@@ -1,3 +1,37 @@
-<a [routerLink]="['/']" routerLinkActive="router-link-active">home</a><br/>
-<a [routerLink]="['/rxjs']" routerLinkActive="router-link-active">rxjs</a><br/>
-<a [routerLink]="['/ng']" routerLinkActive="router-link-active">angular + nest</a>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">ProjekatRWA</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/']" routerLinkActive="router-link-active">Početna</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/rxjs']" routerLinkActive="router-link-active">RxJS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/ng']" routerLinkActive="router-link-active">Angular</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                <!--
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Account</a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Logout</a></li>
+                    </ul>
+                </li>
+                -->
+
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/']" routerLinkActive="router-link-active">Login</a>
+                </li>
+                <button class="btn btn-primary" type="button">Sign Up</button>
+            </ul>
+        </div>
+    </div>
+</nav>
