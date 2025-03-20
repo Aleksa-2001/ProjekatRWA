@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:projekat-rwa": "node dist/projekat-rwa/server/server.mjs"
+    "serve:ssr:projekat-rwa": "node dist/projekat-rwa/server/server.mjs",
+    "api": "json-server db.json --watch"
   },
   "private": true,
   "dependencies": {
@@ -22,6 +23,7 @@
     "@angular/router": "^19.0.0",
     "@angular/ssr": "^19.0.6",
     "@ng-bootstrap/ng-bootstrap": "^18.0.0",
+    "@ngrx/store": "^19.0.1",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
     "express": "^4.18.2",
