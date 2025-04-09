@@ -1,4 +1,7 @@
 import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../store/app-state';
+import { selectAllComponents } from '../../store/komponente.selectors';
 
 @Component({
   selector: 'app-home',
@@ -9,6 +12,10 @@ import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  ngOnInit(): void { }
+  constructor (private store: Store<AppState>) { }
+  
+  ngOnInit(): void {
+    this.store.select(selectAllComponents)
+  }
 
 }
