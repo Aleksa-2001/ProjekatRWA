@@ -13,11 +13,11 @@ import { selectAllComponents } from './store/komponente.selectors';
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
-  title = 'projekat-rwa';
+  title = 'ProjekatRWA';
 
   constructor (private store: Store<AppState>) { }
 
   ngOnInit(): void {
-    this.store.select(selectAllComponents)
+    //this.store.select(selectAllComponents)
   }
 }

@@ -4,7 +4,7 @@ import { KomponenteState } from "./komponente.reducer";
 import { RacunarskaKomponenta } from "../models/racunarskaKomponenta";
 
 export const selectComponentsFeature = createSelector(
-    (state: AppState) => state.components,
+    (state: AppState) => state.komponente,
     (components) => components
 )
 

@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core"
+import { inject, Injectable } from "@angular/core"
 import { Actions, createEffect, ofType } from "@ngrx/effects"
 import { RacunarskaKomponentaService } from "../services/RacunarskaKomponenta.service"
 import * as KomponenteActions from "./komponente.actions"
@@ -7,10 +7,13 @@ import { catchError, map, mergeMap } from "rxjs/operators"
 
 @Injectable()
 export class KomponenteEffect {
-    constructor(private service: RacunarskaKomponentaService, private actions$: Actions) { }
+    private actions$ = inject(Actions);
+    private service = inject(RacunarskaKomponentaService);
 
-    loadEffect$ = createEffect(() => 
-        this.actions$.pipe(
+    //constructor(private service: RacunarskaKomponentaService, private actions$: Actions) { }
+
+    loadEffect$ = createEffect(() => {
+        return this.actions$.pipe(
             ofType(KomponenteActions.loadItems),
             mergeMap(() => this.service.getKomponente()
                 .pipe(
@@ -19,5 +22,5 @@ export class KomponenteEffect {
                 )
             )
         )
-    )
+    })
 }

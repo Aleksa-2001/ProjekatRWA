@@ -22,6 +22,7 @@ export class KomponentaPageComponent implements OnInit {
   constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void { 
+    this.store.dispatch(KomponenteActions.loadItems())
     this.komponente = this.store.select(selectAllComponents)
   }
 

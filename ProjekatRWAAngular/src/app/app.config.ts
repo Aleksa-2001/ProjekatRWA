@@ -2,7 +2,6 @@ import { ApplicationConfig, provideZoneChangeDetection, isDevMode } from '@angul
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideStore } from '@ngrx/store';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { komponentaReducer } from './store/komponente.reducer';
@@ -10,14 +9,13 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideEffects } from '@ngrx/effects';
 import { KomponenteEffect } from './store/komponenta.effects';
 
+
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
+    provideZoneChangeDetection({ eventCoalescing: true }), 
+    provideRouter(routes), 
     provideHttpClient(withFetch()),
-    provideClientHydration(withEventReplay()),
-    provideStore({ komponente: komponentaReducer /*, users: userReduces, ...*/ }),
+    provideStore({ komponente: komponentaReducer /*, users: userReduces, ...*/ }), 
     provideStoreDevtools({ maxAge: 25 /*, logOnly: !isDevMode()*/ }),
-    provideEffects([KomponenteEffect])
-  ]
+    provideEffects([KomponenteEffect])]
 };
