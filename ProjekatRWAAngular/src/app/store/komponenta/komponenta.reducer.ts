@@ -1,7 +1,7 @@
 import { createReducer, on } from "@ngrx/store"
 import { EntityState, createEntityAdapter } from '@ngrx/entity';
-import { RacunarskaKomponenta } from "../models/racunarskaKomponenta"
-import * as KomponenteActions from "./komponente.actions"
+import { RacunarskaKomponenta } from "../../models/racunarska-komponenta"
+import * as KomponenteActions from "./komponenta.actions"
 
 export interface KomponenteState extends EntityState<RacunarskaKomponenta> {
     selectedComponentID: number

@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { RacunarskaKomponenta } from "../models/racunarskaKomponenta";
+import { RacunarskaKomponenta } from "../../models/racunarska-komponenta";
 
 export const loadItems = createAction(
     "Ucitaj listu"

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RacunarskaKomponenta } from '../models/racunarskaKomponenta';
+import { RacunarskaKomponenta } from '../models/racunarska-komponenta';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 
@@ -8,18 +8,12 @@ import { catchError, throwError } from 'rxjs';
 })
 export class RacunarskaKomponentaService {
 
-  //private komponente: Array<RacunarskaKomponenta> = new Array()
-
-  constructor(private httpClient: HttpClient) { 
-    //this.komponente.push(new CPU(0, 1, 'AMD', 'Ryzen 3 3200G', 21000, 'images/ng/komponente/3200g.jpg', 3.6, 4, 4))
-    //this.komponente.push(new GPU(0, 2, 'nVidia', 'GeForce RTX 4090', 99999, 'images/ng/komponente/geforce-rtx-4090.jpg', 2.8, 16))
-  }
+  constructor(private httpClient: HttpClient) { }
 
   getKomponente() {
     return this.httpClient
       .get<RacunarskaKomponenta[]>("http://localhost:3000/" + "komponente")
       .pipe(catchError(errorHandler))
-    //return this.komponente;
   }
 
   getKomponentaByID(komponentaID: number) {

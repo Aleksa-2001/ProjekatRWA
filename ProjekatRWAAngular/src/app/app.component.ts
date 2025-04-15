@@ -4,7 +4,7 @@ import { HeaderComponent } from "./shared/components/header/header.component";
 import { FooterComponent } from "./shared/components/footer/footer.component";
 import { Store } from '@ngrx/store';
 import { AppState } from './store/app-state';
-import { selectAllComponents } from './store/komponente.selectors';
+import { selectAllComponents } from './store/komponenta/komponenta.selectors';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +15,7 @@ import { selectAllComponents } from './store/komponente.selectors';
 export class AppComponent implements OnInit {
   title = 'ProjekatRWA';
 
-  constructor (private store: Store<AppState>) { }
+  //constructor (private store: Store<AppState>) { }
 
   ngOnInit(): void {
     //this.store.select(selectAllComponents)

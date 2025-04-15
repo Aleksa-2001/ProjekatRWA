@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app-state';
-import { selectAllComponents } from '../../store/komponente.selectors';
+import { selectAllComponents } from '../../store/komponenta/komponenta.selectors';
 
 @Component({
   selector: 'app-home',

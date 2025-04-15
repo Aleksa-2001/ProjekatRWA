@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input, type OnInit } from '@angular/core';
-import { RacunarskaKomponentaComponent } from '../RacunarskaKomponenta/RacunarskaKomponenta.component';
 import { GPU } from '../../../../models/gpu';
 
 @Component({
   selector: 'app-gpu',
   imports: [],
-  templateUrl: './GPU.component.html',
-  styleUrl: './GPU.component.scss',
+  templateUrl: './gpu.component.html',
+  styleUrl: './gpu.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GPUComponent implements OnInit {

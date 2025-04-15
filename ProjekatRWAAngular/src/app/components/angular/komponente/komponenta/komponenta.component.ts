@@ -1,24 +1,24 @@
 import { ChangeDetectionStrategy, Component, Input, type OnInit } from '@angular/core';
-import { RacunarskaKomponenta } from '../../../../models/racunarskaKomponenta';
+import { RacunarskaKomponenta } from '../../../../models/racunarska-komponenta';
 import { NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
-import { CPUComponent } from "../CPU/CPU.component";
-import { GPUComponent } from "../GPU/GPU.component";
+import { CPUComponent } from "../cpu/cpu.component";
+import { GPUComponent } from '../gpu/gpu.component';
 import { CPU } from '../../../../models/cpu';
 import { GPU } from '../../../../models/gpu';
 
 @Component({
-  selector: 'app-racunarska-komponenta',
+  selector: 'app-komponenta',
   imports: [NgSwitch, NgSwitchCase, NgSwitchDefault, CPUComponent, GPUComponent],
-  templateUrl: './RacunarskaKomponenta.component.html',
-  styleUrl: './RacunarskaKomponenta.component.scss',
+  templateUrl: './komponenta.component.html',
+  styleUrl: './komponenta.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RacunarskaKomponentaComponent implements OnInit {
+export class KomponentaComponent implements OnInit {
 
   @Input() rk!: RacunarskaKomponenta
 
   ngOnInit(): void {
-    console.log(this.rk)
+    //console.log(this.rk)
   }
 
   isCPU(rk: RacunarskaKomponenta) {

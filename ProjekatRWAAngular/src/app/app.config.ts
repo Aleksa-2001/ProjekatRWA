@@ -4,10 +4,12 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideStore } from '@ngrx/store';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { komponentaReducer } from './store/komponente.reducer';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideEffects } from '@ngrx/effects';
-import { KomponenteEffect } from './store/komponenta.effects';
+import { KomponenteEffects } from './store/komponenta/komponenta.effects';
+import { AuthEffects } from './store/auth/auth.effects';
+import { komponentaReducer } from './store/komponenta/komponenta.reducer';
+import { authReducer } from './store/auth/auth.reducer';
 
 
 export const appConfig: ApplicationConfig = {
@@ -15,7 +17,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }), 
     provideRouter(routes), 
     provideHttpClient(withFetch()),
-    provideStore({ komponente: komponentaReducer /*, users: userReduces, ...*/ }), 
+    provideStore({ auth: authReducer, komponente: komponentaReducer }), 
     provideStoreDevtools({ maxAge: 25 /*, logOnly: !isDevMode()*/ }),
-    provideEffects([KomponenteEffect])]
+    provideEffects([AuthEffects, KomponenteEffects])]
 };

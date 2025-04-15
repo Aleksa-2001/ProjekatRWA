@@ -1,0 +1,37 @@
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
+export class KomponenteService {
+    lista = [
+        {
+            "id": 1,
+            "tip": 1,
+            "proizvodjac": "AMD",
+            "naziv": "Ryzen 3 3200G",
+            "cena": 21000,
+            "slika": "images/ng/komponente/3200g.jpg",
+            "frekvencija": 3.6,
+            "brojJezgara": 4,
+            "brojNiti": 4
+        },
+        {
+            "id": 2,
+            "tip": 2,
+            "proizvodjac": "nVidia",
+            "naziv": "GeForce RTX 4090",
+            "cena": 99999,
+            "slika": "images/ng/komponente/geforce-rtx-4090.jpg",
+            "frekvencija": 2.8,
+            "VRAM": 16
+        }
+    ]
+
+    public getKomponente() {
+        return this.lista
+    }
+
+    public getKomponentaByID(komponentaID: number) {
+        return this.lista.find(komponenta => komponenta.id === komponentaID)
+    }
+
+}

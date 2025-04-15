@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
-import { KomponentaPageComponent } from "./racunarskeKomponente/KomponentaPage.component";
+import { KomponentaPageComponent } from "./komponente/komponente-page.component";
 
 @Component({
   selector: 'app-angular',

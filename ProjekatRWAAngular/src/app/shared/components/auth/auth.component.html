@@ -1,0 +1,16 @@
+<div class="container mt-3">
+    <h1 class="text-center">Prijavi se</h1>
+    <div class="container d-flex justify-content-center">
+        <form class="d-flex" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <label class="d-block">
+                <label>Username:</label>
+                <input type="text" formControlName="username" />
+            </label>
+            <label class="d-block">
+                <label>Password:</label>
+                <input type="password" formControlName="password" />
+            </label>
+            <button class="btn btn-primary" type="submit">Login</button>
+        </form>
+    </div>
+</div>
