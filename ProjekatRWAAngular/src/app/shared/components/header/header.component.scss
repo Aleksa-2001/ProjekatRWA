@@ -1,0 +1,11 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+
+.navbar-nav > li > .dropdown-menu { 
+    background-color: $green-500;
+}
+
+.navbar-nav > li > .dropdown-menu a:hover { 
+    background-color: mix(black, $green-500, 25);
+    cursor: pointer;
+}

@@ -1,3 +1,26 @@
 :host {
   display: block;
 }
+
+.wrap {
+  height: calc(100vh - 240px);
+}
+
+.window {
+  width: 100%;
+  margin: 0;
+  top: 50%;
+  left: 0%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.form-window {
+  width: 100%;
+  max-width: 400px;
+}
+
+.btn {
+  width: 100%;
+  max-width: 200px;
+}

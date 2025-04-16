@@ -5,11 +5,11 @@ import { AppState } from '../../../store/app-state';
 import * as AuthActions from '../../../store/auth/auth.actions'
 import { selectToken } from '../../../store/auth/auth.selectors';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-auth',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgIf],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -19,10 +19,10 @@ export class AuthComponent {
   loginForm: FormGroup
   token$: Observable<string | null>
 
-  constructor(private fb: FormBuilder, private store: Store<AppState>, private router: Router) {
+  constructor(private fb: FormBuilder, private store: Store<AppState>) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
-      password: ['', Validators.required],
+      password: ['', Validators.required]
     });
 
     this.token$ = this.store.select(selectToken)
