@@ -6,10 +6,11 @@ import * as AuthActions from '../../../store/auth/auth.actions'
 import { selectToken } from '../../../store/auth/auth.selectors';
 import { Observable } from 'rxjs';
 import { NgIf } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
-  imports: [ReactiveFormsModule, NgIf],
+  imports: [RouterLink, ReactiveFormsModule, NgIf],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

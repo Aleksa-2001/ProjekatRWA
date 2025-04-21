@@ -12,6 +12,9 @@ export const initialState: AuthState = {
   token: localStorage.getItem('token'),
   user: localStorage.getItem('userID') ? { 
     id: parseInt(localStorage.getItem('userID') ?? '0'), 
+    firstName: '',//user.firstName,
+    lastName: '',//user.lastName,
+    email: '',//user.email,
     username: localStorage.getItem('username') ?? '', 
     password: ''
   } : null,
@@ -23,7 +26,14 @@ export const authReducer = createReducer(
   on(AuthActions.loginSuccess, (state, { token, user }) => ({
     ...state,
     token,
-    user: { id: user.id, username: user.username, password: '' },
+    user: { 
+      id: user.id, 
+      firstName: '',//user.firstName,
+      lastName: '',//user.lastName,
+      email: '',//user.email,
+      username: user.username, 
+      password: '' 
+    },
     error: null,
   })),
   on(AuthActions.loginFailure, (state, { error }) => ({

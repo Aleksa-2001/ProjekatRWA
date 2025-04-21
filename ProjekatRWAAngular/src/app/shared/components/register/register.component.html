@@ -1,0 +1,59 @@
+<div class="container position-relative my-3 wrap">
+    <div class="container window">
+        <form class="d-flex flex-column mx-auto p-3 border border-secondary border-3 rounded-3 form-window" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <h1 class="text-center">Registruj se</h1>
+            <div class="d-sm-flex justify-content-between">
+                <div class="mb-2">
+                    <label for="inputFirstName">Ime:</label>
+                    <input id="inputFirstName" class="form-control border border-secondary" type="text" formControlName="firstName" placeholder="Ime" />
+                    <small class="text-danger" *ngIf="registerForm.controls['firstName'].dirty && registerForm.hasError('required', 'firstName')">
+                        *Korisničko ime je obavezno polje
+                    </small>
+                </div>
+                <div class="mb-2">
+                    <label for="inputLastName">Prezime:</label>
+                    <input id="inputLastName" class="form-control border border-secondary" type="text" formControlName="lastName" placeholder="Prezime" />
+                    <small class="text-danger" *ngIf="registerForm.controls['lastName'].dirty && registerForm.hasError('required', 'lastName')">
+                        *Korisničko ime je obavezno polje
+                    </small>
+                </div>
+            </div>
+            <div class="mb-2">
+                <label for="inputEmail">E-mail adresa:</label>
+                <input id="inputEmail" class="form-control border border-secondary" type="text" formControlName="email" placeholder="text@example.com" />
+                <small class="text-danger" *ngIf="registerForm.controls['email'].dirty && registerForm.hasError('required', 'email')">
+                    *E-mail je obavezno polje
+                </small>
+                <small class="text-danger" *ngIf="registerForm.controls['email'].dirty && registerForm.hasError('email', 'email')">
+                    *Format e-maila nije ispravan
+                </small>
+            </div>
+            <div class="mb-2">
+                <label for="inputUsername">Korisničko ime:</label>
+                <input id="inputUsername" class="form-control border border-secondary" type="text" formControlName="username" placeholder="Korisničko ime" />
+                <small class="text-danger" *ngIf="registerForm.controls['username'].dirty && registerForm.hasError('required', 'username')">
+                    *Korisničko ime je obavezno polje
+                </small>
+            </div>
+            <div class="mb-2">
+                <label for="inputPassword">Lozinka:</label>
+                <input id="inputPassword" class="form-control border border-secondary" type="password" formControlName="password" placeholder="Lozinka" />
+                <small class="text-danger" *ngIf="registerForm.controls['password'].dirty && registerForm.hasError('required', 'password')">
+                    *Lozinka je obavezno polje
+                </small>
+            </div>
+            <div class="mb-2">
+                <label for="inputRepeatPassword">Ponovi lozinku:</label>
+                <input id="inputRepeatPassword" class="form-control border border-secondary" type="password" formControlName="repeatPassword" placeholder="Ponovi lozinku" />
+                <small class="text-danger" *ngIf="registerForm.controls['repeatPassword'].dirty && registerForm.hasError('required', 'repeatPassword')">
+                    *Ponovi lozinku je obavezno polje
+                </small>
+                <small class="text-danger" *ngIf="registerForm.controls['repeatPassword'].dirty && registerForm.hasError('required', 'repeatPassword')">
+                    *Lozinke se ne podudaraju
+                </small>
+            </div>
+            <button class="btn btn-primary mt-2 mx-auto" type="submit">Napravi nalog</button>
+            <p class="text-center mt-3 mb-0">Već ste kreirali nalog? Prijavite se <a class="text-primary" [routerLink]="['/login']" routerLinkActive="router-link-active" >ovde</a></p>
+        </form>
+    </div>
+</div>

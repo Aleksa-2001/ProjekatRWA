@@ -5,12 +5,15 @@ import { AngularComponent } from './components/angular/angular.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { AuthComponent } from './shared/components/auth/auth.component';
 import { AuthGuard, AuthRedirectGuard } from './shared/services/auth.guard';
+import { RegisterComponent } from './shared/components/register/register.component';
 
 export const routes: Routes = [
     { path: "", component: HomeComponent },
-    { path: "login", component: AuthComponent, canActivate: [AuthRedirectGuard] },
     { path: "rxjs", component: RxjsComponent },
     { path: "ng", component: AngularComponent, canActivate: [AuthGuard] },
+
+    { path: "login", component: AuthComponent, canActivate: [AuthRedirectGuard] },
+    { path: "register", component: RegisterComponent, canActivate: [AuthRedirectGuard] },
 
     { path: "**", component: NotFoundComponent }
 ];
