@@ -15,6 +15,7 @@ import { RouterLink } from '@angular/router';
 export class RegisterComponent {
 
   registerForm: FormGroup
+  formData: any
 
   constructor(private fb: FormBuilder, private store: Store<AppState>) {
     this.registerForm = this.fb.group({
@@ -27,18 +28,21 @@ export class RegisterComponent {
     });
   }
 
+  onInput() {
+    this.formData = this.registerForm.value
+  }
+
   onSubmit() {
-    const form = this.registerForm.value
-    console.log(form)
-    if (this.registerForm.valid && this.checkPasswordInputs(form.password, form.repeatPassword)) {
-      const { repeatPassword, ...user } = form
+    if (this.registerForm.valid && this.checkPasswordInputs(this.formData)) {
+      const { repeatPassword, ...user } = this.formData
       console.log(user)
       //TODO: Dispatch-ovanje akcije za registraciju
     }
   }
 
-  checkPasswordInputs(password: string, repeatPassword: string): boolean {
-    return password === repeatPassword
+  checkPasswordInputs(form: any) : boolean {
+    if (form) return form.password === form.repeatPassword
+    return false
   }
 
 }

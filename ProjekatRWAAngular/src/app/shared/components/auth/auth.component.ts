@@ -1,24 +1,24 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app-state';
 import * as AuthActions from '../../../store/auth/auth.actions'
-import { selectToken } from '../../../store/auth/auth.selectors';
+import { selectToken, selectError } from '../../../store/auth/auth.selectors';
 import { Observable } from 'rxjs';
-import { NgIf } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
-  imports: [RouterLink, ReactiveFormsModule, NgIf],
+  imports: [RouterLink, CommonModule, ReactiveFormsModule, NgIf],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AuthComponent {
-
+export class AuthComponent {  
   loginForm: FormGroup
   token$: Observable<string | null>
+  error$: Observable<any>
 
   constructor(private fb: FormBuilder, private store: Store<AppState>) {
     this.loginForm = this.fb.group({
@@ -27,12 +27,13 @@ export class AuthComponent {
     });
 
     this.token$ = this.store.select(selectToken)
+    this.error$ = this.store.select(selectError)
   }
 
   onSubmit() {
     if (this.loginForm.valid) {
       const { username, password } = this.loginForm.value
-      this.store.dispatch(AuthActions.login({ username, password }))
+      this.store.dispatch(AuthActions.login({ username, password }))      
     }
   }
 

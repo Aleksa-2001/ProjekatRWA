@@ -27,6 +27,10 @@
   max-width: 200px;
 }
 
+small {
+  display: block;
+}
+
 @media screen and (max-width: 767px) {
   .wrap {
     height: auto;

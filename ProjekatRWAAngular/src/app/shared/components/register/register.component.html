@@ -37,22 +37,28 @@
             </div>
             <div class="mb-2">
                 <label for="inputPassword">Lozinka:</label>
-                <input id="inputPassword" class="form-control border border-secondary" type="password" formControlName="password" placeholder="Lozinka" />
+                <input id="inputPassword" class="form-control border border-secondary" type="password" formControlName="password" placeholder="Lozinka" (input)="onInput()" />
                 <small class="text-danger" *ngIf="registerForm.controls['password'].dirty && registerForm.hasError('required', 'password')">
                     *Lozinka je obavezno polje
+                </small>
+                <small class="text-danger" *ngIf="registerForm.controls['password'].dirty && registerForm.hasError('minlength', 'password')">
+                    *Lozinka mora imati minimum 8 karaktera
                 </small>
             </div>
             <div class="mb-2">
                 <label for="inputRepeatPassword">Ponovi lozinku:</label>
-                <input id="inputRepeatPassword" class="form-control border border-secondary" type="password" formControlName="repeatPassword" placeholder="Ponovi lozinku" />
+                <input id="inputRepeatPassword" class="form-control border border-secondary" type="password" formControlName="repeatPassword" placeholder="Ponovi lozinku" (input)="onInput()" />
                 <small class="text-danger" *ngIf="registerForm.controls['repeatPassword'].dirty && registerForm.hasError('required', 'repeatPassword')">
                     *Ponovi lozinku je obavezno polje
                 </small>
-                <small class="text-danger" *ngIf="registerForm.controls['repeatPassword'].dirty && registerForm.hasError('required', 'repeatPassword')">
+                <small class="text-danger" *ngIf="registerForm.controls['repeatPassword'].dirty && registerForm.hasError('minlength', 'repeatPassword')">
+                    *Ponovljena lozinka mora imati minimum 8 karaktera
+                </small>
+                <small class="text-danger" *ngIf="registerForm.controls['repeatPassword'].dirty && !this.checkPasswordInputs(formData)">
                     *Lozinke se ne podudaraju
                 </small>
             </div>
-            <button class="btn btn-primary mt-2 mx-auto" type="submit">Napravi nalog</button>
+            <button [disabled]="!(this.registerForm.valid && this.checkPasswordInputs(formData))" class="btn btn-primary mt-2 mx-auto" type="submit">Napravi nalog</button>
             <p class="text-center mt-3 mb-0">Već ste kreirali nalog? Prijavite se <a class="text-primary" [routerLink]="['/login']" routerLinkActive="router-link-active" >ovde</a></p>
         </form>
     </div>
