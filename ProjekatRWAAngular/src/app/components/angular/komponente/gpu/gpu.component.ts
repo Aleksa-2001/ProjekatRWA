@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, type OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { GPU } from '../../../../models/komponente/gpu';
 
 @Component({
@@ -8,12 +8,8 @@ import { GPU } from '../../../../models/komponente/gpu';
   styleUrl: './gpu.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GPUComponent implements OnInit {
+export class GPUComponent {
 
   @Input() gpu?: GPU
-
-  ngOnInit(): void {
-    
-  }
 
 }

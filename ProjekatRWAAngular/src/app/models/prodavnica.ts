@@ -7,6 +7,6 @@ export class Prodavnica {
         naziv = ''
         adresa = ''
         opis = ''
-        proizvodi
+        proizvodi = []
     }
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, type OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CPU } from '../../../../models/komponente/cpu';
 
 @Component({
@@ -8,12 +8,8 @@ import { CPU } from '../../../../models/komponente/cpu';
   styleUrl: './cpu.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CPUComponent implements OnInit {
+export class CPUComponent {
 
   @Input() cpu?: CPU
-
-  ngOnInit(): void {
-    
-  }
 
 }

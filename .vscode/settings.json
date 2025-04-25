@@ -5,7 +5,7 @@
             "externalTemplate": true
         },
         "angular-component": {
-            "ngOnInit": true
+            "ngOnInit": false
         },
         "angular-page": {
             "skipNgOnInit": true

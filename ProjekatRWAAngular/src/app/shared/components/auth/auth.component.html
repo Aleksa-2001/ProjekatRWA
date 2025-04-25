@@ -17,8 +17,8 @@
                 </small>
             </div>
             <button [disabled]="!this.loginForm.valid" class="btn btn-primary mt-2 mx-auto" type="submit">Prijavi se</button>
-            <p *ngIf="error$ | async" class="text-danger text-center mt-3 mb-0">Pogrešno korisničko ime ili lozinka!</p>
-            <p class="text-center mt-3 mb-0">Nemate nalog? Registrujte svoj nalog <a class="text-primary" [routerLink]="['/register']" routerLinkActive="router-link-active" >ovde</a></p>
+            <p *ngIf="error$ | async" class="text-danger text-center mt-3 mb-0">Pogrešno korisničko ime i/ili lozinka!</p>
+            <p class="text-center mt-3 mb-0">Nemate nalog? Kreirajte svoj nalog <a class="text-primary" [routerLink]="['/register']" routerLinkActive="router-link-active" >ovde</a></p>
         </form>
     </div>
 </div>

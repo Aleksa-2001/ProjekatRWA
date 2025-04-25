@@ -7,7 +7,16 @@
     <div *ngSwitchCase="2">
         <app-gpu [gpu]="isGPU(rk)"></app-gpu>
     </div>
-    <div *ngSwitchDefault>Tip nije prepoznat!
-        
+    <div *ngSwitchCase="3">
+        <app-maticna-ploca [maticnaPloca]="isMaticnaPloca(rk)"></app-maticna-ploca>
+    </div>
+    <div *ngSwitchCase="4">
+        <app-ram [ram]="isRAM(rk)"></app-ram>
+    </div>
+    <div *ngSwitchCase="5">
+        <app-napajanje [napajanje]="isNapajanje(rk)"></app-napajanje>
+    </div>
+    <div *ngSwitchDefault>
+        <p class="m-0" Tip nije prepoznat!></p>
     </div>
 </div>

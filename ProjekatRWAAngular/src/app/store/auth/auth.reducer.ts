@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import * as AuthActions from './auth.actions';
-import { User } from '../../models/user';
+
+export type User = any;
 
 export interface AuthState {
   token: string | null;
@@ -11,12 +12,12 @@ export interface AuthState {
 export const initialState: AuthState = {
   token: localStorage.getItem('token'),
   user: localStorage.getItem('userID') ? { 
-    id: parseInt(localStorage.getItem('userID') ?? '0'), 
-    firstName: '',//user.firstName,
-    lastName: '',//user.lastName,
-    email: '',//user.email,
+    userID: parseInt(localStorage.getItem('userID') ?? '0'), 
+    firstName: localStorage.getItem('firstName') ?? '', 
+    lastName: localStorage.getItem('lastName') ?? '', 
+    email: localStorage.getItem('email') ?? '', 
     username: localStorage.getItem('username') ?? '', 
-    password: ''
+    //password: ''
   } : null,
   error: null,
 };
@@ -27,12 +28,12 @@ export const authReducer = createReducer(
     ...state,
     token,
     user: { 
-      id: user.id, 
-      firstName: '',//user.firstName,
-      lastName: '',//user.lastName,
-      email: '',//user.email,
+      userID: user.userID, 
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
       username: user.username, 
-      password: '' 
+      //password: '' 
     },
     error: null,
   })),

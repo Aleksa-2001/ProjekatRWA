@@ -22,7 +22,7 @@
                         {{user.username}}
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="dropdownMenuClickable">
-                        <li><a class="dropdown-item" href="#">Profil</a></li>
+                        <li><a class="dropdown-item" [routerLink]="['/profile', userID]">Profil</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" (click)="logout()">Odjavi se</a></li>
                     </ul>

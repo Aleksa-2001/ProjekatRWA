@@ -1,7 +1,7 @@
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
 
-$primary:       mix(black, $green-500, 25);
+$primary:       mix(black, $green-500, 25%);
 $secondary:     $green-500;
 $success:       $green;
 $info:          $cyan;

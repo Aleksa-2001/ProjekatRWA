@@ -8,6 +8,7 @@ export class MaticnaPloca extends RacunarskaKomponenta {
         proizvodjac: string, 
         naziv: string, 
         slika: string, 
+        public velicina: string, 
         public socket: string, 
         public brojRAMSlotova: number, 
         public brojUSB20Portova: number,
@@ -15,6 +16,7 @@ export class MaticnaPloca extends RacunarskaKomponenta {
         public brojUSB31Portova: number,
     ) {
         super(id, tip, proizvodjac, naziv, slika)
+        velicina = ''
         socket = ''
         brojRAMSlotova = 0
         brojUSB20Portova = 0
