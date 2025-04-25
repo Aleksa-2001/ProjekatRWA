@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, type OnInit } from '@angular/core';
-import { CPU } from '../../../../models/cpu';
+import { CPU } from '../../../../models/komponente/cpu';
 
 @Component({
   selector: 'app-cpu',

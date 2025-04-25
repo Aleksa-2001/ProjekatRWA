@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, type OnInit } from '@angular/core';
-import { GPU } from '../../../../models/gpu';
+import { GPU } from '../../../../models/komponente/gpu';
 
 @Component({
   selector: 'app-gpu',

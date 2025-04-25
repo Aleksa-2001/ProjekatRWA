@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RacunarskaKomponenta } from '../models/racunarska-komponenta';
+import { RacunarskaKomponenta } from '../models/komponente/racunarska-komponenta';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 

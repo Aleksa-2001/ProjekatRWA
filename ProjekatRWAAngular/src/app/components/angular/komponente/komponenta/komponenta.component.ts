@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input, type OnInit } from '@angular/core';
-import { RacunarskaKomponenta } from '../../../../models/racunarska-komponenta';
+import { RacunarskaKomponenta } from '../../../../models/komponente/racunarska-komponenta';
 import { NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { CPUComponent } from "../cpu/cpu.component";
 import { GPUComponent } from '../gpu/gpu.component';
-import { CPU } from '../../../../models/cpu';
-import { GPU } from '../../../../models/gpu';
+import { CPU } from '../../../../models/komponente/cpu';
+import { GPU } from '../../../../models/komponente/gpu';
 
 @Component({
   selector: 'app-komponenta',

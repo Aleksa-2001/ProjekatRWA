@@ -1,6 +1,5 @@
 <img class="mb-2" src={{rk.slika}} alt={{rk.slika}}/>
 <h3 class="m-0">{{rk.proizvodjac}} {{rk.naziv}}</h3>
-<h4 class="m-0">Cena: {{rk.cena}}RSD</h4>
 <div [ngSwitch]="rk.tip">
     <div *ngSwitchCase="1">
         <app-cpu [cpu]="isCPU(rk)"></app-cpu>

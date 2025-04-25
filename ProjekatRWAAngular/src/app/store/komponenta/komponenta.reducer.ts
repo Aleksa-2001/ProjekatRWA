@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store"
 import { EntityState, createEntityAdapter } from '@ngrx/entity';
-import { RacunarskaKomponenta } from "../../models/racunarska-komponenta"
+import { RacunarskaKomponenta } from "../../models/komponente/racunarska-komponenta"
 import * as KomponenteActions from "./komponenta.actions"
 
 export interface KomponenteState extends EntityState<RacunarskaKomponenta> {
@@ -22,10 +22,10 @@ export const komponentaReducer = createReducer(
     on(KomponenteActions.loadItemsSuccess, (state, {komponente}) => 
         adapter.setAll(komponente, state)
     ),
-    on(KomponenteActions.setItem, (state, {komponentaID, novaCena}) => {
+    on(KomponenteActions.setItem, (state, {komponentaID}) => {
         const targetKomponenta = state.entities[komponentaID]
         if (targetKomponenta) {
-            return adapter.setOne({...targetKomponenta, cena: novaCena}, state)
+            return adapter.setOne({...targetKomponenta}, state)
         }
         else {
             return state

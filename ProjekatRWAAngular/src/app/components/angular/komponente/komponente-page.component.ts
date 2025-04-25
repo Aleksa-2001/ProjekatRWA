@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
-import { RacunarskaKomponenta } from '../../../models/racunarska-komponenta';
+import { RacunarskaKomponenta } from '../../../models/komponente/racunarska-komponenta';
 import { KomponentaComponent } from "./komponenta/komponenta.component";
 import { CommonModule, NgFor } from '@angular/common';
 import { Store } from '@ngrx/store';
