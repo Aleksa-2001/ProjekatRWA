@@ -1,12 +1,14 @@
-import { createSelector } from "@ngrx/store";
+import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { AppState } from "../app-state";
 import { KomponenteState } from "./komponenta.reducer";
 import { RacunarskaKomponenta } from "../../models/komponente/racunarska-komponenta";
 
-export const selectComponentsFeature = createSelector(
-    (state: AppState) => state.komponente,
-    (components) => components
-)
+// export const selectComponentsFeature = createSelector(
+//     (state: AppState) => state.komponente,
+//     (components) => components
+// )
+
+export const selectComponentsFeature = createFeatureSelector<KomponenteState>('komponente')
 
 export const selectAllComponents = createSelector(
     selectComponentsFeature,

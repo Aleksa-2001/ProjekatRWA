@@ -1,17 +1,13 @@
 import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
-import { KomponentaPageComponent } from "./komponente/komponente-page.component";
+import { ProdavniceComponent } from "./prodavnice/prodavnice.component";
 
 @Component({
   selector: 'app-angular',
-  imports: [KomponentaPageComponent],
+  imports: [ProdavniceComponent],
   templateUrl: './angular.component.html',
   styleUrl: './angular.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AngularComponent implements OnInit {
-
-  ngOnInit(): void { 
-
-  }
+export class AngularComponent {
 
 }

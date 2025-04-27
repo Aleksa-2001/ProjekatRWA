@@ -10,6 +10,8 @@ import { KomponenteEffects } from './store/komponenta/komponenta.effects';
 import { AuthEffects } from './store/auth/auth.effects';
 import { komponentaReducer } from './store/komponenta/komponenta.reducer';
 import { authReducer } from './store/auth/auth.reducer';
+import { prodavnicaReducer } from './store/prodavnica/prodavnica.reducer';
+import { ProdavniceEffects } from './store/prodavnica/prodavnica.effects';
 
 
 export const appConfig: ApplicationConfig = {
@@ -17,7 +19,16 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }), 
     provideRouter(routes), 
     provideHttpClient(withFetch()),
-    provideStore({ auth: authReducer, komponente: komponentaReducer }), 
+    provideStore({ 
+      auth: authReducer, 
+      prodavnice: prodavnicaReducer, 
+      komponente: komponentaReducer 
+    }), 
     provideStoreDevtools({ maxAge: 25 /*, logOnly: !isDevMode()*/ }),
-    provideEffects([AuthEffects, KomponenteEffects])]
+    provideEffects([
+      AuthEffects, 
+      ProdavniceEffects, 
+      KomponenteEffects
+    ])
+  ]
 };

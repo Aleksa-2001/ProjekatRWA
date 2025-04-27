@@ -3,14 +3,14 @@
         <form class="d-flex flex-column mx-auto p-3 border border-secondary border-3 rounded-3 form-window" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <h1 class="text-center">Prijavi se</h1>
             <div class="mb-2">
-                <label for="inputUsername">Korisničko ime:</label>
+                <label for="inputUsername">Korisničko ime*:</label>
                 <input id="inputUsername" class="form-control border border-secondary" type="text" formControlName="username" placeholder="Korisničko ime" />
                 <small class="text-danger" *ngIf="loginForm.controls['username'].dirty && loginForm.hasError('required', 'username')">
                     *Korisničko ime je obavezno polje
                 </small>
             </div>
             <div class="mb-2">
-                <label for="inputPassword">Lozinka:</label>
+                <label for="inputPassword">Lozinka*</label>
                 <input id="inputPassword" class="form-control border border-secondary" type="password" formControlName="password" placeholder="Lozinka" />
                 <small class="text-danger" *ngIf="loginForm.controls['password'].dirty && loginForm.hasError('required', 'password')">
                     *Lozinka je obavezno polje

@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../../../models/user';
-import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app-state';
 import { selectUser } from '../../../store/auth/auth.selectors';
@@ -19,8 +18,8 @@ export class ProfileComponent {
 
   user$: Observable<User | null>
 
-  constructor(private service: UsersService, private store: Store<AppState>, private route: ActivatedRoute) {
-    const userID = this.route.snapshot.paramMap.get('userID')
+  constructor(/*private service: UsersService, */private store: Store<AppState>) {
+    //const userID = this.route.snapshot.paramMap.get('userID')
     this.user$ = this.store.select(selectUser)
   }
 

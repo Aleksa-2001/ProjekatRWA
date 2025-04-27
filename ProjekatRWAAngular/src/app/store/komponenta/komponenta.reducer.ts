@@ -9,12 +9,12 @@ export interface KomponenteState extends EntityState<RacunarskaKomponenta> {
 
 const adapter = createEntityAdapter<RacunarskaKomponenta>();
 
-const initiasState: KomponenteState = adapter.getInitialState({
+const initialState: KomponenteState = adapter.getInitialState({
     selectedComponentID: -1
 })
 
 export const komponentaReducer = createReducer(
-    initiasState,
+    initialState,
     /*on(KomponenteActions.loadItems, (state, {komponente}) => ({
         ...state,
         allComponents: komponente

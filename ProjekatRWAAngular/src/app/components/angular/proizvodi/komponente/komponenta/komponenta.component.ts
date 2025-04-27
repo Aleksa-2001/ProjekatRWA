@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { RacunarskaKomponenta } from '../../../../models/komponente/racunarska-komponenta';
+import { RacunarskaKomponenta } from '../../../../../models/komponente/racunarska-komponenta';
 import { NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 
 import { CPUComponent } from "../cpu/cpu.component";
@@ -8,11 +8,11 @@ import { MaticnaPlocaComponent } from "../maticna-ploca/maticna-ploca.component"
 import { RAMComponent } from "../ram/ram.component";
 import { NapajanjeComponent } from '../napajanje/napajanje.component';
 
-import { CPU } from '../../../../models/komponente/cpu';
-import { GPU } from '../../../../models/komponente/gpu';
-import { MaticnaPloca } from '../../../../models/komponente/maticna-ploca';
-import { RAM } from '../../../../models/komponente/ram';
-import { Napajanje } from '../../../../models/komponente/napajanje';
+import { CPU } from '../../../../../models/komponente/cpu';
+import { GPU } from '../../../../../models/komponente/gpu';
+import { MaticnaPloca } from '../../../../../models/komponente/maticna-ploca';
+import { RAM } from '../../../../../models/komponente/ram';
+import { Napajanje } from '../../../../../models/komponente/napajanje';
 
 @Component({
   selector: 'app-komponenta',

@@ -6,6 +6,8 @@ import { KomponenteService } from './komponente/komponente.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
+import { ProdavniceController } from './prodavnice/prodavnice.controller';
+import { ProdavniceService } from './prodavnice/prodavnice.service';
 
 @Module({
   imports: [
@@ -13,7 +15,7 @@ import { ConfigModule } from '@nestjs/config';
     UsersModule,
     ConfigModule.forRoot({ isGlobal: true })
   ],
-  controllers: [AppController, KomponenteController],
-  providers: [AppService, KomponenteService],
+  controllers: [AppController, KomponenteController, ProdavniceController],
+  providers: [AppService, KomponenteService, ProdavniceService],
 })
 export class AppModule {}

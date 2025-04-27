@@ -3,15 +3,10 @@
         <div class="row h-100 align-items-center">
             <div class="col-12 text-center">
                 <div class="podaci p-2 text-center shadow-1-strong text-white">
-                    <h1>NASLOV</h1>
+                    <h1 *ngIf="prodavnica$ | async as prodavnica">{{prodavnica.naziv}}</h1>
                     <!-- <app-search></app-search> -->
                 </div>
             </div>
         </div>
     </div>
 </header>
-
-<div class="container mt-3">
-    <h1>Angular</h1>
-    <app-prodavnice></app-prodavnice>
-</div>

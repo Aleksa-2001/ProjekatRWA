@@ -7,15 +7,19 @@ import { AuthComponent } from './shared/components/auth/auth.component';
 import { AuthGuard, AuthRedirectGuard } from './shared/services/auth.guard';
 import { RegisterComponent } from './shared/components/register/register.component';
 import { ProfileComponent } from './shared/components/profile/profile.component';
+import { ProdavnicaPageComponent } from './components/angular/prodavnice/prodavnica-page/prodavnica-page.component';
 
 export const routes: Routes = [
     { path: "", component: HomeComponent, pathMatch: 'full' },
+
     { path: "rxjs", component: RxjsComponent },
+
     { path: "ng", component: AngularComponent, canActivate: [AuthGuard] },
+    { path: "ng/prodavnica/:id", component: ProdavnicaPageComponent, canActivate: [AuthGuard] },
 
     { path: "login", component: AuthComponent, canActivate: [AuthRedirectGuard] },
     { path: "register", component: RegisterComponent, canActivate: [AuthRedirectGuard] },
-    { path: "profile/:userID", component: ProfileComponent, pathMatch: 'full', canActivate: [AuthGuard] },
+    { path: "profile", component: ProfileComponent, canActivate: [AuthGuard] },
 
     { path: "**", component: NotFoundComponent }
 ];
