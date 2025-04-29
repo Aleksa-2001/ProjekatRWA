@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { AppState } from '../../../store/app-state';
 import { Store } from '@ngrx/store';
 import * as AuthActions from '../../../store/auth/auth.actions'
-import { Observable, of, switchMap } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { isAuthenticated, selectUser } from '../../../store/auth/auth.selectors';
 import { CommonModule, NgIf } from '@angular/common';
 import { User } from '../../../models/user';
@@ -15,24 +15,14 @@ import { User } from '../../../models/user';
   styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
   isAuthenticated$: Observable<boolean>;
-  user$: Observable<User | null> = of(null);
-  userID: number = -1;
-
-  constructor(private store: Store<AppState>, private route: ActivatedRoute) {
+  user$: Observable<any | null> = of()
+  
+  constructor(private store: Store<AppState>) {
     this.isAuthenticated$ = this.store.select(isAuthenticated);
-    //this.user$ = this.store.select(selectUser)
-  }
-
-  ngOnInit(): void {
-    this.user$ = this.route.paramMap.pipe(
-      switchMap(params => {
-        this.userID = Number(localStorage.getItem('userID'))
-        return this.store.select(selectUser)
-      })
-    )
+    this.user$ = this.store.select(selectUser)
   }
 
   logout() {

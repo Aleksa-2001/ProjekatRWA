@@ -13,8 +13,22 @@ export const loadItemsSuccess = createAction(
 )
 
 export const setSelectedItemID = createAction(
-    "[Prodavnica] Setuj ID",
+    "[Prodavnica] Setuj ID prodavnice",
     props<{
         prodavnicaID: number
+    }>()
+)
+
+export const loadSelectedItem = createAction(
+    "[Prodavnica] Ucitaj prodavnicu",
+    props<{
+        selectedProdavnicaID: number
+    }>()
+)
+
+export const loadSelectedItemSuccess = createAction(
+    "[Prodavnica] Ucitavanje prodavnice je uspesno",
+    props<{
+        selectedProdavnica: Prodavnica
     }>()
 )

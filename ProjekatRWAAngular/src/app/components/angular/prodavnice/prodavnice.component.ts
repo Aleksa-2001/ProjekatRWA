@@ -6,6 +6,7 @@ import { Prodavnica } from '../../../models/prodavnica';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app-state';
 import { selectProdavnice } from '../../../store/prodavnica/prodavnica.selectors';
+import * as ProdavniceActions from '../../../store/prodavnica/prodavnica.actions'
 
 @Component({
   selector: 'app-prodavnice',
@@ -19,6 +20,7 @@ export class ProdavniceComponent {
   prodavnice: Observable<readonly Prodavnica[]> = of([])
 
   constructor(private store: Store<AppState>) { 
+    this.store.dispatch(ProdavniceActions.loadItems())
     this.prodavnice = this.store.select(selectProdavnice)
   }
 

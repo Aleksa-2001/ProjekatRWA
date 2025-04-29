@@ -8,6 +8,7 @@ import { jwtDecode } from 'jwt-decode';
 
 interface JwtPayload {
   sub: number;
+  admin: boolean;
   firstName: string;
   lastName: string;
   email: string;
@@ -31,6 +32,7 @@ export class AuthEffects {
               token: res.access_token, 
               user: { 
                 userID: payload.sub, 
+                admin: payload.admin, 
                 firstName: payload.firstName,
                 lastName: payload.lastName,
                 email: payload.email,
@@ -44,17 +46,34 @@ export class AuthEffects {
     )
   );
 
+  getUserInfo$ = createEffect(
+    () => 
+      this.actions$.pipe(
+        ofType(AuthActions.getUser),
+        mergeMap(({ token }) => 
+          this.authService.getProfile(token).pipe(
+            map((user) => AuthActions.getUserSuccess({
+              user: {
+                userID: user.userID, 
+                admin: user.admin, 
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                username: user.username
+              }
+            })),
+            catchError(() => of({ type: "Get User Error" }))
+          )
+        )
+      )
+  )
+
   storeToken$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(AuthActions.loginSuccess),
-        tap(({ token, user }) => {
+        tap(({ token }) => {
           localStorage.setItem('token', token);
-          localStorage.setItem('userID', user.userID.toString());
-          localStorage.setItem('firstName', user.firstName);
-          localStorage.setItem('lastName', user.lastName);
-          localStorage.setItem('email', user.email);
-          localStorage.setItem('username', user.username);
           this.router.navigate(["/"]);
         })
       ),
@@ -67,11 +86,6 @@ export class AuthEffects {
         ofType(AuthActions.logout),
         tap(() => {
           localStorage.removeItem('token');
-          localStorage.removeItem('userID');
-          localStorage.removeItem('firstName');
-          localStorage.removeItem('lastName');
-          localStorage.removeItem('email');
-          localStorage.removeItem('username');
           this.router.navigate(["/"]);
         })
       ),

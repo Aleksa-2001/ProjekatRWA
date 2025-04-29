@@ -11,14 +11,16 @@ export interface AuthState {
 
 export const initialState: AuthState = {
   token: localStorage.getItem('token'),
-  user: localStorage.getItem('userID') ? { 
-    userID: parseInt(localStorage.getItem('userID') ?? '0'), 
-    firstName: localStorage.getItem('firstName') ?? '', 
-    lastName: localStorage.getItem('lastName') ?? '', 
-    email: localStorage.getItem('email') ?? '', 
-    username: localStorage.getItem('username') ?? '', 
-    //password: ''
-  } : null,
+  //user: localStorage.getItem('userID') ? { 
+  //  userID: parseInt(localStorage.getItem('userID') ?? '0'), 
+  //  admin: localStorage.getItem('admin') ? true : false,
+  //  firstName: localStorage.getItem('firstName') ?? '', 
+  //  lastName: localStorage.getItem('lastName') ?? '', 
+  //  email: localStorage.getItem('email') ?? '', 
+  //  username: localStorage.getItem('username') ?? '', 
+  //  //password: ''
+  //} : null,
+  user: null,
   error: null,
 };
 
@@ -29,6 +31,7 @@ export const authReducer = createReducer(
     token,
     user: { 
       userID: user.userID, 
+      admin: user.admin,
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
@@ -45,6 +48,19 @@ export const authReducer = createReducer(
     ...state,
     token: null,
     user: null,
+    error: null,
+  })),
+  on(AuthActions.getUserSuccess, (state, { user }) => ({
+    ...state,
+    user: { 
+      userID: user.userID, 
+      admin: user.admin,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      username: user.username, 
+      //password: '' 
+    },
     error: null,
   }))
 );

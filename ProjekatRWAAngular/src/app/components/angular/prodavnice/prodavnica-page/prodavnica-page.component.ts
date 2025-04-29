@@ -23,6 +23,7 @@ export class ProdavnicaPageComponent {
   constructor(private route: ActivatedRoute, private store: Store<AppState>) {
     this.prodavnicaID = Number(this.route.snapshot.paramMap.get('id'));
     this.store.dispatch(ProdavniceActions.setSelectedItemID({ prodavnicaID: this.prodavnicaID }))
+    this.store.dispatch(ProdavniceActions.loadSelectedItem({ selectedProdavnicaID: this.prodavnicaID }))
     this.prodavnica$ = this.store.select(selectSelectedProdavnica)
   }
 

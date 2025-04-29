@@ -5,12 +5,14 @@ import * as ProdavniceActions from "./prodavnica.actions"
 
 export interface ProdavniceState extends EntityState<Prodavnica> {
     selectedProdavnicaID: number
+    selectedProdavnica: Prodavnica | null
 }
 
 const adapter = createEntityAdapter<Prodavnica>();
 
 const initialState: ProdavniceState = adapter.getInitialState({
-    selectedProdavnicaID: -1
+    selectedProdavnicaID: -1,
+    selectedProdavnica: null
 })
 
 export const prodavnicaReducer = createReducer(
@@ -21,5 +23,9 @@ export const prodavnicaReducer = createReducer(
     on(ProdavniceActions.setSelectedItemID, (state, {prodavnicaID}) => ({
         ...state,
         selectedProdavnicaID: prodavnicaID
+    })),
+    on(ProdavniceActions.loadSelectedItemSuccess, (state, {selectedProdavnica}) => ({
+        ...state,
+        selectedProdavnica: selectedProdavnica
     }))
 )

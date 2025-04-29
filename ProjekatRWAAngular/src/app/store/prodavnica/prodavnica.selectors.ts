@@ -24,7 +24,9 @@ export const selectSelectedProdavnicaID = createSelector(
 )
 
 export const selectSelectedProdavnica = createSelector(
-    selectProdavnice,
-    selectSelectedProdavnicaID,
-    (prodavnice, selectedProdavnicaID) => prodavnice.find(prodavnica => prodavnica.id == selectedProdavnicaID) ?? null
+    //selectProdavnice,
+    //selectSelectedProdavnicaID,
+    //(prodavnice, selectedProdavnicaID) => prodavnice.find(prodavnica => prodavnica.id == selectedProdavnicaID) ?? null
+    selectProdavniceFeature,
+    (state: ProdavniceState) => state.selectedProdavnica
 )

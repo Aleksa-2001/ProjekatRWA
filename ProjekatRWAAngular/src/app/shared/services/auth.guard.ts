@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router, UrlTree } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, map, take } from 'rxjs';
-import { isAuthenticated } from '../../store/auth/auth.selectors';
+import { isAuthenticated, selectUser } from '../../store/auth/auth.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -37,6 +37,25 @@ export class AuthRedirectGuard implements CanActivate {
           return this.router.createUrlTree(['/']);
         }
         return true;
+      })
+    );
+  }
+}
+
+@Injectable({
+  providedIn: 'root',
+})
+export class RolesGuard implements CanActivate {
+  constructor(private store: Store, private router: Router) {}
+
+  canActivate(): Observable<boolean | UrlTree> {
+    return this.store.select(selectUser).pipe(
+      take(1),
+      map((user) => {
+        if (user.admin) {
+          return true;
+        }
+        return this.router.createUrlTree(['/ng']);
       })
     );
   }

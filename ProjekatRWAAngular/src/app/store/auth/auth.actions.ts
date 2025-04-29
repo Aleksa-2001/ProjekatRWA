@@ -14,11 +14,12 @@ export const loginSuccess = createAction(
     token: string; 
     user: { 
       userID: number, 
+      admin: boolean, 
       firstName: string, 
       lastName: string, 
       email: string, 
       username: string 
-    } 
+    }
   }>()
 );
 
@@ -32,3 +33,24 @@ export const loginFailure = createAction(
 export const logout = createAction(
   '[Auth] Logout'
 );
+
+export const getUser = createAction(
+  '[Auth] Select User',
+  props<{
+    token: string;
+  }>()
+)
+
+export const getUserSuccess = createAction(
+  '[Auth] Select User Success',
+  props<{
+    user: { 
+      userID: number, 
+      admin: boolean, 
+      firstName: string, 
+      lastName: string, 
+      email: string, 
+      username: string 
+    }
+  }>()
+)

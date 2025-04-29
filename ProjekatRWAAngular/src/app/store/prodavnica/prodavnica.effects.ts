@@ -4,6 +4,7 @@ import { ProdavnicaService } from "../../services/prodavnica.service"
 import * as ProdavniceActions from "./prodavnica.actions"
 import { of } from "rxjs"
 import { catchError, map, mergeMap } from "rxjs/operators"
+import { selectSelectedProdavnicaID } from "./prodavnica.selectors"
 
 @Injectable()
 export class ProdavniceEffects {
@@ -16,6 +17,18 @@ export class ProdavniceEffects {
             mergeMap(() => this.service.getProdavnice()
                 .pipe(
                     map((prodavnice) => (ProdavniceActions.loadItemsSuccess({prodavnice}))),
+                    catchError(() => of({ type: "Load error" }))
+                )
+            )
+        )
+    })
+
+    loadProdavnica$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ProdavniceActions.loadSelectedItem),
+            mergeMap(({ selectedProdavnicaID }) => this.service.getProdavnicaByID(selectedProdavnicaID)
+                .pipe(
+                    map((selectedProdavnica) => (ProdavniceActions.loadSelectedItemSuccess({selectedProdavnica}))),
                     catchError(() => of({ type: "Load error" }))
                 )
             )

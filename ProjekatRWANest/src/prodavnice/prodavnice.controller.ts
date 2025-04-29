@@ -7,12 +7,12 @@ export class ProdavniceController {
     constructor(private service: ProdavniceService) { }
 
     @Get()
-    public getKomponente() {
+    public getProdavnice() {
         return this.service.getProdavnice()
     }
 
     @Get(':id')
-    public getkomponentaByID(@Param('id', ParseIntPipe) prodavnicaID: number) {
+    public getProdavnicaByID(@Param('id', ParseIntPipe) prodavnicaID: number) {
         return this.service.getProdavnicaByID(prodavnicaID)
     }
 

@@ -16,6 +16,10 @@ import { ProdavniceService } from './prodavnice/prodavnice.service';
     ConfigModule.forRoot({ isGlobal: true })
   ],
   controllers: [AppController, KomponenteController, ProdavniceController],
-  providers: [AppService, KomponenteService, ProdavniceService],
+  providers: [
+    AppService, 
+    KomponenteService, 
+    ProdavniceService
+  ],
 })
 export class AppModule {}
