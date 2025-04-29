@@ -1,19 +1,28 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, throwError } from 'rxjs';
+import { catchError, interval, Observable, throwError, map } from 'rxjs';
 import { User } from '../../models/user';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private jwtHelper: JwtHelperService) { }
 
   login(username: string, password: string) {
     return this.httpClient
       .post<{ access_token: string }>("http://localhost:3000/" + "auth/login", { username, password })
       .pipe(catchError(errorHandler))
+  }
+
+  isValid(token: string) {
+    return !this.jwtHelper.isTokenExpired(token)
+  }
+
+  logout() {
+    localStorage.removeItem('token');
   }
 
   getProfile(token: string) {
@@ -29,9 +38,7 @@ export class UsersService {
       .pipe(catchError(errorHandler))
   }
 
-  logout() {
-    localStorage.removeItem('token');
-  }
+  
 
   getToken(): string | null {
     return localStorage.getItem('token');

@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection, isDevMode } from '@angular/core';
+import { ApplicationConfig, provideZoneChangeDetection, isDevMode, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -12,7 +12,14 @@ import { komponentaReducer } from './store/komponenta/komponenta.reducer';
 import { authReducer } from './store/auth/auth.reducer';
 import { prodavnicaReducer } from './store/prodavnica/prodavnica.reducer';
 import { ProdavniceEffects } from './store/prodavnica/prodavnica.effects';
+import { JwtModule, JwtModuleOptions } from '@auth0/angular-jwt'
 
+const jwtOptions: JwtModuleOptions = {
+  config: {
+    tokenGetter: () => localStorage.getItem('token'),
+    allowedDomains: ["http://localhost:4200"],
+  }
+}
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -29,6 +36,7 @@ export const appConfig: ApplicationConfig = {
       AuthEffects, 
       ProdavniceEffects, 
       KomponenteEffects
-    ])
+    ]),
+    importProvidersFrom(JwtModule.forRoot(jwtOptions)),
   ]
 };

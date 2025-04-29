@@ -50,6 +50,25 @@ export const authReducer = createReducer(
     user: null,
     error: null,
   })),
+  on(AuthActions.tokenIsValid, (state, { user }) => ({
+    ...state,
+    user: { 
+      userID: user.userID, 
+      admin: user.admin,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      username: user.username, 
+      //password: '' 
+    },
+    error: null
+  })),
+  on(AuthActions.tokenIsInvalid, (state, { error }) => ({
+    ...state,
+    token: null,
+    user: null,
+    error
+  })),
   on(AuthActions.getUserSuccess, (state, { user }) => ({
     ...state,
     user: { 

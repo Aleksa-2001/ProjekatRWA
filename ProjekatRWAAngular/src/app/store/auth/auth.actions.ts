@@ -34,6 +34,34 @@ export const logout = createAction(
   '[Auth] Logout'
 );
 
+export const validateToken = createAction(
+  '[Auth] Validate Token',
+  props<{
+    token: string
+  }>()
+)
+
+export const tokenIsValid = createAction(
+  '[Auth] Token Is Valid',
+  props<{
+    user: { 
+      userID: number, 
+      admin: boolean, 
+      firstName: string, 
+      lastName: string, 
+      email: string, 
+      username: string 
+    }
+  }>()
+)
+
+export const tokenIsInvalid = createAction(
+  '[Auth] Token Is Invalid',
+  props<{ 
+    error: any 
+  }>()
+)
+
 export const getUser = createAction(
   '[Auth] Select User',
   props<{
