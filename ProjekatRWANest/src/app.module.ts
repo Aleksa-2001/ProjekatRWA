@@ -8,6 +8,8 @@ import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { ProdavniceController } from './prodavnice/prodavnice.controller';
 import { ProdavniceService } from './prodavnice/prodavnice.service';
+import { ProizvodiController } from './proizvodi/proizvodi.controller';
+import { ProizvodiService } from './proizvodi/proizvodi.service';
 
 @Module({
   imports: [
@@ -15,11 +17,11 @@ import { ProdavniceService } from './prodavnice/prodavnice.service';
     UsersModule,
     ConfigModule.forRoot({ isGlobal: true })
   ],
-  controllers: [AppController, KomponenteController, ProdavniceController],
+  controllers: [AppController, KomponenteController, ProdavniceController, ProizvodiController],
   providers: [
     AppService, 
     KomponenteService, 
-    ProdavniceService
+    ProdavniceService, ProizvodiService
   ],
 })
 export class AppModule {}

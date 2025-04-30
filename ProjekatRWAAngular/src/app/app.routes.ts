@@ -8,6 +8,7 @@ import { AuthGuard, AuthRedirectGuard, RolesGuard, ValidateGuard } from './share
 import { RegisterComponent } from './shared/components/register/register.component';
 import { ProfileComponent } from './shared/components/profile/profile.component';
 import { ProdavnicaPageComponent } from './components/angular/prodavnice/prodavnica-page/prodavnica-page.component';
+import { ProizvodPageComponent } from './components/angular/proizvodi/proizvod-page/proizvod-page.component';
 
 export const routes: Routes = [
     { path: "", component: HomeComponent, pathMatch: 'full' },
@@ -15,7 +16,8 @@ export const routes: Routes = [
     { path: "rxjs", component: RxjsComponent },
 
     { path: "ng", component: AngularComponent, canActivate: [AuthGuard, ValidateGuard] },
-    { path: "ng/prodavnica/:id", component: ProdavnicaPageComponent, canActivate: [AuthGuard, /*RolesGuard*/] },
+    { path: "ng/prodavnica/:id", component: ProdavnicaPageComponent, canActivate: [AuthGuard, ValidateGuard, /*RolesGuard*/] },
+    { path: "ng/proizvod/:id", component: ProizvodPageComponent, canActivate: [AuthGuard, ValidateGuard] },
 
     { path: "login", component: AuthComponent, canActivate: [AuthRedirectGuard] },
     { path: "register", component: RegisterComponent, canActivate: [AuthRedirectGuard] },

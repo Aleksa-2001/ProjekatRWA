@@ -7,10 +7,11 @@ import { selectSelectedProdavnica } from '../../../../store/prodavnica/prodavnic
 import { ActivatedRoute } from '@angular/router';
 import * as ProdavniceActions from '../../../../store/prodavnica/prodavnica.actions'
 import { CommonModule, NgIf } from '@angular/common';
+import { ProizvodiComponent } from "../../proizvodi/proizvodi.component";
 
 @Component({
   selector: 'app-prodavnica-page',
-  imports: [NgIf, CommonModule],
+  imports: [NgIf, CommonModule, ProizvodiComponent],
   templateUrl: './prodavnica-page.component.html',
   styleUrl: './prodavnica-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

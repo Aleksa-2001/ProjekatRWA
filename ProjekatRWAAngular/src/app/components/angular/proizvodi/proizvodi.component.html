@@ -1,1 +1,5 @@
-<p>proizvodi works!</p>,
+<div class="row">
+    <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3" *ngFor="let proizvod of proizvodi | async">
+        <app-proizvod-item [proizvod]="proizvod"></app-proizvod-item>
+    </div>
+</div>

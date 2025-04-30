@@ -6,13 +6,13 @@ import { provideStore } from '@ngrx/store';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideEffects } from '@ngrx/effects';
-import { KomponenteEffects } from './store/komponenta/komponenta.effects';
 import { AuthEffects } from './store/auth/auth.effects';
-import { komponentaReducer } from './store/komponenta/komponenta.reducer';
 import { authReducer } from './store/auth/auth.reducer';
 import { prodavnicaReducer } from './store/prodavnica/prodavnica.reducer';
 import { ProdavniceEffects } from './store/prodavnica/prodavnica.effects';
 import { JwtModule, JwtModuleOptions } from '@auth0/angular-jwt'
+import { ProizvodiEffects } from './store/proizvod/proizvod.effects';
+import { proizvodReducer } from './store/proizvod/proizvod.reducer';
 
 const jwtOptions: JwtModuleOptions = {
   config: {
@@ -29,13 +29,13 @@ export const appConfig: ApplicationConfig = {
     provideStore({ 
       auth: authReducer, 
       prodavnice: prodavnicaReducer, 
-      komponente: komponentaReducer 
+      proizvodi: proizvodReducer
     }), 
     provideStoreDevtools({ maxAge: 25 /*, logOnly: !isDevMode()*/ }),
     provideEffects([
       AuthEffects, 
       ProdavniceEffects, 
-      KomponenteEffects
+      ProizvodiEffects
     ]),
     importProvidersFrom(JwtModule.forRoot(jwtOptions)),
   ]

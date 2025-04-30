@@ -1,0 +1,7 @@
+<div class="container mt-3">
+    <h1>Proizvod</h1>
+    <div *ngIf="proizvod$ | async as proizvod">
+        <img class="mb-2" src={{proizvod.slika}} alt={{proizvod.slika}}/>
+        <h3 class="m-0">{{proizvod.proizvodjac}} {{proizvod.naziv}}</h3>
+    </div>
+</div>

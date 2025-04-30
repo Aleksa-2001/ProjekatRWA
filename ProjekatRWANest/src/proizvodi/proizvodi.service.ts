@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class KomponenteService {
+export class ProizvodiService {
     lista = [
         {
             "id": 1,
@@ -54,20 +54,15 @@ export class KomponenteService {
         return this.lista
     }
 
-    public getKomponente(prodavnicaID: number) {
-        const komponente = this.lista.filter(komponenta => komponenta.prodavnica.id == prodavnicaID)
-        if (komponente.length > 0) return komponente
+    public getProizvodi(prodavnicaID: number) {
+        const proizvodi = this.lista.filter(proizvod => proizvod.prodavnica.id == prodavnicaID)
+        if (proizvodi.length > 0) return proizvodi
         else return `Prodavnica sa ID-jem ${prodavnicaID} nema unete proizvode`
     }
 
-    public getKomponentaByID(prodavnicaID: number, komponentaID: number) {
-        const komponente = this.lista.filter(komponenta => komponenta.prodavnica.id == prodavnicaID)
-        if (komponente.length > 0) {
-            const komponenta = komponente.find(komponenta => komponenta.id === komponentaID)
-            if (komponenta) return komponenta
-            else return `Komponenta sa ID-jem ${komponentaID} ne postoji u ovoj prodavnici`
-        }
-        else return `Prodavnica sa ID-jem ${prodavnicaID} nema unete proizvode`
+    public getProizvodByID(proizvodID: number) {
+        const proizvod = this.lista.find(proizvod => proizvod.id === proizvodID)
+        return proizvod ?? `Komponenta sa ID-jem ${proizvodID} ne postoji u ovoj prodavnici`
     }
-
+    
 }
