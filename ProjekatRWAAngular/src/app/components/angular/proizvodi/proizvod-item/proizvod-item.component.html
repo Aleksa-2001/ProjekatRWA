@@ -1,4 +1,9 @@
-<a [routerLink]="['/ng/proizvod', proizvod.id]">
-    <img class="mb-2" src={{proizvod.slika}} alt={{proizvod.slika}}/>
-    <h3 class="m-0">{{proizvod.proizvodjac}} {{proizvod.naziv}}</h3>
+<a class="text-black" [routerLink]="['/ng/proizvod', proizvod.id]">
+    <div class="item d-flex justify-content-between flex-column flex-lg-row">
+        <img class="w-100" src={{proizvod.slika}} alt={{proizvod.slika}}/>
+        <div class="info w-100 d-flex flex-column">
+            <h4 class="m-0">{{proizvod.proizvodjac}} {{proizvod.naziv}}</h4>
+            <h6 class="m-0">Cena: {{proizvod.cena}}RSD</h6>
+        </div>
+    </div>
 </a>

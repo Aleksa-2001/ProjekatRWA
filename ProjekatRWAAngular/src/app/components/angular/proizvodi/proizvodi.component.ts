@@ -1,4 +1,4 @@
-import { CommonModule, NgFor } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ProizvodItemComponent } from './proizvod-item/proizvod-item.component';
 import { Observable, of } from 'rxjs';
@@ -8,24 +8,24 @@ import { AppState } from '../../../store/app-state';
 import * as ProizvodiActions from '../../../store/proizvod/proizvod.actions'
 import { selectProizvodi } from '../../../store/proizvod/proizvod.selectors';
 import { ActivatedRoute } from '@angular/router';
+import { NotFoundComponent } from "../../../shared/components/not-found/not-found.component";
 
 @Component({
   selector: 'app-proizvodi',
-  imports: [NgFor, CommonModule, ProizvodItemComponent],
+  imports: [NgIf, NgFor, CommonModule, ProizvodItemComponent, NotFoundComponent],
   templateUrl: './proizvodi.component.html',
   styleUrl: './proizvodi.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProizvodiComponent { 
 
-  //@Input() prodavnicaID!: number
   prodavnicaID: number
-  proizvodi: Observable<readonly Proizvod[]> = of([])
+  proizvodi$: Observable<readonly Proizvod[]> = of([])
   
   constructor(private route: ActivatedRoute, private store: Store<AppState>) { 
     this.prodavnicaID = Number(this.route.snapshot.paramMap.get('id'));
     this.store.dispatch(ProizvodiActions.loadItems({ prodavnicaID: this.prodavnicaID }))
-    this.proizvodi = this.store.select(selectProizvodi)
+    this.proizvodi$ = this.store.select(selectProizvodi)
   }
 
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ProizvodiService {
@@ -10,13 +10,13 @@ export class ProizvodiService {
             "naziv": "Ryzen 3 3200G",
             "cena": 21000,
             "opis": "AMD Procesor sa integrisanom grafičkom karticom", 
-            "slika": "images/ng/komponente/3200g.jpg",
+            "slika": "images/ng/proizvodi/komponente/3200g.jpg",
             "prodavnica": {
                 'id': 1,
                 'naziv': 'GIGATRON',
                 'adresa': 'Delta Planet Niš',
                 'opis': '',
-                'slika': '',
+                'slika': 'images/ng/prodavnice/gigatron-delta-nis.jpg',
             },
             "tipKomponente": {
                 "id": 1,
@@ -33,13 +33,13 @@ export class ProizvodiService {
             "naziv": "GeForce RTX 4090",
             "cena": 99999,
             "opis": "NVIDIA grafička kartica", 
-            "slika": "images/ng/komponente/geforce-rtx-4090.jpg",
+            "slika": "images/ng/proizvodi/komponente/geforce-rtx-4090.jpg",
             "prodavnica": {
-                'id': 2,
-                'naziv': 'Tehnomanija',
-                'adresa': 'Forum Shopping centar',
+                'id': 1,
+                'naziv': 'GIGATRON',
+                'adresa': 'Delta Planet Niš',
                 'opis': '',
-                'slika': '',
+                'slika': 'images/ng/prodavnice/gigatron-delta-nis.jpg',
             },
             "tipKomponente": {
                 "id": 2,
@@ -47,6 +47,30 @@ export class ProizvodiService {
             },
             "frekvencija": 2.8,
             "VRAM": 16
+        },
+        {
+            "id": 3,
+            "tip": 2,
+            "proizvodjac": "Corasir",
+            "naziv": "Vengeance LPX 16GB (2 x 8GB)",
+            "cena": 9999,
+            "opis": "RAM memorija DDR4 3600MHz CL18", 
+            "slika": "images/ng/proizvodi/komponente/corsair-ram-16gb.png",
+            "prodavnica": {
+                'id': 2,
+                'naziv': 'Tehnomanija',
+                'adresa': 'Nikole Pašića 28a Niš',
+                'opis': '',
+                'slika': 'images/ng/prodavnice/tehnomanija-nikole-pasica-nis.jpg',
+            },
+            "tipKomponente": {
+                "id": 3,
+                "naziv": "RAM"
+            },
+            "tipMemorije": "DDR4", 
+            "brojRAMModula": 2, 
+            "velicina": 16,
+            "frekvencija": 3600
         }
     ]
 
@@ -55,14 +79,13 @@ export class ProizvodiService {
     }
 
     public getProizvodi(prodavnicaID: number) {
-        const proizvodi = this.lista.filter(proizvod => proizvod.prodavnica.id == prodavnicaID)
-        if (proizvodi.length > 0) return proizvodi
-        else return `Prodavnica sa ID-jem ${prodavnicaID} nema unete proizvode`
+        return this.lista.filter(proizvod => proizvod.prodavnica.id == prodavnicaID)
     }
 
     public getProizvodByID(proizvodID: number) {
         const proizvod = this.lista.find(proizvod => proizvod.id === proizvodID)
-        return proizvod ?? `Komponenta sa ID-jem ${proizvodID} ne postoji u ovoj prodavnici`
+        if (proizvod) return proizvod
+        else throw new HttpException(`Proizvod sa ID-jem ${proizvodID} ne postoji!`, HttpStatus.NOT_FOUND) 
     }
     
 }

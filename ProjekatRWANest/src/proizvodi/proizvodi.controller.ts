@@ -1,19 +1,21 @@
 import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { ProizvodiService } from './proizvodi.service';
+import { ProdavniceService } from 'src/prodavnice/prodavnice.service';
 
 @Controller()
 export class ProizvodiController {
 
-    constructor(private service: ProizvodiService) { }
+    constructor(private service: ProizvodiService, private prodavniceService: ProdavniceService) { }
     
-    @Get()
+    @Get('proizvodi')
     getAll() {
         return this.service.getAll()
     }
 
     @Get('proizvodi/:prodavnicaID')
     public getKomponente(@Param('prodavnicaID', ParseIntPipe) prodavnicaID: number) {
-        return this.service.getProizvodi(prodavnicaID)
+        const prodavnica = this.prodavniceService.getProdavnicaByID(prodavnicaID)
+        return this.service.getProizvodi(prodavnica.id)
     }
 
     @Get('proizvod/:proizvodID')

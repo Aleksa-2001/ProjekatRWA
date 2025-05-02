@@ -18,7 +18,7 @@ export class ProdavnicaService {
 
   getProdavnicaByID(prodavnicaID: number) {
     return this.httpClient
-      .get<Prodavnica>("http://localhost:3000/" + `prodavnice/${prodavnicaID}`)
+      .get<Prodavnica>("http://localhost:3000/" + `prodavnica/${prodavnicaID}`)
       .pipe(catchError(errorHandler))
   }
   

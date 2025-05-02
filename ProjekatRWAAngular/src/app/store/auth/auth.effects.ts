@@ -73,7 +73,7 @@ export class AuthEffects {
           })
         }
       }),
-      catchError(() => of({ type: "Validate Token Error" }))
+      catchError(() => of({ type: "[Auth] Validate Token Error" }))
     )
   )
 
@@ -117,7 +117,7 @@ export class AuthEffects {
                 username: user.username
               }
             })),
-            catchError(() => of({ type: "Get User Error" }))
+            catchError(() => of({ type: "[Auth] Get User Error" }))
           )
         )
       )

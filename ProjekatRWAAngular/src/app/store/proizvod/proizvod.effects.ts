@@ -18,7 +18,7 @@ export class ProizvodiEffects {
             mergeMap(({ prodavnicaID }) => this.service.getProizvodi(prodavnicaID)
                 .pipe(
                     map((proizvodi) => (ProizvodiActions.loadItemsSuccess({proizvodi}))),
-                    catchError(() => of({ type: "Load error" }))
+                    catchError(() => of({ type: "[Proizvod] Load error" }))
                 )
             )
         )
@@ -30,7 +30,7 @@ export class ProizvodiEffects {
             mergeMap(({ selectedProizvodID }) => this.service.getProizvodByID(selectedProizvodID)
                 .pipe(
                     map((selectedProizvod) => (ProizvodiActions.loadSelectedItemSuccess({selectedProizvod}))),
-                    catchError(() => of({ type: "Load error" }))
+                    catchError(() => of({ type: "[Proizvod] Load item error" }))
                 )
             )
         )

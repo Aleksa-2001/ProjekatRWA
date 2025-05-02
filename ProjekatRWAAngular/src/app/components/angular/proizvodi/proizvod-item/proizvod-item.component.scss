@@ -1,3 +1,32 @@
 :host {
   display: block;
 }
+
+img {
+  max-width: 50%;
+  aspect-ratio: 1.333;
+  object-fit: cover;
+}
+
+a {
+  text-decoration: none;
+}
+
+.item {
+  row-gap: 20px;
+  column-gap: 20px;
+}
+
+.info {
+  max-width: 50%;
+}
+
+@media screen and (max-width: 991px) {
+  img {
+    max-width: 100%;
+  }
+
+  .info {
+    max-width: 100%;
+  }
+}

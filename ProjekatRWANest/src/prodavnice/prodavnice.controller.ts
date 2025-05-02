@@ -1,17 +1,17 @@
 import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { ProdavniceService } from './prodavnice.service';
 
-@Controller('prodavnice')
+@Controller()
 export class ProdavniceController {
 
     constructor(private service: ProdavniceService) { }
 
-    @Get()
+    @Get('prodavnice')
     public getProdavnice() {
         return this.service.getProdavnice()
     }
 
-    @Get(':id')
+    @Get('prodavnica/:id')
     public getProdavnicaByID(@Param('id', ParseIntPipe) prodavnicaID: number) {
         return this.service.getProdavnicaByID(prodavnicaID)
     }
