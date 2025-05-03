@@ -2,12 +2,6 @@
   display: block;
 }
 
-img {
-  max-width: 50%;
-  aspect-ratio: 1.333;
-  object-fit: cover;
-}
-
 a {
   text-decoration: none;
 }
@@ -19,6 +13,12 @@ a {
 
 .info {
   max-width: 50%;
+}
+
+img {
+  max-width: 50%;
+  aspect-ratio: 1.333;
+  object-fit: cover;
 }
 
 @media screen and (max-width: 991px) {

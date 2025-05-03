@@ -13,7 +13,7 @@ export abstract class RacunarskaKomponenta extends Proizvod {
         opis: string, 
         slika: string, 
         prodavnica: Prodavnica, 
-        tipKomponente: TipKomponente
+        public tipKomponente: TipKomponente
     ) {
         super(id, tip, proizvodjac, naziv, cena, opis, slika, prodavnica)
         tipKomponente

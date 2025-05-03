@@ -1,8 +1,35 @@
-<div *ngIf="proizvod$ | async as proizvod" class="container mt-3">
-    <a [routerLink]="['/ng/prodavnica', proizvod.prodavnica.id]" routerLinkActive="router-link-active">{{proizvod.prodavnica.naziv}}</a>
-    <h1>{{proizvod.proizvodjac}} {{proizvod.naziv}}</h1>
-    <img class="mb-2" src={{proizvod.slika}} alt={{proizvod.slika}}/>
-    <h3 class="m-0">Cena: {{proizvod.cena}}RSD</h3>
+<div *ngIf="proizvod$ | async as proizvod" class="container my-3">
+    <h1>Proizvod</h1>
+    
+    <div class="row mb-3">
+        <img class="col-12 col-md-6 col-xl-5" src={{proizvod.slika}} alt={{proizvod.slika}}/>
+        <div class="col-12 col-md-6 col-xl-7">
+            <h2>{{proizvod.proizvodjac}} {{proizvod.naziv}}</h2>
+            <h3 class="m-0">
+                Tip proizvoda:
+                <span [ngSwitch]="proizvod.tip">
+                    <span *ngSwitchCase="1">Računar</span>
+                    <span *ngSwitchCase="2">Računarska komponenta</span>
+                    <span *ngSwitchDefault>Tip proizvoda nije pronadjen!</span>
+                </span>
+            </h3>
+            <div [ngSwitch]="proizvod.tip">
+                <div *ngSwitchCase="1">
+                    Računar
+                </div>
+                <div *ngSwitchCase="2">
+                    <app-komponenta-page></app-komponenta-page>
+                </div>
+            </div>
+            <hr>
+            <h2 class="m-0">Cena: {{proizvod.cena}}RSD</h2>
+        </div>
+    </div>
+
+    <h3>Opis proizvoda</h3>
+    <p>{{proizvod.opis ? proizvod.opis : "Nema unetog opisa"}}</p>
+
+    <a class="text-primary" [routerLink]="['/ng/prodavnica', proizvod.prodavnica.id]" routerLinkActive="router-link-active">{{proizvod.prodavnica.naziv}}</a>
 </div>
 
 <div *ngIf="!(proizvod$ | async)">

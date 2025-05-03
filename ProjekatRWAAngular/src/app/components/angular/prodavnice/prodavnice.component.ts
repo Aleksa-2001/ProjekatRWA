@@ -17,11 +17,11 @@ import * as ProdavniceActions from '../../../store/prodavnica/prodavnica.actions
 })
 export class ProdavniceComponent { 
 
-  prodavnice: Observable<readonly Prodavnica[]> = of([])
+  prodavnice$: Observable<readonly Prodavnica[]> = of([])
 
   constructor(private store: Store<AppState>) { 
     this.store.dispatch(ProdavniceActions.loadItems())
-    this.prodavnice = this.store.select(selectProdavnice)
+    this.prodavnice$ = this.store.select(selectProdavnice)
   }
 
 }

@@ -11,6 +11,6 @@ import { RouterModule } from '@angular/router';
 })
 export class ProdavnicaItemComponent { 
 
-  @Input() prodavnica?: Prodavnica
+  @Input() prodavnica!: Prodavnica
 
 }

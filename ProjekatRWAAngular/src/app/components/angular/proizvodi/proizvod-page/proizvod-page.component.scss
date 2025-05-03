@@ -2,9 +2,17 @@
   display: block;
 }
 
+.row {
+  row-gap: 20px;
+}
+
 img {
-  width: 100%;
-  max-width: 400px;
   aspect-ratio: 1.333;
   object-fit: cover;
+}
+
+@media screen and (max-width: 767px) {
+  img {
+    max-width: 100%;
+  }
 }

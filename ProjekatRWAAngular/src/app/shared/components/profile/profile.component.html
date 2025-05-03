@@ -1,4 +1,4 @@
-<div class="container mt-3">
+<div class="container my-3">
     <h1>Profil</h1>
     <div *ngIf="user$ | async as user">
         <h4 class="m-0">{{user.firstName}} {{user.lastName}} ({{user.username}})<span *ngIf="user.admin"> - <span class="text-danger">ADMINISTRATOR</span></span></h4>

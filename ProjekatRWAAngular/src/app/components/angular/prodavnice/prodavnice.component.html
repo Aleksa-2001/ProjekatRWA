@@ -1,5 +1,5 @@
-<div class="row">
-    <div class="col-12 col-sm-6 col-lg-4 col-xl-3 mb-3" *ngFor="let prodavnica of prodavnice | async">
+<div *ngIf="prodavnice$ | async as prodavnice" class="row">
+    <div class="col-12 col-sm-6 col-lg-4 col-xl-3" *ngFor="let prodavnica of prodavnice">
         <app-prodavnica-item [prodavnica]="prodavnica"></app-prodavnica-item>
     </div>
 </div>

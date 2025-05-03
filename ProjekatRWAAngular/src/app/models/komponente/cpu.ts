@@ -14,8 +14,6 @@ export class CPU extends RacunarskaKomponenta {
         slika: string, 
         prodavnica: Prodavnica, 
         tipKomponente: TipKomponente, 
-        public snaga: number, 
-        public modularno: boolean, 
         public socket: number, 
         public frekvencija: number, 
         public brojJezgara: number, 

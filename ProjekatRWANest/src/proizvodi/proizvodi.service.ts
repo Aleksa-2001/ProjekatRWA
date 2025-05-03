@@ -22,6 +22,7 @@ export class ProizvodiService {
                 "id": 1,
                 "naziv": "Procesor"
             },
+            "socket": "AM4",
             "frekvencija": 3.6,
             "brojJezgara": 4,
             "brojNiti": 4

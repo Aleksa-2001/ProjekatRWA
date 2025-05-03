@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { MaticnaPloca } from '../../../../models/komponente/maticna-ploca';
+import { MaticnaPloca } from '../../../../../../models/komponente/maticna-ploca';
 
 @Component({
   selector: 'app-maticna-ploca',

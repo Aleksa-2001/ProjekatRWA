@@ -8,11 +8,10 @@ import { AppState } from '../../../store/app-state';
 import * as ProizvodiActions from '../../../store/proizvod/proizvod.actions'
 import { selectProizvodi } from '../../../store/proizvod/proizvod.selectors';
 import { ActivatedRoute } from '@angular/router';
-import { NotFoundComponent } from "../../../shared/components/not-found/not-found.component";
 
 @Component({
   selector: 'app-proizvodi',
-  imports: [NgIf, NgFor, CommonModule, ProizvodItemComponent, NotFoundComponent],
+  imports: [NgIf, NgFor, CommonModule, ProizvodItemComponent],
   templateUrl: './proizvodi.component.html',
   styleUrl: './proizvodi.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

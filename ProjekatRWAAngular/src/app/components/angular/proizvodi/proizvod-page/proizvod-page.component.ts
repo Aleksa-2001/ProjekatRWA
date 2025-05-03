@@ -1,17 +1,27 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { map, Observable, of, take, tap } from 'rxjs';
 import { Proizvod } from '../../../../models/proizvod';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app-state';
-import { CommonModule, NgIf } from '@angular/common';
+import { CommonModule, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import * as ProizvodiActions from '../../../../store/proizvod/proizvod.actions'
 import { selectSelectedProizvod } from '../../../../store/proizvod/proizvod.selectors';
 import { NotFoundComponent } from "../../../../shared/components/not-found/not-found.component";
+import { KomponentaPageComponent } from "./komponenta-page/komponenta-page.component";
 
 @Component({
   selector: 'app-proizvod-page',
-  imports: [NgIf, CommonModule, RouterModule, NotFoundComponent],
+  imports: [
+    NgIf, 
+    NgSwitch, 
+    NgSwitchCase, 
+    NgSwitchDefault, 
+    CommonModule, 
+    RouterModule, 
+    KomponentaPageComponent, 
+    NotFoundComponent
+  ],
   templateUrl: './proizvod-page.component.html',
   styleUrl: './proizvod-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

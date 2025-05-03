@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Skladiste } from '../../../../models/komponente/skladiste';
+import { Skladiste } from '../../../../../../models/komponente/skladiste';
 
 @Component({
   selector: 'app-skladiste',

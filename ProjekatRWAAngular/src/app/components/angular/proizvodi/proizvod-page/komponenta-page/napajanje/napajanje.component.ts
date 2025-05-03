@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Napajanje } from '../../../../models/komponente/napajanje';
+import { Napajanje } from '../../../../../../models/komponente/napajanje';
 
 @Component({
   selector: 'app-napajanje',
