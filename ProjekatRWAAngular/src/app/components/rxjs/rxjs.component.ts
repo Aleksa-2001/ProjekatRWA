@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-rxjs',
@@ -7,8 +8,10 @@ import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
   styleUrl: './rxjs.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RxjsComponent implements OnInit {
+export class RxjsComponent {
 
-  ngOnInit(): void { }
+  constructor(private title: Title) {
+    this.title.setTitle("RxJS - ProjekatRWA")
+  }
 
 }

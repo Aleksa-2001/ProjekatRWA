@@ -1,14 +1,15 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { map, Observable, of, take } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { filter, Observable, of, take, tap } from 'rxjs';
 import { Prodavnica } from '../../../../models/prodavnica';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app-state';
 import { selectSelectedProdavnica } from '../../../../store/prodavnica/prodavnica.selectors';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import * as ProdavniceActions from '../../../../store/prodavnica/prodavnica.actions'
 import { CommonModule, NgIf } from '@angular/common';
 import { ProizvodiComponent } from "../../proizvodi/proizvodi.component";
 import { NotFoundComponent } from "../../../../shared/components/not-found/not-found.component";
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-prodavnica-page',
@@ -17,16 +18,28 @@ import { NotFoundComponent } from "../../../../shared/components/not-found/not-f
   styleUrl: './prodavnica-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProdavnicaPageComponent { 
+export class ProdavnicaPageComponent implements OnInit, OnDestroy { 
   
   prodavnicaID!: number
   prodavnica$: Observable<Prodavnica | null> = of()
 
-  constructor(private route: ActivatedRoute, private store: Store<AppState>, private router: Router) {
+  constructor(private title: Title, private route: ActivatedRoute, private store: Store<AppState>) { }
+
+  ngOnInit(): void {
     this.prodavnicaID = Number(this.route.snapshot.paramMap.get('id'));
     this.store.dispatch(ProdavniceActions.setSelectedItemID({ prodavnicaID: this.prodavnicaID }))
     this.store.dispatch(ProdavniceActions.loadSelectedItem({ selectedProdavnicaID: this.prodavnicaID }))
     this.prodavnica$ = this.store.select(selectSelectedProdavnica)
+
+    this.prodavnica$.pipe(
+      filter(prodavnica => !!prodavnica),
+      take(1),
+      tap(prodavnica => this.title.setTitle(`${prodavnica.naziv} - ProjekatRWA`))
+    ).subscribe()
+  }
+
+  ngOnDestroy(): void {
+    this.store.dispatch(ProdavniceActions.deselectSelectedItem())
   }
 
   protected loadBackground(prodavnica: Prodavnica) {

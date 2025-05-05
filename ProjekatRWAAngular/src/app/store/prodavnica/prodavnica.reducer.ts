@@ -27,5 +27,10 @@ export const prodavnicaReducer = createReducer(
     on(ProdavniceActions.loadSelectedItemSuccess, (state, {selectedProdavnica}) => ({
         ...state,
         selectedProdavnica: selectedProdavnica
+    })),
+    on(ProdavniceActions.deselectSelectedItem, (state) => ({
+        ...state,
+        selectedProdavnicaID: -1,
+        selectedProdavnica: null
     }))
 )

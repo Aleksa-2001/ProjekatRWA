@@ -7,6 +7,7 @@ import { selectToken, selectError } from '../../../store/auth/auth.selectors';
 import { Observable } from 'rxjs';
 import { CommonModule, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-auth',
@@ -20,7 +21,9 @@ export class AuthComponent {
   token$: Observable<string | null>
   error$: Observable<any>
 
-  constructor(private fb: FormBuilder, private store: Store<AppState>) {
+  constructor(private title: Title, private fb: FormBuilder, private store: Store<AppState>) {
+    this.title.setTitle("Prijava - ProjekatRWA")
+
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]

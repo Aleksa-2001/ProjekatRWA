@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -8,8 +9,10 @@ import { RouterLink } from '@angular/router';
   styleUrl: './not-found.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NotFoundComponent implements OnInit {
+export class NotFoundComponent {
 
-  ngOnInit(): void { }
+  constructor(private title: Title) {
+    this.title.setTitle("Error 404 - ProjekatRWA")
+  }
 
 }

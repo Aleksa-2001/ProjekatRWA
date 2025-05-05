@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app-state';
 import { NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,9 @@ export class RegisterComponent {
   registerForm: FormGroup
   formData: any
 
-  constructor(private fb: FormBuilder, private store: Store<AppState>) {
+  constructor(private title: Title, private fb: FormBuilder, private store: Store<AppState>) {
+    this.title.setTitle("Registracija - ProjekatRWA")
+    
     this.registerForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],

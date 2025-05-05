@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
 import { ProdavniceComponent } from "./prodavnice/prodavnice.component";
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-angular',
@@ -9,5 +10,9 @@ import { ProdavniceComponent } from "./prodavnice/prodavnice.component";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AngularComponent {
+
+  constructor(private title: Title) {
+    this.title.setTitle("Angular - ProjekatRWA")
+  }
 
 }

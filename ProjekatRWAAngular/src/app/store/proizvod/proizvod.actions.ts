@@ -36,6 +36,10 @@ export const loadSelectedItemSuccess = createAction(
     }>()
 )
 
+export const deselectSelectedItem = createAction(
+    "[Proizvod] Deselektuj proizvod"
+)
+
 export const setItem = createAction(
     "[Proizvod] Promeni cenu (test)",
     props<{
