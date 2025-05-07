@@ -7,7 +7,7 @@ export class ProdavniceService {
             'id': 1,
             'naziv': 'GIGATRON',
             'adresa': 'Delta Planet Niš',
-            'opis': '',
+            'opis': 'GIGATRON prodavnica na prvom spratu tržnog centra Delta Planet u Nišu',
             'slika': 'images/ng/prodavnice/gigatron-delta-nis.jpg',
         },
         {

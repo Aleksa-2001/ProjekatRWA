@@ -13,5 +13,10 @@
 
 <div class="container my-3">
     <h1>Prodavnice</h1>
+    <div *ngIf="isAdmin$ | async" class="mb-3">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDialog">Dodaj prodavnicu</button>
+    </div>
     <app-prodavnice></app-prodavnice>
 </div>
+
+<app-dialog *ngIf="isAdmin$ | async" [text]="'Dodaj prodavnicu'"></app-dialog>

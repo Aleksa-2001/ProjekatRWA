@@ -1,0 +1,5 @@
+<div [ngSwitch]="text">
+    <app-dodaj-prodavnicu-dialog *ngSwitchCase="'Dodaj prodavnicu'" [title]="text"></app-dodaj-prodavnicu-dialog>
+    <app-dodaj-proizvod-dialog *ngSwitchCase="'Dodaj proizvod'" [title]="text"></app-dodaj-proizvod-dialog>
+    <app-error-dialog *ngSwitchDefault></app-error-dialog>
+</div>

@@ -6,7 +6,6 @@ import * as AuthActions from '../../../store/auth/auth.actions'
 import { Observable, of } from 'rxjs';
 import { isAuthenticated, selectUser } from '../../../store/auth/auth.selectors';
 import { CommonModule, NgIf } from '@angular/common';
-import { User } from '../../../models/user';
 
 @Component({
   selector: 'app-header',

@@ -1,8 +1,9 @@
 <div *ngIf="proizvod$ | async as proizvod" class="container my-3">
     <h1>Proizvod</h1>
-    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Dijalog
-    </button>
+    <div *ngIf="isAdmin$ | async" class="mb-3">
+        <button type="button" class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#modalDialog">Izmeni proizvod</button>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDialog">Obriši proizvod</button>
+    </div>
     <div class="row mb-3">
         <img class="col-12 col-md-6 col-xl-5" src={{proizvod.slika}} alt={{proizvod.slika}}/>
         <div class="col-12 col-md-6 col-xl-7">
@@ -32,25 +33,10 @@
     <p>{{proizvod.opis ? proizvod.opis : "Nema unetog opisa"}}</p>
 
     <a class="text-primary" [routerLink]="['/ng/prodavnica', proizvod.prodavnica.id]" routerLinkActive="router-link-active">{{proizvod.prodavnica.naziv}}</a>
+
+    <app-dialog *ngIf="isAdmin$ | async" [text]="'Izmeni proizvod'"></app-dialog>
 </div>
 
 <div *ngIf="!(proizvod$ | async)">
     <app-not-found></app-not-found>
-</div>
-
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Dijalog</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Test dijalog
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
-            </div>
-        </div>
-    </div>
 </div>

@@ -18,7 +18,12 @@ export const selectUser = createSelector(
   (state) => state.user
 );
 
+export const isAdmin = createSelector(
+  selectUser,
+  (state) => <boolean>state?.admin ?? false
+)
+
 export const selectError = createSelector(
   selectAuthState,
   (state) => state.error
-)
+);

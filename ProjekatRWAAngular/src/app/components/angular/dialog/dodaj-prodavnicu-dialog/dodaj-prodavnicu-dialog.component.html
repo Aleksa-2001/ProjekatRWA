@@ -1,0 +1,40 @@
+<div class="modal fade" id="modalDialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalDialogLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="modal-content border-secondary border-3 rounded-3">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{title}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+                
+            <div class="modal-body row">
+                <div class="col-12">
+                    <div class="mb-2">
+                        <label for="inputNaziv">Naziv prodavnice*</label>
+                        <input id="inputNaziv" class="form-control border-secondary" type="text" formControlName="naziv" placeholder="Naziv prodavnice" />
+                        <small class="text-danger" *ngIf="form.controls['naziv'].dirty && form.hasError('required', 'naziv')">
+                            *Naziv prodavnice je obavezno polje
+                        </small>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="inputAdresa">Adresa*</label>
+                        <input id="inputAdresa" class="form-control border-secondary" type="text" formControlName="adresa" placeholder="Adresa" />
+                        <small class="text-danger" *ngIf="form.controls['adresa'].dirty && form.hasError('required', 'adresa')">
+                            *Adresa je obavezno polje
+                        </small>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="inputOpis">Opis</label>
+                        <textarea id="inputOpis" class="form-control border-secondary" rows="3" maxlength="1000" formControlName="opis" placeholder="Opis"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Otkaži</button>
+                <button [disabled]="!this.form.valid" type="submit" class="btn btn-primary">Dodaj</button>
+            </div>
+        </form>
+    </div>
+</div>
