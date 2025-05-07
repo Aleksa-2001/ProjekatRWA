@@ -1,5 +1,11 @@
 <div [ngSwitch]="text">
-    <app-dodaj-prodavnicu-dialog *ngSwitchCase="'Dodaj prodavnicu'" [title]="text"></app-dodaj-prodavnicu-dialog>
-    <app-dodaj-proizvod-dialog *ngSwitchCase="'Dodaj proizvod'" [title]="text"></app-dodaj-proizvod-dialog>
+    <app-prodavnica-dialog *ngSwitchCase="'Dodaj prodavnicu'" [title]="text"></app-prodavnica-dialog>
+    <app-prodavnica-dialog *ngSwitchCase="'Izmeni prodavnicu'" [title]="text"></app-prodavnica-dialog>
+    <app-confirm-dialog *ngSwitchCase="'Obriši prodavnicu'" [title]="text"></app-confirm-dialog>
+
+    <app-proizvod-dialog *ngSwitchCase="'Dodaj proizvod'" [title]="text"></app-proizvod-dialog>
+    <app-proizvod-dialog *ngSwitchCase="'Izmeni proizvod'" [title]="text"></app-proizvod-dialog>
+    <app-confirm-dialog *ngSwitchCase="'Obriši proizvod'" [title]="text"></app-confirm-dialog>
+    
     <app-error-dialog *ngSwitchDefault></app-error-dialog>
 </div>

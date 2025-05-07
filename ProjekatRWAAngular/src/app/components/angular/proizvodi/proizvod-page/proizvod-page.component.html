@@ -1,8 +1,8 @@
 <div *ngIf="proizvod$ | async as proizvod" class="container my-3">
     <h1>Proizvod</h1>
     <div *ngIf="isAdmin$ | async" class="mb-3">
-        <button type="button" class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#modalDialog">Izmeni proizvod</button>
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDialog">Obriši proizvod</button>
+        <button type="button" class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#proizvodModalDialog">Izmeni proizvod</button>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModalDialog">Obriši proizvod</button>
     </div>
     <div class="row mb-3">
         <img class="col-12 col-md-6 col-xl-5" src={{proizvod.slika}} alt={{proizvod.slika}}/>
@@ -30,11 +30,13 @@
     </div>
 
     <h3>Opis proizvoda</h3>
-    <p>{{proizvod.opis ? proizvod.opis : "Nema unetog opisa"}}</p>
+    <p *ngIf="!proizvod.opis"><i>Nema unetog opisa</i></p>
+    <p *ngIf="proizvod.opis">{{proizvod.opis}}</p>
 
     <a class="text-primary" [routerLink]="['/ng/prodavnica', proizvod.prodavnica.id]" routerLinkActive="router-link-active">{{proizvod.prodavnica.naziv}}</a>
 
     <app-dialog *ngIf="isAdmin$ | async" [text]="'Izmeni proizvod'"></app-dialog>
+    <app-dialog *ngIf="isAdmin$ | async" [text]="'Obriši proizvod'"></app-dialog>
 </div>
 
 <div *ngIf="!(proizvod$ | async)">

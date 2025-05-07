@@ -1,5 +1,10 @@
 <div *ngIf="prodavnica$ | async as prodavnica">
-    <header class="masthead" [ngStyle]="{ 'background': setBackground(prodavnica) }">
+    <header class="masthead" [ngStyle]="{ 
+        'background': setBackground(prodavnica.slika),
+        'background-size': 'cover',
+        'background-repeat': 'no-repeat',
+        'background-position': 'center'
+    }">
         <div class="container h-100">
             <div class="row h-100 align-items-center">
                 <div class="col-12 text-center">
@@ -14,23 +19,25 @@
 
     <div class="container my-3">
         <div *ngIf="isAdmin$ | async" class="mb-3">
-            <button type="button" class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#modalDialog">Izmeni prodavnicu</button>
-            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDialog">Obriši prodavnicu</button>
+            <button type="button" class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#prodavnicaModalDialog">Izmeni prodavnicu</button>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModalDialog">Obriši prodavnicu</button>
         </div>
 
         <h3>Opis prodavnice</h3>
-        <p>{{prodavnica.opis ? prodavnica.opis : "Nema unetog opisa"}}</p>
+        <p *ngIf="!prodavnica.opis"><i>Nema unetog opisa</i></p>
+        <p *ngIf="prodavnica.opis">{{prodavnica.opis}}</p>
 
         <hr>
 
         <h1>Proizvodi</h1>
         <div *ngIf="isAdmin$ | async" class="mb-3">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDialog">Dodaj proizvod</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#proizvodModalDialog">Dodaj proizvod</button>
         </div>
         <app-proizvodi></app-proizvodi>
     </div>
 
-    <!-- <app-dialog *ngIf="isAdmin$ | async" [text]="'Izmeni prodavnicu'"></app-dialog> -->
+    <app-dialog *ngIf="isAdmin$ | async" [text]="'Izmeni prodavnicu'"></app-dialog>
+    <app-dialog *ngIf="isAdmin$ | async" [text]="'Obriši prodavnicu'"></app-dialog>
     <app-dialog *ngIf="isAdmin$ | async" [text]="'Dodaj proizvod'"></app-dialog>
 </div>
 

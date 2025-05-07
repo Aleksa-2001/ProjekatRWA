@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { DodajProizvodDialogComponent } from "./dodaj-proizvod-dialog/dodaj-proizvod-dialog.component";
-import { NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
+import { ProizvodDialogComponent } from "./proizvod-dialog/proizvod-dialog.component";
+import { NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { ErrorDialogComponent } from "./error-dialog/error-dialog.component";
-import { DodajProdavnicuDialogComponent } from "./dodaj-prodavnicu-dialog/dodaj-prodavnicu-dialog.component";
+import { ProdavnicaDialogComponent } from "./prodavnica-dialog/prodavnica-dialog.component";
+import { ConfirmDialogComponent } from "./confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: 'app-dialog',
@@ -10,8 +11,9 @@ import { DodajProdavnicuDialogComponent } from "./dodaj-prodavnicu-dialog/dodaj-
     NgSwitch,
     NgSwitchCase,
     NgSwitchDefault,
-    DodajProdavnicuDialogComponent, 
-    DodajProizvodDialogComponent, 
+    ProdavnicaDialogComponent,
+    ProizvodDialogComponent,
+    ConfirmDialogComponent,
     ErrorDialogComponent
 ],
   templateUrl: './dialog.component.html',
@@ -20,6 +22,6 @@ import { DodajProdavnicuDialogComponent } from "./dodaj-prodavnicu-dialog/dodaj-
 })
 export class DialogComponent { 
 
-  @Input() text?: string
+  @Input() text!: string
 
 }

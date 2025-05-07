@@ -48,8 +48,8 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
     this.store.dispatch(ProdavniceActions.deselectSelectedItem())
   }
 
-  protected setBackground(prodavnica: Prodavnica) {
-    return `linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000 100%), url(${prodavnica.slika})`
+  setBackground(slika: string) {
+    return `linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000 100%), url(${slika})`
   }
 
 }
