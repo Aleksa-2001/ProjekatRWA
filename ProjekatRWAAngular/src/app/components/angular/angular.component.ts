@@ -7,10 +7,18 @@ import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app-state';
 import { isAdmin } from '../../store/auth/auth.selectors';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-angular',
-  imports: [NgIf, CommonModule, ProdavniceComponent, DialogComponent],
+  imports: [
+    CommonModule, 
+    ReactiveFormsModule,
+    NgIf, 
+    ProdavniceComponent, 
+    DialogComponent
+  ],
   templateUrl: './angular.component.html',
   styleUrl: './angular.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -19,9 +27,20 @@ export class AngularComponent {
 
   isAdmin$: Observable<boolean> = of(false)
 
-  constructor(private title: Title, private store: Store<AppState>) {
+  searchForm!: FormGroup
+
+  constructor(private title: Title, private router: Router, private fb: FormBuilder, private store: Store<AppState>) {
     this.isAdmin$ = this.store.select(isAdmin)
     this.title.setTitle("Angular - ProjekatRWA")
+
+    this.searchForm = this.fb.group({
+      inputSearch: ['', Validators.required]
+    })
+  }
+
+  onSubmit() {
+    const data = this.searchForm.value
+    this.router.navigate(['ng/search'], { queryParams: { q: data.inputSearch } })
   }
 
 }

@@ -9,6 +9,7 @@ import { RegisterComponent } from './shared/components/register/register.compone
 import { ProfileComponent } from './shared/components/profile/profile.component';
 import { ProdavnicaPageComponent } from './components/angular/prodavnice/prodavnica-page/prodavnica-page.component';
 import { ProizvodPageComponent } from './components/angular/proizvodi/proizvod-page/proizvod-page.component';
+import { SearchComponent } from './components/angular/search/search.component';
 
 export const routes: Routes = [
     { path: "", component: HomeComponent, pathMatch: 'full' },
@@ -16,6 +17,7 @@ export const routes: Routes = [
     { path: "rxjs", component: RxjsComponent },
 
     { path: "ng", component: AngularComponent, canActivate: [AuthGuard, ValidateGuard] },
+    { path: "ng/search", component: SearchComponent, canActivate: [AuthGuard, ValidateGuard] },
     { path: "ng/prodavnica/:id", component: ProdavnicaPageComponent, canActivate: [AuthGuard, ValidateGuard, /*RolesGuard*/] },
     { path: "ng/proizvod/:id", component: ProizvodPageComponent, canActivate: [AuthGuard, ValidateGuard] },
 

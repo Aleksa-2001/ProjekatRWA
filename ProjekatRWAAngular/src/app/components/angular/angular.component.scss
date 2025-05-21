@@ -9,6 +9,11 @@
 }
 
 .masthead h1 {
-    font-size: 4rem;
-    line-height: 4rem;
+    font-size: calc(2.5rem + 1.5vw);
+    line-height: calc(2.5rem + 1.5vw);
+}
+
+.search-box {
+    max-width: 640px;
+    column-gap: 15px;
 }

@@ -7,20 +7,18 @@
     }">
         <div class="container h-100">
             <div class="row h-100 align-items-center">
-                <div class="col-12 text-center">
-                    <div class="podaci p-2 text-center shadow-1-strong text-white">
-                        <h1>{{prodavnica.naziv}}</h1>
-                        <!-- <app-search></app-search> -->
-                    </div>
+                <div class="col-12 text-center shadow-1-strong text-white">
+                    <h1>{{prodavnica.naziv}}</h1>
+                    <!-- <app-search></app-search> -->
                 </div>
             </div>
         </div>
     </header>
 
     <div class="container my-3">
-        <div *ngIf="isAdmin$ | async" class="mb-3">
-            <button type="button" class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#prodavnicaModalDialog">Izmeni prodavnicu</button>
-            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModalDialog">Obriši prodavnicu</button>
+        <div *ngIf="isAdmin$ | async" class="menu mb-3 d-flex flex-column flex-sm-row">
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#prodavnicaModalDialog"><i class="bi bi-pencil me-2"></i>Izmeni prodavnicu</button>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModalDialog"><i class="bi bi-trash me-2"></i>Obriši prodavnicu</button>
         </div>
 
         <h3>Opis prodavnice</h3>
@@ -31,7 +29,7 @@
 
         <h1>Proizvodi</h1>
         <div *ngIf="isAdmin$ | async" class="mb-3">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#proizvodModalDialog">Dodaj proizvod</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#proizvodModalDialog"><i class="bi bi-plus-lg me-2"></i>Dodaj proizvod</button>
         </div>
         <app-proizvodi></app-proizvodi>
     </div>

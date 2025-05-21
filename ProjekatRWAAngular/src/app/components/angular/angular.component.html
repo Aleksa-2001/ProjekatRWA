@@ -1,11 +1,12 @@
 <header class="masthead">
     <div class="container h-100">
         <div class="row h-100 align-items-center">
-            <div class="col-12 text-center">
-                <div class="podaci p-2 text-center shadow-1-strong text-white">
-                    <h1>Angular</h1>
-                    <!-- <app-search></app-search> -->
-                </div>
+            <div class="col-12 text-center shadow-1-strong text-white">
+                <h1 class="mb-3">Angular</h1>
+                <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="d-flex search-box flex-row mx-auto">
+                    <input id="inputSearch" class="form-control form-control-lg border-secondary" type="search" formControlName="inputSearch" minlength=1 placeholder="Pretraga"/>
+                    <button [disabled]="!this.searchForm.valid" class="btn btn-lg btn-primary" type="submit"><i class="bi bi-search"></i></button>
+                </form>
             </div>
         </div>
     </div>
@@ -14,7 +15,7 @@
 <div class="container my-3">
     <h1>Prodavnice</h1>
     <div *ngIf="isAdmin$ | async" class="mb-3">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#prodavnicaModalDialog">Dodaj prodavnicu</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#prodavnicaModalDialog"><i class="bi bi-plus-lg me-2"></i>Dodaj prodavnicu</button>
     </div>
     <app-prodavnice></app-prodavnice>
 </div>

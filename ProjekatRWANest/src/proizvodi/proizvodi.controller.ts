@@ -13,13 +13,13 @@ export class ProizvodiController {
     }
 
     @Get('proizvodi/:prodavnicaID')
-    public getKomponente(@Param('prodavnicaID', ParseIntPipe) prodavnicaID: number) {
+    public getProizvodi(@Param('prodavnicaID', ParseIntPipe) prodavnicaID: number) {
         const prodavnica = this.prodavniceService.getProdavnicaByID(prodavnicaID)
         return this.service.getProizvodi(prodavnica.id)
     }
 
     @Get('proizvod/:proizvodID')
-    public getkomponentaByID(@Param('proizvodID', ParseIntPipe) proizvodID: number) {
+    public getProizvodByID(@Param('proizvodID', ParseIntPipe) proizvodID: number) {
         return this.service.getProizvodByID(proizvodID)
     }
 

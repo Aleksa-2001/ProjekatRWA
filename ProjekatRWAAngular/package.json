@@ -26,6 +26,7 @@
     "@ngrx/store-devtools": "^19.1.0",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.13.1",
     "json-server": "^1.0.0-beta.3",
     "jwt-decode": "^4.0.0",
     "popper.js": "^1.16.1",
