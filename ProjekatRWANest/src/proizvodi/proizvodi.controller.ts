@@ -8,14 +8,13 @@ export class ProizvodiController {
     constructor(private service: ProizvodiService, private prodavniceService: ProdavniceService) { }
     
     @Get('proizvodi')
-    getAll() {
+    public getAll() {
         return this.service.getAll()
     }
 
     @Get('proizvodi/:prodavnicaID')
     public getProizvodi(@Param('prodavnicaID', ParseIntPipe) prodavnicaID: number) {
-        const prodavnica = this.prodavniceService.getProdavnicaByID(prodavnicaID)
-        return this.service.getProizvodi(prodavnica.id)
+        return this.service.getProizvodi(prodavnicaID)
     }
 
     @Get('proizvod/:proizvodID')

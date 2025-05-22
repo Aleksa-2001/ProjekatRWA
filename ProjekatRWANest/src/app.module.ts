@@ -8,22 +8,25 @@ import { ProdavniceController } from './prodavnice/prodavnice.controller';
 import { ProdavniceService } from './prodavnice/prodavnice.service';
 import { ProizvodiController } from './proizvodi/proizvodi.controller';
 import { ProizvodiService } from './proizvodi/proizvodi.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { typeOrmConfig } from 'typeorm.config';
+import { ProdavniceModule } from './prodavnice/prodavnice.module';
+import { ProizvodiModule } from './proizvodi/proizvodi.module';
 
 @Module({
   imports: [
     AuthModule,
     UsersModule,
-    ConfigModule.forRoot({ isGlobal: true })
+    ProdavniceModule, 
+    ProizvodiModule, 
+    ConfigModule.forRoot({ isGlobal: true }),
+    TypeOrmModule.forRoot(typeOrmConfig),
   ],
   controllers: [
     AppController, 
-    ProdavniceController, 
-    ProizvodiController
   ],
   providers: [
     AppService, 
-    ProdavniceService, 
-    ProizvodiService
   ],
 })
 export class AppModule {}

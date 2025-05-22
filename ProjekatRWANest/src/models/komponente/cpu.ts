@@ -1,5 +1,5 @@
-import { RacunarskaKomponenta } from "./racunarska-komponenta";
-import { Prodavnica } from "../prodavnica";
+import { RacunarskaKomponenta } from "../racunarska-komponenta";
+import { Prodavnica } from "../../prodavnice/entities/prodavnica.entity";
 import { TipKomponente } from "../tip-komponente";
 
 export class CPU extends RacunarskaKomponenta {

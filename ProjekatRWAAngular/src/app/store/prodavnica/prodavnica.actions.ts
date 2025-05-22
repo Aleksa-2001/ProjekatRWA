@@ -36,3 +36,32 @@ export const loadSelectedItemSuccess = createAction(
         selectedProdavnica: Prodavnica
     }>()
 )
+
+export const addItem = createAction(
+    "[Prodavnica] Dodaj prodavnicu",
+    props<{
+        prodavnica: Prodavnica
+    }>()
+)
+
+export const addItemSuccess = createAction(
+    "[Prodavnica] Dodavanje prodavnice je uspesno",
+    props<{
+        prodavnica: Prodavnica
+    }>()
+)
+
+export const updateItem = createAction(
+    "[Prodavnica] Izmeni prodavnicu",
+    props<{
+        selectedProdavnicaID: number,
+        selectedProdavnica: Prodavnica
+    }>()
+)
+
+export const updateItemSuccess = createAction(
+    "[Prodavnica] Izmena prodavnice je uspesna",
+    props<{
+        selectedProdavnica: Prodavnica
+    }>()
+)

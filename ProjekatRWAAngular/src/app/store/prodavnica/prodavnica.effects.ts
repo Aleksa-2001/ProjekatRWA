@@ -34,4 +34,28 @@ export class ProdavniceEffects {
             )
         )
     })
+
+    addProdavnica$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ProdavniceActions.addItem),
+            mergeMap(({ prodavnica }) => this.service.addProdavnica(prodavnica)
+                .pipe(
+                    map((prodavnica) => (ProdavniceActions.addItemSuccess({prodavnica}))),
+                    catchError(() => of({ type: "[Prodavnica] Add error" }))
+                )
+            )
+        )
+    })
+
+    updateProdavnica$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ProdavniceActions.updateItem),
+            mergeMap(({ selectedProdavnicaID, selectedProdavnica }) => this.service.updateProdavnica(selectedProdavnicaID, selectedProdavnica)
+                .pipe(
+                    map((selectedProdavnica) => (ProdavniceActions.updateItemSuccess({selectedProdavnica}))),
+                    catchError(() => of({ type: "[Prodavnica] Update error" }))
+                )
+            )
+        )
+    })
 }

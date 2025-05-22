@@ -21,6 +21,26 @@ export class ProdavnicaService {
       .get<Prodavnica>("http://localhost:3000/" + `prodavnica/${prodavnicaID}`)
       .pipe(catchError(errorHandler))
   }
+
+  addProdavnica(prodavnica: Prodavnica) {
+    const { id, ...prodavnicaDto } = prodavnica
+    return this.httpClient
+      .post<Prodavnica>("http://localhost:3000/" + "prodavnica", prodavnicaDto)
+      .pipe(catchError(errorHandler))
+  }
+
+  updateProdavnica(prodavnicaID: number, prodavnica: Prodavnica) {
+    const { id, ...prodavnicaDto } = prodavnica
+    return this.httpClient
+      .put<Prodavnica>("http://localhost:3000/" + `prodavnica/${prodavnicaID}`, prodavnicaDto)
+      .pipe(catchError(errorHandler))
+  }
+
+  deleteProdavnica(prodavnicaID: number) {
+    return this.httpClient
+      .delete<Prodavnica>("http://localhost:3000/" + `prodavnica/${prodavnicaID}`)
+      .pipe(catchError(errorHandler))
+  }
   
 }
 

@@ -1,5 +1,6 @@
-import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { ProdavniceService } from './prodavnice.service';
+import { ProdavnicaDto } from './entities/prodavnica.dto';
 
 @Controller()
 export class ProdavniceController {
@@ -14,6 +15,21 @@ export class ProdavniceController {
     @Get('prodavnica/:id')
     public getProdavnicaByID(@Param('id', ParseIntPipe) prodavnicaID: number) {
         return this.service.getProdavnicaByID(prodavnicaID)
+    }
+
+    @Post('prodavnica')
+    public addProdavnica(@Body() dto: ProdavnicaDto) {
+        return this.service.create(dto)
+    }
+    
+    @Put('prodavnica/:id')
+    public updateProdavnica(@Param('id', ParseIntPipe) prodavnicaID: number, @Body() dto: ProdavnicaDto) {
+        return this.service.update(prodavnicaID, dto)
+    }
+
+    @Delete('prodavnica/:id')
+    public deleteProdavnica(@Param('id', ParseIntPipe) prodavnicaID: number) {
+        return this.service.delete(prodavnicaID)
     }
 
 }

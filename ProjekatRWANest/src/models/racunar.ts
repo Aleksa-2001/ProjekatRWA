@@ -1,5 +1,5 @@
-import { Proizvod } from "./proizvod";
-import { Prodavnica } from "./prodavnica";
+//import { Proizvod } from "./proizvod";
+import { Prodavnica } from "../prodavnice/entities/prodavnica.entity";
 import { CPU } from "./komponente/cpu";
 import { GPU } from "./komponente/gpu";
 import { MaticnaPloca } from "./komponente/maticna-ploca";
@@ -7,7 +7,7 @@ import { Napajanje } from "./komponente/napajanje";
 import { RAM } from "./komponente/ram";
 import { Skladiste } from "./komponente/skladiste";
 
-export class Racunar extends Proizvod {
+export class Racunar /*extends Proizvod*/ {
     
     constructor(
         id: number, 
@@ -25,7 +25,7 @@ export class Racunar extends Proizvod {
         napajanje: Napajanje,
         gpu: GPU
     ) {
-        super(id, tip, proizvodjac, naziv, cena, opis, slika, prodavnica)
+        //super(id, tip, proizvodjac, naziv, cena, opis, slika, prodavnica)
         maticnaPloca
         cpu
         ram

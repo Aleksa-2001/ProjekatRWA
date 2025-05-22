@@ -6,6 +6,7 @@ import { filter, Observable, of, take, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app-state';
 import { selectSelectedProdavnica } from '../../../../store/prodavnica/prodavnica.selectors';
+import * as ProdavniceActions from "../../../../store/prodavnica/prodavnica.actions"
 
 @Component({
   selector: 'app-prodavnica-dialog',
@@ -21,6 +22,7 @@ export class ProdavnicaDialogComponent implements OnInit {
 
   @Input() title!: string
   prodavnica$: Observable<Prodavnica | null> = of()
+  prodavnicaID: number = -1
 
   constructor(private fb: FormBuilder, private store: Store<AppState>) { }
 
@@ -32,6 +34,7 @@ export class ProdavnicaDialogComponent implements OnInit {
         filter(prodavnica => !!prodavnica),
         take(1),
         tap(prodavnica => {
+          this.prodavnicaID = prodavnica.id
           this.form = this.fb.group({
             naziv: [prodavnica.naziv, Validators.required],
             adresa: [prodavnica.adresa, Validators.required],
@@ -54,9 +57,14 @@ export class ProdavnicaDialogComponent implements OnInit {
   onSubmit() {
     if (this.form.valid) {
       const prodavnica = this.form.value
-      prodavnica.id = -1
+      prodavnica.id = this.prodavnicaID
       console.log(prodavnica)
-      
+      if (this.title === 'Izmeni prodavnicu') {
+        this.store.dispatch(ProdavniceActions.updateItem({ selectedProdavnicaID: prodavnica.id, selectedProdavnica: <Prodavnica>prodavnica }))
+      }
+      else {
+        this.store.dispatch(ProdavniceActions.addItem({ prodavnica: <Prodavnica>prodavnica }))
+      }
     }
   }
 
