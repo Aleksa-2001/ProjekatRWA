@@ -5,7 +5,7 @@ import { AppState } from "../app-state";
 
 export const selectProdavniceFeature = createSelector(
     (state: AppState) => state.prodavnice,
-    (components) => components
+    (prodavnice) => prodavnice
 )
 
 //export const selectProdavniceFeature = createFeatureSelector<ProdavniceState>('prodavnice');
@@ -14,7 +14,7 @@ export const selectProdavnice = createSelector(
     selectProdavniceFeature,
     (state: ProdavniceState) => Object
         .values(state.entities)
-        .filter(prodavnica => prodavnica != null)
+        .filter(prodavnica => !!prodavnica)
         .map(prodavnica => <Prodavnica>prodavnica)
 )
     

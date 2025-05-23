@@ -58,7 +58,6 @@ export class ProdavnicaDialogComponent implements OnInit {
     if (this.form.valid) {
       const prodavnica = this.form.value
       prodavnica.id = this.prodavnicaID
-      console.log(prodavnica)
       if (this.title === 'Izmeni prodavnicu') {
         this.store.dispatch(ProdavniceActions.updateItem({ selectedProdavnicaID: prodavnica.id, selectedProdavnica: <Prodavnica>prodavnica }))
       }
