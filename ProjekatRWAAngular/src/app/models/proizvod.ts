@@ -1,10 +1,10 @@
 import { Prodavnica } from "./prodavnica"
 
 export abstract class Proizvod {
-
+    
     constructor(
         public id: number, 
-        public tip: number, 
+        public tip: string, 
         public proizvodjac: string, 
         public naziv: string, 
         public cena: number, 
@@ -13,7 +13,7 @@ export abstract class Proizvod {
         public prodavnica: Prodavnica
     ) {
         id = 0
-        tip = 0
+        tip = ''
         proizvodjac = ''
         naziv = ''
         cena = 0

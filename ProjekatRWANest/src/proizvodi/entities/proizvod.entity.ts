@@ -1,13 +1,14 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, TableInheritance } from "typeorm"
 import { Prodavnica } from "../../prodavnice/entities/prodavnica.entity"
 
 @Entity()
-export class Proizvod {
+@TableInheritance({ column: { type: "varchar", name: "tip" } })
+export abstract class Proizvod {
     @PrimaryGeneratedColumn()
     id: number
-    
+
     @Column()
-    tip: number
+    tip: string;
     
     @Column()
     proizvodjac: string

@@ -11,7 +11,7 @@ export class Racunar extends Proizvod {
     
     constructor(
         id: number, 
-        tip: number, 
+        tip: string, 
         proizvodjac: string, 
         naziv: string, 
         cena: number, 

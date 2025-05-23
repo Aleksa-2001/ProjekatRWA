@@ -35,4 +35,28 @@ export class ProizvodiEffects {
             )
         )
     })
+
+    addProizvod$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ProizvodiActions.addItem),
+            mergeMap(({ proizvod }) => this.service.addProizvod(proizvod)
+                .pipe(
+                    map((proizvod) => (ProizvodiActions.addItemSuccess({proizvod}))),
+                    catchError(() => of({ type: "[Proizvod] Add error" }))
+                )
+            )
+        )
+    })
+
+    updateProizvod$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ProizvodiActions.updateItem),
+            mergeMap(({ selectedProizvodID, selectedProizvod }) => this.service.updateProizvod(selectedProizvodID, selectedProizvod)
+                .pipe(
+                    map((selectedProizvod) => (ProizvodiActions.updateItemSuccess({selectedProizvod}))),
+                    catchError(() => of({ type: "[Proizvod] Update error" }))
+                )
+            )
+        )
+    })
 }

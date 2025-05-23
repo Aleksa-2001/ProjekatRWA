@@ -1,19 +1,18 @@
-import { RacunarskaKomponenta } from "./racunarska-komponenta";
+import { RacunarskaKomponenta } from "../racunarska-komponenta";
 import { Prodavnica } from "../prodavnica";
-import { TipKomponente } from "../tip-komponente";
 
 export class CPU extends RacunarskaKomponenta {
 
     constructor(
         id: number, 
-        tip: number, 
+        tip: string, 
         proizvodjac: string, 
         naziv: string, 
         cena: number, 
         opis: string, 
         slika: string, 
         prodavnica: Prodavnica, 
-        tipKomponente: TipKomponente, 
+        tipKomponente: string, 
         public socket: number, 
         public frekvencija: number, 
         public brojJezgara: number, 

@@ -1,19 +1,18 @@
-import { RacunarskaKomponenta } from "./racunarska-komponenta";
+import { RacunarskaKomponenta } from "../racunarska-komponenta";
 import { Prodavnica } from "../prodavnica";
-import { TipKomponente } from "../tip-komponente";
 
 export class Napajanje extends RacunarskaKomponenta {
 
     constructor(
         id: number, 
-        tip: number, 
+        tip: string, 
         proizvodjac: string, 
         naziv: string, 
         cena: number, 
         opis: string, 
         slika: string, 
         prodavnica: Prodavnica, 
-        tipKomponente: TipKomponente, 
+        tipKomponente: string, 
         public snaga: number, 
         public modularno: boolean
     ) {

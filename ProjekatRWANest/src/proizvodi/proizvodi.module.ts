@@ -5,10 +5,12 @@ import { Proizvod } from './entities/proizvod.entity';
 import { ProizvodiService } from './proizvodi.service';
 import { ProdavniceService } from 'src/prodavnice/prodavnice.service';
 import { ProdavniceModule } from 'src/prodavnice/prodavnice.module';
-import { Prodavnica } from 'src/prodavnice/entities/prodavnica.entity';
+import { CPU } from './entities/komponente/cpu.entity';
+import { GPU } from './entities/komponente/gpu.entity';
+import { RacunarskaKomponenta } from './entities/racunarska-komponenta.entity';
 
 @Module({
-  imports: [ProdavniceModule, TypeOrmModule.forFeature([Proizvod])],
+  imports: [ProdavniceModule, TypeOrmModule.forFeature([Proizvod, RacunarskaKomponenta, CPU, GPU])],
   controllers: [ProizvodiController],
   providers: [ProizvodiService, ProdavniceService]
 })

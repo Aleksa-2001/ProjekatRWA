@@ -1,19 +1,18 @@
-import { RacunarskaKomponenta } from "./racunarska-komponenta";
+import { RacunarskaKomponenta } from "../racunarska-komponenta";
 import { Prodavnica } from "../prodavnica";
-import { TipKomponente } from "../tip-komponente";
 
 export class RAM extends RacunarskaKomponenta {
 
     constructor(
         id: number, 
-        tip: number, 
+        tip: string, 
         proizvodjac: string, 
         naziv: string, 
         cena: number, 
         opis: string, 
         slika: string, 
         prodavnica: Prodavnica, 
-        tipKomponente: TipKomponente, 
+        tipKomponente: string, 
         public tipMemorije: string, 
         public brojRAMModula: number, 
         public velicina: number,

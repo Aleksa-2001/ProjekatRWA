@@ -28,6 +28,26 @@ export class ProizvodService {
       .pipe(catchError(errorHandler))
   }
   
+  addProizvod(proizvod: Proizvod) {
+    const { id, ...proizvodDto } = proizvod
+    return this.httpClient
+      .post<Proizvod>("http://localhost:3000/" + "proizvod", proizvodDto)
+      .pipe(catchError(errorHandler))
+  }
+
+  updateProizvod(proizvodID: number, proizvod: Proizvod) {
+    const { id, ...proizvodDto } = proizvod
+    return this.httpClient
+      .put<Proizvod>("http://localhost:3000/" + `proizvod/${proizvodID}`, proizvodDto)
+      .pipe(catchError(errorHandler))
+  }
+
+  deleteProdavnica(proizvodID: number) {
+    return this.httpClient
+      .delete<Proizvod>("http://localhost:3000/" + `proizvod/${proizvodID}`)
+      .pipe(catchError(errorHandler))
+  }
+
 }
 
 const errorHandler = (error: HttpErrorResponse) => {

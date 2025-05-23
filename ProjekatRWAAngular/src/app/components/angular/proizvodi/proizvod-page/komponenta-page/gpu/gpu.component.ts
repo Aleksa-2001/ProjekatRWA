@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { RacunarskaKomponenta } from '../../../../../../models/komponente/racunarska-komponenta';
+import { RacunarskaKomponenta } from '../../../../../../models/racunarska-komponenta';
 import { GPU } from '../../../../../../models/komponente/gpu';
 
 @Component({

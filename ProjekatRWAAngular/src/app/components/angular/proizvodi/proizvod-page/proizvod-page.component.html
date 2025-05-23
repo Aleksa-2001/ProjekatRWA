@@ -8,19 +8,24 @@
         <img class="col-12 col-md-6 col-xl-5" src={{proizvod.slika}} alt={{proizvod.slika}}/>
         <div class="col-12 col-md-6 col-xl-7">
             <h2>{{proizvod.proizvodjac}} {{proizvod.naziv}}</h2>
+            <!--
             <h3 class="m-0">
                 Tip proizvoda:
                 <span [ngSwitch]="proizvod.tip">
-                    <span *ngSwitchCase="1">Računar</span>
-                    <span *ngSwitchCase="2">Računarska komponenta</span>
+                    <span *ngSwitchCase="'Racunar'">Računar</span>
+                    <span *ngSwitchCase="'RacunarskaKomponenta'">Računarska komponenta</span>
                     <span *ngSwitchDefault>Tip proizvoda nije pronadjen!</span>
                 </span>
             </h3>
+            -->
             <div [ngSwitch]="proizvod.tip">
-                <div *ngSwitchCase="1">
+                <div *ngSwitchCase="'Racunar'">
                     Računar
                 </div>
-                <div *ngSwitchCase="2">
+                <div *ngSwitchCase="'CPU'">
+                    <app-komponenta-page></app-komponenta-page>
+                </div>
+                <div *ngSwitchCase="'GPU'">
                     <app-komponenta-page></app-komponenta-page>
                 </div>
             </div>
@@ -33,8 +38,10 @@
     <p *ngIf="!proizvod.opis"><i>Nema unetog opisa</i></p>
     <p *ngIf="proizvod.opis">{{proizvod.opis}}</p>
 
+    <!--
     <a class="text-primary" [routerLink]="['/ng/prodavnica', proizvod.prodavnica.id]" routerLinkActive="router-link-active">{{proizvod.prodavnica.naziv}}</a>
-
+    -->
+    
     <app-dialog *ngIf="isAdmin$ | async" [text]="'Izmeni proizvod'"></app-dialog>
     <app-dialog *ngIf="isAdmin$ | async" [text]="'Obriši proizvod'"></app-dialog>
 </div>

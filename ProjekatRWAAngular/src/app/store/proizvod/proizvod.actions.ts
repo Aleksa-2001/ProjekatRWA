@@ -40,6 +40,35 @@ export const deselectSelectedItem = createAction(
     "[Proizvod] Deselektuj proizvod"
 )
 
+export const addItem = createAction(
+    "[Proizvod] Dodaj proizvod",
+    props<{
+        proizvod: Proizvod
+    }>()
+)
+
+export const addItemSuccess = createAction(
+    "[Proizvod] Dodavanje proizvoda je uspesno",
+    props<{
+        proizvod: Proizvod
+    }>()
+)
+
+export const updateItem = createAction(
+    "[Proizvod] Izmeni proizvod",
+    props<{
+        selectedProizvodID: number,
+        selectedProizvod: Proizvod
+    }>()
+)
+
+export const updateItemSuccess = createAction(
+    "[Proizvod] Izmena proizvoda je uspesna",
+    props<{
+        selectedProizvod: Proizvod
+    }>()
+)
+
 export const setItem = createAction(
     "[Proizvod] Promeni cenu (test)",
     props<{

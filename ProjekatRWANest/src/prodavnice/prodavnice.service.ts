@@ -47,7 +47,7 @@ export class ProdavniceService {
         return await this.prodavnicaRepository.save(prodavnica)
     }
 
-    public async update(prodavnicaID: number, prodavnicaDto: ProdavnicaDto) : Promise<Prodavnica> {
+    public async update(prodavnicaID: number, prodavnicaDto: ProdavnicaDto) {
         //return await this.prodavnicaRepository.save({ 
         //    id: prodavnicaID,
         //    prodavnicaDto

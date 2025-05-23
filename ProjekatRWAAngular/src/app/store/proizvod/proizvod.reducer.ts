@@ -36,6 +36,13 @@ export const proizvodReducer = createReducer(
         ...state,
         selectedProizvodID: -1,
         selectedProizvod: null
+    })),
+    on(ProizvodiActions.addItemSuccess, (state, {proizvod}) => 
+        adapter.addOne(proizvod, state)
+    ),
+    on(ProizvodiActions.updateItemSuccess, (state, {selectedProizvod}) => ({
+        ...state,
+        selectedProizvod: selectedProizvod
     }))
     //on(KomponenteActions.setItem, (state, {komponentaID}) => {
     //    const targetKomponenta = state.entities[komponentaID]

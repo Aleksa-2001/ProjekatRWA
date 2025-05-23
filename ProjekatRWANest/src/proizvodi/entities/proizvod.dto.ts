@@ -1,7 +1,7 @@
 import { Prodavnica } from "../../prodavnice/entities/prodavnica.entity"
 
-export class ProizvodDto {
-    tip: number
+export abstract class ProizvodDto {
+    tip: string
     proizvodjac: string
     naziv: string
     cena: number

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RacunarskaKomponenta } from '../../../../../models/komponente/racunarska-komponenta';
+import { RacunarskaKomponenta } from '../../../../../models/racunarska-komponenta';
 import { CommonModule, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { CPUComponent } from './cpu/cpu.component';
 import { GPUComponent } from "./gpu/gpu.component";
