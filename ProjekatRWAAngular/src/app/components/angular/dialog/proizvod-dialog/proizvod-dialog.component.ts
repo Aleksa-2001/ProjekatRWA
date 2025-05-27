@@ -10,6 +10,8 @@ import { selectSelectedProizvod } from '../../../../store/proizvod/proizvod.sele
 import { CPU } from '../../../../models/komponente/cpu';
 import { GPU } from '../../../../models/komponente/gpu';
 import * as ProizvodiActions from "../../../../store/proizvod/proizvod.actions"
+import { Prodavnica } from '../../../../models/prodavnica';
+import { RAM } from '../../../../models/komponente/ram';
 
 @Component({
   selector: 'app-proizvod-dialog',
@@ -19,14 +21,14 @@ import * as ProizvodiActions from "../../../../store/proizvod/proizvod.actions"
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProizvodDialogComponent implements OnInit {
-
   form!: FormGroup
   formData: any
-  tip: number = 0
-  tipKomponente: string = ''
+  type: string = ''
+  tipProizvoda: string = ''
 
   @Input() title!: string
   proizvod$: Observable<Proizvod | null> = of()
+  prodavnica$: Observable<Prodavnica | null> = of()
   proizvodID: number = -1
 
   constructor(private fb: FormBuilder, private store: Store<AppState>) { }
@@ -34,28 +36,37 @@ export class ProizvodDialogComponent implements OnInit {
   ngOnInit(): void {
     if (this.title === 'Izmeni proizvod') {
       this.proizvod$ = this.store.select(selectSelectedProizvod)
+      this.prodavnica$ = this.store.select(selectSelectedProdavnica)
 
       this.proizvod$.pipe(
         filter(proizvod => !!proizvod),
         take(1),
         tap(proizvod => {
           this.proizvodID = proizvod.id
-          this.tip = proizvod.tip == 'CPU' || proizvod.tip == 'GPU' ? 2 : 0
-          this.tipKomponente = proizvod.tip
+          this.type = proizvod.type
+          this.tipProizvoda = proizvod.tipProizvoda
 
           this.form = this.fb.group({
-            tip: [this.tip.toString(), Validators.required],
+            type: [proizvod.type],
+            tipProizvoda: [proizvod.tipProizvoda, Validators.required],
             proizvodjac: [proizvod.proizvodjac, Validators.required],
             naziv: [proizvod.naziv, Validators.required],
             cena: [proizvod.cena, Validators.required],
             opis: [proizvod.opis],
             slika: [proizvod.slika],
-            //tipKomponente: [(proizvod as RacunarskaKomponenta).tipKomponente],
-            tipKomponente: [proizvod.tip],
 
-            socket: [(proizvod as CPU).socket ?? ''],
-            frekvencija: [(proizvod as CPU | GPU).frekvencija],
-            VRAM: [(proizvod as GPU).VRAM]
+            cpuSocket: [(proizvod as CPU).socket],
+            cpuFrekvencija: [proizvod.type === 'CPU' ? (proizvod as CPU).frekvencija : ''],
+            cpuBrojJezgara: [(proizvod as CPU).brojJezgara],
+            cpuBrojNiti: [(proizvod as CPU).brojNiti],
+
+            gpuFrekvencija: [proizvod.type === 'GPU' ? (proizvod as GPU).frekvencija : ''],
+            gpuVRAM: [(proizvod as GPU).VRAM],
+
+            ramTipMemorije: [(proizvod as RAM).tipMemorije],
+            ramBrojModula: [(proizvod as RAM).brojRAMModula],
+            ramVelicina: [(proizvod as RAM).velicina],
+            ramFrekvencija: [proizvod.type === 'RAM' ? (proizvod as RAM).frekvencija : '']
           })
 
           //this.tip = this.form.value.tip ? Number(this.form.value.tip) : 0
@@ -64,27 +75,36 @@ export class ProizvodDialogComponent implements OnInit {
     }
     else {
       this.form = this.fb.group({
-        tip: ['', Validators.required],
+        type: [''],
+        tipProizvoda: ['', Validators.required],
         proizvodjac: ['', Validators.required],
         naziv: ['', Validators.required],
         cena: ['', Validators.required],
         opis: [''],
         slika: [''],
-        tipKomponente: [''],
 
-        socket: [''],
-        frekvencija: [''],
-        VRAM: ['']
+        cpuSocket: [''],
+        cpuFrekvencija: [''],
+        cpuBrojJezgara: [''],
+        cpuBrojNiti: [''],
+
+        gpuFrekvencija: [''],
+        gpuVRAM: [''],
+
+        ramTipMemorije: [''],
+        ramBrojModula: [''],
+        ramVelicina: [''],
+        ramFrekvencija: ['']
       })
     }
   }
 
   onChangeTip() {
-    this.tip = this.form.value.tip ? Number(this.form.value.tip) : 0
+    this.tipProizvoda = this.form.value.tipProizvoda ? this.form.value.tipProizvoda : ''
   }
 
   onChangeTipKomponente() {
-    this.tipKomponente = this.form.value.tipKomponente ? this.form.value.tipKomponente : ''
+    this.type = this.form.value.type ? this.form.value.type : ''
   }
 
   onSubmit() {
@@ -93,43 +113,53 @@ export class ProizvodDialogComponent implements OnInit {
       
       const proizvodBase = {
         id: this.proizvodID,
-        tip: value.tipKomponente,
+        type: value.type,
+        tipProizvoda: value.tipProizvoda,
         proizvodjac: value.proizvodjac,
         naziv: value.naziv,
         cena: value.cena,
-        opis: value.opis
+        opis: value.opis,
+        slika: value.slika,
+        prodavnica: {}
       }
 
-      //this.store.select(selectSelectedProdavnica).pipe(
-      //  filter(prodavnica => !!prodavnica),
-      //  take(1),
-      //  tap(prodavnica => proizvod.prodavnica = prodavnica)
-      //).subscribe()
-
-      console.log(proizvodBase)
+      this.prodavnica$.pipe(
+        filter(prodavnica => !!prodavnica),
+        take(1),
+        tap(prodavnica => proizvodData.prodavnica = prodavnica)
+      ).subscribe()
 
       let proizvodData: any = {}
 
-      switch (proizvodBase.tip) {
+      switch (proizvodBase.type) {
         case 'CPU':
           proizvodData = {
             ...proizvodBase,
-            socket: value.socket,
-            frekvencija: value.frekvencija
+            socket: value.cpuSocket,
+            frekvencija: value.cpuFrekvencija,
+            brojJezgara: value.cpuBrojJezgara,
+            brojNiti: value.cpuBrojNiti
           };
           break;
         case 'GPU':
           proizvodData = {
             ...proizvodBase,
-            frekvencija: value.frekvencija,
-            VRAM: value.VRAM
+            frekvencija: value.gpuFrekvencija,
+            VRAM: value.gpuVRAM
+          };
+          break;
+        case 'RAM':
+          proizvodData = {
+            ...proizvodBase,
+            tipMemorije: value.ramTipMemorije,
+            brojRAMModula: value.ramBrojModula,
+            velicina: value.ramVelicina,
+            frekvencija: value.ramFrekvencija
           };
           break;
         default:
           proizvodData = proizvodBase;
       }
-
-      console.log(proizvodData)
 
       if (this.title === 'Izmeni proizvod') {
         this.store.dispatch(ProizvodiActions.updateItem({ selectedProizvodID: proizvodData.id, selectedProizvod: <Proizvod>proizvodData }))

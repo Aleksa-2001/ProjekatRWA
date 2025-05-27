@@ -3,8 +3,7 @@ import { ChildEntity, Column } from "typeorm"
 
 @ChildEntity()
 export abstract class RacunarskaKomponenta extends Proizvod {
-    @Column()
-    tipKomponente: string
+    
     
     //constructor(
     //    id: number, 

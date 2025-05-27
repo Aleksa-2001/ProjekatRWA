@@ -4,7 +4,8 @@ export abstract class Proizvod {
     
     constructor(
         public id: number, 
-        public tip: string, 
+        public type: string, 
+        public tipProizvoda: string, 
         public proizvodjac: string, 
         public naziv: string, 
         public cena: number, 
@@ -12,8 +13,9 @@ export abstract class Proizvod {
         public slika: string, 
         public prodavnica: Prodavnica
     ) {
-        id = 0
-        tip = ''
+        id = 0,
+        type = ''
+        tipProizvoda = ''
         proizvodjac = ''
         naziv = ''
         cena = 0

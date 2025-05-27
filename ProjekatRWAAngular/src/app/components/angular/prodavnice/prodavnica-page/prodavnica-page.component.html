@@ -40,6 +40,7 @@
     <app-dialog *ngIf="isAdmin$ | async" [text]="'Dodaj proizvod'"></app-dialog>
 </div>
 
+
 <div *ngIf="!(prodavnica$ | async)">
     <app-not-found></app-not-found>
 </div>

@@ -2,13 +2,16 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, TableInheritance } f
 import { Prodavnica } from "../../prodavnice/entities/prodavnica.entity"
 
 @Entity()
-@TableInheritance({ column: { type: "varchar", name: "tip" } })
+@TableInheritance({ column: { type: "varchar", name: "type" } })
 export abstract class Proizvod {
     @PrimaryGeneratedColumn()
     id: number
 
     @Column()
-    tip: string;
+    type: string
+
+    @Column()
+    tipProizvoda: string
     
     @Column()
     proizvodjac: string

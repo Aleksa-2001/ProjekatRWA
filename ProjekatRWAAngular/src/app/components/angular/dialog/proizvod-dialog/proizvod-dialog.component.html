@@ -1,5 +1,5 @@
 <div class="modal fade" id="proizvodModalDialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="proizvodModalDialogLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" [ngClass]="{ 'modal-lg': tip > 1 }">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" [ngClass]="{ 'modal-lg': tipProizvoda === 'RacunarskaKomponenta' }">
         <form [formGroup]="form" (ngSubmit)="onSubmit()" class="modal-content border-secondary border-3 rounded-3">
             <div class="modal-header">
                 <h5 class="modal-title" id="proizvodModalDialogLabel">{{title}}</h5>
@@ -7,15 +7,15 @@
             </div>
                 
             <div class="modal-body row">
-                <div class="col-12" [ngClass]="{ 'col-lg-6': tip > 1 }">
+                <div class="col-12" [ngClass]="{ 'col-lg-6': tipProizvoda === 'RacunarskaKomponenta' }">
                     <div class="mb-2">
                         <label for="inputTip">Tip proizvoda*</label>
-                        <select (change)="onChangeTip()" id="inputTip" class="form-select border-secondary" formControlName="tip" aria-label="Izaberite tip proizvoda...">
+                        <select (change)="onChangeTip()" id="inputTip" class="form-select border-secondary" formControlName="tipProizvoda" aria-label="Izaberite tip proizvoda...">
                             <option value="" selected>Izaberite tip proizvoda...</option>
-                            <option value="1">Računar</option>
-                            <option value="2">Računarska komponenta</option>
+                            <option value="Racunar">Računar</option>
+                            <option value="RacunarskaKomponenta">Računarska komponenta</option>
                         </select>
-                        <small class="text-danger" *ngIf="form.controls['tip'].dirty && form.hasError('required', 'tipProizvoda')">
+                        <small class="text-danger" *ngIf="form.controls['tipProizvoda'].dirty && form.hasError('required', 'tipProizvoda')">
                             *Tip je obavezno polje
                         </small>
                     </div>
@@ -50,40 +50,73 @@
                     </div>
                 </div>
 
-                <div [hidden]="tip !== 2" class="col-12 col-lg-6">
+                <div [hidden]="tipProizvoda !== 'RacunarskaKomponenta'" class="col-12 col-lg-6">
                     <div class="mb-2">
-                        <label for="inputTipKomponente">Tip računarske komponente</label>
-                        <select (change)="onChangeTipKomponente()" id="inputTipKomponente" class="form-select border-secondary" formControlName="tipKomponente" aria-label="Izaberite tip računarske komponente...">
+                        <label for="inputType">Tip računarske komponente</label>
+                        <select (change)="onChangeTipKomponente()" id="inputType" class="form-select border-secondary" formControlName="type" aria-label="Izaberite tip računarske komponente...">
                             <option value="" selected>Izaberite tip računarske komponente...</option>
                             <option value="CPU">Procesor</option>
                             <option value="GPU">Grafička karta</option>
+                            <option value="RAM">RAM memorija</option>
                         </select>
-                        <!-- <small class="text-danger" *ngIf="form.controls['tipKomponente'].dirty && form.hasError('required', 'tip')">
+                        <!-- <small class="text-danger" *ngIf="form.controls['type'].dirty && form.hasError('required', 'type')">
                             *Tip je obavezno polje
                         </small> -->
                     </div>
 
-                    <div [hidden]="tipKomponente !== 'CPU'" class="mb-2">
+                    <div [hidden]="type !== 'CPU'" class="mb-2">
                         <div class="mb-2">
                             <label for="inputCPUSocket">Socket</label>
-                            <input id="inputCPUSocket" class="form-control border-secondary" type="text" formControlName="socket" placeholder="Socket" />
+                            <input id="inputCPUSocket" class="form-control border-secondary" type="text" formControlName="cpuSocket" placeholder="Socket" />
                         </div>
 
                         <div class="mb-2">
                             <label for="inputCPUFrekvencija">Frekvencija (u GHz)</label>
-                            <input id="inputCPUFrekvencija" class="form-control border-secondary" type="number" formControlName="frekvencija" min="0" placeholder="Frekvencija (u GHz)" />
+                            <input id="inputCPUFrekvencija" class="form-control border-secondary" type="number" formControlName="cpuFrekvencija" min="0" placeholder="Frekvencija (u GHz)" />
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="inputCPUBrojJezgara">Broj jezgara</label>
+                            <input id="inputCPUBrojJezgara" class="form-control border-secondary" type="number" formControlName="cpuBrojJezgara" min="0" placeholder="Broj jezgara" />
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="inputCPUBrojNiti">Broj niti</label>
+                            <input id="inputCPUBrojNiti" class="form-control border-secondary" type="number" formControlName="cpuBrojNiti" min="0" placeholder="Broj niti" />
                         </div>
                     </div>
                     
-                    <div [hidden]="tipKomponente !== 'GPU'" class="mb-2">
+                    <div [hidden]="type !== 'GPU'" class="mb-2">
                         <div class="mb-2">
                             <label for="inputGPUFrekvencija">Frekvencija (u MHz)</label>
-                            <input id="inputGPUFrekvencija" class="form-control border-secondary" type="number" formControlName="frekvencija" min="0" placeholder="Frekvencija (u MHz)" />
+                            <input id="inputGPUFrekvencija" class="form-control border-secondary" type="number" formControlName="gpuFrekvencija" min="0" placeholder="Frekvencija (u MHz)" />
                         </div>
     
                         <div class="mb-2">
-                            <label for="inputGPUVRAM">VRAM</label>
-                            <input id="inputGPUVRAM" class="form-control border-secondary" type="number" formControlName="VRAM" min="0" placeholder="VRAM" />
+                            <label for="inputGPUVRAM">VRAM (u GB)</label>
+                            <input id="inputGPUVRAM" class="form-control border-secondary" type="number" formControlName="gpuVRAM" min="0" placeholder="VRAM" />
+                        </div>
+                    </div>
+
+                    <div [hidden]="type !== 'RAM'" class="mb-2">
+                        <div class="mb-2">
+                            <label for="inputRAMTipMemorije">Tip memorije</label>
+                            <input id="inputRAMTipMemorije" class="form-control border-secondary" type="text" formControlName="ramTipMemorije"  placeholder="Tip memorije" />
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="inputRAMBrojModula">Broj RAM modula</label>
+                            <input id="inputRAMBrojModula" class="form-control border-secondary" type="number" formControlName="ramBrojModula" min="0" placeholder="Broj RAM modula" />
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="inputRAMVelicina">Veličina (u GB)</label>
+                            <input id="inputRAMBrojModula" class="form-control border-secondary" type="number" formControlName="ramVelicina" min="0" placeholder="Veličina" />
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="inputRAMFrekvencija">Frekvencija (u MHz)</label>
+                            <input id="inputRAMFrekvencija" class="form-control border-secondary" type="number" formControlName="ramFrekvencija" min="0" placeholder="Frekvencija (u MHz)" />
                         </div>
                     </div>
                 </div>

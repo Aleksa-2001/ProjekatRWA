@@ -1,14 +1,8 @@
 <div *ngIf="komponenta$ | async as komponenta">
-    <h4 class="m-0">Tip komponente: {{komponenta.tipKomponente}}</h4>
-    <div [ngSwitch]="komponenta.tipKomponente">
-        <div *ngSwitchCase="'CPU'">
-            <app-cpu [komponenta]="komponenta"></app-cpu>
-        </div>
-        <div *ngSwitchCase="'GPU'">
-            <app-gpu [komponenta]="komponenta"></app-gpu>
-        </div>
-        <div *ngSwitchCase="'RAM'">
-            <app-ram [komponenta]="komponenta"></app-ram>
-        </div>
+    <h4 class="m-0">Tip komponente: {{komponenta.type}}</h4>
+    <div [ngSwitch]="komponenta.type">
+        <app-cpu *ngSwitchCase="'CPU'" [komponenta]="komponenta"></app-cpu>
+        <app-gpu *ngSwitchCase="'GPU'" [komponenta]="komponenta"></app-gpu>
+        <app-ram *ngSwitchCase="'RAM'" [komponenta]="komponenta"></app-ram>
     </div>
 </div>

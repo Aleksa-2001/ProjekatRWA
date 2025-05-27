@@ -8,9 +8,10 @@ import { ProdavniceModule } from 'src/prodavnice/prodavnice.module';
 import { CPU } from './entities/komponente/cpu.entity';
 import { GPU } from './entities/komponente/gpu.entity';
 import { RacunarskaKomponenta } from './entities/racunarska-komponenta.entity';
+import { RAM } from './entities/komponente/ram.entity';
 
 @Module({
-  imports: [ProdavniceModule, TypeOrmModule.forFeature([Proizvod, RacunarskaKomponenta, CPU, GPU])],
+  imports: [ProdavniceModule, TypeOrmModule.forFeature([Proizvod, RacunarskaKomponenta, CPU, GPU, RAM])],
   controllers: [ProizvodiController],
   providers: [ProizvodiService, ProdavniceService]
 })

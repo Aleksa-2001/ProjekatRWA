@@ -4,10 +4,12 @@ import { ProdavniceService } from 'src/prodavnice/prodavnice.service';
 import { ProizvodDto } from './entities/proizvod.dto';
 import { CPUDto } from './entities/komponente/cpu.dto';
 import { GPUDto } from './entities/komponente/gpu.dto';
+import { RAMDto } from './entities/komponente/ram.dto';
 
 export type ProizvodTypeDto = 
     CPUDto |
-    GPUDto
+    GPUDto |
+    RAMDto
 
 @Controller()
 export class ProizvodiController {
@@ -31,7 +33,7 @@ export class ProizvodiController {
 
     @Post('proizvod')
     public addProizvod(@Body() dto: ProizvodTypeDto) {
-        switch (dto.tip) {
+        switch (dto.type) {
             case 'Racunar':
                 return "Racunar"
             case 'RacunarskaKomponenta':
@@ -40,14 +42,16 @@ export class ProizvodiController {
                 return this.service.createCPU(dto as CPUDto)
             case "GPU":
                 return this.service.createGPU(dto as GPUDto)
+            case "RAM":
+                return this.service.createRAM(dto as RAMDto)
             default:
-                throw new BadRequestException('Tip komponente nije prepoznat')
+                throw new BadRequestException('Tip proizvoda nije prepoznat')
         }
     }
     
     @Put('proizvod/:id')
     public updateProizvod(@Param('id', ParseIntPipe) proizvodID: number, @Body() dto: ProizvodTypeDto) {
-        switch (dto.tip) {
+        switch (dto.type) {
             case 'Racunar':
                 return "Racunar"
             case 'RacunarskaKomponenta':
@@ -56,8 +60,10 @@ export class ProizvodiController {
                 return this.service.updateCPU(proizvodID, dto as CPUDto)
             case "GPU":
                 return this.service.updateGPU(proizvodID, dto as GPUDto)
+            case "RAM":
+                return this.service.updateRAM(proizvodID, dto as RAMDto)
             default:
-                throw new BadRequestException('Tip komponente nije prepoznat')
+                throw new BadRequestException('Tip proizvoda nije prepoznat')
         }
     }
 
