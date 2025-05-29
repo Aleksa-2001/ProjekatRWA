@@ -12,6 +12,11 @@ export class ProdavniceController {
         return this.service.getProdavnice()
     }
 
+    @Get('prodavnice/:search')
+    public getProdavniceBySearch(@Param('search') search: string) {
+        return this.service.getProdavniceBySearch(search)
+    }
+
     @Get('prodavnica/:id')
     public getProdavnicaByID(@Param('id', ParseIntPipe) prodavnicaID: number) {
         return this.service.getProdavnicaByID(prodavnicaID)

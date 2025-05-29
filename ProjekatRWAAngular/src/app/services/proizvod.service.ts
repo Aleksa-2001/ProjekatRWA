@@ -15,12 +15,19 @@ export class ProizvodService {
       .get<Proizvod[]>("http://localhost:3000/" + "proizvodi")
       .pipe(catchError(errorHandler))
   }
-
+  
   getProizvodi(prodavnicaID: number) {
     return this.httpClient
       .get<Proizvod[]>("http://localhost:3000/" + `proizvodi/${prodavnicaID}`)
       .pipe(catchError(errorHandler))
   }
+  
+  getProizvodiBySearch(search: string) {
+    return this.httpClient
+      .get<Proizvod[]>("http://localhost:3000/" + `proizvodi?search=${search}`)
+      .pipe(catchError(errorHandler))
+  }
+
 
   getProizvodByID(proizvodID: number) {
     return this.httpClient
@@ -42,9 +49,9 @@ export class ProizvodService {
       .pipe(catchError(errorHandler))
   }
 
-  deleteProdavnica(proizvodID: number) {
+  deleteProizvod(proizvodID: number) {
     return this.httpClient
-      .delete<Proizvod>("http://localhost:3000/" + `proizvod/${proizvodID}`)
+      .delete<number>("http://localhost:3000/" + `proizvod/${proizvodID}`)
       .pipe(catchError(errorHandler))
   }
 

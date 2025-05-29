@@ -1,28 +1,30 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../store/app-state';
-import { take, tap } from 'rxjs';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-search',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchComponent { 
+export class SearchComponent implements OnInit { 
 
-  constructor(private title: Title, private route: ActivatedRoute, private router: Router, private store: Store<AppState>) { 
-    this.route.queryParams.pipe(
-      take(1),
-      tap((params) => {
-        const query = params['q']
-        this.title.setTitle(`Pretraga: \"${query}\" - ProjekatRWA`)
-      })
-    ).subscribe()
+  @Input() query!: string
+  searchForm!: FormGroup
 
+  constructor(private fb: FormBuilder, private router: Router) { }
+
+  ngOnInit(): void {
+    this.searchForm = this.fb.group({
+      inputSearch: [this.query, Validators.required]
+    })
+  }
+
+  onSubmit() {
+    const data = this.searchForm.value
+    this.router.navigate(['ng/search'], { queryParams: { q: data.inputSearch } })
   }
 
 }

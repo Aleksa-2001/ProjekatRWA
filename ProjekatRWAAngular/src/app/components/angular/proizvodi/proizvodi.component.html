@@ -2,7 +2,4 @@
     <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xxl-4 mb-3" *ngFor="let proizvod of proizvodi">
         <app-proizvod-item [proizvod]="proizvod"></app-proizvod-item>
     </div>
-    <div *ngIf="proizvodi.length === 0">
-        <p>Nema unetih proizvoda!</p>
-    </div>
 </div>

@@ -23,6 +23,18 @@ export class ProdavniceEffects {
         )
     })
 
+    loadBySearch$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ProdavniceActions.loadItemsBySearch),
+            mergeMap(({ search }) => this.service.getProdavniceBySearch(search)
+                .pipe(
+                    map((prodavnice) => (ProdavniceActions.loadItemsSuccess({prodavnice}))),
+                    catchError(() => of({ type: "[Prodavnica] Load error" }))
+                )
+            )
+        )
+    })
+
     loadProdavnica$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ProdavniceActions.loadSelectedItem),
@@ -54,6 +66,18 @@ export class ProdavniceEffects {
                 .pipe(
                     map((selectedProdavnica) => (ProdavniceActions.updateItemSuccess({selectedProdavnica}))),
                     catchError(() => of({ type: "[Prodavnica] Update error" }))
+                )
+            )
+        )
+    })
+
+    deleteProdavnica$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ProdavniceActions.deleteItem),
+            mergeMap(({ selectedProdavnicaID }) => this.service.deleteProdavnica(selectedProdavnicaID)
+                .pipe(
+                    map((prodavnicaID) => (ProdavniceActions.deleteItemSuccess({prodavnicaID}))),
+                    catchError(() => of({ type: "[Prodavnica] Delete error" }))
                 )
             )
         )

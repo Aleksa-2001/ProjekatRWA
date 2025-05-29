@@ -1,0 +1,14 @@
+<div class="container my-3">
+    <h1>Pretraga</h1>
+    <app-search class="mb-3" [query]="query"></app-search>
+    <div class="mb-3" *ngIf="query" [hidden]="brojProdavnica === 0">
+        <h3>Prodavnice</h3>
+        <app-prodavnice (brojProdavnica)="getBrojProdavnica($event)"></app-prodavnice>
+    </div>
+    <div *ngIf="query" [hidden]="brojProizvoda === 0">
+        <h3>Proizvodi</h3>
+        <app-proizvodi (brojProizvoda)="getBrojProizvoda($event)"></app-proizvodi>
+    </div>
+    <p *ngIf="query && brojProdavnica === 0 && brojProizvoda === 0">Nije pronađen nijedan rezultat!</p>
+    <p *ngIf="!query">Molimo da popunite polje za pretragu!</p>
+</div>

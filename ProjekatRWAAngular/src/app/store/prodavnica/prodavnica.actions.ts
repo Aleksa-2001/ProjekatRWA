@@ -5,6 +5,13 @@ export const loadItems = createAction(
     "[Prodavnica] Ucitaj listu"
 )
 
+export const loadItemsBySearch = createAction(
+    "[Prodavnica] Ucitaj listu putem pretrage",
+    props<{
+        search: string
+    }>()
+)
+
 export const loadItemsSuccess = createAction(
     "[Prodavnica] Ucitavanje liste je uspesno",
     props<{
@@ -63,5 +70,19 @@ export const updateItemSuccess = createAction(
     "[Prodavnica] Izmena prodavnice je uspesna",
     props<{
         selectedProdavnica: Prodavnica
+    }>()
+)
+
+export const deleteItem = createAction(
+    "[Prodavnica] Obrisi prodavnicu",
+    props<{
+        selectedProdavnicaID: number
+    }>()
+)
+
+export const deleteItemSuccess = createAction(
+    "[Prodavnica] Prodavnica uspesno obrisana",
+    props<{
+        prodavnicaID: number
     }>()
 )

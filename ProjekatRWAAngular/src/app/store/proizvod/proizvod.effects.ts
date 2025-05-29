@@ -24,7 +24,19 @@ export class ProizvodiEffects {
         )
     })
 
-    loadProdavnica$ = createEffect(() => {
+    loadBySearch$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ProizvodiActions.loadItemsBySearch),
+            mergeMap(({ search }) => this.service.getProizvodiBySearch(search)
+                .pipe(
+                    map((proizvodi) => (ProizvodiActions.loadItemsSuccess({proizvodi}))),
+                    catchError(() => of({ type: "[Proizvod] Load error" }))
+                )
+            )
+        )
+    })
+
+    loadProizvod$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ProizvodiActions.loadSelectedItem),
             mergeMap(({ selectedProizvodID }) => this.service.getProizvodByID(selectedProizvodID)
@@ -53,8 +65,23 @@ export class ProizvodiEffects {
             ofType(ProizvodiActions.updateItem),
             mergeMap(({ selectedProizvodID, selectedProizvod }) => this.service.updateProizvod(selectedProizvodID, selectedProizvod)
                 .pipe(
-                    map((selectedProizvod) => (ProizvodiActions.updateItemSuccess({selectedProizvod}))),
+                    map((selectedProizvod) => (ProizvodiActions.updateItemSuccess({ 
+                        proizvod: { id: selectedProizvod.id, changes: selectedProizvod }, 
+                        selectedProizvod: selectedProizvod
+                    }))),
                     catchError(() => of({ type: "[Proizvod] Update error" }))
+                )
+            )
+        )
+    })
+
+    deleteProizvod$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ProizvodiActions.deleteItem),
+            mergeMap(({ selectedProizvodID }) => this.service.deleteProizvod(selectedProizvodID)
+                .pipe(
+                    map((proizvodID) => (ProizvodiActions.deleteItemSuccess({proizvodID}))),
+                    catchError(() => of({ type: "[Proizvod] Delete error" }))
                 )
             )
         )

@@ -7,8 +7,10 @@
     <div class="row mb-3">
         <img class="col-12 col-md-6 col-xl-5" src={{proizvod.slika}} alt={{proizvod.slika}}/>
         <div class="col-12 col-md-6 col-xl-7">
-            <h2>{{proizvod.proizvodjac}} {{proizvod.naziv}}</h2>
+            <h2>{{proizvod.naziv}}</h2>
             
+            <h3>Proizvodjac: {{proizvod.proizvodjac}}</h3>
+
             <h3 class="m-0">
                 Tip proizvoda:
                 <span [ngSwitch]="proizvod.tipProizvoda">

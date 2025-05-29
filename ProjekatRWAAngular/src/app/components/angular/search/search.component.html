@@ -1,3 +1,4 @@
-<div class="container my-3">
-    <h1>Pretraga</h1>
-</div>
+<form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="d-flex search-box flex-row">
+    <input id="inputSearch" class="form-control form-control-lg border-secondary" type="search" formControlName="inputSearch" placeholder="Pretraga"/>
+    <button [disabled]="!this.searchForm.valid" class="btn btn-lg btn-primary" type="submit"><i class="bi bi-search"></i></button>
+</form>

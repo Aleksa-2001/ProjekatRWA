@@ -1,12 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { ProdavnicaItemComponent } from "./prodavnica-item/prodavnica-item.component";
 import { CommonModule, NgFor } from '@angular/common';
-import { Observable, of } from 'rxjs';
+import { filter, Observable, of, tap } from 'rxjs';
 import { Prodavnica } from '../../../models/prodavnica';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app-state';
 import { selectProdavnice } from '../../../store/prodavnica/prodavnica.selectors';
-import * as ProdavniceActions from '../../../store/prodavnica/prodavnica.actions'
 
 @Component({
   selector: 'app-prodavnice',
@@ -19,9 +18,14 @@ export class ProdavniceComponent {
 
   prodavnice$: Observable<readonly Prodavnica[]> = of([])
 
+  @Output() brojProdavnica = new EventEmitter<number>()
+
   constructor(private store: Store<AppState>) { 
-    this.store.dispatch(ProdavniceActions.loadItems())
     this.prodavnice$ = this.store.select(selectProdavnice)
+    this.prodavnice$.pipe(
+      filter(prodavnice => !!prodavnice),
+      tap(prodavnice => this.brojProdavnica.emit(prodavnice.length))
+    ).subscribe()
   }
 
 }

@@ -52,8 +52,7 @@ export class ProizvodPageComponent implements OnInit, OnDestroy {
 
     this.proizvod$.pipe(
       filter(proizvod => !!proizvod),
-      take(1),
-      tap(proizvod => this.title.setTitle(`${proizvod.proizvodjac} ${proizvod.naziv} - ProjekatRWA`))
+      tap(proizvod => this.title.setTitle(`${proizvod.naziv} - ProjekatRWA`))
     ).subscribe()
   }
 

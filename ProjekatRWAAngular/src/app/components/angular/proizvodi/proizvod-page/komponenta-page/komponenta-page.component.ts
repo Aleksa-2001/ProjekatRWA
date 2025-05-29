@@ -6,9 +6,8 @@ import { GPUComponent } from "./gpu/gpu.component";
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../../store/app-state';
 import { selectSelectedProizvod } from '../../../../../store/proizvod/proizvod.selectors';
-import { filter, Observable, of, take, tap } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { RAMComponent } from './ram/ram.component';
-import { Proizvod } from '../../../../../models/proizvod';
 
 @Component({
   selector: 'app-komponenta-page',

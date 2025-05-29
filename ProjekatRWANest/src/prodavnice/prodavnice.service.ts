@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Prodavnica } from './entities/prodavnica.entity';
-import { Repository } from 'typeorm';
+import { ILike, Like, Repository } from 'typeorm';
 import { ProdavnicaDto } from './entities/prodavnica.dto';
 
 @Injectable()
@@ -26,20 +26,22 @@ export class ProdavniceService {
     //    }
     //]
 
-    public getProdavnice() {
+    public async getProdavnice() {
         //return this.lista
-        return this.prodavnicaRepository.find()
+        return await this.prodavnicaRepository.find()
     }
 
-    public getProdavnicaByID(prodavnicaID: number) {
+    public async getProdavniceBySearch(search: string) {
+        return await this.prodavnicaRepository.findBy({
+            naziv: ILike(`%${search.toLowerCase()}%`)
+        })
+    }
+
+    public async getProdavnicaByID(prodavnicaID: number) {
         //const prodavnica = this.lista.find(prodavnica => prodavnica.id === prodavnicaID)
-        return this.prodavnicaRepository.findOneBy({ id: prodavnicaID })/*.then(prodavnica => {
-            console.log(prodavnica)
-            if (prodavnica) return prodavnica
-            else throw new HttpException(`Prodavnica sa ID-jem ${prodavnicaID} ne postoji!`, HttpStatus.NOT_FOUND)
-        }).catch(error => error.status).finally(() => console.log(prodavnica))*/
-        //if (prodavnica) return prodavnica
-        //else throw new HttpException(`Prodavnica sa ID-jem ${prodavnicaID} ne postoji!`, HttpStatus.NOT_FOUND)
+        if (await this.prodavnicaRepository.existsBy({ id: prodavnicaID }))
+            return await this.prodavnicaRepository.findOneBy({ id: prodavnicaID })
+        else throw new NotFoundException(`Prodavnica sa ID-jem ${prodavnicaID} nije pronadjena!`)
     }
 
     public async create(prodavnicaDto: ProdavnicaDto) {
@@ -48,18 +50,21 @@ export class ProdavniceService {
     }
 
     public async update(prodavnicaID: number, prodavnicaDto: ProdavnicaDto) {
-        //return await this.prodavnicaRepository.save({ 
-        //    id: prodavnicaID,
-        //    prodavnicaDto
-        //})
-        return await this.prodavnicaRepository.update(prodavnicaID, prodavnicaDto)
-            .then(res => {
-                if (res.affected === 1)
-                    return this.getProdavnicaByID(prodavnicaID)
+        if (await this.prodavnicaRepository.existsBy({ id: prodavnicaID })) {
+            return await this.prodavnicaRepository.update(prodavnicaID, prodavnicaDto).then(res => {
+                if (res.affected === 1) return this.getProdavnicaByID(prodavnicaID)
             })
+        }
+        else throw new NotFoundException(`Prodavnica sa ID-jem ${prodavnicaID} nije pronadjena!`)
     }
 
     public async delete(prodavnicaID: number) {
-        return await this.prodavnicaRepository.delete(prodavnicaID)
+        if (await this.prodavnicaRepository.existsBy({ id: prodavnicaID })) {
+            return await this.prodavnicaRepository.delete(prodavnicaID).then(res => {
+                if (res.affected === 1) return prodavnicaID
+            })
+        }
+        else throw new NotFoundException(`Prodavnica sa ID-jem ${prodavnicaID} nije pronadjena!`)
+        
     }
 }

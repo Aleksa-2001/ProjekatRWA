@@ -9,16 +9,19 @@ import { AppState } from '../../store/app-state';
 import { isAdmin } from '../../store/auth/auth.selectors';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import * as ProdavniceActions from '../../store/prodavnica/prodavnica.actions'
+import { SearchComponent } from "./search/search.component";
 
 @Component({
   selector: 'app-angular',
   imports: [
-    CommonModule, 
+    CommonModule,
     ReactiveFormsModule,
-    NgIf, 
-    ProdavniceComponent, 
-    DialogComponent
-  ],
+    NgIf,
+    ProdavniceComponent,
+    DialogComponent,
+    SearchComponent
+],
   templateUrl: './angular.component.html',
   styleUrl: './angular.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -33,14 +36,16 @@ export class AngularComponent {
     this.isAdmin$ = this.store.select(isAdmin)
     this.title.setTitle("Angular - ProjekatRWA")
 
-    this.searchForm = this.fb.group({
-      inputSearch: ['', Validators.required]
-    })
+    this.store.dispatch(ProdavniceActions.loadItems())
+
+    //this.searchForm = this.fb.group({
+    //  inputSearch: ['', Validators.required]
+    //})
   }
 
-  onSubmit() {
-    const data = this.searchForm.value
-    this.router.navigate(['ng/search'], { queryParams: { q: data.inputSearch } })
-  }
+  //onSubmit() {
+  //  const data = this.searchForm.value
+  //  this.router.navigate(['ng/search'], { queryParams: { q: data.inputSearch } })
+  //}
 
 }

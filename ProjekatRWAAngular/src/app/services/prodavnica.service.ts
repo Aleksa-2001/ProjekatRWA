@@ -16,6 +16,12 @@ export class ProdavnicaService {
       .pipe(catchError(errorHandler))
   }
 
+  getProdavniceBySearch(search: string) {
+    return this.httpClient
+      .get<Prodavnica[]>("http://localhost:3000/" + `prodavnice/${search}`)
+      .pipe(catchError(errorHandler))
+  }
+
   getProdavnicaByID(prodavnicaID: number) {
     return this.httpClient
       .get<Prodavnica>("http://localhost:3000/" + `prodavnica/${prodavnicaID}`)
@@ -38,7 +44,7 @@ export class ProdavnicaService {
 
   deleteProdavnica(prodavnicaID: number) {
     return this.httpClient
-      .delete<Prodavnica>("http://localhost:3000/" + `prodavnica/${prodavnicaID}`)
+      .delete<number>("http://localhost:3000/" + `prodavnica/${prodavnicaID}`)
       .pipe(catchError(errorHandler))
   }
   

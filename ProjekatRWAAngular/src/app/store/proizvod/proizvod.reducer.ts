@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store"
-import { EntityState, createEntityAdapter } from '@ngrx/entity';
+import { EntityState, Update, createEntityAdapter } from '@ngrx/entity';
 import { Proizvod } from "../../models/proizvod";
 import * as ProizvodiActions from "./proizvod.actions"
 
@@ -40,17 +40,17 @@ export const proizvodReducer = createReducer(
     on(ProizvodiActions.addItemSuccess, (state, {proizvod}) => 
         adapter.addOne(proizvod, state)
     ),
-    on(ProizvodiActions.updateItemSuccess, (state, {selectedProizvod}) => ({
-        ...state,
-        selectedProizvod: selectedProizvod
-    }))
-    //on(KomponenteActions.setItem, (state, {komponentaID}) => {
-    //    const targetKomponenta = state.entities[komponentaID]
-    //    if (targetKomponenta) {
-    //        return adapter.setOne({...targetKomponenta}, state)
-    //    }
-    //    else {
-    //        return state
-    //    }
-    //})
+    on(ProizvodiActions.updateItemSuccess, (state, {proizvod, selectedProizvod}) => (
+        adapter.updateOne(proizvod, {
+            ...state,
+            selectedProizvod: selectedProizvod
+        })
+    )),
+    on(ProizvodiActions.deleteItemSuccess, (state, {proizvodID}) => (
+        adapter.removeOne(proizvodID, {
+            ...state,
+            selectedProizvodID: -1,
+            selectedProizvod: null
+        })
+    ))
 )

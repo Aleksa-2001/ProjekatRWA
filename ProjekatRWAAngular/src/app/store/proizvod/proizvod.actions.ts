@@ -1,10 +1,18 @@
 import { createAction, props } from "@ngrx/store";
 import { Proizvod } from "../../models/proizvod";
+import { Update } from "@ngrx/entity";
 
 export const loadItems = createAction(
     "[Proizvod] Ucitaj listu",
     props<{
         prodavnicaID: number
+    }>()
+)
+
+export const loadItemsBySearch = createAction(
+    "[Proizvod] Ucitaj listu putem pretrage",
+    props<{
+        search: string
     }>()
 )
 
@@ -65,14 +73,21 @@ export const updateItem = createAction(
 export const updateItemSuccess = createAction(
     "[Proizvod] Izmena proizvoda je uspesna",
     props<{
+        proizvod: Update<Proizvod>
         selectedProizvod: Proizvod
     }>()
 )
 
-export const setItem = createAction(
-    "[Proizvod] Promeni cenu (test)",
+export const deleteItem = createAction(
+    "[Proizvod] Obrisi proizvod",
     props<{
-        proizvodID: number,
-        novaCena: number
+        selectedProizvodID: number
+    }>()
+)
+
+export const deleteItemSuccess = createAction(
+    "[Proizvod] Proizvod uspesno obrisan",
+    props<{
+        proizvodID: number
     }>()
 )

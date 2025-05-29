@@ -3,10 +3,7 @@
         <div class="row h-100 align-items-center">
             <div class="col-12 text-center shadow-1-strong text-white">
                 <h1 class="mb-3">Angular</h1>
-                <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="d-flex search-box flex-row mx-auto">
-                    <input id="inputSearch" class="form-control form-control-lg border-secondary" type="search" formControlName="inputSearch" minlength=1 placeholder="Pretraga"/>
-                    <button [disabled]="!this.searchForm.valid" class="btn btn-lg btn-primary" type="submit"><i class="bi bi-search"></i></button>
-                </form>
+                <app-search class="search mx-auto"></app-search>
             </div>
         </div>
     </div>

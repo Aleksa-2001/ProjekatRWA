@@ -5,13 +5,14 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app-state';
 import { selectSelectedProdavnica } from '../../../../store/prodavnica/prodavnica.selectors';
 import { ActivatedRoute } from '@angular/router';
-import * as ProdavniceActions from '../../../../store/prodavnica/prodavnica.actions'
 import { CommonModule, NgIf, NgStyle } from '@angular/common';
 import { ProizvodiComponent } from "../../proizvodi/proizvodi.component";
 import { NotFoundComponent } from "../../../../shared/components/not-found/not-found.component";
 import { Title } from '@angular/platform-browser';
 import { DialogComponent } from "../../dialog/dialog.component";
 import { isAdmin } from '../../../../store/auth/auth.selectors';
+import * as ProdavniceActions from '../../../../store/prodavnica/prodavnica.actions'
+import * as ProizvodiActions from '../../../../store/proizvod/proizvod.actions'
 
 @Component({
   selector: 'app-prodavnica-page',
@@ -36,9 +37,10 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
     this.store.dispatch(ProdavniceActions.loadSelectedItem({ selectedProdavnicaID: this.prodavnicaID }))
     this.prodavnica$ = this.store.select(selectSelectedProdavnica)
 
+    this.store.dispatch(ProizvodiActions.loadItems({ prodavnicaID: this.prodavnicaID }))
+
     this.prodavnica$.pipe(
       filter(prodavnica => !!prodavnica),
-      take(1),
       tap(prodavnica => this.title.setTitle(`${prodavnica.naziv} - ProjekatRWA`))
     ).subscribe()
 

@@ -30,13 +30,13 @@ export class ProizvodDialogComponent implements OnInit {
   proizvod$: Observable<Proizvod | null> = of()
   prodavnica$: Observable<Prodavnica | null> = of()
   proizvodID: number = -1
+  prodavnica: Prodavnica | null = null
 
   constructor(private fb: FormBuilder, private store: Store<AppState>) { }
 
   ngOnInit(): void {
     if (this.title === 'Izmeni proizvod') {
       this.proizvod$ = this.store.select(selectSelectedProizvod)
-      this.prodavnica$ = this.store.select(selectSelectedProdavnica)
 
       this.proizvod$.pipe(
         filter(proizvod => !!proizvod),
@@ -45,6 +45,7 @@ export class ProizvodDialogComponent implements OnInit {
           this.proizvodID = proizvod.id
           this.type = proizvod.type
           this.tipProizvoda = proizvod.tipProizvoda
+          this.prodavnica = proizvod.prodavnica
 
           this.form = this.fb.group({
             type: [proizvod.type],
@@ -74,6 +75,12 @@ export class ProizvodDialogComponent implements OnInit {
       ).subscribe()
     }
     else {
+      this.prodavnica$ = this.store.select(selectSelectedProdavnica)
+      this.prodavnica$.pipe(
+        filter(prodavnica => !!prodavnica),
+        tap(prodavnica => this.prodavnica = prodavnica)
+      ).subscribe()
+
       this.form = this.fb.group({
         type: [''],
         tipProizvoda: ['', Validators.required],
@@ -120,14 +127,8 @@ export class ProizvodDialogComponent implements OnInit {
         cena: value.cena,
         opis: value.opis,
         slika: value.slika,
-        prodavnica: {}
-      }
-
-      this.prodavnica$.pipe(
-        filter(prodavnica => !!prodavnica),
-        take(1),
-        tap(prodavnica => proizvodData.prodavnica = prodavnica)
-      ).subscribe()
+        prodavnica: this.prodavnica
+      }      
 
       let proizvodData: any = {}
 
@@ -139,15 +140,15 @@ export class ProizvodDialogComponent implements OnInit {
             frekvencija: value.cpuFrekvencija,
             brojJezgara: value.cpuBrojJezgara,
             brojNiti: value.cpuBrojNiti
-          };
-          break;
+          }
+          break
         case 'GPU':
           proizvodData = {
             ...proizvodBase,
             frekvencija: value.gpuFrekvencija,
             VRAM: value.gpuVRAM
-          };
-          break;
+          }
+          break
         case 'RAM':
           proizvodData = {
             ...proizvodBase,
@@ -155,11 +156,13 @@ export class ProizvodDialogComponent implements OnInit {
             brojRAMModula: value.ramBrojModula,
             velicina: value.ramVelicina,
             frekvencija: value.ramFrekvencija
-          };
-          break;
+          }
+          break
         default:
-          proizvodData = proizvodBase;
+          proizvodData = proizvodBase
       }
+
+      console.log(proizvodData)
 
       if (this.title === 'Izmeni proizvod') {
         this.store.dispatch(ProizvodiActions.updateItem({ selectedProizvodID: proizvodData.id, selectedProizvod: <Proizvod>proizvodData }))

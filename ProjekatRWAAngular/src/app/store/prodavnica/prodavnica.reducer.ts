@@ -39,5 +39,12 @@ export const prodavnicaReducer = createReducer(
     on(ProdavniceActions.updateItemSuccess, (state, {selectedProdavnica}) => ({
         ...state,
         selectedProdavnica: selectedProdavnica
-    }))
+    })),
+    on(ProdavniceActions.deleteItemSuccess, (state, {prodavnicaID}) => (
+        adapter.removeOne(prodavnicaID, {
+            ...state,
+            selectedProdavnicaID: -1,
+            selectedProdavnica: null
+        })
+    ))
 )

@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Proizvod } from './entities/proizvod.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { CPUDto } from './entities/komponente/cpu.dto';
 import { CPU } from './entities/komponente/cpu.entity';
 import { GPUDto } from './entities/komponente/gpu.dto';
@@ -92,12 +92,12 @@ export class ProizvodiService {
     //    }
     //]
 
-    public getAll() {
+    public async getAll() {
         //return this.lista
         return this.proizvodRepository.find()
     }
 
-    public getProizvodi(prodavnicaID: number) {
+    public async getProizvodi(prodavnicaID: number) {
         //return this.lista.filter(proizvod => proizvod.prodavnica.id == prodavnicaID)
         //return this.proizvodRepository.findBy({ prodavnica: prodavnica })
         return this.proizvodRepository.find({ 
@@ -105,12 +105,23 @@ export class ProizvodiService {
         })
     }
 
+    public async getProizvodiBySearch(search: string) {
+        return await this.proizvodRepository.findBy(
+            [
+                { proizvodjac: ILike(`%${search.toLowerCase()}%`) }, 
+                { naziv: ILike(`%${search.toLowerCase()}%`) }
+            ]
+        )
+    }
+
     public async getProizvodByID(proizvodID: number) {
         //const proizvod = this.lista.find(proizvod => proizvod.id === proizvodID)
-        return await this.proizvodRepository.findOne({
-            where: { id: proizvodID },
-            relations: ['prodavnica']
-        })
+        if (await this.proizvodRepository.existsBy({ id: proizvodID }))
+            return await this.proizvodRepository.findOne({
+                where: { id: proizvodID },
+                relations: ['prodavnica']
+            })
+        else throw new NotFoundException(`Proizvod sa ID-jem ${proizvodID} nije pronadjen!`)
         //if (proizvod) return proizvod
         //else throw new HttpException(`Proizvod sa ID-jem ${proizvodID} ne postoji!`, HttpStatus.NOT_FOUND) 
     }
@@ -136,9 +147,7 @@ export class ProizvodiService {
                 if (res.affected === 1) return await this.getProizvodByID(proizvodID)
             })
         }
-        else {
-            throw new NotFoundException(`Proizvod sa ID-jem ${proizvodID} nije pronadjen!`)
-        }
+        else throw new NotFoundException(`Proizvod sa ID-jem ${proizvodID} nije pronadjen!`)
     }
 
     public async updateGPU(proizvodID: number, dto: GPUDto) {
@@ -147,9 +156,7 @@ export class ProizvodiService {
                 if (res.affected === 1) return this.getProizvodByID(proizvodID)
             })
         }
-        else {
-            throw new NotFoundException(`Proizvod sa ID-jem ${proizvodID} nije pronadjen!`)
-        }
+        else throw new NotFoundException(`Proizvod sa ID-jem ${proizvodID} nije pronadjen!`)
     }
 
     public async updateRAM(proizvodID: number, dto: RAMDto) {
@@ -158,13 +165,16 @@ export class ProizvodiService {
                 if (res.affected === 1) return this.getProizvodByID(proizvodID)
             })
         }
-        else {
-            throw new NotFoundException(`Proizvod sa ID-jem ${proizvodID} nije pronadjen!`)
-        }
+        else throw new NotFoundException(`Proizvod sa ID-jem ${proizvodID} nije pronadjen!`)
     }
 
     public async delete(proizvodID: number) {
-        return await this.proizvodRepository.delete(proizvodID)
+        if (await this.proizvodRepository.existsBy({ id: proizvodID })) {
+            return await this.proizvodRepository.delete(proizvodID).then(res => {
+                if (res.affected === 1) return proizvodID
+            })
+        }
+        else throw new NotFoundException(`Proizvod sa ID-jem ${proizvodID} nije pronadjen!`)
     }
     
 }

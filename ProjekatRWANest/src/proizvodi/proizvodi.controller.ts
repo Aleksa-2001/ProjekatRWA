@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { ProizvodiService } from './proizvodi.service';
 import { ProdavniceService } from 'src/prodavnice/prodavnice.service';
 import { ProizvodDto } from './entities/proizvod.dto';
@@ -16,14 +16,19 @@ export class ProizvodiController {
 
     constructor(private service: ProizvodiService, private prodavniceService: ProdavniceService) { }
     
-    @Get('proizvodi')
-    public getAll() {
-        return this.service.getAll()
-    }
+    //@Get('proizvodi')
+    //public getAll() {
+    //    return this.service.getAll()
+    //}
 
     @Get('proizvodi/:prodavnicaID')
     public getProizvodi(@Param('prodavnicaID', ParseIntPipe) prodavnicaID: number) {
         return this.service.getProizvodi(prodavnicaID)
+    }
+
+    @Get('proizvodi')
+    public getProizvodiBySearch(@Query('search') search: string) {
+        return this.service.getProizvodiBySearch(search)
     }
 
     @Get('proizvod/:id')
