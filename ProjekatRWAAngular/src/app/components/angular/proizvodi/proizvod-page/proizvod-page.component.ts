@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { filter, Observable, of, take, tap } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { filter, Observable, of, tap } from 'rxjs';
 import { Proizvod } from '../../../../models/proizvod';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -13,8 +13,6 @@ import { KomponentaPageComponent } from "./komponenta-page/komponenta-page.compo
 import { Title } from '@angular/platform-browser';
 import { DialogComponent } from "../../dialog/dialog.component";
 import { isAdmin } from '../../../../store/auth/auth.selectors';
-import { selectSelectedProdavnicaID } from '../../../../store/prodavnica/prodavnica.selectors';
-import { Prodavnica } from '../../../../models/prodavnica';
 
 @Component({
   selector: 'app-proizvod-page',

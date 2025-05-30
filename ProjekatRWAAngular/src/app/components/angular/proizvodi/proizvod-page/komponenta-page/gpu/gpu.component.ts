@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { RacunarskaKomponenta } from '../../../../../../models/racunarska-komponenta';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { GPU } from '../../../../../../models/komponente/gpu';
 
 @Component({
@@ -9,13 +8,8 @@ import { GPU } from '../../../../../../models/komponente/gpu';
   styleUrl: './gpu.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GPUComponent implements OnInit {
+export class GPUComponent {
 
-  @Input() komponenta!: RacunarskaKomponenta
-  gpu!: GPU
-
-  ngOnInit(): void {
-    this.gpu = <GPU>this.komponenta
-  }
+  @Input() gpu!: GPU
 
 }

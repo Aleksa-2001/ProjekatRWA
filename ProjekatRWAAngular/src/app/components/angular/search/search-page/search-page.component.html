@@ -5,6 +5,7 @@
         <h3>Prodavnice</h3>
         <app-prodavnice (brojProdavnica)="getBrojProdavnica($event)"></app-prodavnice>
     </div>
+    <hr *ngIf="query && brojProdavnica !== 0 && brojProizvoda !== 0">
     <div *ngIf="query" [hidden]="brojProizvoda === 0">
         <h3>Proizvodi</h3>
         <app-proizvodi (brojProizvoda)="getBrojProizvoda($event)"></app-proizvodi>

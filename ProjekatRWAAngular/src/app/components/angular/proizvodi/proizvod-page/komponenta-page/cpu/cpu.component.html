@@ -1,4 +1,32 @@
-<h5 class="m-0">Socket: {{cpu.socket}}</h5>
-<h5 class="m-0">Frekvencija: {{cpu.frekvencija}}GHz</h5>
-<h5 class="m-0">Broj jezgara: {{cpu.brojJezgara}}</h5>
-<h5 class="m-0">Broj niti: {{cpu.brojNiti}}</h5>
+<div class="row">
+    <div class="col col-5">
+        <h5>Socket</h5>
+    </div>
+    <div class="col">
+        <h5>{{cpu.socket}}</h5>
+    </div>
+</div>
+<div class="row">
+    <div class="col col-5">
+        <h5>Frekvencija</h5>
+    </div>
+    <div class="col">
+        <h5>{{cpu.frekvencija.toFixed(2)}} GHz</h5>
+    </div>
+</div>
+<div class="row">
+    <div class="col col-5">
+        <h5>Broj jezgara</h5>
+    </div>
+    <div class="col">
+        <h5>{{cpu.brojJezgara}}</h5>
+    </div>
+</div>
+<div class="row">
+    <div class="col col-5">
+        <h5>Broj niti</h5>
+    </div>
+    <div class="col">
+        <h5>{{cpu.brojNiti}}</h5>
+    </div>
+</div>

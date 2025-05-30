@@ -1,13 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { RacunarskaKomponenta } from '../../../../../models/racunarska-komponenta';
 import { CommonModule, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { CPUComponent } from './cpu/cpu.component';
 import { GPUComponent } from "./gpu/gpu.component";
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../../../store/app-state';
-import { selectSelectedProizvod } from '../../../../../store/proizvod/proizvod.selectors';
-import { Observable, of } from 'rxjs';
 import { RAMComponent } from './ram/ram.component';
+import { RAM } from '../../../../../models/komponente/ram';
+import { CPU } from '../../../../../models/komponente/cpu';
+import { GPU } from '../../../../../models/komponente/gpu';
 
 @Component({
   selector: 'app-komponenta-page',
@@ -24,14 +23,20 @@ import { RAMComponent } from './ram/ram.component';
   styleUrl: './komponenta-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class KomponentaPageComponent implements OnInit {
+export class KomponentaPageComponent {
   
-  komponenta$: Observable<RacunarskaKomponenta | null> = of()
+  @Input() komponenta!: RacunarskaKomponenta
 
-  constructor(private store: Store<AppState>) { }
+  getCPU(): CPU {
+    return this.komponenta as CPU
+  }
 
-  ngOnInit(): void {
-    this.komponenta$ = this.store.select(selectSelectedProizvod)
+  getGPU(): GPU {
+    return this.komponenta as GPU
+  }
+
+  getRAM(): RAM {
+    return this.komponenta as RAM
   }
 
 }

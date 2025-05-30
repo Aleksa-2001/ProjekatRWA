@@ -4,45 +4,70 @@
         <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#proizvodModalDialog"><i class="bi bi-pencil me-2"></i>Izmeni proizvod</button>
         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModalDialog"><i class="bi bi-trash me-2"></i>Obriši proizvod</button>
     </div>
-    <div class="row mb-3">
-        <img class="col-12 col-md-6 col-xl-5" src={{proizvod.slika}} alt={{proizvod.slika}}/>
-        <div class="col-12 col-md-6 col-xl-7">
+    <div class="main row mb-3">
+        <div class="col-12 col-md-6 col-lg-5">
+            <img class="w-100 border" src={{proizvod.slika}} alt={{proizvod.slika}}/>
+        </div>
+        <div class="col-12 col-md-6 col-lg-7">
             <h2>{{proizvod.naziv}}</h2>
             
-            <h3>Proizvodjac: {{proizvod.proizvodjac}}</h3>
-
-            <h3 class="m-0">
-                Tip proizvoda:
-                <span [ngSwitch]="proizvod.tipProizvoda">
-                    <span *ngSwitchCase="'Racunar'">Računar</span>
-                    <span *ngSwitchCase="'RacunarskaKomponenta'">Računarska komponenta</span>
-                    <span *ngSwitchDefault>Tip proizvoda nije pronadjen!</span>
-                </span>
-            </h3>
+            <a class="text-primary" [routerLink]="['/ng/prodavnica', proizvod.prodavnica.id]" routerLinkActive="router-link-active">{{proizvod.prodavnica.naziv}}</a>
             
-            <div [ngSwitch]="proizvod.tipProizvoda">
-                <div *ngSwitchCase="'Racunar'">
-                    Računar
-                </div>
-                <div *ngSwitchCase="'RacunarskaKomponenta'">
-                    <app-komponenta-page></app-komponenta-page>
-                </div>
-            </div>
             <hr>
+            
+            <h3>Opis proizvoda</h3>
+            <p class="m-0" *ngIf="proizvod.opis">{{proizvod.opis}}</p>
+            <p class="m-0" *ngIf="!proizvod.opis"><i>Nema unetog opisa</i></p>
+
+            <hr>
+
             <h2 class="m-0">Cena: {{proizvod.cena}}RSD</h2>
         </div>
     </div>
 
-    <h3>Opis proizvoda</h3>
-    <p *ngIf="!proizvod.opis"><i>Nema unetog opisa</i></p>
-    <p *ngIf="proizvod.opis">{{proizvod.opis}}</p>
+    <h2 class="mb-3">Specifikacije</h2>
 
-    <a class="text-primary" [routerLink]="['/ng/prodavnica', proizvod.prodavnica.id]" routerLinkActive="router-link-active">{{proizvod.prodavnica.naziv}}</a>
-    
+    <div class="table-responsive">
+        <div class="specs container border border-primary">
+            <div class="head row bg-secondary text-white">
+                <div class="col col-5">
+                    <h5>Atribut</h5>
+                </div>
+                <div class="col">
+                    <h5>Vrednost</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-5">
+                    <h5>Tip proizvoda</h5>
+                </div>
+                <div class="col">
+                    <h5 [ngSwitch]="proizvod.tipProizvoda">
+                        <span *ngSwitchCase="'Racunar'">Računar</span>
+                        <span *ngSwitchCase="'RacunarskaKomponenta'">Računarska komponenta</span>
+                        <span *ngSwitchDefault>Tip proizvoda nije pronađen!</span>
+                    </h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-5">
+                    <h5>Proizvođac</h5>
+                </div>
+                <div class="col">
+                    <h5>{{proizvod.proizvodjac}}</h5>
+                </div>
+            </div>
+            <div [ngSwitch]="proizvod.tipProizvoda">
+                <div *ngSwitchCase="'Racunar'">
+                    Računar
+                </div>
+                <app-komponenta-page *ngSwitchCase="'RacunarskaKomponenta'" [komponenta]="proizvod"></app-komponenta-page>
+            </div>
+        </div>
+    </div>
+
     <app-dialog *ngIf="isAdmin$ | async" [text]="'Izmeni proizvod'"></app-dialog>
     <app-dialog *ngIf="isAdmin$ | async" [text]="'Obriši proizvod'"></app-dialog>
 </div>
 
-<div *ngIf="!(proizvod$ | async)">
-    <app-not-found></app-not-found>
-</div>
+<app-not-found *ngIf="!(proizvod$ | async)"></app-not-found>

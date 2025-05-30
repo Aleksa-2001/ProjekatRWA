@@ -3,7 +3,7 @@
 }
 
 .row {
-  row-gap: 20px;
+  row-gap: 1rem;
 }
 
 img {
@@ -12,12 +12,44 @@ img {
 }
 
 .menu {
-    row-gap: 10px;
-    column-gap: 10px;
+  row-gap: 10px;
+  column-gap: 10px;
 }
 
-@media screen and (max-width: 767px) {
-  img {
-    max-width: 100%;
-  }
+.specs {
+  min-width: 288px;
+}
+
+.specs .row {
+  row-gap: 0;
+  transition: 0.1s;
+}
+
+.specs .row:hover {
+  background-color: #DDDDDD;
+}
+
+.specs .row:nth-child(even) {
+  background-color: #EEEEEE;
+  transition: 0.1s;
+}
+
+.specs .row:nth-child(even):hover {
+  background-color: #DDDDDD;
+}
+
+.specs .col {
+  padding: 0.75rem;
+}
+
+.specs .col h5 {
+  margin: 0;
+}
+
+.specs .head h5 {
+  font-weight: bolder;
+}
+
+.specs .col:first-child h5 {
+  font-weight: bolder;
 }

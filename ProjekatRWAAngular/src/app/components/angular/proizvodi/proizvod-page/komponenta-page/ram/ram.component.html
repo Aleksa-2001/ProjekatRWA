@@ -1,3 +1,24 @@
-<h5 class="m-0">Tip memorije: {{ram.tipMemorije}}</h5>
-<h5 class="m-0">Veličina: {{ram.velicina}}GB ({{ram.brojRAMModula}} x {{ram.velicina / ram.brojRAMModula}}GB)</h5>
-<h5 class="m-0">Frekvencija: {{ram.frekvencija}}MHz</h5>
+<div class="row">
+    <div class="col col-5">
+        <h5>Tip memorije</h5>
+    </div>
+    <div class="col">
+        <h5>{{ram.tipMemorije}}</h5>
+    </div>
+</div>
+<div class="row">
+    <div class="col col-5">
+        <h5>Veličina</h5>
+    </div>
+    <div class="col">
+        <h5>{{ram.velicina}} GB ({{ram.brojRAMModula}} x {{ram.velicina / ram.brojRAMModula}} GB)</h5>
+    </div>
+</div>
+<div class="row">
+    <div class="col col-5">
+        <h5>Frekvencija</h5>
+    </div>
+    <div class="col">
+        <h5>{{ram.frekvencija}} MHz</h5>
+    </div>
+</div>

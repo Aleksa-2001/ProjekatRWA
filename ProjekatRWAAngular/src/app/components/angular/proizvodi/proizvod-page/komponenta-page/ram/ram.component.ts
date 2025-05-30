@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { RacunarskaKomponenta } from '../../../../../../models/racunarska-komponenta';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { RAM } from '../../../../../../models/komponente/ram';
 
 @Component({
@@ -9,13 +8,8 @@ import { RAM } from '../../../../../../models/komponente/ram';
   styleUrl: './ram.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RAMComponent implements OnInit {
+export class RAMComponent {
 
-  @Input() komponenta!: RacunarskaKomponenta
-  ram!: RAM
-
-  ngOnInit(): void {
-    this.ram = <RAM>this.komponenta
-  }
+  @Input() ram!: RAM
 
 }

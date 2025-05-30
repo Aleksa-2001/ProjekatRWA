@@ -1,8 +1,20 @@
-<div *ngIf="komponenta$ | async as komponenta">
-    <h4 class="m-0">Tip komponente: {{komponenta.type}}</h4>
+<div *ngIf="komponenta">
+    <div class="row">
+        <div class="col col-5">
+            <h5>Tip komponente</h5>
+        </div>
+        <div class="col">
+            <h5 [ngSwitch]="komponenta.type">
+                <span *ngSwitchCase="'CPU'">Procesor</span>
+                <span *ngSwitchCase="'GPU'">Grafička karta</span>
+                <span *ngSwitchCase="'RAM'">RAM memorija</span>
+                <span *ngSwitchDefault>Tip komponente nije pronađen!</span>
+            </h5>
+        </div>
+    </div>
     <div [ngSwitch]="komponenta.type">
-        <app-cpu *ngSwitchCase="'CPU'" [komponenta]="komponenta"></app-cpu>
-        <app-gpu *ngSwitchCase="'GPU'" [komponenta]="komponenta"></app-gpu>
-        <app-ram *ngSwitchCase="'RAM'" [komponenta]="komponenta"></app-ram>
+        <app-cpu *ngSwitchCase="'CPU'" [cpu]="getCPU()"></app-cpu>
+        <app-gpu *ngSwitchCase="'GPU'" [gpu]="getGPU()"></app-gpu>
+        <app-ram *ngSwitchCase="'RAM'" [ram]="getRAM()"></app-ram>
     </div>
 </div>

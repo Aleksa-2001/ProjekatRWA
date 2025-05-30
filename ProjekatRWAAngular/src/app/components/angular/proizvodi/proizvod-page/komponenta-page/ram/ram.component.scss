@@ -1,3 +1,33 @@
 :host {
   display: block;
 }
+
+.col {
+  padding: 0.75rem;
+}
+
+.col h5 {
+  margin: 0;
+}
+
+.row {
+  row-gap: 0;
+  transition: 0.1s;
+}
+
+.row:hover {
+  background-color: #DDDDDD;
+}
+
+.row:nth-child(even) {
+  background-color: #EEEEEE;
+  transition: 0.1s;
+}
+
+.row:nth-child(even):hover {
+  background-color: #DDDDDD;
+}
+
+.col:first-child h5 {
+  font-weight: bolder;
+}
