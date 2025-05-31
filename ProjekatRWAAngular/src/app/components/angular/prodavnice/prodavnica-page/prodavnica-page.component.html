@@ -17,7 +17,7 @@
     </header>
 
     <div class="container my-3">
-        <div *ngIf="isAdmin$ | async" class="menu mb-3 d-flex flex-column flex-sm-row">
+        <div *ngIf="isAdmin$ | async" class="mb-3 d-flex flex-column flex-sm-row gap-2">
             <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#prodavnicaModalDialog"><i class="bi bi-pencil me-2"></i>Izmeni prodavnicu</button>
             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModalDialog"><i class="bi bi-trash me-2"></i>Obriši prodavnicu</button>
         </div>
@@ -27,8 +27,7 @@
         <p *ngIf="prodavnica.opis">{{prodavnica.opis}}</p>
 
         <hr>
-
-        <h1>Proizvodi</h1>
+        
         <div *ngIf="isAdmin$ | async" class="mb-3">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#proizvodModalDialog"><i class="bi bi-plus-lg me-2"></i>Dodaj proizvod</button>
         </div>
@@ -40,7 +39,4 @@
     <app-dialog *ngIf="isAdmin$ | async" [text]="'Dodaj proizvod'"></app-dialog>
 </div>
 
-
-<div *ngIf="!(prodavnica$ | async)">
-    <app-not-found></app-not-found>
-</div>
+<app-not-found *ngIf="!(prodavnica$ | async)"></app-not-found>

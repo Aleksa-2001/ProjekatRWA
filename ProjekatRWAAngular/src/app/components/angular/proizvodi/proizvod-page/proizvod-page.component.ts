@@ -6,7 +6,6 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app-state';
 import { CommonModule, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import * as ProizvodiActions from '../../../../store/proizvod/proizvod.actions'
-import * as ProdavniceActions from '../../../../store/prodavnica/prodavnica.actions'
 import { selectSelectedProizvod } from '../../../../store/proizvod/proizvod.selectors';
 import { NotFoundComponent } from "../../../../shared/components/not-found/not-found.component";
 import { KomponentaPageComponent } from "./komponenta-page/komponenta-page.component";
@@ -26,7 +25,7 @@ import { isAdmin } from '../../../../store/auth/auth.selectors';
     KomponentaPageComponent,
     DialogComponent,
     NotFoundComponent
-],
+  ],
   templateUrl: './proizvod-page.component.html',
   styleUrl: './proizvod-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

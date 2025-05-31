@@ -19,6 +19,8 @@ export class ProizvodiComponent {
 
   prodavnicaID: number
   proizvodi$: Observable<readonly Proizvod[]> = of([])
+
+  displayMode: number = 1;
   
   @Output() brojProizvoda = new EventEmitter<number>()
   
@@ -29,6 +31,10 @@ export class ProizvodiComponent {
       filter(proizvodi => !!proizvodi),
       tap(proizvodi => this.brojProizvoda.emit(proizvodi.length))
     ).subscribe()
+  }
+
+  onDisplayModeChange(mode: number) {
+    this.displayMode = mode;
   }
 
 }

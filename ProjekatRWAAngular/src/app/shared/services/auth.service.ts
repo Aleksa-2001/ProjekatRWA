@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, interval, Observable, throwError, map } from 'rxjs';
+import { catchError, throwError } from 'rxjs';
 import { User } from '../../models/user';
 import { JwtHelperService } from '@auth0/angular-jwt';
 

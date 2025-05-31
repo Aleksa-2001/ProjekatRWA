@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { filter, Observable, of, take, tap } from 'rxjs';
+import { filter, Observable, of, tap } from 'rxjs';
 import { Prodavnica } from '../../../../models/prodavnica';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app-state';

@@ -3,8 +3,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects"
 import { ProdavnicaService } from "../../services/prodavnica.service"
 import * as ProdavniceActions from "./prodavnica.actions"
 import { of } from "rxjs"
-import { catchError, map, mergeMap, tap } from "rxjs/operators"
-import { selectSelectedProdavnicaID } from "./prodavnica.selectors"
+import { catchError, map, mergeMap } from "rxjs/operators"
 
 @Injectable()
 export class ProdavniceEffects {

@@ -2,16 +2,17 @@ import { Proizvod } from "./proizvod";
 import { Prodavnica } from "./prodavnica";
 import { CPU } from "./komponente/cpu";
 import { GPU } from "./komponente/gpu";
+import { RAM } from "./komponente/ram";
 import { MaticnaPloca } from "./komponente/maticna-ploca";
 import { Napajanje } from "./komponente/napajanje";
-import { RAM } from "./komponente/ram";
 import { Skladiste } from "./komponente/skladiste";
 
 export class Racunar extends Proizvod {
     
     constructor(
         id: number, 
-        tip: string, 
+        type: string, 
+        tipProizvoda: string, 
         proizvodjac: string, 
         naziv: string, 
         cena: number, 
@@ -25,7 +26,7 @@ export class Racunar extends Proizvod {
         napajanje: Napajanje,
         gpu: GPU
     ) {
-        super(id, tip, proizvodjac, naziv, cena, opis, slika, prodavnica)
+        super(id, type, tipProizvoda, proizvodjac, naziv, cena, opis, slika, prodavnica)
         maticnaPloca
         cpu
         ram

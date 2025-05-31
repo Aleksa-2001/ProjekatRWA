@@ -5,23 +5,23 @@ export class MaticnaPloca extends RacunarskaKomponenta {
 
     constructor(
         id: number, 
-        tip: string, 
+        type: string, 
+        tipProizvoda: string, 
         proizvodjac: string, 
         naziv: string, 
         cena: number, 
         opis: string, 
         slika: string, 
         prodavnica: Prodavnica, 
-        tipKomponente: string, 
-        public velicina: string, 
+        public tipMaticnePloce: string, 
         public socket: string, 
         public brojRAMSlotova: number, 
         public brojUSB20Portova: number,
         public brojUSB30Portova: number,
         public brojUSB31Portova: number
     ) {
-        super(id, tip, proizvodjac, naziv, cena, opis, slika, prodavnica, tipKomponente)
-        velicina = ''
+        super(id, type, tipProizvoda, proizvodjac, naziv, cena, opis, slika, prodavnica)
+        tipMaticnePloce = ''
         socket = ''
         brojRAMSlotova = 0
         brojUSB20Portova = 0

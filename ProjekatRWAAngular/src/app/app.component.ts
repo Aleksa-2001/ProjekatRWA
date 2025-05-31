@@ -6,7 +6,6 @@ import { Store } from '@ngrx/store';
 import { AppState } from './store/app-state';
 import * as AuthActions from './store/auth/auth.actions'
 import { CommonModule } from '@angular/common';
-import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',

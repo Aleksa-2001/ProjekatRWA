@@ -1,5 +1,12 @@
-<div *ngIf="proizvodi$ | async as proizvodi" class="row">
-    <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xxl-4 mb-3" *ngFor="let proizvod of proizvodi">
-        <app-proizvod-item [proizvod]="proizvod"></app-proizvod-item>
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <h2 class="m-0">Proizvodi</h2>
+    <div class="btn-group" role="group">
+        <button type="button" class="btn" (click)="onDisplayModeChange(1)" [ngClass]="{ 'btn-outline-primary': displayMode !== 1, 'btn-primary active': displayMode === 1 }"><i class="bi bi-list"></i></button>
+        <button type="button" class="btn" (click)="onDisplayModeChange(2)" [ngClass]="{ 'btn-outline-primary': displayMode !== 2, 'btn-primary active': displayMode === 2 }"><i class="bi bi-grid-fill"></i></button>
+    </div>
+</div>
+<div *ngIf="proizvodi$ | async as proizvodi" class="row row-gap-3">
+    <div class="col-12" [ngClass]="{ 'col-sm-6 col-md-4 col-lg-3 col-xxl-2': displayMode === 2 }" *ngFor="let proizvod of proizvodi">
+        <app-proizvod-item [proizvod]="proizvod" [displayMode]="displayMode"></app-proizvod-item>
     </div>
 </div>

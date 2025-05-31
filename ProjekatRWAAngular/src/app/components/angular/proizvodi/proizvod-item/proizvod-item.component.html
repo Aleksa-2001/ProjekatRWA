@@ -1,9 +1,26 @@
 <a class="text-black" [routerLink]="['/ng/proizvod', proizvod.id]">
-    <div class="item d-flex justify-content-between flex-column flex-lg-row">
-        <img class="w-100" src={{proizvod.slika}} alt={{proizvod.slika}}/>
-        <div class="info w-100 d-flex flex-column">
-            <h4 class="m-0">{{proizvod.naziv}}</h4>
-            <h6 class="m-0">Cena: {{proizvod.cena}}RSD</h6>
+    <div class="row" *ngIf="displayMode === 1">
+        <div class="col-3 col-md-2 col-lg-1 pe-0">
+            <img class="w-100 border" src={{proizvod.slika}} alt={{proizvod.slika}}/>
+        </div>
+        <div class="info-list col align-content-center">
+            <div class="row gap-0">
+                <div class="col col-12 col-md-9 col-lg-10">
+                    <h5 class="m-0">{{proizvod.naziv}}</h5>
+                </div>
+                <div class="col col-12 col-md-3 col-lg-2">
+                    <h5 class="m-0 text-md-end">{{proizvod.cena}} RSD</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="displayMode === 2">
+        <div class="col-12">
+            <img class="w-100 border" src={{proizvod.slika}} alt={{proizvod.slika}}/>
+        </div>
+        <div class="info-grid col-12">
+            <h5 class="m-0">{{proizvod.naziv}}</h5>
+            <h5 class="m-0">{{proizvod.cena}} RSD</h5>
         </div>
     </div>
 </a>

@@ -11,11 +11,6 @@ img {
   object-fit: cover;
 }
 
-.menu {
-  row-gap: 10px;
-  column-gap: 10px;
-}
-
 .specs {
   min-width: 288px;
 }
@@ -40,6 +35,7 @@ img {
 
 .specs .col {
   padding: 0.75rem;
+  align-content: center;
 }
 
 .specs .col h5 {
