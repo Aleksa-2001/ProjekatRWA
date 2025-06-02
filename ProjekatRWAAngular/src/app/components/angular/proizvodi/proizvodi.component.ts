@@ -31,9 +31,14 @@ export class ProizvodiComponent {
       filter(proizvodi => !!proizvodi),
       tap(proizvodi => this.brojProizvoda.emit(proizvodi.length))
     ).subscribe()
+
+    if (localStorage.getItem('proizvod_display_mode')) {
+      this.displayMode = parseInt(localStorage.getItem('proizvod_display_mode')!)
+    }
   }
 
   onDisplayModeChange(mode: number) {
+    localStorage.setItem('proizvod_display_mode', mode.toString())
     this.displayMode = mode;
   }
 

@@ -1,79 +1,95 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { UsersService } from '../../shared/services/auth.service';
+import { AuthService } from '../../shared/services/auth.service';
 import * as AuthActions from './auth.actions';
-import { catchError, map, mergeMap, of, switchMap, tap } from 'rxjs';
+import { catchError, filter, map, mergeMap, of, switchMap, take, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { selectToken } from './auth.selectors';
 import { AppState } from '../app-state';
 import { Store } from '@ngrx/store';
+import { User } from './auth.reducer';
 
 interface JwtPayload {
   sub: number;
-  admin: boolean;
-  firstName: string;
-  lastName: string;
-  email: string;
-  username: string;
+  //admin: boolean;
+  //firstName: string;
+  //lastName: string;
+  //email: string;
+  //username: string;
 }
 
 @Injectable()
 export class AuthEffects {
   private actions$ = inject(Actions);
-  private authService = inject(UsersService);
+  private authService = inject(AuthService);
   private store = inject(Store<AppState>)
   private router = inject(Router)
 
-  login$ = createEffect(() =>
+  login$ = createEffect(() => 
     this.actions$.pipe(
       ofType(AuthActions.login),
-      mergeMap(({ username, password }) =>
+      mergeMap(({ username, password }) => 
         this.authService.login(username, password).pipe(
-          map((res) => {
-            const payload: JwtPayload = jwtDecode(res.access_token)
-            return AuthActions.loginSuccess({ 
-              token: res.access_token, 
-              user: { 
-                userID: payload.sub, 
-                admin: payload.admin, 
-                firstName: payload.firstName,
-                lastName: payload.lastName,
-                email: payload.email,
-                username: payload.username 
-              } 
-            })
+          switchMap((res) => {
+            const payload: JwtPayload = jwtDecode(res.token)
+            return this.authService.getUserByID(payload.sub).pipe(
+              filter(user => !!user),
+              take(1),
+              map(user => 
+                AuthActions.loginSuccess({
+                  token: res.token,
+                  expiresAt: res.expiresIn,
+                  user: {
+                    userID: user.userID,
+                    admin: user.admin,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    email: user.email,
+                    username: user.username
+                  }
+                })
+              )
+            )
           }),
           catchError((error) => of(AuthActions.loginFailure({ error })))
         )
       )
     )
-  );
+  )
 
   validateToken$ = createEffect(() => 
     this.actions$.pipe(
       ofType(AuthActions.validateToken),
-      map(({ token }) => {
-        if (this.authService.isValid(token)) {
+      switchMap(({ token }) => {
+        if (this.authService.isLoggedIn()) {
           const payload: JwtPayload = jwtDecode(token)
-          return AuthActions.tokenIsValid({
-            user: { 
-              userID: payload.sub, 
-              admin: payload.admin, 
-              firstName: payload.firstName,
-              lastName: payload.lastName,
-              email: payload.email,
-              username: payload.username 
-            }
-        })}
-        else {
-          localStorage.removeItem('token')
-          return AuthActions.tokenIsInvalid({
-            error: "Token Is Invalid"
-          })
+          return this.authService.getUserByID(payload.sub).pipe(
+            filter(user => !!user),
+            take(1),
+            map(user => 
+              AuthActions.tokenIsValid({
+                user: {
+                  userID: user.userID,
+                  admin: user.admin,
+                  firstName: user.firstName,
+                  lastName: user.lastName,
+                  email: user.email,
+                  username: user.username
+                }
+              })
+            ),
+            catchError(() => {
+              this.authService.logout();
+              return of(AuthActions.tokenIsInvalid({ error: "Token Is Invalid" }));
+            })
+          )
         }
-      }),
-      catchError(() => of({ type: "[Auth] Validate Token Error" }))
+        else {
+          this.authService.logout()
+          return of(AuthActions.tokenIsInvalid({ error: "Token Is Invalid" }))
+        }
+      })
     )
   )
 
@@ -94,7 +110,7 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthActions.logout),
         tap(() => {
-          localStorage.removeItem('token');
+          this.authService.logout()
           this.router.navigate(["/"]);
         })
       ),

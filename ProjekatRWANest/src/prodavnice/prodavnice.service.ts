@@ -65,6 +65,5 @@ export class ProdavniceService {
             })
         }
         else throw new NotFoundException(`Prodavnica sa ID-jem ${prodavnicaID} nije pronadjena!`)
-        
     }
 }

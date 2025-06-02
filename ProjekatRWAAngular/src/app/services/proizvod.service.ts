@@ -10,11 +10,11 @@ export class ProizvodService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getAll() {
-    return this.httpClient
-      .get<Proizvod[]>("http://localhost:3000/" + "proizvodi")
-      .pipe(catchError(errorHandler))
-  }
+  //getAll() {
+  //  return this.httpClient
+  //    .get<Proizvod[]>("http://localhost:3000/" + "proizvodi")
+  //    .pipe(catchError(errorHandler))
+  //}
   
   getProizvodi(prodavnicaID: number) {
     return this.httpClient

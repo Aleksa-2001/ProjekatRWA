@@ -23,12 +23,10 @@ export class ConfirmDialogComponent {
 
   onDelete() {
     if (this.title.includes('Obriši prodavnicu')) {
-      console.log('Brisanje prodavnice')
       this.store.select(selectSelectedProdavnica).pipe(
         filter(prodavnica => !!prodavnica),
         take(1),
         tap(prodavnica => {
-          console.log(prodavnica)
           this.store.dispatch(ProdavniceActions.deleteItem({ selectedProdavnicaID: prodavnica.id }))
           this.router.navigate(["ng"])
         })
@@ -36,12 +34,10 @@ export class ConfirmDialogComponent {
     }
 
     if (this.title.includes('Obriši proizvod')) {
-      console.log('Brisanje proizvoda')
       this.store.select(selectSelectedProizvod).pipe(
         filter(proizvod => !!proizvod),
         take(1),
         tap(proizvod => {
-          console.log(proizvod)
           this.store.dispatch(ProizvodiActions.deleteItem({ selectedProizvodID: proizvod.id }))
           this.router.navigate(["ng/prodavnica", proizvod.prodavnica.id])
         })

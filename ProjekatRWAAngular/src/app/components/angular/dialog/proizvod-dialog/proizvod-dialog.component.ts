@@ -162,8 +162,6 @@ export class ProizvodDialogComponent implements OnInit {
           proizvodData = proizvodBase
       }
 
-      console.log(proizvodData)
-
       if (this.title === 'Izmeni proizvod') {
         this.store.dispatch(ProizvodiActions.updateItem({ selectedProizvodID: proizvodData.id, selectedProizvod: <Proizvod>proizvodData }))
       }

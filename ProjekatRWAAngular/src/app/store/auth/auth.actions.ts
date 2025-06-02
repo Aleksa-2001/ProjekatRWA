@@ -12,7 +12,8 @@ export const loginSuccess = createAction(
   '[Auth] Login Success',
   props<{ 
     token: string; 
-    user: { 
+    expiresAt: number,
+    user: {
       userID: number, 
       admin: boolean, 
       firstName: string, 
