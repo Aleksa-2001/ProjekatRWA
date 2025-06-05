@@ -18,11 +18,14 @@ import * as ProdavniceActions from "../../../../store/prodavnica/prodavnica.acti
 export class ProdavnicaDialogComponent implements OnInit { 
 
   form!: FormGroup
-  formData: any
-
+  
   @Input() title!: string
   prodavnica$: Observable<Prodavnica | null> = of()
   prodavnicaID: number = -1
+  filename: string = ""
+  path: string = "images/prodavnice/"
+
+  formData?: FormData
 
   constructor(private fb: FormBuilder, private store: Store<AppState>) { }
 
@@ -35,11 +38,12 @@ export class ProdavnicaDialogComponent implements OnInit {
         take(1),
         tap(prodavnica => {
           this.prodavnicaID = prodavnica.id
+          this.filename = prodavnica.slika
           this.form = this.fb.group({
             naziv: [prodavnica.naziv, Validators.required],
             adresa: [prodavnica.adresa, Validators.required],
             opis: [prodavnica.opis],
-            slika: [prodavnica.slika]
+            slika: ['']
           })
         })
       ).subscribe()
@@ -54,15 +58,33 @@ export class ProdavnicaDialogComponent implements OnInit {
     }
   }
 
+  onFileSelected(event: any) {
+    const file = event.target.files[0]
+    //console.log(file)
+    if (file) {
+      if (file.type === "image/jpeg" || file.type === "image/png") {
+        this.filename = `${file.name}`
+        this.formData = new FormData()
+        this.formData.append('file', file)
+        console.log(this.formData.get('file'))
+        return
+        //this.store.dispatch(ProdavniceActions.uploadImage({ id: -1, file: file }))
+      }
+    }
+    this.filename = ""
+  }
+
   onSubmit() {
     if (this.form.valid) {
       const prodavnica = this.form.value
       prodavnica.id = this.prodavnicaID
+      if (this.prodavnicaID != -1) prodavnica.slika = `${this.path}${this.prodavnicaID}${this.filename.substring(this.filename.lastIndexOf('.'), this.filename.length)}`
+      console.log(prodavnica)
       if (this.title === 'Izmeni prodavnicu') {
         this.store.dispatch(ProdavniceActions.updateItem({ selectedProdavnicaID: prodavnica.id, selectedProdavnica: <Prodavnica>prodavnica }))
       }
       else {
-        this.store.dispatch(ProdavniceActions.addItem({ prodavnica: <Prodavnica>prodavnica }))
+        this.store.dispatch(ProdavniceActions.addItem({ prodavnica: <Prodavnica>prodavnica, file: this.formData }))
       }
     }
   }

@@ -33,7 +33,6 @@ export class UsersService {
 	]
 
 	public getUserByID(userID: number) {
-		console.log(userID)
 		return this.users.find(user => user.userID === userID)
 	}
 

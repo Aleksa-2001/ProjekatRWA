@@ -1,6 +1,6 @@
 <div *ngIf="prodavnica$ | async as prodavnica">
     <header class="masthead" [ngStyle]="{ 
-        'background': setBackground(prodavnica.slika),
+        'background': setBackground('http://localhost:3000/' + prodavnica.slika),
         'background-size': 'cover',
         'background-repeat': 'no-repeat',
         'background-position': 'center'

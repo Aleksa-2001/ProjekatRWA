@@ -1,7 +1,7 @@
 <a class="text-black" [routerLink]="['/ng/proizvod', proizvod.id]">
     <div class="row" *ngIf="displayMode === 1">
         <div class="col-3 col-md-2 col-lg-1 pe-0">
-            <img class="w-100 border" src={{proizvod.slika}} alt={{proizvod.slika}}/>
+            <img class="w-100 border" [src]="'http://localhost:3000/' + proizvod.slika" alt={{proizvod.slika}} />
         </div>
         <div class="info-list col align-content-center">
             <div class="row gap-0">
@@ -16,7 +16,7 @@
     </div>
     <div class="row" *ngIf="displayMode === 2">
         <div class="col-12">
-            <img class="w-100 border" src={{proizvod.slika}} alt={{proizvod.slika}}/>
+            <img class="w-100 border" [src]="'http://localhost:3000/' + proizvod.slika" alt={{proizvod.slika}}/>
         </div>
         <div class="info-grid col-12">
             <h5 class="m-0">{{proizvod.naziv}}</h5>

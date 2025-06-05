@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Prodavnica } from './entities/prodavnica.entity';
 import { ILike, Like, Repository } from 'typeorm';
@@ -65,5 +65,14 @@ export class ProdavniceService {
             })
         }
         else throw new NotFoundException(`Prodavnica sa ID-jem ${prodavnicaID} nije pronadjena!`)
+    }
+
+    public async upload(prodavnicaID: number, file: Express.Multer.File) {
+        console.log(file)
+        console.log(file.filename)
+        if (await this.prodavnicaRepository.existsBy({ id: prodavnicaID }) && file) {
+            return file.path
+        }
+        else throw new BadRequestException('Slika nije upload-ovana!')
     }
 }

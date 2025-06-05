@@ -17,7 +17,6 @@ export class UsersController {
     @UseGuards(JwtAuthGuard)
     @Get('user/:id')
     public getUserByID(@Param('id', ParseIntPipe) userID: number) {
-        console.log(userID)
         return this.service.getUserByID(userID)
     }
     

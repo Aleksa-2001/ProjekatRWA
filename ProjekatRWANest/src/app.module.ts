@@ -8,6 +8,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from 'typeorm.config';
 import { ProdavniceModule } from './prodavnice/prodavnice.module';
 import { ProizvodiModule } from './proizvodi/proizvodi.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -17,6 +19,10 @@ import { ProizvodiModule } from './proizvodi/proizvodi.module';
     ProizvodiModule, 
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot(typeOrmConfig),
+    ServeStaticModule.forRoot({ 
+      rootPath: join(__dirname, '../..', 'images'), 
+      serveRoot: '/images'
+    })
   ],
   controllers: [
     AppController, 

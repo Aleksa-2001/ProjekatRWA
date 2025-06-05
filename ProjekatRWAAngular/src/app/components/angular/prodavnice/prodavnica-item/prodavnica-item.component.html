@@ -1,7 +1,7 @@
 <a class="text-black" [routerLink]="['/ng/prodavnica', prodavnica.id]">
     <div class="row gap-3">
         <div class="col-12">
-            <img class="w-100" src={{prodavnica.slika}} alt={{prodavnica.slika}} />
+            <img class="w-100" [src]="'http://localhost:3000/' + prodavnica.slika" alt={{prodavnica.slika}} />
         </div>
         <div class="col-12">
             <h3 class="m-0">{{prodavnica.naziv}}</h3>

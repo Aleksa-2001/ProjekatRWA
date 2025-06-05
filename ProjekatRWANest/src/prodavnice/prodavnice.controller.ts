@@ -1,6 +1,10 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { ProdavniceService } from './prodavnice.service';
 import { ProdavnicaDto } from './entities/prodavnica.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Express } from 'express'
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 
 @Controller()
 export class ProdavniceController {
@@ -35,6 +39,23 @@ export class ProdavniceController {
     @Delete('prodavnica/:id')
     public deleteProdavnica(@Param('id', ParseIntPipe) prodavnicaID: number) {
         return this.service.delete(prodavnicaID)
+    }
+
+    @Post('prodavnica/upload/:id')
+    @UseInterceptors(FileInterceptor('file', {
+        storage: diskStorage({
+            destination: 'images/prodavnice',
+            filename: (req, file, callback) => {
+                console.log(req.params)
+                const id = req.params.id
+                const ext = extname(file.originalname)
+                const filename = `${id}${ext}`
+                callback(null, filename)
+            }
+        })
+    }))
+    public uploadImage(@Param('id', ParseIntPipe) prodavnicaID: number, @UploadedFile() file: Express.Multer.File) {
+        return this.service.upload(prodavnicaID, file)
     }
 
 }

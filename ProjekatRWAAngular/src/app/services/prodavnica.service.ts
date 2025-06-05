@@ -48,6 +48,13 @@ export class ProdavnicaService {
       .pipe(catchError(errorHandler))
   }
   
+  uploadImage(prodavnicaID: number, file?: FormData) {
+    console.log(file?.get('id'))
+    return this.httpClient
+      .post<string>("http://localhost:3000/" + `prodavnica/upload/${prodavnicaID}`, file)
+      .pipe(catchError(errorHandler))
+  }
+
 }
 
 const errorHandler = (error: HttpErrorResponse) => {

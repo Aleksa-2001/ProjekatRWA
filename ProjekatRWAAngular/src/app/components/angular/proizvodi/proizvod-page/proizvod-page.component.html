@@ -6,7 +6,7 @@
     </div>
     <div class="main row mb-3">
         <div class="col-12 col-md-6 col-lg-5">
-            <img class="w-100 border" src={{proizvod.slika}} alt={{proizvod.slika}}/>
+            <img class="w-100 border" [src]="'http://localhost:3000/' + proizvod.slika" alt={{proizvod.slika}}/>
         </div>
         <div class="col-12 col-md-6 col-lg-7">
             <h2>{{proizvod.naziv}}</h2>

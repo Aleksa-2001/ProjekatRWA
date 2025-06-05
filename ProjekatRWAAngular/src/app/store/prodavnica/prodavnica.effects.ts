@@ -4,11 +4,13 @@ import { ProdavnicaService } from "../../services/prodavnica.service"
 import * as ProdavniceActions from "./prodavnica.actions"
 import { of } from "rxjs"
 import { catchError, map, mergeMap } from "rxjs/operators"
+import { Store } from "@ngrx/store"
+import { AppState } from "../app-state"
 
 @Injectable()
 export class ProdavniceEffects {
-    private actions$ = inject(Actions);
-    private service = inject(ProdavnicaService);
+    private actions$ = inject(Actions)
+    private service = inject(ProdavnicaService)
 
     loadEffect$ = createEffect(() => {
         return this.actions$.pipe(
@@ -49,9 +51,12 @@ export class ProdavniceEffects {
     addProdavnica$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ProdavniceActions.addItem),
-            mergeMap(({ prodavnica }) => this.service.addProdavnica(prodavnica)
+            mergeMap(({ prodavnica, file }) => this.service.addProdavnica(prodavnica)
                 .pipe(
-                    map((prodavnica) => (ProdavniceActions.addItemSuccess({prodavnica}))),
+                    map((prodavnica) => {
+                        file?.append('id', prodavnica.id.toString())
+                        return ProdavniceActions.addItemSuccess({ prodavnica, file })
+                    }),
                     catchError(() => of({ type: "[Prodavnica] Add error" }))
                 )
             )
@@ -77,6 +82,18 @@ export class ProdavniceEffects {
                 .pipe(
                     map((prodavnicaID) => (ProdavniceActions.deleteItemSuccess({prodavnicaID}))),
                     catchError(() => of({ type: "[Prodavnica] Delete error" }))
+                )
+            )
+        )
+    })
+
+    uploadImage$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ProdavniceActions.addItemSuccess),
+            mergeMap(({ prodavnica, file }) => this.service.uploadImage(prodavnica.id, file)
+                .pipe(
+                    map((filename) => (ProdavniceActions.uploadImageSuccess({filename}))),
+                    catchError(() => of({ type: "[Prodavnica] Upload failed" }))
                 )
             )
         )

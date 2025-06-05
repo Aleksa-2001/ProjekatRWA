@@ -47,14 +47,16 @@ export const loadSelectedItemSuccess = createAction(
 export const addItem = createAction(
     "[Prodavnica] Dodaj prodavnicu",
     props<{
-        prodavnica: Prodavnica
+        prodavnica: Prodavnica,
+        file?: FormData
     }>()
 )
 
 export const addItemSuccess = createAction(
     "[Prodavnica] Dodavanje prodavnice je uspesno",
     props<{
-        prodavnica: Prodavnica
+        prodavnica: Prodavnica,
+        file?: FormData
     }>()
 )
 
@@ -84,5 +86,20 @@ export const deleteItemSuccess = createAction(
     "[Prodavnica] Prodavnica uspesno obrisana",
     props<{
         prodavnicaID: number
+    }>()
+)
+
+export const uploadImage = createAction(
+    "[Prodavnica] Unesi sliku",
+    props<{
+        prodavnicaID: number,
+        file: FormData
+    }>()
+)
+
+export const uploadImageSuccess = createAction(
+    "[Prodavnica] Slika uspesno uneta",
+    props<{
+        filename: string
     }>()
 )
