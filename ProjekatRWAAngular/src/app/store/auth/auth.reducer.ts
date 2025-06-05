@@ -51,6 +51,7 @@ export const authReducer = createReducer(
   on(AuthActions.logout, (state) => ({
     ...state,
     token: null,
+    expiresAt: null,
     user: null,
     error: null,
   })),
@@ -71,7 +72,7 @@ export const authReducer = createReducer(
   on(AuthActions.tokenIsInvalid, (state, { error }) => ({
     ...state,
     token: null,
-    expiresIn: null,
+    expiresAt: null,
     user: null,
     error
   })),

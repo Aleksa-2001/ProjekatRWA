@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Prodavnica } from '../models/prodavnica';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, throwError } from 'rxjs';
+import { catchError, of, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +35,7 @@ export class ProdavnicaService {
       .pipe(catchError(errorHandler))
   }
 
-  updateProdavnica(prodavnicaID: number, prodavnica: Prodavnica) {
+  updateProdavnica(prodavnicaID: number, prodavnica: Partial<Prodavnica>) {
     const { id, ...prodavnicaDto } = prodavnica
     return this.httpClient
       .put<Prodavnica>("http://localhost:3000/" + `prodavnica/${prodavnicaID}`, prodavnicaDto)
@@ -49,10 +49,16 @@ export class ProdavnicaService {
   }
   
   uploadImage(prodavnicaID: number, file?: FormData) {
-    console.log(file?.get('id'))
-    return this.httpClient
-      .post<string>("http://localhost:3000/" + `prodavnica/upload/${prodavnicaID}`, file)
-      .pipe(catchError(errorHandler))
+    if (file) {
+      console.log(file)
+      return this.httpClient
+        .post<{ prodavnicaID: number, path: string }>("http://localhost:3000/" + `prodavnica/upload/${prodavnicaID}`, file)
+        .pipe(catchError(errorHandler))
+    }
+    else {
+      console.log("nema slike")
+      return of("Slika nije prosledjena")
+    }
   }
 
 }

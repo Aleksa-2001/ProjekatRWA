@@ -46,7 +46,6 @@ export class ProdavniceController {
         storage: diskStorage({
             destination: 'images/prodavnice',
             filename: (req, file, callback) => {
-                console.log(req.params)
                 const id = req.params.id
                 const ext = extname(file.originalname)
                 const filename = `${id}${ext}`
@@ -57,5 +56,4 @@ export class ProdavniceController {
     public uploadImage(@Param('id', ParseIntPipe) prodavnicaID: number, @UploadedFile() file: Express.Multer.File) {
         return this.service.upload(prodavnicaID, file)
     }
-
 }

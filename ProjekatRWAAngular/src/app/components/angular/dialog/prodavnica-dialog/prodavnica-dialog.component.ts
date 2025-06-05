@@ -23,7 +23,6 @@ export class ProdavnicaDialogComponent implements OnInit {
   prodavnica$: Observable<Prodavnica | null> = of()
   prodavnicaID: number = -1
   filename: string = ""
-  path: string = "images/prodavnice/"
 
   formData?: FormData
 
@@ -60,33 +59,44 @@ export class ProdavnicaDialogComponent implements OnInit {
 
   onFileSelected(event: any) {
     const file = event.target.files[0]
-    //console.log(file)
     if (file) {
       if (file.type === "image/jpeg" || file.type === "image/png") {
         this.filename = `${file.name}`
         this.formData = new FormData()
         this.formData.append('file', file)
-        console.log(this.formData.get('file'))
         return
-        //this.store.dispatch(ProdavniceActions.uploadImage({ id: -1, file: file }))
       }
     }
+    this.formData?.delete('file')
+    this.formData = undefined
     this.filename = ""
   }
 
   onSubmit() {
+    console.log(this.formData?.get('file'))
+
     if (this.form.valid) {
-      const prodavnica = this.form.value
-      prodavnica.id = this.prodavnicaID
-      if (this.prodavnicaID != -1) prodavnica.slika = `${this.path}${this.prodavnicaID}${this.filename.substring(this.filename.lastIndexOf('.'), this.filename.length)}`
+      const path = "images/prodavnice/"
+
+      console.log(this.filename)
+      
+      const prodavnica = this.form.getRawValue()
       console.log(prodavnica)
+
       if (this.title === 'Izmeni prodavnicu') {
-        this.store.dispatch(ProdavniceActions.updateItem({ selectedProdavnicaID: prodavnica.id, selectedProdavnica: <Prodavnica>prodavnica }))
+        prodavnica.slika = this.generatePath(path, this.filename, this.prodavnicaID)
+        this.store.dispatch(ProdavniceActions.updateItem({ selectedProdavnicaID: this.prodavnicaID, selectedProdavnica: <Prodavnica>prodavnica, file: this.formData }))
+        this.filename = prodavnica.slika
       }
       else {
         this.store.dispatch(ProdavniceActions.addItem({ prodavnica: <Prodavnica>prodavnica, file: this.formData }))
       }
     }
+  }
+
+  private generatePath(path: string, filename: string, id?: number) {
+    if (filename) return `${path}${id ?? 'temp'}${filename.substring(this.filename.lastIndexOf('.'), this.filename.length)}`
+    else return path
   }
 
 }

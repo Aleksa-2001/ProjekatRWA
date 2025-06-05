@@ -1,5 +1,6 @@
 import { createAction, props } from "@ngrx/store";
 import { Prodavnica } from "../../models/prodavnica";
+import { Update } from "@ngrx/entity";
 
 export const loadItems = createAction(
     "[Prodavnica] Ucitaj listu"
@@ -65,13 +66,16 @@ export const updateItem = createAction(
     props<{
         selectedProdavnicaID: number,
         selectedProdavnica: Prodavnica
+        file?: FormData
     }>()
 )
 
 export const updateItemSuccess = createAction(
     "[Prodavnica] Izmena prodavnice je uspesna",
     props<{
+        prodavnica: Update<Prodavnica>
         selectedProdavnica: Prodavnica
+        file?: FormData
     }>()
 )
 
@@ -89,17 +93,22 @@ export const deleteItemSuccess = createAction(
     }>()
 )
 
-export const uploadImage = createAction(
-    "[Prodavnica] Unesi sliku",
-    props<{
-        prodavnicaID: number,
-        file: FormData
-    }>()
-)
-
 export const uploadImageSuccess = createAction(
     "[Prodavnica] Slika uspesno uneta",
     props<{
-        filename: string
+        prodavnicaID: number
+        path: string
+    }>()
+)
+
+export const uploadImageIgnore = createAction(
+    "[Prodavnica] Slika nije prosledjena"
+)
+
+export const updatePathSucces = createAction(
+    "[Prodavnica] Azuriranje putanje uspesno",
+    props<{
+        prodavnica: Update<Prodavnica>
+        selectedProdavnica: Prodavnica
     }>()
 )

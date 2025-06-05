@@ -2,7 +2,7 @@ import { inject, Injectable } from "@angular/core"
 import { Actions, createEffect, ofType } from "@ngrx/effects"
 import { ProdavnicaService } from "../../services/prodavnica.service"
 import * as ProdavniceActions from "./prodavnica.actions"
-import { of } from "rxjs"
+import { Observable, of } from "rxjs"
 import { catchError, map, mergeMap } from "rxjs/operators"
 import { Store } from "@ngrx/store"
 import { AppState } from "../app-state"
@@ -66,9 +66,13 @@ export class ProdavniceEffects {
     updateProdavnica$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ProdavniceActions.updateItem),
-            mergeMap(({ selectedProdavnicaID, selectedProdavnica }) => this.service.updateProdavnica(selectedProdavnicaID, selectedProdavnica)
+            mergeMap(({ selectedProdavnicaID, selectedProdavnica, file }) => this.service.updateProdavnica(selectedProdavnicaID, selectedProdavnica)
                 .pipe(
-                    map((selectedProdavnica) => (ProdavniceActions.updateItemSuccess({selectedProdavnica}))),
+                    map((prodavnica) => (ProdavniceActions.updateItemSuccess({
+                        prodavnica: { id: prodavnica.id, changes: prodavnica },
+                        selectedProdavnica: prodavnica,
+                        file: file
+                    }))),
                     catchError(() => of({ type: "[Prodavnica] Update error" }))
                 )
             )
@@ -89,11 +93,29 @@ export class ProdavniceEffects {
 
     uploadImage$ = createEffect(() => {
         return this.actions$.pipe(
-            ofType(ProdavniceActions.addItemSuccess),
-            mergeMap(({ prodavnica, file }) => this.service.uploadImage(prodavnica.id, file)
+            ofType(ProdavniceActions.addItemSuccess, ProdavniceActions.updateItemSuccess),
+            mergeMap(({ prodavnica, file }) => (this.service.uploadImage((prodavnica.id as number), file) as Observable<{prodavnicaID: number, path: string}>)
                 .pipe(
-                    map((filename) => (ProdavniceActions.uploadImageSuccess({filename}))),
+                    map((res) => {
+                        if (res.prodavnicaID && res.path) return ProdavniceActions.uploadImageSuccess({ prodavnicaID: res.prodavnicaID, path: res.path })
+                        else return ProdavniceActions.uploadImageIgnore()
+                    }),
                     catchError(() => of({ type: "[Prodavnica] Upload failed" }))
+                )
+            )
+        )
+    })
+
+    updateImagePath$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ProdavniceActions.uploadImageSuccess),
+            mergeMap(({ prodavnicaID, path }) => this.service.updateProdavnica(prodavnicaID, { slika: path })
+                .pipe(
+                    map((prodavnica) => ProdavniceActions.updatePathSucces({
+                        prodavnica: { id: prodavnica.id, changes: prodavnica },
+                        selectedProdavnica: prodavnica
+                    })),
+                    catchError(() => of({ type: "[Prodavnica] Update path failed" }))
                 )
             )
         )

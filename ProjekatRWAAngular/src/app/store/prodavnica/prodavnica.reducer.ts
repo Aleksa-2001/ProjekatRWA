@@ -36,15 +36,23 @@ export const prodavnicaReducer = createReducer(
     on(ProdavniceActions.addItemSuccess, (state, {prodavnica}) => 
         adapter.addOne(prodavnica, state)
     ),
-    on(ProdavniceActions.updateItemSuccess, (state, {selectedProdavnica}) => ({
-        ...state,
-        selectedProdavnica: selectedProdavnica
-    })),
+    on(ProdavniceActions.updateItemSuccess, (state, {prodavnica, selectedProdavnica}) => (
+        adapter.updateOne(prodavnica, {
+            ...state,
+            selectedProdavnica: selectedProdavnica
+        })
+    )),
     on(ProdavniceActions.deleteItemSuccess, (state, {prodavnicaID}) => (
         adapter.removeOne(prodavnicaID, {
             ...state,
             selectedProdavnicaID: -1,
             selectedProdavnica: null
+        })
+    )),
+    on(ProdavniceActions.updatePathSucces, (state, {prodavnica, selectedProdavnica}) => (
+        adapter.updateOne(prodavnica, {
+            ...state,
+            selectedProdavnica: selectedProdavnica
         })
     ))
 )

@@ -27,6 +27,8 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
   prodavnica$: Observable<Prodavnica | null> = of()
   isAdmin$: Observable<boolean> = of(false)
 
+  backgroundStyle: { [key: string]: string } = { }
+
   constructor(private title: Title, private route: ActivatedRoute, private store: Store<AppState>) { }
 
   ngOnInit(): void {
@@ -41,9 +43,11 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
 
     this.prodavnica$.pipe(
       filter(prodavnica => !!prodavnica),
-      tap(prodavnica => this.title.setTitle(`${prodavnica.naziv} - ProjekatRWA`))
+      tap(prodavnica => {
+        this.title.setTitle(`${prodavnica.naziv} - ProjekatRWA`)
+        this.setBackground('http://localhost:3000/' + prodavnica.slika)
+      })
     ).subscribe()
-
   }
 
   ngOnDestroy(): void {
@@ -51,7 +55,15 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
   }
 
   setBackground(slika: string) {
-    return `linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000 100%), url(${slika})`
+    const timestamp = new Date().getTime()
+    const url = `${slika}?t=${timestamp}`
+    this.backgroundStyle = {
+      "background-image": `linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000 100%), url(${url})`,
+      "background-size": "cover",
+      "background-repeat": "no-repeat",
+      "background-position": "center",
+      "background-color": "#6c757d"
+    }
   }
 
 }

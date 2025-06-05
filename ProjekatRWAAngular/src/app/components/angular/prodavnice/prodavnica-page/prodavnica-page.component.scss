@@ -1,9 +1,10 @@
 .masthead {
-    margin-top: -56px;
+    //margin-top: -56px;
     height: 50vh;
+    min-height: 240px;
 }
 
 .masthead h1 {
-    font-size: 4rem;
-    line-height: 4rem;
+    font-size: calc(2.5rem + 1.5vw);
+    line-height: calc(2.5rem + 1.5vw);
 }
