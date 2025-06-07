@@ -10,8 +10,9 @@ import { selectSelectedProizvod } from '../../../../store/proizvod/proizvod.sele
 import { NotFoundComponent } from "../../../../shared/components/not-found/not-found.component";
 import { KomponentaPageComponent } from "./komponenta-page/komponenta-page.component";
 import { Title } from '@angular/platform-browser';
-import { DialogComponent } from "../../dialog/dialog.component";
 import { isAdmin } from '../../../../store/auth/auth.selectors';
+import { ProizvodDialogComponent } from "../../dialog/proizvod-dialog/proizvod-dialog.component";
+import { ConfirmDialogComponent } from "../../dialog/confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: 'app-proizvod-page',
@@ -23,9 +24,10 @@ import { isAdmin } from '../../../../store/auth/auth.selectors';
     CommonModule,
     RouterModule,
     KomponentaPageComponent,
-    DialogComponent,
-    NotFoundComponent
-  ],
+    NotFoundComponent,
+    ProizvodDialogComponent,
+    ConfirmDialogComponent
+],
   templateUrl: './proizvod-page.component.html',
   styleUrl: './proizvod-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -36,6 +38,8 @@ export class ProizvodPageComponent implements OnInit, OnDestroy {
 
   proizvodID!: number
   proizvod$: Observable<Proizvod | null> = of()
+
+  image: string = ""
 
   constructor(private title: Title, private route: ActivatedRoute, private store: Store<AppState>) { }
 
@@ -49,12 +53,20 @@ export class ProizvodPageComponent implements OnInit, OnDestroy {
 
     this.proizvod$.pipe(
       filter(proizvod => !!proizvod),
-      tap(proizvod => this.title.setTitle(`${proizvod.naziv} - ProjekatRWA`))
+      tap(proizvod => {
+        this.title.setTitle(`${proizvod.naziv} - ProjekatRWA`)
+        this.setImage('http://localhost:3000/' + proizvod.slika)
+      })
     ).subscribe()
   }
 
   ngOnDestroy(): void {
     this.store.dispatch(ProizvodiActions.deselectSelectedItem())
+  }
+
+  setImage(slika: string) {
+    const timestamp = new Date().getTime()
+    this.image = `${slika}?t=${timestamp}`
   }
 
 }

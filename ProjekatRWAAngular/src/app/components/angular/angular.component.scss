@@ -3,8 +3,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    //margin-top: -56px;
-    height: 50vh;
+    height: calc(50vh - 56px);
     min-height: 240px;
 }
 

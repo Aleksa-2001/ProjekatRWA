@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ProdavniceComponent } from "./prodavnice/prodavnice.component";
 import { Title } from '@angular/platform-browser';
-import { DialogComponent } from './dialog/dialog.component';
 import { CommonModule, NgIf } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -9,6 +8,7 @@ import { AppState } from '../../store/app-state';
 import { isAdmin } from '../../store/auth/auth.selectors';
 import * as ProdavniceActions from '../../store/prodavnica/prodavnica.actions'
 import { SearchComponent } from "./search/search.component";
+import { ProdavnicaDialogComponent } from "./dialog/prodavnica-dialog/prodavnica-dialog.component";
 
 @Component({
   selector: 'app-angular',
@@ -16,8 +16,8 @@ import { SearchComponent } from "./search/search.component";
     CommonModule,
     NgIf,
     ProdavniceComponent,
-    DialogComponent,
-    SearchComponent
+    SearchComponent,
+    ProdavnicaDialogComponent
 ],
   templateUrl: './angular.component.html',
   styleUrl: './angular.component.scss',

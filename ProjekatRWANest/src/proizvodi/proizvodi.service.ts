@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { Proizvod } from './entities/proizvod.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ILike, Repository } from 'typeorm';
@@ -8,6 +8,9 @@ import { GPUDto } from './entities/komponente/gpu.dto';
 import { GPU } from './entities/komponente/gpu.entity';
 import { RAMDto } from './entities/komponente/ram.dto';
 import { RAM } from './entities/komponente/ram.entity';
+import * as fs from 'fs';
+import { join } from 'path';
+import { ProizvodDto } from './entities/proizvod.dto';
 
 @Injectable()
 export class ProizvodiService {
@@ -109,7 +112,8 @@ export class ProizvodiService {
         return await this.proizvodRepository.findBy(
             [
                 { proizvodjac: ILike(`%${search.toLowerCase()}%`) }, 
-                { naziv: ILike(`%${search.toLowerCase()}%`) }
+                { naziv: ILike(`%${search.toLowerCase()}%`) }, 
+                { type: ILike(`%${search.toLowerCase()}%`) }
             ]
         )
     }
@@ -126,55 +130,89 @@ export class ProizvodiService {
         //else throw new HttpException(`Proizvod sa ID-jem ${proizvodID} ne postoji!`, HttpStatus.NOT_FOUND) 
     }
 
-    public async createCPU(dto: CPUDto) {
-        const cpu = this.cpuRepository.create(dto)
-        return await this.cpuRepository.save(cpu)
+    public async create(proizvodDto: ProizvodDto) {
+        const proizvod = this.proizvodRepository.create(proizvodDto)
+        return await this.proizvodRepository.save(proizvod)
     }
 
-    public async createGPU(dto: GPUDto) {
-        const gpu = this.gpuRepository.create(dto)
-        return await this.gpuRepository.save(gpu)
-    }
-
-    public async createRAM(dto: RAMDto) {
-        const ram = this.ramRepository.create(dto)
-        return await this.ramRepository.save(ram)
-    }
-
-    public async updateCPU(proizvodID: number, dto: CPUDto) {
-        if (await this.cpuRepository.existsBy({ id: proizvodID })) {
-            return await this.cpuRepository.update(proizvodID, dto).then(async res => {
-                if (res.affected === 1) return await this.getProizvodByID(proizvodID)
+    public async update(proizvodID: number, proizvodDto: ProizvodDto) {
+        if (await this.proizvodRepository.existsBy({ id: proizvodID })) {
+            const proizvod = await this.proizvodRepository.findOneBy({ id: proizvodID })
+            return await this.proizvodRepository.update(proizvodID, proizvodDto).then(res => {
+                if (res.affected === 1) {
+                    if (!proizvodDto.slika && proizvod.slika) {
+                        const putanja = join(__dirname, '..', '..', '..', proizvod.slika)
+                        if (fs.existsSync(putanja)) fs.unlinkSync(putanja)
+                    }
+                    return this.getProizvodByID(proizvodID)
+                }
             })
         }
         else throw new NotFoundException(`Proizvod sa ID-jem ${proizvodID} nije pronadjen!`)
     }
 
-    public async updateGPU(proizvodID: number, dto: GPUDto) {
-        if (await this.gpuRepository.existsBy({ id: proizvodID })) {
-            return await this.gpuRepository.update(proizvodID, dto).then(res => {
-                if (res.affected === 1) return this.getProizvodByID(proizvodID)
-            })
-        }
-        else throw new NotFoundException(`Proizvod sa ID-jem ${proizvodID} nije pronadjen!`)
-    }
-
-    public async updateRAM(proizvodID: number, dto: RAMDto) {
-        if (await this.ramRepository.existsBy({ id: proizvodID })) {
-            return await this.ramRepository.update(proizvodID, dto).then(res => {
-                if (res.affected === 1) return this.getProizvodByID(proizvodID)
-            })
-        }
-        else throw new NotFoundException(`Proizvod sa ID-jem ${proizvodID} nije pronadjen!`)
-    }
+    //public async createCPU(dto: CPUDto) {
+    //    const cpu = this.cpuRepository.create(dto)
+    //    return await this.cpuRepository.save(cpu)
+    //}
+    //
+    //public async createGPU(dto: GPUDto) {
+    //    const gpu = this.gpuRepository.create(dto)
+    //    return await this.gpuRepository.save(gpu)
+    //}
+    //
+    //public async createRAM(dto: RAMDto) {
+    //    const ram = this.ramRepository.create(dto)
+    //    return await this.ramRepository.save(ram)
+    //}
+    //
+    //public async updateCPU(proizvodID: number, dto: CPUDto) {
+    //    if (await this.cpuRepository.existsBy({ id: proizvodID })) {
+    //        return await this.cpuRepository.update(proizvodID, dto).then(async res => {
+    //            if (res.affected === 1) return await this.getProizvodByID(proizvodID)
+    //        })
+    //    }
+    //    else throw new NotFoundException(`Proizvod sa ID-jem ${proizvodID} nije pronadjen!`)
+    //}
+    //
+    //public async updateGPU(proizvodID: number, dto: GPUDto) {
+    //    if (await this.gpuRepository.existsBy({ id: proizvodID })) {
+    //        return await this.gpuRepository.update(proizvodID, dto).then(res => {
+    //            if (res.affected === 1) return this.getProizvodByID(proizvodID)
+    //        })
+    //    }
+    //    else throw new NotFoundException(`Proizvod sa ID-jem ${proizvodID} nije pronadjen!`)
+    //}
+    //
+    //public async updateRAM(proizvodID: number, dto: RAMDto) {
+    //    if (await this.ramRepository.existsBy({ id: proizvodID })) {
+    //        return await this.ramRepository.update(proizvodID, dto).then(res => {
+    //            if (res.affected === 1) return this.getProizvodByID(proizvodID)
+    //        })
+    //    }
+    //    else throw new NotFoundException(`Proizvod sa ID-jem ${proizvodID} nije pronadjen!`)
+    //}
 
     public async delete(proizvodID: number) {
         if (await this.proizvodRepository.existsBy({ id: proizvodID })) {
+            const proizvod = await this.proizvodRepository.findOneBy({ id: proizvodID })
             return await this.proizvodRepository.delete(proizvodID).then(res => {
-                if (res.affected === 1) return proizvodID
+                if (res.affected === 1) {
+                    if (proizvod.slika) {
+                        const putanja = join(__dirname, '..', '..', '..', proizvod.slika)
+                        if (fs.existsSync(putanja)) fs.unlinkSync(putanja)
+                    }
+                    return proizvodID
+                }
             })
         }
         else throw new NotFoundException(`Proizvod sa ID-jem ${proizvodID} nije pronadjen!`)
     }
-    
+
+    public async upload(proizvodID: number, file: Express.Multer.File) {
+        if (await this.proizvodRepository.existsBy({ id: proizvodID }) && file) {
+            return { proizvodID: proizvodID, path: `${file.destination}/${file.filename}` }
+        }
+        else throw new BadRequestException('Slika nije upload-ovana!')
+    }    
 }

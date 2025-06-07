@@ -23,8 +23,13 @@ export class SearchComponent implements OnInit {
   }
 
   onSubmit() {
-    const data = this.searchForm.value
-    this.router.navigate(['ng/search'], { queryParams: { q: data.inputSearch } })
+    const data = this.searchForm.getRawValue()
+    const queryString = (data.inputSearch as string).trim()
+    this.router.navigate(['ng/search'], { queryParams: { q: queryString } })
+  }
+
+  isEmptyOrWhiteSpace(input: string){
+    return input === null || input.trim() === ""
   }
 
 }

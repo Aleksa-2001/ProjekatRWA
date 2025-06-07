@@ -50,13 +50,11 @@ export class ProdavnicaService {
   
   uploadImage(prodavnicaID: number, file?: FormData) {
     if (file) {
-      console.log(file)
       return this.httpClient
         .post<{ prodavnicaID: number, path: string }>("http://localhost:3000/" + `prodavnica/upload/${prodavnicaID}`, file)
         .pipe(catchError(errorHandler))
     }
     else {
-      console.log("nema slike")
       return of("Slika nije prosledjena")
     }
   }

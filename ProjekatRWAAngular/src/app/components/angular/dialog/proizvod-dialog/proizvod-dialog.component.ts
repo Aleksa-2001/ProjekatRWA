@@ -21,21 +21,27 @@ import { RAM } from '../../../../models/komponente/ram';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProizvodDialogComponent implements OnInit {
-  form!: FormGroup
-  formData: any
-  type: string = ''
-  tipProizvoda: string = ''
 
-  @Input() title!: string
+  form!: FormGroup
+  
+  @Input() mode: number = 0
+  title: string = ""
+  
   proizvod$: Observable<Proizvod | null> = of()
   prodavnica$: Observable<Prodavnica | null> = of()
   proizvodID: number = -1
   prodavnica: Prodavnica | null = null
+  type: string = ''
+  tipProizvoda: string = ''
+  
+  formData?: FormData
+  filename: string = ""
 
   constructor(private fb: FormBuilder, private store: Store<AppState>) { }
 
   ngOnInit(): void {
-    if (this.title === 'Izmeni proizvod') {
+    if (this.mode === 1) {
+      this.title = 'Izmeni proizvod'
       this.proizvod$ = this.store.select(selectSelectedProizvod)
 
       this.proizvod$.pipe(
@@ -46,6 +52,7 @@ export class ProizvodDialogComponent implements OnInit {
           this.type = proizvod.type
           this.tipProizvoda = proizvod.tipProizvoda
           this.prodavnica = proizvod.prodavnica
+          this.filename = proizvod.slika
 
           this.form = this.fb.group({
             type: [proizvod.type],
@@ -54,7 +61,7 @@ export class ProizvodDialogComponent implements OnInit {
             naziv: [proizvod.naziv, Validators.required],
             cena: [proizvod.cena, Validators.required],
             opis: [proizvod.opis],
-            slika: [proizvod.slika],
+            slika: [''],
 
             cpuSocket: [(proizvod as CPU).socket],
             cpuFrekvencija: [proizvod.type === 'CPU' ? (proizvod as CPU).frekvencija : ''],
@@ -75,6 +82,7 @@ export class ProizvodDialogComponent implements OnInit {
       ).subscribe()
     }
     else {
+      this.title = 'Dodaj proizvod'
       this.prodavnica$ = this.store.select(selectSelectedProdavnica)
       this.prodavnica$.pipe(
         filter(prodavnica => !!prodavnica),
@@ -114,19 +122,41 @@ export class ProizvodDialogComponent implements OnInit {
     this.type = this.form.value.type ? this.form.value.type : ''
   }
 
+  onFileSelected(event: any) {
+    const file = event.target.files[0]
+    if (file) {
+      if (file.type === "image/jpeg" || file.type === "image/png") {
+        this.filename = `${file.name}`
+        this.formData = new FormData()
+        this.formData.append('file', file)
+        return
+      }
+      else {
+        console.log("Fajl nije slika!")
+      }
+    }
+  }
+
+  removeFile() {
+    this.formData?.delete('file')
+    this.formData = undefined
+    this.filename = ""
+  }
+
   onSubmit() {
     if (this.form.valid) {
-      const value = this.form.value
+      const path = "images/proizvodi/"
+      const proizvod = this.form.getRawValue()
       
       const proizvodBase = {
         id: this.proizvodID,
-        type: value.type,
-        tipProizvoda: value.tipProizvoda,
-        proizvodjac: value.proizvodjac,
-        naziv: value.naziv,
-        cena: value.cena,
-        opis: value.opis,
-        slika: value.slika,
+        type: proizvod.type,
+        tipProizvoda: proizvod.tipProizvoda,
+        proizvodjac: proizvod.proizvodjac,
+        naziv: proizvod.naziv,
+        cena: proizvod.cena,
+        opis: proizvod.opis,
+        slika: proizvod.slika,
         prodavnica: this.prodavnica
       }      
 
@@ -136,39 +166,46 @@ export class ProizvodDialogComponent implements OnInit {
         case 'CPU':
           proizvodData = {
             ...proizvodBase,
-            socket: value.cpuSocket,
-            frekvencija: value.cpuFrekvencija,
-            brojJezgara: value.cpuBrojJezgara,
-            brojNiti: value.cpuBrojNiti
+            socket: proizvod.cpuSocket,
+            frekvencija: proizvod.cpuFrekvencija,
+            brojJezgara: proizvod.cpuBrojJezgara,
+            brojNiti: proizvod.cpuBrojNiti
           }
           break
         case 'GPU':
           proizvodData = {
             ...proizvodBase,
-            frekvencija: value.gpuFrekvencija,
-            VRAM: value.gpuVRAM
+            frekvencija: proizvod.gpuFrekvencija,
+            VRAM: proizvod.gpuVRAM
           }
           break
         case 'RAM':
           proizvodData = {
             ...proizvodBase,
-            tipMemorije: value.ramTipMemorije,
-            brojRAMModula: value.ramBrojModula,
-            velicina: value.ramVelicina,
-            frekvencija: value.ramFrekvencija
+            tipMemorije: proizvod.ramTipMemorije,
+            brojRAMModula: proizvod.ramBrojModula,
+            velicina: proizvod.ramVelicina,
+            frekvencija: proizvod.ramFrekvencija
           }
           break
         default:
           proizvodData = proizvodBase
       }
 
-      if (this.title === 'Izmeni proizvod') {
-        this.store.dispatch(ProizvodiActions.updateItem({ selectedProizvodID: proizvodData.id, selectedProizvod: <Proizvod>proizvodData }))
+      if (this.mode === 1) {
+        proizvodData.slika = this.generatePath(path, this.filename, this.proizvodID)
+        this.store.dispatch(ProizvodiActions.updateItem({ selectedProizvodID: proizvodData.id, selectedProizvod: <Proizvod>proizvodData, file: this.formData }))
+        this.filename = proizvodData.slika
       }
       else {
-        this.store.dispatch(ProizvodiActions.addItem({ proizvod: <Proizvod>proizvodData }))
+        this.store.dispatch(ProizvodiActions.addItem({ proizvod: <Proizvod>proizvodData, file: this.formData }))
       }
     }
+  }
+
+  private generatePath(path: string, filename: string, id?: number) {
+    if (filename) return `${path}${id ?? 'temp'}${filename.substring(this.filename.lastIndexOf('.'), this.filename.length)}`
+    else return ""
   }
 
 }

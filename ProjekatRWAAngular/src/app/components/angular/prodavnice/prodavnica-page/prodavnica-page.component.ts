@@ -9,14 +9,16 @@ import { CommonModule, NgIf, NgStyle } from '@angular/common';
 import { ProizvodiComponent } from "../../proizvodi/proizvodi.component";
 import { NotFoundComponent } from "../../../../shared/components/not-found/not-found.component";
 import { Title } from '@angular/platform-browser';
-import { DialogComponent } from "../../dialog/dialog.component";
 import { isAdmin } from '../../../../store/auth/auth.selectors';
 import * as ProdavniceActions from '../../../../store/prodavnica/prodavnica.actions'
 import * as ProizvodiActions from '../../../../store/proizvod/proizvod.actions'
+import { ProdavnicaDialogComponent } from "../../dialog/prodavnica-dialog/prodavnica-dialog.component";
+import { ConfirmDialogComponent } from "../../dialog/confirm-dialog/confirm-dialog.component";
+import { ProizvodDialogComponent } from "../../dialog/proizvod-dialog/proizvod-dialog.component";
 
 @Component({
   selector: 'app-prodavnica-page',
-  imports: [NgIf, NgStyle, CommonModule, ProizvodiComponent, NotFoundComponent, DialogComponent],
+  imports: [NgIf, NgStyle, CommonModule, ProizvodiComponent, NotFoundComponent, ProdavnicaDialogComponent, ConfirmDialogComponent, ProizvodDialogComponent],
   templateUrl: './prodavnica-page.component.html',
   styleUrl: './prodavnica-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

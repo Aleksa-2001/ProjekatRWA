@@ -19,17 +19,20 @@ export class ProdavnicaDialogComponent implements OnInit {
 
   form!: FormGroup
   
-  @Input() title!: string
+  @Input() mode: number = 0
+  title: string = ""
+  
   prodavnica$: Observable<Prodavnica | null> = of()
   prodavnicaID: number = -1
-  filename: string = ""
-
+  
   formData?: FormData
+  filename: string = ""
 
   constructor(private fb: FormBuilder, private store: Store<AppState>) { }
 
   ngOnInit(): void {
-    if (this.title === 'Izmeni prodavnicu') {
+    if (this.mode === 1) {
+      this.title = 'Izmeni prodavnicu'
       this.prodavnica$ = this.store.select(selectSelectedProdavnica)
 
       this.prodavnica$.pipe(
@@ -38,6 +41,7 @@ export class ProdavnicaDialogComponent implements OnInit {
         tap(prodavnica => {
           this.prodavnicaID = prodavnica.id
           this.filename = prodavnica.slika
+          
           this.form = this.fb.group({
             naziv: [prodavnica.naziv, Validators.required],
             adresa: [prodavnica.adresa, Validators.required],
@@ -48,6 +52,7 @@ export class ProdavnicaDialogComponent implements OnInit {
       ).subscribe()
     }
     else {
+      this.title = 'Dodaj prodavnicu'
       this.form = this.fb.group({
         naziv: ['', Validators.required],
         adresa: ['', Validators.required],
@@ -66,24 +71,24 @@ export class ProdavnicaDialogComponent implements OnInit {
         this.formData.append('file', file)
         return
       }
+      else {
+        console.log("Fajl nije slika!")
+      }
     }
+  }
+
+  removeFile() {
     this.formData?.delete('file')
     this.formData = undefined
     this.filename = ""
   }
 
   onSubmit() {
-    console.log(this.formData?.get('file'))
-
     if (this.form.valid) {
       const path = "images/prodavnice/"
-
-      console.log(this.filename)
-      
       const prodavnica = this.form.getRawValue()
-      console.log(prodavnica)
-
-      if (this.title === 'Izmeni prodavnicu') {
+      
+      if (this.mode === 1) {
         prodavnica.slika = this.generatePath(path, this.filename, this.prodavnicaID)
         this.store.dispatch(ProdavniceActions.updateItem({ selectedProdavnicaID: this.prodavnicaID, selectedProdavnica: <Prodavnica>prodavnica, file: this.formData }))
         this.filename = prodavnica.slika
@@ -96,7 +101,7 @@ export class ProdavnicaDialogComponent implements OnInit {
 
   private generatePath(path: string, filename: string, id?: number) {
     if (filename) return `${path}${id ?? 'temp'}${filename.substring(this.filename.lastIndexOf('.'), this.filename.length)}`
-    else return path
+    else return ""
   }
 
 }

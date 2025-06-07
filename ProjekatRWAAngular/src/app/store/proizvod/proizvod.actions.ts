@@ -52,6 +52,7 @@ export const addItem = createAction(
     "[Proizvod] Dodaj proizvod",
     props<{
         proizvod: Proizvod
+        file?: FormData
     }>()
 )
 
@@ -59,6 +60,7 @@ export const addItemSuccess = createAction(
     "[Proizvod] Dodavanje proizvoda je uspesno",
     props<{
         proizvod: Proizvod
+        file?: FormData
     }>()
 )
 
@@ -67,6 +69,7 @@ export const updateItem = createAction(
     props<{
         selectedProizvodID: number,
         selectedProizvod: Proizvod
+        file?: FormData
     }>()
 )
 
@@ -75,6 +78,7 @@ export const updateItemSuccess = createAction(
     props<{
         proizvod: Update<Proizvod>
         selectedProizvod: Proizvod
+        file?: FormData
     }>()
 )
 
@@ -89,5 +93,25 @@ export const deleteItemSuccess = createAction(
     "[Proizvod] Proizvod uspesno obrisan",
     props<{
         proizvodID: number
+    }>()
+)
+
+export const uploadImageSuccess = createAction(
+    "[Proizvod] Slika uspesno uneta",
+    props<{
+        proizvodID: number
+        path: string
+    }>()
+)
+
+export const uploadImageIgnore = createAction(
+    "[Proizvod] Slika nije prosledjena"
+)
+
+export const updatePathSucces = createAction(
+    "[Proizvod] Azuriranje putanje uspesno",
+    props<{
+        proizvod: Update<Proizvod>
+        selectedProizvod: Proizvod
     }>()
 )

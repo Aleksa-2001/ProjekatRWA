@@ -29,9 +29,9 @@
         <app-proizvodi></app-proizvodi>
     </div>
 
-    <app-dialog *ngIf="isAdmin$ | async" [text]="'Izmeni prodavnicu'"></app-dialog>
-    <app-dialog *ngIf="isAdmin$ | async" [text]="'Obriši prodavnicu'"></app-dialog>
-    <app-dialog *ngIf="isAdmin$ | async" [text]="'Dodaj proizvod'"></app-dialog>
+    <app-prodavnica-dialog *ngIf="isAdmin$ | async" [mode]="1"></app-prodavnica-dialog>
+    <app-confirm-dialog *ngIf="isAdmin$ | async" [delete]="'Prodavnica'"></app-confirm-dialog>
+    <app-proizvod-dialog *ngIf="isAdmin$ | async"></app-proizvod-dialog>
 </div>
 
 <app-not-found *ngIf="!(prodavnica$ | async)"></app-not-found>

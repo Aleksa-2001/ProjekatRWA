@@ -2,7 +2,7 @@ import { inject, Injectable } from "@angular/core"
 import { Actions, createEffect, ofType } from "@ngrx/effects"
 import { ProizvodService } from "../../services/proizvod.service"
 import * as ProizvodiActions from "./proizvod.actions"
-import { of } from "rxjs"
+import { Observable, of } from "rxjs"
 import { catchError, map, mergeMap } from "rxjs/operators"
 
 @Injectable()
@@ -51,9 +51,9 @@ export class ProizvodiEffects {
     addProizvod$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ProizvodiActions.addItem),
-            mergeMap(({ proizvod }) => this.service.addProizvod(proizvod)
+            mergeMap(({ proizvod, file }) => this.service.addProizvod(proizvod)
                 .pipe(
-                    map((proizvod) => (ProizvodiActions.addItemSuccess({proizvod}))),
+                    map((proizvod) => (ProizvodiActions.addItemSuccess({ proizvod, file }))),
                     catchError(() => of({ type: "[Proizvod] Add error" }))
                 )
             )
@@ -63,11 +63,12 @@ export class ProizvodiEffects {
     updateProizvod$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ProizvodiActions.updateItem),
-            mergeMap(({ selectedProizvodID, selectedProizvod }) => this.service.updateProizvod(selectedProizvodID, selectedProizvod)
+            mergeMap(({ selectedProizvodID, selectedProizvod, file }) => this.service.updateProizvod(selectedProizvodID, selectedProizvod)
                 .pipe(
                     map((selectedProizvod) => (ProizvodiActions.updateItemSuccess({ 
                         proizvod: { id: selectedProizvod.id, changes: selectedProizvod }, 
-                        selectedProizvod: selectedProizvod
+                        selectedProizvod: selectedProizvod,
+                        file: file
                     }))),
                     catchError(() => of({ type: "[Proizvod] Update error" }))
                 )
@@ -82,6 +83,36 @@ export class ProizvodiEffects {
                 .pipe(
                     map((proizvodID) => (ProizvodiActions.deleteItemSuccess({proizvodID}))),
                     catchError(() => of({ type: "[Proizvod] Delete error" }))
+                )
+            )
+        )
+    })
+
+    uploadImage$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ProizvodiActions.addItemSuccess, ProizvodiActions.updateItemSuccess),
+            mergeMap(({ proizvod, file }) => (this.service.uploadImage((proizvod.id as number), file) as Observable<{proizvodID: number, path: string}>)
+                .pipe(
+                    map((res) => {
+                        if (res.proizvodID && res.path) return ProizvodiActions.uploadImageSuccess({ proizvodID: res.proizvodID, path: res.path })
+                        else return ProizvodiActions.uploadImageIgnore()
+                    }),
+                    catchError(() => of({ type: "[Proizvod] Upload failed" }))
+                )
+            )
+        )
+    })
+
+    updateImagePath$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ProizvodiActions.uploadImageSuccess),
+            mergeMap(({ proizvodID, path }) => this.service.updateProizvod(proizvodID, { slika: path })
+                .pipe(
+                    map((proizvod) => ProizvodiActions.updatePathSucces({
+                        proizvod: { id: proizvod.id, changes: proizvod },
+                        selectedProizvod: proizvod
+                    })),
+                    catchError(() => of({ type: "[Proizvod] Update path failed" }))
                 )
             )
         )

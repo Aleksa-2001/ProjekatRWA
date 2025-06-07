@@ -48,6 +48,16 @@
                         <label for="inputOpis">Opis</label>
                         <textarea id="inputOpis" class="form-control border-secondary" rows="3" maxlength="1000" formControlName="opis" placeholder="Opis"></textarea>
                     </div>
+
+                    <div>
+                        <label for="inputSlika">Slika</label>
+                        <input (change)="onFileSelected($event)" id="inputSlika" class="form-control border-secondary" type="file" accept="image/png, image/jpeg" formControlName="slika" #fileUpload />
+                        <div class="file-upload d-flex align-items-center overflow-hidden border border-secondary rounded-2 position-relative">
+                            <a type="button" (click)="fileUpload.click()" class="btn btn-primary rounded-0"><i class="bi bi-image me-2"></i>Izaberite sliku</a>
+                            <span class="flex-fill">{{(filename !== "" && filename !== "images/prodavnice/") ? filename : "Slika nije učitana"}}</span>
+                            <a type="button" [hidden]="!filename" (click)="removeFile()" class="btn btn-danger rounded-0 py-5 position-absolute end-0"><i class="bi bi-trash"></i></a>
+                        </div>
+                    </div>
                 </div>
 
                 <div [hidden]="tipProizvoda !== 'RacunarskaKomponenta'" class="col-12 col-lg-6">

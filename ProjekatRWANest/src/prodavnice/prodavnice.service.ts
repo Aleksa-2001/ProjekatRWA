@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Prodavnica } from './entities/prodavnica.entity';
-import { ILike, Like, Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { ProdavnicaDto } from './entities/prodavnica.dto';
 import * as fs from 'fs';
-import { extname, join } from 'path';
+import { join } from 'path';
 
 @Injectable()
 export class ProdavniceService {
@@ -53,8 +53,15 @@ export class ProdavniceService {
 
     public async update(prodavnicaID: number, prodavnicaDto: ProdavnicaDto) {
         if (await this.prodavnicaRepository.existsBy({ id: prodavnicaID })) {
+            const prodavnica = await this.prodavnicaRepository.findOneBy({ id: prodavnicaID })
             return await this.prodavnicaRepository.update(prodavnicaID, prodavnicaDto).then(res => {
-                if (res.affected === 1) return this.getProdavnicaByID(prodavnicaID)
+                if (res.affected === 1) {
+                    if (!prodavnicaDto.slika && prodavnica.slika) {
+                        const putanja = join(__dirname, '..', '..', '..', prodavnica.slika)
+                        if (fs.existsSync(putanja)) fs.unlinkSync(putanja)
+                    }
+                    return this.getProdavnicaByID(prodavnicaID)
+                }
             })
         }
         else throw new NotFoundException(`Prodavnica sa ID-jem ${prodavnicaID} nije pronadjena!`)
@@ -65,8 +72,10 @@ export class ProdavniceService {
             const prodavnica = await this.prodavnicaRepository.findOneBy({ id: prodavnicaID })
             return await this.prodavnicaRepository.delete(prodavnicaID).then(res => {
                 if (res.affected === 1) {
-                    const putanja = join(__dirname, '..', '..', '..', prodavnica.slika)
-                    if (fs.existsSync(putanja)) fs.unlinkSync(putanja)
+                    if (prodavnica.slika) {
+                        const putanja = join(__dirname, '..', '..', '..', prodavnica.slika)
+                        if (fs.existsSync(putanja)) fs.unlinkSync(putanja)
+                    }
                     return prodavnicaID
                 }
             })

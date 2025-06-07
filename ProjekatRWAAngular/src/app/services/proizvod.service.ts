@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Proizvod } from '../models/proizvod';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, throwError } from 'rxjs';
+import { catchError, of, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +42,7 @@ export class ProizvodService {
       .pipe(catchError(errorHandler))
   }
 
-  updateProizvod(proizvodID: number, proizvod: Proizvod) {
+  updateProizvod(proizvodID: number, proizvod: Partial<Proizvod>) {
     const { id, ...proizvodDto } = proizvod
     return this.httpClient
       .put<Proizvod>("http://localhost:3000/" + `proizvod/${proizvodID}`, proizvodDto)
@@ -53,6 +53,17 @@ export class ProizvodService {
     return this.httpClient
       .delete<number>("http://localhost:3000/" + `proizvod/${proizvodID}`)
       .pipe(catchError(errorHandler))
+  }
+
+  uploadImage(proizvodID: number, file?: FormData) {
+    if (file) {
+      return this.httpClient
+        .post<{ proizvodID: number, path: string }>("http://localhost:3000/" + `proizvod/upload/${proizvodID}`, file)
+        .pipe(catchError(errorHandler))
+    }
+    else {
+      return of("Slika nije prosledjena")
+    }
   }
 
 }

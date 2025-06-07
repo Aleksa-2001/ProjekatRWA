@@ -16,4 +16,4 @@
     <app-prodavnice></app-prodavnice>
 </div>
 
-<app-dialog *ngIf="isAdmin$ | async" [text]="'Dodaj prodavnicu'"></app-dialog>
+<app-prodavnica-dialog *ngIf="isAdmin$ | async"></app-prodavnica-dialog>

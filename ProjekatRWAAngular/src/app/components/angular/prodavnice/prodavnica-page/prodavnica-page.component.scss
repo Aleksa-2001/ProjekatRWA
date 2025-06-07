@@ -1,6 +1,5 @@
 .masthead {
-    //margin-top: -56px;
-    height: 50vh;
+    height: calc(50vh - 56px);
     min-height: 240px;
 }
 

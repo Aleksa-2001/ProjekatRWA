@@ -52,5 +52,11 @@ export const proizvodReducer = createReducer(
             selectedProizvodID: -1,
             selectedProizvod: null
         })
+    )),
+    on(ProizvodiActions.updatePathSucces, (state, {proizvod, selectedProizvod}) => (
+        adapter.updateOne(proizvod, {
+            ...state,
+            selectedProizvod: selectedProizvod
+        })
     ))
 )

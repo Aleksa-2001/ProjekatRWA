@@ -1,10 +1,13 @@
-import { BadRequestException, Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { ProizvodiService } from './proizvodi.service';
 import { ProdavniceService } from 'src/prodavnice/prodavnice.service';
 import { ProizvodDto } from './entities/proizvod.dto';
 import { CPUDto } from './entities/komponente/cpu.dto';
 import { GPUDto } from './entities/komponente/gpu.dto';
 import { RAMDto } from './entities/komponente/ram.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 
 export type ProizvodTypeDto = 
     CPUDto |
@@ -37,43 +40,69 @@ export class ProizvodiController {
     }
 
     @Post('proizvod')
-    public addProizvod(@Body() dto: ProizvodTypeDto) {
-        switch (dto.type) {
-            case 'Racunar':
-                return "Racunar"
-            case 'RacunarskaKomponenta':
-                return "RacunarskaKomponenta"
-            case "CPU":
-                return this.service.createCPU(dto as CPUDto)
-            case "GPU":
-                return this.service.createGPU(dto as GPUDto)
-            case "RAM":
-                return this.service.createRAM(dto as RAMDto)
-            default:
-                throw new BadRequestException('Tip proizvoda nije prepoznat')
-        }
+    public addProizvod(@Body() dto: ProizvodDto) {
+        return this.service.create(dto)
     }
-    
+
     @Put('proizvod/:id')
-    public updateProizvod(@Param('id', ParseIntPipe) proizvodID: number, @Body() dto: ProizvodTypeDto) {
-        switch (dto.type) {
-            case 'Racunar':
-                return "Racunar"
-            case 'RacunarskaKomponenta':
-                return "RacunarskaKomponenta"
-            case "CPU":
-                return this.service.updateCPU(proizvodID, dto as CPUDto)
-            case "GPU":
-                return this.service.updateGPU(proizvodID, dto as GPUDto)
-            case "RAM":
-                return this.service.updateRAM(proizvodID, dto as RAMDto)
-            default:
-                throw new BadRequestException('Tip proizvoda nije prepoznat')
-        }
+    public updateProizvod(@Param('id', ParseIntPipe) proizvodID: number, @Body() dto: ProizvodDto) {
+        return this.service.update(proizvodID, dto)
     }
+
+    //@Post('proizvod')
+    //public addProizvod(@Body() dto: ProizvodTypeDto) {
+    //    switch (dto.type) {
+    //        case 'Racunar':
+    //            return "Racunar"
+    //        case 'RacunarskaKomponenta':
+    //            return "RacunarskaKomponenta"
+    //        case "CPU":
+    //            return this.service.createCPU(dto as CPUDto)
+    //        case "GPU":
+    //            return this.service.createGPU(dto as GPUDto)
+    //        case "RAM":
+    //            return this.service.createRAM(dto as RAMDto)
+    //        default:
+    //            throw new BadRequestException('Tip proizvoda nije prepoznat')
+    //    }
+    //}
+    //
+    //@Put('proizvod/:id')
+    //public updateProizvod(@Param('id', ParseIntPipe) proizvodID: number, @Body() dto: ProizvodTypeDto) {
+    //    switch (dto.type) {
+    //        case 'Racunar':
+    //            return "Racunar"
+    //        case 'RacunarskaKomponenta':
+    //            return "RacunarskaKomponenta"
+    //        case "CPU":
+    //            return this.service.updateCPU(proizvodID, dto as CPUDto)
+    //        case "GPU":
+    //            return this.service.updateGPU(proizvodID, dto as GPUDto)
+    //        case "RAM":
+    //            return this.service.updateRAM(proizvodID, dto as RAMDto)
+    //        default:
+    //            throw new BadRequestException('Tip proizvoda nije prepoznat')
+    //    }
+    //}
 
     @Delete('proizvod/:id')
     public deleteProizvod(@Param('id', ParseIntPipe) proizvodID: number) {
         return this.service.delete(proizvodID)
+    }
+
+    @Post('proizvod/upload/:id')
+    @UseInterceptors(FileInterceptor('file', {
+        storage: diskStorage({
+            destination: 'images/proizvodi',
+            filename: (req, file, callback) => {
+                const id = req.params.id
+                const ext = extname(file.originalname)
+                const filename = `${id}${ext}`
+                callback(null, filename)
+            }
+        })
+    }))
+    public uploadImage(@Param('id', ParseIntPipe) proizvodID: number, @UploadedFile() file: Express.Multer.File) {
+        return this.service.upload(proizvodID, file)
     }
 }

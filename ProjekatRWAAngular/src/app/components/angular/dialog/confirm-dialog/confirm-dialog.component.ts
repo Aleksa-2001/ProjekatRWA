@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app-state';
 import { selectSelectedProdavnica } from '../../../../store/prodavnica/prodavnica.selectors';
@@ -15,11 +15,21 @@ import * as ProizvodiActions from '../../../../store/proizvod/proizvod.actions'
   styleUrl: './confirm-dialog.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ConfirmDialogComponent { 
+export class ConfirmDialogComponent implements OnInit { 
 
-  @Input() title!: string
+  @Input() delete!: string
+  title: string = ""
 
   constructor(private router: Router, private store: Store<AppState>) { }
+
+  ngOnInit(): void {
+    if (this.delete === 'Prodavnica') {
+      this.title = 'Obriši prodavnicu'
+    }
+    if (this.delete === 'Proizvod') {
+      this.title = 'Obriši proizvod'
+    }
+  }
 
   onDelete() {
     if (this.title.includes('Obriši prodavnicu')) {

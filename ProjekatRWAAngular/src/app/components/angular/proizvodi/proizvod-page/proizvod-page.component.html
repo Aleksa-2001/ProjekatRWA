@@ -6,7 +6,7 @@
     </div>
     <div class="main row mb-3">
         <div class="col-12 col-md-6 col-lg-5">
-            <img class="w-100 border" [src]="'http://localhost:3000/' + proizvod.slika" alt={{proizvod.slika}}/>
+            <img class="w-100 border" [src]="image" alt={{proizvod.slika}}/>
         </div>
         <div class="col-12 col-md-6 col-lg-7">
             <h2>{{proizvod.naziv}}</h2>
@@ -16,14 +16,14 @@
             <hr>
             
             <h3>Opis proizvoda</h3>
-            <p class="m-0" *ngIf="proizvod.opis">{{proizvod.opis}}</p>
-            <p class="m-0" *ngIf="!proizvod.opis"><i>Nema unetog opisa</i></p>
+            <p *ngIf="proizvod.opis">{{proizvod.opis}}</p>
+            <p *ngIf="!proizvod.opis"><i>Nema unetog opisa</i></p>
 
-            <hr>
-
-            <h2 class="m-0">Cena: {{proizvod.cena}}RSD</h2>
+            <h2 class="m-0">Cena: {{proizvod.cena}} RSD</h2>
         </div>
     </div>
+
+    <hr>
 
     <h2 class="mb-3">Specifikacije</h2>
 
@@ -66,8 +66,8 @@
         </div>
     </div>
 
-    <app-dialog *ngIf="isAdmin$ | async" [text]="'Izmeni proizvod'"></app-dialog>
-    <app-dialog *ngIf="isAdmin$ | async" [text]="'Obriši proizvod'"></app-dialog>
+    <app-proizvod-dialog *ngIf="isAdmin$ | async" [mode]="1"></app-proizvod-dialog>
+    <app-confirm-dialog *ngIf="isAdmin$ | async" [delete]="'Proizvod'"></app-confirm-dialog>
 </div>
 
 <app-not-found *ngIf="!(proizvod$ | async)"></app-not-found>
