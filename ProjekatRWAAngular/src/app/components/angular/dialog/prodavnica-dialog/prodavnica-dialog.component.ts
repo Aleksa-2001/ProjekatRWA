@@ -19,6 +19,7 @@ export class ProdavnicaDialogComponent implements OnInit {
 
   form!: FormGroup
   
+  @Input() modalID!: string
   @Input() mode: number = 0
   title: string = ""
   
@@ -62,6 +63,13 @@ export class ProdavnicaDialogComponent implements OnInit {
     }
   }
 
+  resetForm(addEvent: boolean = false) {
+    this.form.reset()
+
+    if (addEvent) this.filename = ""
+    else this.removeFile()
+  }
+
   onFileSelected(event: any) {
     const file = event.target.files[0]
     if (file) {
@@ -87,14 +95,31 @@ export class ProdavnicaDialogComponent implements OnInit {
     if (this.form.valid) {
       const path = "images/prodavnice/"
       const prodavnica = this.form.getRawValue()
+
+      console.log(prodavnica.opis)
+
+      const prodavnicaData = {
+        id: this.prodavnicaID,
+        naziv: prodavnica.naziv,
+        adresa: prodavnica.adresa,
+        opis: prodavnica.opis ?? "",
+        slika: prodavnica.slika ?? ""
+      }
+
+      console.log(prodavnicaData)
       
       if (this.mode === 1) {
-        prodavnica.slika = this.generatePath(path, this.filename, this.prodavnicaID)
-        this.store.dispatch(ProdavniceActions.updateItem({ selectedProdavnicaID: this.prodavnicaID, selectedProdavnica: <Prodavnica>prodavnica, file: this.formData }))
-        this.filename = prodavnica.slika
+        prodavnicaData.slika = this.generatePath(path, this.filename, this.prodavnicaID)
+        this.store.dispatch(ProdavniceActions.updateItem({ selectedProdavnicaID: this.prodavnicaID, selectedProdavnica: <Prodavnica>prodavnicaData, file: this.formData }))
+        this.filename = prodavnicaData.slika
       }
       else {
-        this.store.dispatch(ProdavniceActions.addItem({ prodavnica: <Prodavnica>prodavnica, file: this.formData }))
+        if (!this.filename) {
+          prodavnica.slika = ""
+          this.removeFile()
+        }
+        this.store.dispatch(ProdavniceActions.addItem({ prodavnica: <Prodavnica>prodavnicaData, file: this.formData }))
+        this.resetForm(true)
       }
     }
   }

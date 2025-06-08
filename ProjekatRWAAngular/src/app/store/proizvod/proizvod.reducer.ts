@@ -53,6 +53,10 @@ export const proizvodReducer = createReducer(
             selectedProizvod: null
         })
     )),
+    on(ProizvodiActions.deleteAllItemsSuccess, (state/*, {proizvodi}*/) => (
+        //adapter.removeMany(proizvodi.map(proizvod => proizvod.id), state)
+        adapter.removeAll(state)
+    )),
     on(ProizvodiActions.updatePathSucces, (state, {proizvod, selectedProizvod}) => (
         adapter.updateOne(proizvod, {
             ...state,

@@ -24,6 +24,7 @@ export class ProizvodDialogComponent implements OnInit {
 
   form!: FormGroup
   
+  @Input() modalID!: string
   @Input() mode: number = 0
   title: string = ""
   
@@ -31,8 +32,8 @@ export class ProizvodDialogComponent implements OnInit {
   prodavnica$: Observable<Prodavnica | null> = of()
   proizvodID: number = -1
   prodavnica: Prodavnica | null = null
-  type: string = ''
-  tipProizvoda: string = ''
+  type: string = ""
+  tipProizvoda: string = ""
   
   formData?: FormData
   filename: string = ""
@@ -122,6 +123,19 @@ export class ProizvodDialogComponent implements OnInit {
     this.type = this.form.value.type ? this.form.value.type : ''
   }
 
+  resetForm(addEvent: boolean = false) {
+    this.form.reset({
+      type: '',
+      tipProizvoda: '',
+    })
+    
+    this.type = ""
+    this.tipProizvoda = ""
+
+    if (addEvent) this.filename = ""
+    else this.removeFile()
+  }
+
   onFileSelected(event: any) {
     const file = event.target.files[0]
     if (file) {
@@ -155,8 +169,8 @@ export class ProizvodDialogComponent implements OnInit {
         proizvodjac: proizvod.proizvodjac,
         naziv: proizvod.naziv,
         cena: proizvod.cena,
-        opis: proizvod.opis,
-        slika: proizvod.slika,
+        opis: proizvod.opis ?? "",
+        slika: proizvod.slika ?? "",
         prodavnica: this.prodavnica
       }      
 
@@ -198,7 +212,12 @@ export class ProizvodDialogComponent implements OnInit {
         this.filename = proizvodData.slika
       }
       else {
+        if (!this.filename) {
+          proizvodData.slika = ""
+          this.removeFile()
+        }
         this.store.dispatch(ProizvodiActions.addItem({ proizvod: <Proizvod>proizvodData, file: this.formData }))
+        this.resetForm(true)
       }
     }
   }

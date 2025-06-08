@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-error-dialog',
@@ -7,4 +7,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './error-dialog.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ErrorDialogComponent { }
+export class ErrorDialogComponent { 
+
+  @Input() modalID!: string
+
+}

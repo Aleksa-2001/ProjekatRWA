@@ -1,18 +1,29 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProizvodiController } from './proizvodi.controller';
-import { Proizvod } from './entities/proizvod.entity';
 import { ProizvodiService } from './proizvodi.service';
-import { ProdavniceService } from 'src/prodavnice/prodavnice.service';
 import { ProdavniceModule } from 'src/prodavnice/prodavnice.module';
+import { Proizvod } from './entities/proizvod.entity';
+import { RacunarskaKomponenta } from './entities/racunarska-komponenta.entity';
 import { CPU } from './entities/komponente/cpu.entity';
 import { GPU } from './entities/komponente/gpu.entity';
-import { RacunarskaKomponenta } from './entities/racunarska-komponenta.entity';
 import { RAM } from './entities/komponente/ram.entity';
 
 @Module({
-  imports: [ProdavniceModule, TypeOrmModule.forFeature([Proizvod, RacunarskaKomponenta, CPU, GPU, RAM])],
+  imports: [
+    forwardRef(() => ProdavniceModule), 
+    TypeOrmModule.forFeature(
+      [
+        Proizvod, 
+        RacunarskaKomponenta, 
+        CPU, 
+        GPU, 
+        RAM
+      ]
+    )
+  ],
   controllers: [ProizvodiController],
-  providers: [ProizvodiService, ProdavniceService]
+  providers: [ProizvodiService],
+  exports: [ProizvodiService]
 })
 export class ProizvodiModule {}

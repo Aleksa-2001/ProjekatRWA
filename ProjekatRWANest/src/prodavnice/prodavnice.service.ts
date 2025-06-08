@@ -3,33 +3,19 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Prodavnica } from './entities/prodavnica.entity';
 import { ILike, Repository } from 'typeorm';
 import { ProdavnicaDto } from './entities/prodavnica.dto';
+import { ProizvodiService } from 'src/proizvodi/proizvodi.service';
 import * as fs from 'fs';
 import { join } from 'path';
 
 @Injectable()
 export class ProdavniceService {
     
-    constructor(@InjectRepository(Prodavnica) private prodavnicaRepository: Repository<Prodavnica>) { }
-
-    //lista = [
-    //    {
-    //        'id': 1,
-    //        'naziv': 'GIGATRON',
-    //        'adresa': 'Delta Planet Niš',
-    //        'opis': 'GIGATRON prodavnica na prvom spratu tržnog centra Delta Planet u Nišu',
-    //        'slika': 'images/ng/prodavnice/gigatron-delta-nis.jpg',
-    //    },
-    //    {
-    //        'id': 2,
-    //        'naziv': 'Tehnomanija',
-    //        'adresa': 'Nikole Pašića 28a Niš',
-    //        'opis': '',
-    //        'slika': 'images/ng/prodavnice/tehnomanija-nikole-pasica-nis.jpg',
-    //    }
-    //]
+    constructor(
+        @InjectRepository(Prodavnica) private prodavnicaRepository: Repository<Prodavnica>, 
+        private proizvodiService: ProizvodiService
+    ) { }
 
     public async getProdavnice() {
-        //return this.lista
         return await this.prodavnicaRepository.find()
     }
 
@@ -40,7 +26,6 @@ export class ProdavniceService {
     }
 
     public async getProdavnicaByID(prodavnicaID: number) {
-        //const prodavnica = this.lista.find(prodavnica => prodavnica.id === prodavnicaID)
         if (await this.prodavnicaRepository.existsBy({ id: prodavnicaID }))
             return await this.prodavnicaRepository.findOneBy({ id: prodavnicaID })
         else throw new NotFoundException(`Prodavnica sa ID-jem ${prodavnicaID} nije pronadjena!`)
@@ -70,6 +55,7 @@ export class ProdavniceService {
     public async delete(prodavnicaID: number) {
         if (await this.prodavnicaRepository.existsBy({ id: prodavnicaID })) {
             const prodavnica = await this.prodavnicaRepository.findOneBy({ id: prodavnicaID })
+            this.proizvodiService.deleteAll(prodavnicaID)
             return await this.prodavnicaRepository.delete(prodavnicaID).then(res => {
                 if (res.affected === 1) {
                     if (prodavnica.slika) {

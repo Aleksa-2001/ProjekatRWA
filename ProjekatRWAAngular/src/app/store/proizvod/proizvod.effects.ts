@@ -88,6 +88,18 @@ export class ProizvodiEffects {
         )
     })
 
+    deleteAll$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ProizvodiActions.deleteAllItems),
+            mergeMap(({ prodavnicaID }) => this.service.deleteProizvodi(prodavnicaID)
+                .pipe(
+                    map((proizvodi) => ProizvodiActions.deleteAllItemsSuccess({proizvodi})),
+                    catchError(() => of({ type: "[Proizvod] Delete all error" }))
+                )
+            )
+        )
+    })
+
     uploadImage$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ProizvodiActions.addItemSuccess, ProizvodiActions.updateItemSuccess),

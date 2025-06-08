@@ -1,4 +1,4 @@
-<div class="modal fade" id="prodavnicaModalDialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="prodavnicaModalDialogLabel" aria-hidden="true">
+<div class="modal fade" [id]="modalID" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="prodavnicaModalDialogLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <form [formGroup]="form" (ngSubmit)="onSubmit()" class="modal-content border-secondary border-3 rounded-3">
             <div class="modal-header">
@@ -43,6 +43,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Otkaži</button>
+                <button type="button" class="btn btn-warning" (click)="resetForm()">Resetuj formu</button>
                 <button [disabled]="!this.form.valid" type="submit" class="btn btn-primary" data-bs-dismiss="modal">{{title === 'Izmeni prodavnicu' ? 'Izmeni' : 'Dodaj'}}</button>
             </div>
         </form>

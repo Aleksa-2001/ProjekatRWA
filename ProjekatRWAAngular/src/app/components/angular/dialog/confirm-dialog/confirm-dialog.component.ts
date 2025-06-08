@@ -17,6 +17,7 @@ import * as ProizvodiActions from '../../../../store/proizvod/proizvod.actions'
 })
 export class ConfirmDialogComponent implements OnInit { 
 
+  @Input() modalID!: string
   @Input() delete!: string
   title: string = ""
 
@@ -28,6 +29,9 @@ export class ConfirmDialogComponent implements OnInit {
     }
     if (this.delete === 'Proizvod') {
       this.title = 'Obriši proizvod'
+    }
+    if (this.delete === 'Proizvodi') {
+      this.title = 'Obriši sve proizvode'
     }
   }
 
@@ -50,6 +54,16 @@ export class ConfirmDialogComponent implements OnInit {
         tap(proizvod => {
           this.store.dispatch(ProizvodiActions.deleteItem({ selectedProizvodID: proizvod.id }))
           this.router.navigate(["ng/prodavnica", proizvod.prodavnica.id])
+        })
+      ).subscribe()
+    }
+
+    if (this.title.includes('Obriši sve proizvode')) {
+      this.store.select(selectSelectedProdavnica).pipe(
+        filter(prodavnica => !!prodavnica),
+        take(1),
+        tap(prodavnica => {
+          this.store.dispatch(ProizvodiActions.deleteAllItems({ prodavnicaID: prodavnica.id }))
         })
       ).subscribe()
     }

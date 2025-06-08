@@ -96,6 +96,20 @@ export const deleteItemSuccess = createAction(
     }>()
 )
 
+export const deleteAllItems = createAction(
+    "[Proizvod] Obrisi sve proizvode",
+    props<{
+        prodavnicaID: number
+    }>()
+)
+
+export const deleteAllItemsSuccess = createAction(
+    "[Proizvod] Proizvodi uspesno obrisani",
+    props<{
+        proizvodi: Proizvod[]
+    }>()
+)
+
 export const uploadImageSuccess = createAction(
     "[Proizvod] Slika uspesno uneta",
     props<{

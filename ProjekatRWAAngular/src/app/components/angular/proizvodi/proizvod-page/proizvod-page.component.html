@@ -66,8 +66,8 @@
         </div>
     </div>
 
-    <app-proizvod-dialog *ngIf="isAdmin$ | async" [mode]="1"></app-proizvod-dialog>
-    <app-confirm-dialog *ngIf="isAdmin$ | async" [delete]="'Proizvod'"></app-confirm-dialog>
+    <app-proizvod-dialog *ngIf="isAdmin$ | async" [modalID]="'proizvodModalDialog'" [mode]="1"></app-proizvod-dialog>
+    <app-confirm-dialog *ngIf="isAdmin$ | async" [modalID]="'confirmModalDialog'" [delete]="'Proizvod'"></app-confirm-dialog>
 </div>
 
 <app-not-found *ngIf="!(proizvod$ | async)"></app-not-found>

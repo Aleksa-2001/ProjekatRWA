@@ -55,6 +55,12 @@ export class ProizvodService {
       .pipe(catchError(errorHandler))
   }
 
+  deleteProizvodi(prodavnicaID: number) {
+    return this.httpClient
+      .delete<Proizvod[]>("http://localhost:3000/" + `proizvodi/${prodavnicaID}`)
+      .pipe(catchError(errorHandler))
+  }
+
   uploadImage(proizvodID: number, file?: FormData) {
     if (file) {
       return this.httpClient

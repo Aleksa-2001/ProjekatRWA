@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { filter, Observable, of, tap } from 'rxjs';
+import { filter, Observable, of, take, tap } from 'rxjs';
 import { Prodavnica } from '../../../../models/prodavnica';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app-state';
@@ -30,6 +30,8 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
   isAdmin$: Observable<boolean> = of(false)
 
   backgroundStyle: { [key: string]: string } = { }
+  
+  brojProizvoda: number = 0
 
   constructor(private title: Title, private route: ActivatedRoute, private store: Store<AppState>) { }
 
@@ -41,14 +43,18 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
     this.store.dispatch(ProdavniceActions.loadSelectedItem({ selectedProdavnicaID: this.prodavnicaID }))
     this.prodavnica$ = this.store.select(selectSelectedProdavnica)
 
-    this.store.dispatch(ProizvodiActions.loadItems({ prodavnicaID: this.prodavnicaID }))
-
     this.prodavnica$.pipe(
       filter(prodavnica => !!prodavnica),
       tap(prodavnica => {
         this.title.setTitle(`${prodavnica.naziv} - ProjekatRWA`)
         this.setBackground('http://localhost:3000/' + prodavnica.slika)
       })
+    ).subscribe()
+
+    this.prodavnica$.pipe(
+      filter(prodavnica => !!prodavnica),
+      take(1),
+      tap(prodavnica => this.store.dispatch(ProizvodiActions.loadItems({ prodavnicaID: prodavnica.id })))
     ).subscribe()
   }
 
@@ -68,4 +74,7 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
     }
   }
 
+  getBrojProizvoda(brojProizvoda: number) {
+    this.brojProizvoda = brojProizvoda
+  }
 }

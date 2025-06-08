@@ -28,7 +28,7 @@ export abstract class Proizvod {
     @Column()
     slika: string
     
-    @ManyToOne(() => Prodavnica, { onDelete: 'CASCADE' })
+    @ManyToOne(() => Prodavnica)
     prodavnica: Prodavnica
 
     // constructor(
