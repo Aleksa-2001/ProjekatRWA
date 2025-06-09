@@ -3,11 +3,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProizvodiController } from './proizvodi.controller';
 import { ProizvodiService } from './proizvodi.service';
 import { ProdavniceModule } from 'src/prodavnice/prodavnice.module';
-import { Proizvod } from './entities/proizvod.entity';
-import { RacunarskaKomponenta } from './entities/racunarska-komponenta.entity';
-import { CPU } from './entities/komponente/cpu.entity';
-import { GPU } from './entities/komponente/gpu.entity';
-import { RAM } from './entities/komponente/ram.entity';
+import { Proizvod } from '../models/proizvod.entity';
+import { RacunarskaKomponenta } from '../models/racunarska-komponenta.entity';
+import { CPU } from '../models/komponente/cpu.entity';
+import { GPU } from '../models/komponente/gpu.entity';
+import { RAM } from '../models/komponente/ram.entity';
+import { MaticnaPloca } from 'src/models/komponente/maticna-ploca.entity';
+import { Skladiste } from 'src/models/komponente/skladiste.entity';
+import { Napajanje } from 'src/models/komponente/napajanje.entity';
 
 @Module({
   imports: [
@@ -18,7 +21,10 @@ import { RAM } from './entities/komponente/ram.entity';
         RacunarskaKomponenta, 
         CPU, 
         GPU, 
-        RAM
+        RAM,
+        MaticnaPloca,
+        Skladiste,
+        Napajanje
       ]
     )
   ],

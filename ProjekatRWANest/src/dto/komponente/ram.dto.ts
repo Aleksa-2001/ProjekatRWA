@@ -1,4 +1,4 @@
-import { RacunarskaKomponentaDto } from "../racunarska-komponenta.dto"
+import { RacunarskaKomponentaDto } from "../racunarska-komponenta.dto";
 
 export class RAMDto extends RacunarskaKomponentaDto {
     tipMemorije: string

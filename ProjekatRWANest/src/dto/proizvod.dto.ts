@@ -1,4 +1,4 @@
-import { Prodavnica } from "../../prodavnice/entities/prodavnica.entity"
+import { Prodavnica } from "../models/prodavnica.entity"
 
 export abstract class ProizvodDto {
     type: string

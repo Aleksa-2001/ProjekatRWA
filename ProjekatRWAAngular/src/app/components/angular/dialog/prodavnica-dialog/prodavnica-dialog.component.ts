@@ -96,17 +96,13 @@ export class ProdavnicaDialogComponent implements OnInit {
       const path = "images/prodavnice/"
       const prodavnica = this.form.getRawValue()
 
-      console.log(prodavnica.opis)
-
       const prodavnicaData = {
         id: this.prodavnicaID,
         naziv: prodavnica.naziv,
         adresa: prodavnica.adresa,
         opis: prodavnica.opis ?? "",
-        slika: prodavnica.slika ?? ""
+        slika: (prodavnica.slika && this.filename) ? prodavnica.slika : "",
       }
-
-      console.log(prodavnicaData)
       
       if (this.mode === 1) {
         prodavnicaData.slika = this.generatePath(path, this.filename, this.prodavnicaID)

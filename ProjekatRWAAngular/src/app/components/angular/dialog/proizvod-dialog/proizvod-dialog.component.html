@@ -68,6 +68,9 @@
                             <option value="CPU">Procesor</option>
                             <option value="GPU">Grafička karta</option>
                             <option value="RAM">RAM memorija</option>
+                            <option value="MaticnaPloca">Matična ploča</option>
+                            <option value="Skladiste">Skladišna memorija</option>
+                            <option value="Napajanje">Napajanje</option>
                         </select>
                         <!-- <small class="text-danger" *ngIf="form.controls['type'].dirty && form.hasError('required', 'type')">
                             *Tip je obavezno polje
@@ -127,6 +130,63 @@
                         <div>
                             <label for="inputRAMFrekvencija">Frekvencija (u MHz)</label>
                             <input id="inputRAMFrekvencija" class="form-control border-secondary" type="number" formControlName="ramFrekvencija" min="0" placeholder="Frekvencija (u MHz)" />
+                        </div>
+                    </div>
+
+                    <div [hidden]="type !== 'MaticnaPloca'">
+                        <div class="mb-2">
+                            <label for="inputMaticnaPlocaTipMaticnePloce">Tip matične ploče</label>
+                            <input id="inputMaticnaPlocaTipMaticnePloce" class="form-control border-secondary" type="text" formControlName="maticnaPlocaTipMaticnePloce" placeholder="Tip matične ploče" />
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="inputMaticnaPlocaSocket">Socket</label>
+                            <input id="inputMaticnaPlocaSocket" class="form-control border-secondary" type="text" formControlName="maticnaPlocaSocket" placeholder="Socket" />
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="inputMaticnaPlocaBrojRAMSlotova">Broj RAM slotova</label>
+                            <input id="inputMaticnaPlocaBrojRAMSlotova" class="form-control border-secondary" type="number" formControlName="maticnaPlocaBrojRAMSlotova" min="0" max="16" placeholder="Broj RAM slotova" />
+                        </div>
+    
+                        <div class="mb-2">
+                            <label for="inputMaticnaPlocaBrojUSB20Portova">Broj USB 2.0 portova</label>
+                            <input id="inputMaticnaPlocaBrojUSB20Portova" class="form-control border-secondary" type="number" formControlName="maticnaPlocaBrojUSB20Portova" min="0" placeholder="Broj USB 2.0 portova" />
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="inputMaticnaPlocaBrojUSB30Portova">Broj USB 3.0 portova</label>
+                            <input id="inputMaticnaPlocaBrojUSB30Portova" class="form-control border-secondary" type="number" formControlName="maticnaPlocaBrojUSB30Portova" min="0" placeholder="Broj USB 3.0 portova" />
+                        </div>
+
+                        <div>
+                            <label for="inputMaticnaPlocaBrojUSB31Portova">Broj USB 3.1 portova</label>
+                            <input id="inputMaticnaPlocaBrojUSB31Portova" class="form-control border-secondary" type="number" formControlName="maticnaPlocaBrojUSB31Portova" min="0" placeholder="Broj USB 3.1 portova" />
+                        </div>
+                    </div>
+
+                    <div [hidden]="type !== 'Skladiste'">
+                        <div class="mb-2">
+                            <label for="inputSkladisteTipMemorije">Tip memorije</label>
+                            <input id="inputSkladisteTipMemorije" class="form-control border-secondary" type="text" formControlName="skladisteTipMemorije" placeholder="Tip memorije" />
+                        </div>
+    
+                        <div>
+                            <label for="inputSkladisteVelicina">Veličina (u GB)</label>
+                            <input id="inputSkladisteVelicina" class="form-control border-secondary" type="number" formControlName="skladisteVelicina" min="0" placeholder="Veličina (u GB)" />
+                        </div>
+                    </div>
+
+                    <div [hidden]="type !== 'Napajanje'">
+                        <div class="mb-2">
+                            <label for="inputNapajanjeSnaga">Snaga (u W)</label>
+                            <input id="inputNapajanjeSnaga" class="form-control border-secondary" type="number" formControlName="napajanjeSnaga" min="0" placeholder="Snaga (u W)" />
+                        </div>
+    
+                        <div class="d-flex d-sm-inline-flex flex-column">
+                            <label for="inputNapajanjeModularno">Modularno</label>
+                            <input id="inputNapajanjeModularno" class="btn-check" type="checkbox" formControlName="napajanjeModularno" placeholder="Modularno" />
+                            <label for="inputNapajanjeModularno" class="btn btn-outline-primary">Modularno</label>
                         </div>
                     </div>
                 </div>

@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Prodavnica } from './entities/prodavnica.entity';
+import { Prodavnica } from '../models/prodavnica.entity';
 import { ILike, Repository } from 'typeorm';
-import { ProdavnicaDto } from './entities/prodavnica.dto';
+import { ProdavnicaDto } from '../dto/prodavnica.dto';
 import { ProizvodiService } from 'src/proizvodi/proizvodi.service';
 import * as fs from 'fs';
 import { join } from 'path';

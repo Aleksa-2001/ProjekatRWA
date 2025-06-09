@@ -1,4 +1,4 @@
-import { RacunarskaKomponentaDto } from "../racunarska-komponenta.dto"
+import { RacunarskaKomponentaDto } from "../racunarska-komponenta.dto";
 
 export class CPUDto extends RacunarskaKomponentaDto {
     socket: string

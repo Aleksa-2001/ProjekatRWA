@@ -6,7 +6,7 @@
 //import { RAM } from "./komponente/ram";
 //import { Skladiste } from "./komponente/skladiste";
 
-import { Proizvod } from "src/proizvodi/entities/proizvod.entity";
+import { Proizvod } from "./proizvod.entity";
 import { ChildEntity } from "typeorm";
 
 @ChildEntity()

@@ -17,19 +17,10 @@ export class User {
     @Column()
     email: string
 
-    @Column()
+    @Column({ unique: true })
     username: string
 
     @Column()
     password: string
-
-    //constructor(userID: number, admin: boolean, firstName: string, lastName: string, email: string, username: string, password: string) {
-    //    //userID = 0
-    //    admin = false
-    //    firstName = ''
-    //    lastName = ''
-    //    email = ''
-    //    username = ''
-    //    password = ''
-    //}
+    
 }

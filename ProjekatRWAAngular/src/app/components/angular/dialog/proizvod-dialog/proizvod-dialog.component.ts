@@ -12,6 +12,9 @@ import { GPU } from '../../../../models/komponente/gpu';
 import * as ProizvodiActions from "../../../../store/proizvod/proizvod.actions"
 import { Prodavnica } from '../../../../models/prodavnica';
 import { RAM } from '../../../../models/komponente/ram';
+import { MaticnaPloca } from '../../../../models/komponente/maticna-ploca';
+import { Skladiste } from '../../../../models/komponente/skladiste';
+import { Napajanje } from '../../../../models/komponente/napajanje';
 
 @Component({
   selector: 'app-proizvod-dialog',
@@ -72,10 +75,23 @@ export class ProizvodDialogComponent implements OnInit {
             gpuFrekvencija: [proizvod.type === 'GPU' ? (proizvod as GPU).frekvencija : ''],
             gpuVRAM: [(proizvod as GPU).VRAM],
 
-            ramTipMemorije: [(proizvod as RAM).tipMemorije],
+            ramTipMemorije: [proizvod.type === 'RAM' ? (proizvod as RAM).tipMemorije : ''],
             ramBrojModula: [(proizvod as RAM).brojRAMModula],
-            ramVelicina: [(proizvod as RAM).velicina],
-            ramFrekvencija: [proizvod.type === 'RAM' ? (proizvod as RAM).frekvencija : '']
+            ramVelicina: [proizvod.type === 'RAM' ? (proizvod as RAM).velicina : ''],
+            ramFrekvencija: [proizvod.type === 'RAM' ? (proizvod as RAM).frekvencija : ''],
+
+            maticnaPlocaTipMaticnePloce: [(proizvod as MaticnaPloca).tipMaticnePloce], 
+            maticnaPlocaSocket: [proizvod.type === 'MaticnaPloca' ? (proizvod as MaticnaPloca).socket : ''], 
+            maticnaPlocaBrojRAMSlotova: [(proizvod as MaticnaPloca).brojRAMSlotova], 
+            maticnaPlocaBrojUSB20Portova: [(proizvod as MaticnaPloca).brojUSB20Portova],
+            maticnaPlocaBrojUSB30Portova: [(proizvod as MaticnaPloca).brojUSB30Portova],
+            maticnaPlocaBrojUSB31Portova: [(proizvod as MaticnaPloca).brojUSB31Portova],
+
+            skladisteTipMemorije: [proizvod.type === 'Skladiste' ? (proizvod as Skladiste).tipMemorije : ''], 
+            skladisteVelicina: [proizvod.type === 'Skladiste' ? (proizvod as Skladiste).velicina : ''],
+
+            napajanjeSnaga: [(proizvod as Napajanje).snaga],
+            napajanjeModularno: [(proizvod as Napajanje).modularno]
           })
 
           //this.tip = this.form.value.tip ? Number(this.form.value.tip) : 0
@@ -110,7 +126,20 @@ export class ProizvodDialogComponent implements OnInit {
         ramTipMemorije: [''],
         ramBrojModula: [''],
         ramVelicina: [''],
-        ramFrekvencija: ['']
+        ramFrekvencija: [''],
+
+        maticnaPlocaTipMaticnePloce: [''],
+        maticnaPlocaSocket: [''], 
+        maticnaPlocaBrojRAMSlotova: [''], 
+        maticnaPlocaBrojUSB20Portova: [''],
+        maticnaPlocaBrojUSB30Portova: [''],
+        maticnaPlocaBrojUSB31Portova: [''],
+
+        skladisteTipMemorije: [''], 
+        skladisteVelicina: [''],
+
+        napajanjeSnaga: [''],
+        napajanjeModularno: [false]
       })
     }
   }
@@ -170,7 +199,7 @@ export class ProizvodDialogComponent implements OnInit {
         naziv: proizvod.naziv,
         cena: proizvod.cena,
         opis: proizvod.opis ?? "",
-        slika: proizvod.slika ?? "",
+        slika: (proizvod.slika && this.filename) ? proizvod.slika : "",
         prodavnica: this.prodavnica
       }      
 
@@ -180,31 +209,58 @@ export class ProizvodDialogComponent implements OnInit {
         case 'CPU':
           proizvodData = {
             ...proizvodBase,
-            socket: proizvod.cpuSocket,
-            frekvencija: proizvod.cpuFrekvencija,
-            brojJezgara: proizvod.cpuBrojJezgara,
-            brojNiti: proizvod.cpuBrojNiti
+            socket: proizvod.cpuSocket ?? "",
+            frekvencija: proizvod.cpuFrekvencija ?? 0,
+            brojJezgara: proizvod.cpuBrojJezgara ?? 0,
+            brojNiti: proizvod.cpuBrojNiti ?? 0
           }
           break
         case 'GPU':
           proizvodData = {
             ...proizvodBase,
-            frekvencija: proizvod.gpuFrekvencija,
-            VRAM: proizvod.gpuVRAM
+            frekvencija: proizvod.gpuFrekvencija ?? 0,
+            VRAM: proizvod.gpuVRAM ?? 0
           }
           break
         case 'RAM':
           proizvodData = {
             ...proizvodBase,
-            tipMemorije: proizvod.ramTipMemorije,
-            brojRAMModula: proizvod.ramBrojModula,
-            velicina: proizvod.ramVelicina,
-            frekvencija: proizvod.ramFrekvencija
+            tipMemorije: proizvod.ramTipMemorije ?? "",
+            brojRAMModula: proizvod.ramBrojModula ?? 0,
+            velicina: proizvod.ramVelicina ?? 0,
+            frekvencija: proizvod.ramFrekvencija ?? 0
+          }
+          break
+        case 'MaticnaPloca':
+          proizvodData = {
+            ...proizvodBase,
+            tipMaticnePloce: proizvod.maticnaPlocaTipMaticnePloce ?? "", 
+            socket: proizvod.maticnaPlocaSocket ?? "", 
+            brojRAMSlotova: proizvod.maticnaPlocaBrojRamSlotova ?? 0, 
+            brojUSB20Portova: proizvod.maticnaPlocaBrojUSB20Portova ?? 0,
+            brojUSB30Portova: proizvod.maticnaPlocaBrojUSB30Portova ?? 0,
+            brojUSB31Portova: proizvod.maticnaPlocaBrojUSB31Portova ?? 0
+          }
+          break
+        case 'Skladiste':
+          proizvodData = {
+            ...proizvodBase,
+            tipMemorije: proizvod.skladisteTipMemorije ?? "", 
+            velicina: proizvod.skladisteVelicina ?? 0
+          }
+          break
+        case 'Napajanje':
+          proizvodData = {
+            ...proizvodBase,
+            snaga: proizvod.napajanjeSnaga ?? 0, 
+            modularno: proizvod.napajanjeModularno ?? false
           }
           break
         default:
           proizvodData = proizvodBase
       }
+
+      //console.log(proizvodData)
 
       if (this.mode === 1) {
         proizvodData.slika = this.generatePath(path, this.filename, this.proizvodID)

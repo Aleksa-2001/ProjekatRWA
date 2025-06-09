@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { ProizvodiService } from './proizvodi.service';
-import { ProizvodDto } from './entities/proizvod.dto';
+import { ProizvodDto } from '../dto/proizvod.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';

@@ -1,6 +1,6 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Prodavnica } from './entities/prodavnica.entity';
+import { Prodavnica } from '../models/prodavnica.entity';
 import { ProdavniceService } from './prodavnice.service';
 import { ProdavniceController } from './prodavnice.controller';
 import { ProizvodiModule } from 'src/proizvodi/proizvodi.module';
