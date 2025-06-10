@@ -10,6 +10,6 @@ import { Napajanje } from '../../../../../../models/komponente/napajanje';
 })
 export class NapajanjeComponent {
 
-  @Input() napajanje?: Napajanje
+  @Input() napajanje!: Napajanje
 
 }

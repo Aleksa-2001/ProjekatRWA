@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Prodavnica } from '../../../../models/prodavnica';
 import { RouterModule } from '@angular/router';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-prodavnica-item',
-  imports: [RouterModule],
+  imports: [NgIf, RouterModule],
   templateUrl: './prodavnica-item.component.html',
   styleUrl: './prodavnica-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

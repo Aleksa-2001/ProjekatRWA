@@ -5,7 +5,7 @@ import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-proizvod-item',
-  imports: [NgIf, CommonModule,RouterModule],
+  imports: [NgIf, CommonModule, RouterModule],
   templateUrl: './proizvod-item.component.html',
   styleUrl: './proizvod-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

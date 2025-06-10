@@ -10,6 +10,6 @@ import { MaticnaPloca } from '../../../../../../models/komponente/maticna-ploca'
 })
 export class MaticnaPlocaComponent { 
 
-  @Input() maticnaPloca?: MaticnaPloca
+  @Input() maticnaPloca!: MaticnaPloca
   
 }

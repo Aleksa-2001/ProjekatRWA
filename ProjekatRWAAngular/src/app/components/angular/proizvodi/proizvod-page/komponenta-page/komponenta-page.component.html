@@ -8,7 +8,9 @@
                 <span *ngSwitchCase="'CPU'">Procesor</span>
                 <span *ngSwitchCase="'GPU'">Grafička karta</span>
                 <span *ngSwitchCase="'RAM'">RAM memorija</span>
-                <!-- TODO: Implementacija novih tipova komponenti -->
+                <span *ngSwitchCase="'MaticnaPloca'">Matična ploča</span>
+                <span *ngSwitchCase="'Skladiste'">Skladišna memorija</span>
+                <span *ngSwitchCase="'Napajanje'">Napajanje</span>
                 <span *ngSwitchDefault>Tip komponente nije pronađen!</span>
             </h5>
         </div>
@@ -17,5 +19,8 @@
         <app-cpu *ngSwitchCase="'CPU'" [cpu]="getCPU()"></app-cpu>
         <app-gpu *ngSwitchCase="'GPU'" [gpu]="getGPU()"></app-gpu>
         <app-ram *ngSwitchCase="'RAM'" [ram]="getRAM()"></app-ram>
+        <app-maticna-ploca *ngSwitchCase="'MaticnaPloca'" [maticnaPloca]="getMaticnaPloca()"></app-maticna-ploca>
+        <app-skladiste *ngSwitchCase="'Skladiste'" [skladiste]="getSkladiste()"></app-skladiste>
+        <app-napajanje *ngSwitchCase="'Napajanje'" [napajanje]="getNapajanje()"></app-napajanje>
     </div>
 </div>

@@ -10,6 +10,6 @@ import { Skladiste } from '../../../../../../models/komponente/skladiste';
 })
 export class SkladisteComponent { 
   
-  @Input() skladiste?: Skladiste
+  @Input() skladiste!: Skladiste
 
 }

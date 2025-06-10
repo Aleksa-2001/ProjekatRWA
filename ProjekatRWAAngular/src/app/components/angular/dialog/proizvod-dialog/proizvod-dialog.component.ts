@@ -236,7 +236,7 @@ export class ProizvodDialogComponent implements OnInit {
             ...proizvodBase,
             tipMaticnePloce: proizvod.maticnaPlocaTipMaticnePloce ?? "", 
             socket: proizvod.maticnaPlocaSocket ?? "", 
-            brojRAMSlotova: proizvod.maticnaPlocaBrojRamSlotova ?? 0, 
+            brojRAMSlotova: proizvod.maticnaPlocaBrojRAMSlotova ?? 0, 
             brojUSB20Portova: proizvod.maticnaPlocaBrojUSB20Portova ?? 0,
             brojUSB30Portova: proizvod.maticnaPlocaBrojUSB30Portova ?? 0,
             brojUSB31Portova: proizvod.maticnaPlocaBrojUSB31Portova ?? 0

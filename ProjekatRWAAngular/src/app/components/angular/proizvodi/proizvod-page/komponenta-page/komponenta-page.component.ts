@@ -7,17 +7,26 @@ import { RAMComponent } from './ram/ram.component';
 import { RAM } from '../../../../../models/komponente/ram';
 import { CPU } from '../../../../../models/komponente/cpu';
 import { GPU } from '../../../../../models/komponente/gpu';
+import { MaticnaPlocaComponent } from "./maticna-ploca/maticna-ploca.component";
+import { MaticnaPloca } from '../../../../../models/komponente/maticna-ploca';
+import { Skladiste } from '../../../../../models/komponente/skladiste';
+import { Napajanje } from '../../../../../models/komponente/napajanje';
+import { SkladisteComponent } from "./skladiste/skladiste.component";
+import { NapajanjeComponent } from "./napajanje/napajanje.component";
 
 @Component({
   selector: 'app-komponenta-page',
   imports: [
-    NgIf, 
-    NgSwitch, 
-    NgSwitchCase, 
-    CommonModule, 
-    CPUComponent, 
-    GPUComponent, 
-    RAMComponent
+    NgIf,
+    NgSwitch,
+    NgSwitchCase,
+    CommonModule,
+    CPUComponent,
+    GPUComponent,
+    RAMComponent,
+    MaticnaPlocaComponent,
+    SkladisteComponent,
+    NapajanjeComponent
 ],
   templateUrl: './komponenta-page.component.html',
   styleUrl: './komponenta-page.component.scss',
@@ -37,6 +46,18 @@ export class KomponentaPageComponent {
 
   getRAM(): RAM {
     return this.komponenta as RAM
+  }
+
+  getMaticnaPloca(): MaticnaPloca {
+    return this.komponenta as MaticnaPloca
+  }
+
+  getSkladiste(): Skladiste {
+    return this.komponenta as Skladiste
+  }
+
+  getNapajanje(): Napajanje {
+    return this.komponenta as Napajanje
   }
 
 }
