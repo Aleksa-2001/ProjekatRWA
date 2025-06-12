@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app-state';
@@ -27,7 +27,7 @@ export class AuthComponent {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
-    });
+    })
 
     this.token$ = this.store.select(selectToken)
     this.error$ = this.store.select(selectError)

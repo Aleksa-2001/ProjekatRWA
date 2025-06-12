@@ -33,7 +33,9 @@ export class UsersService {
 	]
 
 	public getUserByID(userID: number) {
-		return this.users.find(user => user.userID === userID)
+		const data = this.users.find(user => user.userID === userID)
+		const { password, ...user } = data
+		return user
 	}
 
 	/*

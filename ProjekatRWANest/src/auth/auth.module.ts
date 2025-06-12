@@ -23,8 +23,12 @@ import { AuthController } from './auth.controller';
       })
     })
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
+  providers: [
+    AuthService, 
+    LocalStrategy, 
+    JwtStrategy
+  ],
+  controllers: [AuthController],
   exports: [AuthService],
-  controllers: [AuthController]
 })
 export class AuthModule {}

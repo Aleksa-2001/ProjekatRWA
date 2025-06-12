@@ -1,5 +1,5 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { ProizvodItemComponent } from './proizvod-item/proizvod-item.component';
 import { filter, Observable, of, tap } from 'rxjs';
 import { Proizvod } from '../../../models/proizvod';

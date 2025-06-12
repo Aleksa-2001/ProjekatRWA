@@ -4,8 +4,6 @@ import { ProdavnicaService } from "../../services/prodavnica.service"
 import * as ProdavniceActions from "./prodavnica.actions"
 import { Observable, of } from "rxjs"
 import { catchError, map, mergeMap } from "rxjs/operators"
-import { Store } from "@ngrx/store"
-import { AppState } from "../app-state"
 
 @Injectable()
 export class ProdavniceEffects {

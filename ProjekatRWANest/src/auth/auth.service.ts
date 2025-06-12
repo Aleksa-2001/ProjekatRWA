@@ -10,13 +10,13 @@ export class AuthService {
 
     constructor(private userService: UsersService, private jwt: JwtService, private config: ConfigService) { }
 
-    async validateUser(username: string, pass: string): Promise<any> {
+    async validateUser(username: string, password: string): Promise<any> {
         //const saltOrRounds = 10;
         //const hash = await bcrypt.hash(pass, saltOrRounds);
         //console.log(hash);
 
         const user = await this.userService.getUserByUsername(username);
-        if (user && user.password === pass) {
+        if (user && user.password === password) {
             const { password, ...result } = user;
             return result;
         }
@@ -50,12 +50,20 @@ export class AuthService {
             //}
             //res.cookie('token', jwtBearerToken, cookieOptions)
 
-            res.status(200).json({
-                token: jwtBearerToken,
-                expiresIn: this.config.get<number>('JWT_EXPIRES_IN')
-            })
+            res.status(200).json(jwtBearerToken)
         }
         //else throw new UnauthorizedException('Pogresno korisnicko ime ili lozinka!')
         else res.sendStatus(401)
+    }
+
+    public async validateToken(req: Request) {
+        const token = req.headers.authorization.split(' ')[1]
+        try {
+            const payload = await this.jwt.verifyAsync(token, { secret: this.config.get<string>('JWT_SECRET') })
+            return this.userService.getUserByID(payload.sub)
+        }
+        catch {
+            return null
+        }
     }
 }

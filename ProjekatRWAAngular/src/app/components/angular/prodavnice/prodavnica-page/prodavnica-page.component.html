@@ -12,9 +12,12 @@
     </header>
 
     <div class="container my-3">
-        <div *ngIf="isAdmin$ | async" class="mb-3 d-flex flex-column flex-sm-row gap-2">
-            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#prodavnicaModalDialog"><i class="bi bi-pencil me-2"></i>Izmeni prodavnicu</button>
-            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModalDialog"><i class="bi bi-trash me-2"></i>Obriši prodavnicu</button>
+        <div *ngIf="isAdmin$ | async" class="mb-3">
+            <div class="d-flex flex-column flex-sm-row gap-2">
+                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#prodavnicaModalDialog"><i class="bi bi-pencil me-2"></i>Izmeni prodavnicu</button>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModalDialog"><i class="bi bi-trash me-2"></i>Obriši prodavnicu</button>
+            </div>
+            <hr>
         </div>
 
         <h3>Opis prodavnice</h3>

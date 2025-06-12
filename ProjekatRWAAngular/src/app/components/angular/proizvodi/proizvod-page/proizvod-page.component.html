@@ -1,8 +1,11 @@
 <div *ngIf="proizvod$ | async as proizvod" class="container my-3">
     <h1>Proizvod</h1>
-    <div *ngIf="isAdmin$ | async" class="mb-3 d-flex flex-column flex-sm-row gap-2">
-        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#proizvodModalDialog"><i class="bi bi-pencil me-2"></i>Izmeni proizvod</button>
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModalDialog"><i class="bi bi-trash me-2"></i>Obriši proizvod</button>
+    <div *ngIf="isAdmin$ | async" class="mb-3 ">
+        <div class="d-flex flex-column flex-sm-row gap-2">
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#proizvodModalDialog"><i class="bi bi-pencil me-2"></i>Izmeni proizvod</button>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModalDialog"><i class="bi bi-trash me-2"></i>Obriši proizvod</button>
+        </div>
+        <hr>
     </div>
     <div class="main row mb-3">
         <div class="col-12 col-md-6 col-lg-5">

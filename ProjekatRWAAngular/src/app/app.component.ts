@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./shared/components/header/header.component";
 import { FooterComponent } from "./shared/components/footer/footer.component";
@@ -23,7 +23,7 @@ export class AppComponent {
   constructor(private store: Store<AppState>) {
     const token = localStorage.getItem('token')
     if (token)
-      this.store.dispatch(AuthActions.validateToken({ token: token }))
+      this.store.dispatch(AuthActions.validateToken())
   }
 
 }

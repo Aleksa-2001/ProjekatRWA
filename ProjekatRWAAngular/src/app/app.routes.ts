@@ -4,7 +4,9 @@ import { RxjsComponent } from './components/rxjs/rxjs.component';
 import { AngularComponent } from './components/angular/angular.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { AuthComponent } from './shared/components/auth/auth.component';
-import { AuthGuard, AuthRedirectGuard, RolesGuard, ValidateGuard } from './shared/services/auth.guard';
+import { AuthGuard, AuthRedirectGuard } from './shared/guards/auth.guard';
+import { RolesGuard } from './shared/guards/roles.guard';
+import { ValidateGuard } from './shared/guards/auth-validate.guard';
 import { RegisterComponent } from './shared/components/register/register.component';
 import { ProfileComponent } from './shared/components/profile/profile.component';
 import { ProdavnicaPageComponent } from './components/angular/prodavnice/prodavnica-page/prodavnica-page.component';
@@ -26,4 +28,4 @@ export const routes: Routes = [
     { path: "profile", component: ProfileComponent, canActivate: [AuthGuard, ValidateGuard] },
 
     { path: "**", component: NotFoundComponent }
-];
+]

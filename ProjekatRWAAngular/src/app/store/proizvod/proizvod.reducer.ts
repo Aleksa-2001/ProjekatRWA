@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store"
-import { EntityState, Update, createEntityAdapter } from '@ngrx/entity';
+import { createEntityAdapter, EntityState } from '@ngrx/entity';
 import { Proizvod } from "../../models/proizvod";
 import * as ProizvodiActions from "./proizvod.actions"
 

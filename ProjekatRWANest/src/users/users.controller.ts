@@ -5,6 +5,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/roles.guard';
 
 @Controller()
+//@UseGuards(JwtAuthGuard)
 export class UsersController {
 
     constructor(private service: UsersService) { }
@@ -14,7 +15,6 @@ export class UsersController {
     //    return this.service.getUsers()
     //}
     
-    @UseGuards(JwtAuthGuard)
     @Get('user/:id')
     public getUserByID(@Param('id', ParseIntPipe) userID: number) {
         return this.service.getUserByID(userID)
