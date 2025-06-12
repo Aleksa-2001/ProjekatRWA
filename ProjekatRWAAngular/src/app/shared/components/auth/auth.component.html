@@ -16,9 +16,13 @@
                     *Lozinka je obavezno polje
                 </small>
             </div>
-            <button [disabled]="!this.loginForm.valid" class="btn btn-primary mt-2 mx-auto" type="submit">Prijavi se</button>
-            <p *ngIf="error$ | async" class="text-danger text-center mt-3 mb-0">Pogrešno korisničko ime i/ili lozinka!</p>
-            <p class="text-center mt-3 mb-0">Nemate nalog? Kreirajte svoj nalog <a class="text-primary" [routerLink]="['/register']" routerLinkActive="router-link-active" >ovde</a></p>
+            <button [disabled]="!this.loginForm.valid" class="btn btn-primary mx-auto my-2" type="submit">Prijavi se</button>
+            <div *ngIf="error$ | async as error" class="text-danger text-center">
+                <p class="mb-2" *ngIf="error.includes('401') || error.includes('404')">Pogrešno korisničko ime i/ili lozinka</p>
+                <p class="mb-2" *ngIf="error.includes('500')">Serverska greška</p>
+                <p class="mb-2" *ngIf="error.includes('API')">Nije uspelo povezivanje sa serverom</p>
+            </div>
+            <p class="text-center mb-0">Nemate nalog? Kreirajte svoj nalog <a class="text-primary" [routerLink]="['/register']" routerLinkActive="router-link-active" >ovde</a></p>
         </form>
     </div>
 </div>

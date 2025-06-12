@@ -58,8 +58,13 @@
                     *Lozinke se ne podudaraju
                 </small>
             </div>
-            <button [disabled]="!(this.registerForm.valid && this.checkPasswordInputs(formData))" class="btn btn-primary mt-2 mx-auto" type="submit">Napravi nalog</button>
-            <p class="text-center mt-3 mb-0">Već ste kreirali nalog? Prijavite se <a class="text-primary" [routerLink]="['/login']" routerLinkActive="router-link-active" >ovde</a></p>
+            <button [disabled]="!(this.registerForm.valid && this.checkPasswordInputs(formData))" class="btn btn-primary mx-auto my-2" type="submit">Napravi nalog</button>
+            <div *ngIf="error$ | async as error" class="text-danger text-center mb-0">
+                <p class="mb-2" *ngIf="error.includes('409')">Uneto korisničko ime već postoji</p>
+                <p class="mb-2" *ngIf="error.includes('500')">Serverska greška</p>
+                <p class="mb-2" *ngIf="error.includes('API')">Nije uspelo povezivanje sa serverom</p>
+            </div>
+            <p class="text-center mb-0">Već ste kreirali nalog? Prijavite se <a class="text-primary" [routerLink]="['/login']" routerLinkActive="router-link-active" >ovde</a></p>
         </form>
     </div>
 </div>

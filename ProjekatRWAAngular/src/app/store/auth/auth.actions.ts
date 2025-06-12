@@ -23,6 +23,24 @@ export const loginFailure = createAction(
   }>()
 )
 
+export const register = createAction(
+  '[Auth] Register',
+  props<{
+    user: User
+  }>()
+)
+
+export const registerSuccess = createAction(
+  '[Auth] Register Success'
+)
+
+export const registerFailure = createAction(
+  '[Auth] Register Failure',
+  props<{
+    error: any
+  }>()
+)
+
 export const logout = createAction(
   '[Auth] Logout'
 )

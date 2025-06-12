@@ -25,7 +25,7 @@ export class AuthRedirectGuard implements CanActivate {
 
     canActivate(): Observable<boolean | UrlTree> {
         return this.store.select(isAuthenticated).pipe(
-            map((auth) => auth ? this.router.createUrlTree(['/login']) : true)
+            map((auth) => auth ? this.router.createUrlTree(['/']) : true)
         )
     }
 }

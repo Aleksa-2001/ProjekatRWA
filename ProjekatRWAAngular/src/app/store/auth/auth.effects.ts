@@ -47,6 +47,20 @@ export class AuthEffects {
     )
   )
 
+  register$ = createEffect(() => 
+    this.actions$.pipe(
+      ofType(AuthActions.register),
+      mergeMap(({ user }) => this.userService.addUser(user).pipe(
+        map((user) => {
+          console.log(user)
+          this.router.navigate(['/login'])
+          return AuthActions.registerSuccess()
+        }),
+        catchError((error) => of(AuthActions.registerFailure({ error })))
+      ))
+    )
+  )
+
   validateToken$ = createEffect(() => 
     this.actions$.pipe(
       ofType(AuthActions.validateToken),

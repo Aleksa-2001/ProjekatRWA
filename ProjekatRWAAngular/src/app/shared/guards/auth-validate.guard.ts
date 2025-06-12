@@ -3,7 +3,7 @@ import { CanActivate, Router, UrlTree } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../store/app-state";
 import { AuthService } from "../services/auth.service";
-import { catchError, map, Observable, of, take } from "rxjs";
+import { catchError, map, Observable, of } from "rxjs";
 import * as AuthActions from "../../store/auth/auth.actions"
 
 @Injectable({

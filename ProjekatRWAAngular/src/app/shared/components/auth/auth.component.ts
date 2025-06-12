@@ -11,7 +11,7 @@ import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-auth',
-  imports: [RouterLink, CommonModule, ReactiveFormsModule, NgIf],
+  imports: [NgIf, CommonModule, RouterLink, ReactiveFormsModule],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

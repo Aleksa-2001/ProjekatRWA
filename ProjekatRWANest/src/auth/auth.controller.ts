@@ -10,13 +10,13 @@ export class AuthController {
     
     @UseGuards(LocalAuthGuard)
     @Post('login')
-    async login(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
-        this.authService.login(req, res)
+    public login(@Req() req: Request) {
+        return this.authService.login(req)
     }
 
     @UseGuards(JwtAuthGuard)
     @Get('validate')
-    validateToken(@Req() req: Request) {
+    public validateToken(@Req() req: Request) {
         return this.authService.validateToken(req)
     }
 }

@@ -13,6 +13,11 @@ export const isAuthenticated = createSelector(
   (token) => !!token
 )
 
+export const isLoggedIn = createSelector(
+  selectAuthState,
+  (state) => state.isLoggedIn
+)
+
 export const selectUser = createSelector(
   selectAuthState,
   (state) => state.user

@@ -16,6 +16,13 @@ export class UserService {
             .pipe(catchError(errorHandler))
     }
 
+    addUser(user: User) {
+        const { userID, ...userDto } = user
+        return this.httpClient
+            .post<User>("http://localhost:3000/" + "user", userDto)
+            .pipe(catchError(errorHandler))
+    }
+
 }
 
 const errorHandler = (error: HttpErrorResponse) => {

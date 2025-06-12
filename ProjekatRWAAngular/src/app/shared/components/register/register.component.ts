@@ -2,18 +2,23 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app-state';
-import { NgIf } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import * as AuthActions from '../../../store/auth/auth.actions';
+import { Observable } from 'rxjs';
+import { selectError } from '../../../store/auth/auth.selectors';
 
 @Component({
   selector: 'app-register',
-  imports: [RouterLink, ReactiveFormsModule, NgIf],
+  imports: [NgIf, CommonModule, RouterLink, ReactiveFormsModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent {
+
+  error$: Observable<any>
 
   registerForm: FormGroup
   formData: any
@@ -28,11 +33,13 @@ export class RegisterComponent {
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(8)]],
       repeatPassword: ['', [Validators.required, Validators.minLength(8)]]
-    });
+    })
+
+    this.error$ = this.store.select(selectError)
   }
 
   onInput() {
-    this.formData = this.registerForm.value
+    this.formData = this.registerForm.getRawValue()
   }
 
   onSubmit() {
@@ -40,6 +47,7 @@ export class RegisterComponent {
       const { repeatPassword, ...user } = this.formData
       console.log(user)
       //TODO: Dispatch-ovanje akcije za registraciju
+      this.store.dispatch(AuthActions.register({ user }))
     }
   }
 
