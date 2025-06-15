@@ -1,13 +1,73 @@
 <div class="container my-3">
     <h1>Pretraga</h1>
     <app-search class="mb-3" [query]="query"></app-search>
-    <div class="mb-3" *ngIf="query" [hidden]="brojProdavnica === 0">
-        <app-prodavnice (brojProdavnica)="getBrojProdavnica($event)"></app-prodavnice>
+    <div class="row row-gap-3">
+        <div *ngIf="query && (brojProdavnica !== 0 || brojProizvoda !== 0)" class="col-12 col-md-3 col-xl-2">
+            <div class="sticky-top">
+                <div class="d-flex flex-row flex-sm-row flex-md-column flex-wrap column-gap-2">
+                    <h5 class="mb-1">Prikaz</h5>
+                    <div class="form-check form-check-sm-inline">
+                        <input (change)="onSelectPrikaz(1)" class="form-check-input" type="radio" name="inputRadioPrikaz" id="radioSve" value="1" checked>
+                        <label class="form-check-label" for="radioSve">Sve</label>
+                    </div>
+                    <div class="form-check form-check-sm-inline">
+                        <input (change)="onSelectPrikaz(2)" class="form-check-input" type="radio" name="inputRadioPrikaz" id="radioProdavnice" value="2">
+                        <label class="form-check-label" for="radioProdavnice">Prodavnice</label>
+                    </div>
+                    <div class="form-check form-check-sm-inline">
+                        <input (change)="onSelectPrikaz(3)" class="form-check-input" type="radio" name="inputRadioPrikaz" id="radioProizvodi" value="3">
+                        <label class="form-check-label" for="radioProizvodi">Proizvodi</label>
+                    </div>
+                </div>
+                <hr *ngIf="brojProdavnica !== 0 && prikaziProdavnice" class="my-2">
+                <div *ngIf="brojProdavnica !== 0 && prikaziProdavnice" class="d-flex flex-row flex-sm-row flex-md-column flex-wrap column-gap-2">
+                    <h5 class="mb-1">Prodavnica</h5>
+                    <div class="form-check" *ngFor="let nazivProdavnice of naziviProdavnica$ | async">
+                        <input (change)="onSelectProdavnica(nazivProdavnice)" class="form-check-input" type="checkbox" name="inputCheckbox{{nazivProdavnice}}" id="checkbox{{nazivProdavnice}}" value={{nazivProdavnice}}>
+                        <label class="form-check-label" for="checkbox{{nazivProdavnice}}">{{nazivProdavnice}}</label>
+                    </div>
+                </div>
+                <hr *ngIf="brojProizvoda !== 0 && prikaziProizvode" class="my-2">
+                <div *ngIf="brojProizvoda !== 0 && prikaziProizvode" class="d-flex flex-row flex-sm-row flex-md-column flex-wrap column-gap-2">
+                    <h5 class="mb-1">Proizvod</h5>
+                    <div class="form-check" *ngFor="let tipProizvoda of tipoviProizvoda$ | async">
+                        <input (change)="onSelectTipProizvoda(tipProizvoda)" class="form-check-input" type="checkbox" name="inputCheckbox{{tipProizvoda}}" id="checkbox{{tipProizvoda}}" value={{tipProizvoda}}>
+                        <label class="form-check-label" for="checkbox{{tipProizvoda}}">{{tipProizvoda}}</label>
+                    </div>
+                </div>
+                <hr *ngIf="brojProizvoda !== 0 && prikaziProizvode" class="my-2">
+                <div *ngIf="brojProizvoda !== 0 && prikaziProizvode" class="d-flex flex-row flex-sm-row flex-md-column flex-wrap column-gap-2">
+                    <h5 class="mb-1">Tip proizvoda</h5>
+                    <div class="form-check" *ngFor="let type of types$ | async">
+                        <input (change)="onSelectType(type)" class="form-check-input" type="checkbox" name="inputCheckbox{{type}}" id="checkbox{{type}}" value={{type}}>
+                        <label class="form-check-label" for="checkbox{{type}}">{{type}}</label>
+                    </div>
+                </div>
+                <hr *ngIf="brojProizvoda !== 0 && prikaziProizvode" class="my-2">
+                <div *ngIf="brojProizvoda !== 0 && prikaziProizvode" class="d-flex flex-row flex-sm-row flex-md-column flex-wrap column-gap-2">
+                    <h5 class="mb-1">Proizvođač</h5>
+                    <div class="form-check" *ngFor="let proizvodjac of proizvodjaci$ | async">
+                        <input (change)="onSelectProizvodjac(proizvodjac)" class="form-check-input" type="checkbox" name="inputCheckbox{{proizvodjac}}" id="checkbox{{proizvodjac}}" value={{proizvodjac}}>
+                        <label class="form-check-label" for="checkbox{{proizvodjac}}">{{proizvodjac}}</label>
+                    </div>
+                </div>
+                <hr class="mt-2 mb-0 d-md-none">
+            </div>
+        </div>
+        <div class="col">
+            <app-prodavnice *ngIf="query" [hidden]="brojProdavnica === 0 || !prikaziProdavnice" [selectedNazivi]="selectedNaziviProdavnica" (brojProdavnica)="getBrojProdavnica($event)"></app-prodavnice>
+
+            <hr *ngIf="query && brojProdavnica !== 0 && brojProizvoda !== 0 && prikaziProdavnice && prikaziProizvode">
+
+            <app-proizvodi *ngIf="query" [hidden]="brojProizvoda === 0 || !prikaziProizvode" 
+                [selectedTipoviProizvoda]="selectedTipoviProizvoda" 
+                [selectedTypes]="selectedTypes" 
+                [selectedProizvodjaci]="selectedProizvodjaci" 
+                (brojProizvoda)="getBrojProizvoda($event)"
+            ></app-proizvodi>
+            
+            <p *ngIf="query && brojProdavnica === 0 && brojProizvoda === 0">Nije pronađen nijedan rezultat!</p>
+            <p *ngIf="!query">Molimo da popunite polje za pretragu!</p>
+        </div>
     </div>
-    <hr *ngIf="query && brojProdavnica !== 0 && brojProizvoda !== 0">
-    <div *ngIf="query" [hidden]="brojProizvoda === 0">
-        <app-proizvodi (brojProizvoda)="getBrojProizvoda($event)"></app-proizvodi>
-    </div>
-    <p *ngIf="query && brojProdavnica === 0 && brojProizvoda === 0">Nije pronađen nijedan rezultat!</p>
-    <p *ngIf="!query">Molimo da popunite polje za pretragu!</p>
 </div>

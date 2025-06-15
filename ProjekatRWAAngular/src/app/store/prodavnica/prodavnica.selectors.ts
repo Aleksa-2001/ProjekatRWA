@@ -30,3 +30,8 @@ export const selectSelectedProdavnica = createSelector(
     selectProdavniceFeature,
     (state: ProdavniceState) => state.selectedProdavnica
 )
+
+export const selectNaziviProdavnica = createSelector(
+    selectProdavnice,
+    (prodavnice) => [...new Set(prodavnice.map(prodavnica => prodavnica.naziv))].sort((a, b) => a.toLowerCase() < b.toLowerCase() ? -1 : 1)
+)

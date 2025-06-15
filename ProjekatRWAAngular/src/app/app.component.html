@@ -7,3 +7,5 @@
 
     <app-footer class="footer"></app-footer>
 </div>
+
+<button class="btn btn-lg btn-secondary" [ngClass]="{ 'show-scroll-to-top': windowScroll >= 56 }" (click)="scrollToTop()"><i class="bi bi-chevron-up"></i></button>

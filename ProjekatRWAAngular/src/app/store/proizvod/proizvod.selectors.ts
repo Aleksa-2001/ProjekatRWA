@@ -28,3 +28,18 @@ export const selectSelectedProizvod = createSelector(
     selectProizvodiFeature,
     (state: ProizvodiState) => state.selectedProizvod
 )
+
+export const selectTipoviProizvoda = createSelector(
+    selectProizvodi,
+    (proizvodi) => [...new Set(proizvodi.map(proizvod => proizvod.tipProizvoda))].sort((a, b) => a.toLowerCase() < b.toLowerCase() ? -1 : 1)
+)
+
+export const selectType = createSelector(
+    selectProizvodi,
+    (proizvodi) => [...new Set(proizvodi.map(proizvod => proizvod.type))].sort((a, b) => a.toLowerCase() < b.toLowerCase() ? -1 : 1)
+)
+
+export const selectProizvodjaci = createSelector(
+    selectProizvodi,
+    (proizvodi) => [...new Set(proizvodi.map(proizvod => proizvod.proizvodjac))].sort((a, b) => a.toLowerCase() < b.toLowerCase() ? -1 : 1)
+)

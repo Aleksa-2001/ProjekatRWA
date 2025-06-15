@@ -20,10 +20,18 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent {
 
+  windowScroll: number = 0
+
   constructor(private store: Store<AppState>) {
     const token = localStorage.getItem('token')
     if (token)
       this.store.dispatch(AuthActions.validateToken())
+
+    window.addEventListener('scroll', () => this.windowScroll = window.pageYOffset)
+  }
+
+  scrollToTop() {
+    window.scrollTo(0, 0)
   }
 
 }

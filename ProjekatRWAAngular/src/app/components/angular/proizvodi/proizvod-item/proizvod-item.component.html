@@ -1,15 +1,15 @@
 <a class="text-black" [routerLink]="['/ng/proizvod', proizvod.id]">
     <div class="row" *ngIf="displayMode === 1">
-        <div class="col-3 col-md-2 col-lg-1 pe-0">
+        <div class="col-3 col-md-2 col-xl-1 pe-0">
             <img *ngIf="proizvod.slika" class="w-100 border" [src]="'http://localhost:3000/' + proizvod.slika" alt={{proizvod.slika}} />
             <img *ngIf="!proizvod.slika" class="w-100 border" src="images/image-default.png"/>
         </div>
         <div class="info-list col align-content-center">
             <div class="row gap-0">
-                <div class="col col-12 col-md-9 col-lg-10">
+                <div class="col col-12 col-md-8 col-lg-9 align-content-center">
                     <h5 class="m-0">{{proizvod.naziv}}</h5>
                 </div>
-                <div class="col col-12 col-md-3 col-lg-2">
+                <div class="col col-12 col-md-4 col-lg-3 align-content-center">
                     <h5 class="m-0 text-md-end">{{proizvod.cena}} RSD</h5>
                 </div>
             </div>
