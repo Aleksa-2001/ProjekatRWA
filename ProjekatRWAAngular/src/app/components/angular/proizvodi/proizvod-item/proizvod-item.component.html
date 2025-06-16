@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-    <div class="row" *ngIf="displayMode === 2">
+    <div class="row row-gap-3" *ngIf="displayMode === 2">
         <div class="col-12">
             <img *ngIf="proizvod.slika" class="w-100 border" [src]="'http://localhost:3000/' + proizvod.slika" alt={{proizvod.slika}}/>
             <img *ngIf="!proizvod.slika" class="w-100 border" src="images/image-default.png"/>

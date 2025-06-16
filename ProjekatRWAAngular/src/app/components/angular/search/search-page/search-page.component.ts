@@ -9,13 +9,23 @@ import { ProdavniceComponent } from "../../prodavnice/prodavnice.component";
 import { loadItemsBySearch as loadProdavnice } from '../../../../store/prodavnica/prodavnica.actions';
 import { loadItemsBySearch as loadProizvodi } from '../../../../store/proizvod/proizvod.actions';
 import { SearchComponent } from '../search.component';
-import { CommonModule, NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { selectNaziviProdavnica } from '../../../../store/prodavnica/prodavnica.selectors';
 import { selectProizvodjaci, selectTipoviProizvoda, selectType } from '../../../../store/proizvod/proizvod.selectors';
 
 @Component({
   selector: 'app-search-page',
-  imports: [NgIf, NgFor, CommonModule, ProdavniceComponent, ProizvodiComponent, SearchComponent],
+  imports: [
+    NgIf, 
+    NgFor, 
+    NgSwitch, 
+    NgSwitchCase, 
+    NgSwitchDefault, 
+    CommonModule, 
+    ProdavniceComponent, 
+    ProizvodiComponent, 
+    SearchComponent
+  ],
   templateUrl: './search-page.component.html',
   styleUrl: './search-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -84,10 +94,14 @@ export class SearchPageComponent implements OnInit {
       case 2: 
         this.prikaziProdavnice = true
         this.prikaziProizvode = false
+        this.selectedTipoviProizvoda = []
+        this.selectedTypes = []
+        this.selectedProizvodjaci = []
         break
       case 3: 
         this.prikaziProdavnice = false
         this.prikaziProizvode = true
+        this.selectedNaziviProdavnica = []
         break
     }
   }

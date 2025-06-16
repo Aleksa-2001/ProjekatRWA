@@ -19,7 +19,7 @@ export class ProdavniceComponent implements OnChanges {
   prodavnice$: Observable<readonly Prodavnica[]> = of([])
   selectedProdavnice$: Observable<readonly Prodavnica[]> = of([])
 
-  @Input() selectedNazivi: string[] = []
+  @Input() selectedNaziviProdavnica: string[] = []
   @Output() brojProdavnica = new EventEmitter<number>()
 
   constructor(private store: Store<AppState>) { 
@@ -35,7 +35,7 @@ export class ProdavniceComponent implements OnChanges {
   ngOnChanges(): void {
     this.selectedProdavnice$ = combineLatest([
       this.prodavnice$,
-      of(this.selectedNazivi)
+      of(this.selectedNaziviProdavnica)
     ]).pipe(
       filter(([prodavnice, _]) => !!prodavnice),
       map(([prodavnice, selectedProdavnice]) => {
