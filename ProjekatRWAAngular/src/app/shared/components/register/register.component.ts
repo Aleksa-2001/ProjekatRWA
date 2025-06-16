@@ -45,8 +45,6 @@ export class RegisterComponent {
   onSubmit() {
     if (this.registerForm.valid && this.checkPasswordInputs(this.formData)) {
       const { repeatPassword, ...user } = this.formData
-      console.log(user)
-      //TODO: Dispatch-ovanje akcije za registraciju
       this.store.dispatch(AuthActions.register({ user }))
     }
   }

@@ -1,3 +1,41 @@
 :host {
   display: block;
 }
+
+.profile-info {
+  min-width: 384px;
+}
+
+.profile-info .row {
+  transition: 0.1s;
+}
+
+.profile-info .row:hover {
+  background-color: #DDDDDD;
+}
+
+.profile-info .row:nth-child(even) {
+  background-color: #EEEEEE;
+  transition: 0.1s;
+}
+
+.profile-info .row:nth-child(even):hover {
+  background-color: #DDDDDD;
+}
+
+.profile-info .col {
+  padding: 0.75rem;
+  align-content: center;
+}
+
+.profile-info .col h5 {
+  margin: 0;
+}
+
+.profile-info .head h5 {
+  font-weight: bolder;
+}
+
+.profile-info .col:first-child h5 {
+  font-weight: bolder;
+}
