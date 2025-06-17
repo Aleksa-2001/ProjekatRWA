@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, NotFoundException, Scope } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/models/user.entity';
 import { Repository } from 'typeorm';
@@ -40,12 +40,33 @@ export class UsersService {
 
 	public async updateUser(userID: number, userDto: UserDto) {
 		if (await this.userRepository.existsBy({ userID: userID })) {
-			return await this.userRepository.update(userID, userDto).then(res => {
-				if (res.affected === 1) return this.getUserByID(userID)
-			})
+			const user = await this.userRepository.findOneBy({ userID: userID })
+			if (!(await this.userRepository.existsBy({ username: userDto.username })) || user.username === userDto.username) {
+				return await this.userRepository.update(userID, userDto).then(res => {
+					if (res.affected === 1) return this.getUserByID(userID)
+				})
+			}
+			else throw new ConflictException("Uneto korisnicko ime vec postoji!")
 		}
 		else throw new NotFoundException(`Korisnik sa ID-jem ${userID} nije pronadjen!`)
 	}
+
+	public async changePassword(userID: number, password: string, newPassword: string) {
+		if (await this.userRepository.existsBy({ userID: userID })) {
+			const user = await this.userRepository.findOneBy({ userID: userID })
+			if (await bcrypt.compare(password, user.password)) {
+				const salt = await bcrypt.genSalt()
+				const hashedPassword = await bcrypt.hash(newPassword, salt)
+
+				return await this.userRepository.update(userID, { password: hashedPassword }).then(res => {
+					if (res.affected === 1) return this.getUserByID(userID)
+				})
+			}
+			else throw new UnauthorizedException(`Pogresna lozinka!`)
+		}
+		else throw new NotFoundException(`Korisnik sa ID-jem ${userID} nije pronadjen!`)
+	}
+
 
 	public async deleteUser(userID: number) {
 		if (await this.userRepository.existsBy({ userID: userID })) {
@@ -69,12 +90,4 @@ export class UsersService {
 			return (await this.userRepository.findOneBy({ username: username })).userID
 		else throw new NotFoundException(`Korisnik sa korisnickim imenom ${username} nije pronadjen!`)
 	}
-
-	//public getUserByUsername(username: string) {
-	//	return this.users.find(user => user.username === username)
-	//}
-	//
-	//public getUserID(username: string) {
-	//	return this.users.find(user => user.username === username).userID
-	//}
 }

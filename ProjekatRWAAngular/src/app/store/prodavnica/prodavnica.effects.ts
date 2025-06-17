@@ -4,11 +4,13 @@ import { ProdavnicaService } from "../../services/prodavnica.service"
 import * as ProdavniceActions from "./prodavnica.actions"
 import { Observable, of } from "rxjs"
 import { catchError, map, mergeMap } from "rxjs/operators"
+import { Router } from "@angular/router"
 
 @Injectable()
 export class ProdavniceEffects {
     private actions$ = inject(Actions)
     private service = inject(ProdavnicaService)
+    private router = inject(Router)
 
     loadEffect$ = createEffect(() => {
         return this.actions$.pipe(
@@ -82,7 +84,10 @@ export class ProdavniceEffects {
             ofType(ProdavniceActions.deleteItem),
             mergeMap(({ selectedProdavnicaID }) => this.service.deleteProdavnica(selectedProdavnicaID)
                 .pipe(
-                    map((prodavnicaID) => (ProdavniceActions.deleteItemSuccess({prodavnicaID}))),
+                    map((prodavnicaID) => {
+                        this.router.navigate(["ng"])
+                        return ProdavniceActions.deleteItemSuccess({prodavnicaID})
+                    }),
                     catchError(() => of({ type: "[Prodavnica] Delete error" }))
                 )
             )

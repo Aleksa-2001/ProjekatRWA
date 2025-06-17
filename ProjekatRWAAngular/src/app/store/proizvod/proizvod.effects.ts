@@ -7,8 +7,8 @@ import { catchError, map, mergeMap } from "rxjs/operators"
 
 @Injectable()
 export class ProizvodiEffects {
-    private actions$ = inject(Actions);
-    private service = inject(ProizvodService);
+    private actions$ = inject(Actions)
+    private service = inject(ProizvodService)
 
     //constructor(private service: RacunarskaKomponentaService, private actions$: Actions) { }
 

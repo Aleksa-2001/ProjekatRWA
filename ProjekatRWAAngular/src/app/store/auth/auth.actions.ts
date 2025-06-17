@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { User } from '../../models/user';
+import { Update } from '@ngrx/entity';
 
 export const login = createAction(
   '[Auth] Login',
@@ -71,5 +72,49 @@ export const getUserSuccess = createAction(
   '[Auth] Load User Success',
   props<{
     user: User
+  }>()
+)
+
+export const updateUser = createAction(
+  '[Auth] Update User', 
+  props<{
+    userID: number,
+    user: User
+  }>()
+)
+
+export const updateUserSuccess = createAction(
+  '[Auth] Update User Success',
+  props<{
+    user: Update<User>
+  }>()
+)
+
+export const changePassword = createAction(
+  '[Auth] Change Password',
+  props<{
+    userID: number,
+    data: {
+      password: string,
+      newPassword: string
+    }
+  }>()
+)
+
+export const changePasswordSuccess = createAction(
+  '[Auth] Change Password Success'
+)
+
+export const deleteUser = createAction(
+  '[Auth] Delete User',
+  props<{
+    userID: number
+  }>()
+)
+
+export const deleteUserSuccess = createAction(
+  '[Auth] Delete User Success',
+  props<{
+    userID: number
   }>()
 )

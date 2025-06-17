@@ -39,3 +39,12 @@
 .profile-info .col:first-child h5 {
   font-weight: bolder;
 }
+
+small {
+  display: block;
+}
+
+.sticky-top {
+  top: calc(56px + 1rem);
+  max-height: calc(100vh - 56px - 2rem);
+}

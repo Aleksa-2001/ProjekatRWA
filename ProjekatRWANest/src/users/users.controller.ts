@@ -30,6 +30,12 @@ export class UsersController {
     public updateUser(@Param('id', ParseIntPipe) userID: number, @Body() dto: UserDto) {
         return this.service.updateUser(userID, dto)
     }
+
+    @UseGuards(JwtAuthGuard)
+    @Put('changePassword/:id')
+    public changePassword(@Param('id', ParseIntPipe) userID: number, @Body() data: { password: string, newPassword: string }) {
+        return this.service.changePassword(userID, data.password, data.newPassword)
+    }
     
     @UseGuards(JwtAuthGuard)
     @Delete('user/:id')

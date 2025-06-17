@@ -2,11 +2,11 @@
     <h1>Profil</h1>
     <div class="row row-gap-3">
         <div class="col-12 col-md-4 col-lg-3">
-            <div class="btn-group-vertical w-100" role="group">
+            <div class="sticky-top btn-group-vertical w-100" role="group">
                 <input type="radio" class="btn-check" (click)="onChangeProfileOption(false)" name="radioProfile" id="radioProfileInfo" checked>
-                <label class="btn btn-lg btn-outline-primary" for="radioProfileInfo"><i class="bi bi-person-fill me-2"></i>Pregled profila</label>
+                <label class="btn btn-lg btn-outline-primary rounded-0" for="radioProfileInfo"><i class="bi bi-person-fill me-2"></i>Pregled profila</label>
                 <input type="radio" class="btn-check" (click)="onChangeProfileOption(true)" name="radioProfile" id="radioProfileEdit">
-                <label class="btn btn-lg btn-outline-primary" for="radioProfileEdit"><i class="bi bi-pencil me-2"></i>Izmeni profil</label>
+                <label class="btn btn-lg btn-outline-primary rounded-0" for="radioProfileEdit"><i class="bi bi-pencil me-2"></i>Izmeni profil</label>
             </div>
         </div>
         <div class="col-12 d-md-none">
@@ -47,76 +47,110 @@
                 </div>
             </div>
         </div>
-        <form *ngIf="editProfileMode" [formGroup]="editProfileForm" (ngSubmit)="onSubmit()" class="col">
-            <h2 class="text-center text-md-start">Izmeni profil</h2>
-            <div class="row row-gap-2">
-                <div class="col-12 col-sm-6">
-                    <label for="inputFirstName">Ime*</label>
-                    <input id="inputFirstName" class="form-control border border-secondary" type="text" formControlName="firstName" placeholder="Ime" />
-                    <small class="text-danger" *ngIf="editProfileForm.controls['firstName'].dirty && editProfileForm.hasError('required', 'firstName')">
-                        *Ime je obavezno polje
-                    </small>
-                </div>
-                <div class="col-12 col-sm-6">
-                    <label for="inputLastName">Prezime*</label>
-                    <input id="inputLastName" class="form-control border border-secondary" type="text" formControlName="lastName" placeholder="Prezime" />
-                    <small class="text-danger" *ngIf="editProfileForm.controls['lastName'].dirty && editProfileForm.hasError('required', 'lastName')">
-                        *Prezime je obavezno polje
-                    </small>
-                </div>
-                <div class="col-12">
-                    <label for="inputEmail">E-mail adresa*</label>
-                    <input id="inputEmail" class="form-control border border-secondary" type="text" formControlName="email" placeholder="text@example.com" />
-                    <small class="text-danger" *ngIf="editProfileForm.controls['email'].dirty && editProfileForm.hasError('required', 'email')">
-                        *E-mail je obavezno polje
-                    </small>
-                    <small class="text-danger" *ngIf="editProfileForm.controls['email'].dirty && editProfileForm.hasError('email', 'email')">
-                        *Format e-maila nije ispravan
-                    </small>
-                </div>
-                <div class="col-12">
-                    <label for="inputUsername">Korisničko ime*</label>
-                    <input id="inputUsername" class="form-control border border-secondary" type="text" formControlName="username" placeholder="Korisničko ime" />
-                    <small class="text-danger" *ngIf="editProfileForm.controls['username'].dirty && editProfileForm.hasError('required', 'username')">
-                        *Korisničko ime je obavezno polje
-                    </small>
-                </div>
-                <div class="col-12">
-                    <label for="inputNewPassword">Nova lozinka</label>
-                    <input id="inputNewPassword" class="form-control border border-secondary" type="password" formControlName="newPassword" placeholder="Nova lozinka" (input)="onInput()" />
-                    <small class="text-danger" *ngIf="editProfileForm.controls['newPassword'].dirty && editProfileForm.hasError('required', 'newPassword')">
-                        *Nova lozinka je obavezno polje
-                    </small>
-                    <small class="text-danger" *ngIf="editProfileForm.controls['newPassword'].dirty && editProfileForm.hasError('minlength', 'newPassword')">
-                        *Nova lozinka mora imati minimum 8 karaktera
-                    </small>
-                </div>
-                <div class="col-12">
-                    <label for="inputRepeatPassword">Ponovi lozinku</label>
-                    <input id="inputRepeatPassword" class="form-control border border-secondary" type="password" formControlName="repeatPassword" placeholder="Ponovi lozinku" (input)="onInput()" />
-                    <small class="text-danger" *ngIf="editProfileForm.controls['repeatPassword'].dirty && editProfileForm.hasError('required', 'repeatPassword')">
-                        *Ponovi lozinku je obavezno polje
-                    </small>
-                    <small class="text-danger" *ngIf="editProfileForm.controls['repeatPassword'].dirty && editProfileForm.hasError('minlength', 'repeatPassword')">
-                        *Ponovljena lozinka mora imati minimum 8 karaktera
-                    </small>
-                    <small class="text-danger" *ngIf="editProfileForm.controls['repeatPassword'].dirty && !this.checkPasswordInputs(formData)">
-                        *Lozinke se ne podudaraju
-                    </small>
-                </div>
-                <div class="col-12 col-md-auto">
-                    <button [disabled]="!(this.editProfileForm.valid && this.checkPasswordInputs(formData))" class="btn btn-primary w-100 my-2" type="submit">Izmeni profil</button>
-                </div>
-                <div class="col-12">
-                    <hr class="mt-0 mb-3">
-                    <div class="row">
-                        <h5>Brisanje naloga</h5>
+        <div *ngIf="editProfileMode" class="col">
+            <div class="row">
+                <form [formGroup]="editProfileForm" (ngSubmit)="changeUser(user)" class="col-12 col-lg-6">
+                    <h2 class="text-center text-md-start">Izmeni profil</h2>
+                    <div class="row row-gap-2">
+                        <div class="col-12 col-sm-6">
+                            <label for="inputFirstName">Ime*</label>
+                            <input id="inputFirstName" class="form-control border border-secondary" type="text" formControlName="firstName" placeholder="Ime" (input)="onDataInput()" />
+                            <small class="text-danger" *ngIf="editProfileForm.controls['firstName'].dirty && editProfileForm.hasError('required', 'firstName')">
+                                *Ime je obavezno polje
+                            </small>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <label for="inputLastName">Prezime*</label>
+                            <input id="inputLastName" class="form-control border border-secondary" type="text" formControlName="lastName" placeholder="Prezime" (input)="onDataInput()" />
+                            <small class="text-danger" *ngIf="editProfileForm.controls['lastName'].dirty && editProfileForm.hasError('required', 'lastName')">
+                                *Prezime je obavezno polje
+                            </small>
+                        </div>
+                        <div class="col-12">
+                            <label for="inputEmail">E-mail adresa*</label>
+                            <input id="inputEmail" class="form-control border border-secondary" type="text" formControlName="email" placeholder="text@example.com" (input)="onDataInput()" />
+                            <small class="text-danger" *ngIf="editProfileForm.controls['email'].dirty && editProfileForm.hasError('required', 'email')">
+                                *E-mail je obavezno polje
+                            </small>
+                            <small class="text-danger" *ngIf="editProfileForm.controls['email'].dirty && editProfileForm.hasError('email', 'email')">
+                                *Format e-maila nije ispravan
+                            </small>
+                        </div>
+                        <div class="col-12">
+                            <label for="inputUsername">Korisničko ime*</label>
+                            <input id="inputUsername" class="form-control border border-secondary" type="text" formControlName="username" placeholder="Korisničko ime" (input)="onDataInput()" />
+                            <small class="text-danger" *ngIf="editProfileForm.controls['username'].dirty && editProfileForm.hasError('required', 'username')">
+                                *Korisničko ime je obavezno polje
+                            </small>
+                        </div>
                         <div class="col-12 col-md-auto">
-                            <a type="button" class="btn btn-danger w-100"><i class="bi bi-trash me-2"></i>Obriši nalog</a>
+                            <div class="d-flex flex-column flex-sm-row gap-2 mt-2">
+                                <button [disabled]="!(this.editProfileForm.valid && this.checkDataInputs(user, formData))" class="btn btn-warning mx-auto ms-md-0" type="submit"><i class="bi bi-pencil me-2"></i>Izmeni profil</button>
+                            </div>
                         </div>
                     </div>
+                </form>
+                <div class="col-12 d-lg-none">
+                    <hr>
+                </div>
+                <form [formGroup]="changePasswordForm" (ngSubmit)="changePassword()" class="col-12 col-lg-6">
+                    <h2 class="text-center text-md-start">Promeni lozinku</h2>
+                    <div class="row row-gap-2">
+                        <div class="col-12">
+                            <label for="inputPassword">Trenutna lozinka*</label>
+                            <input id="inputPassword" class="form-control border border-secondary" type="password" formControlName="password" placeholder="Trenutna lozinka" (input)="onPasswordInput()" />
+                            <small class="text-danger" *ngIf="changePasswordForm.controls['password'].dirty && changePasswordForm.hasError('required', 'password')">
+                                *Trenutna lozinka je obavezno polje
+                            </small>
+                            <small class="text-danger" *ngIf="changePasswordForm.controls['password'].dirty && changePasswordForm.hasError('minlength', 'password')">
+                                *Lozinka mora imati minimum 8 karaktera
+                            </small>
+                        </div>
+                        <div class="col-12">
+                            <label for="inputNewPassword">Nova lozinka*</label>
+                            <input id="inputNewPassword" class="form-control border border-secondary" type="password" formControlName="newPassword" placeholder="Nova lozinka" (input)="onPasswordInput()" />
+                            <small class="text-danger" *ngIf="changePasswordForm.controls['newPassword'].dirty && changePasswordForm.hasError('required', 'newPassword')">
+                                *Nova lozinka je obavezno polje
+                            </small>
+                            <small class="text-danger" *ngIf="changePasswordForm.controls['newPassword'].dirty && changePasswordForm.hasError('minlength', 'newPassword')">
+                                *Nova lozinka mora imati minimum 8 karaktera
+                            </small>
+                            <small class="text-danger" *ngIf="changePasswordForm.controls['newPassword'].dirty && !checkPasswordsAreNotEqual(passwordData)">
+                                *Trenutna i nova lozinka se moraju razlikovati
+                            </small>
+                        </div>
+                        <div class="col-12">
+                            <label for="inputRepeatPassword">Ponovi lozinku*</label>
+                            <input id="inputRepeatPassword" class="form-control border border-secondary" type="password" formControlName="repeatPassword" placeholder="Ponovi lozinku" (input)="onPasswordInput()" />
+                            <small class="text-danger" *ngIf="changePasswordForm.controls['repeatPassword'].dirty && changePasswordForm.hasError('required', 'repeatPassword')">
+                                *Ponovi lozinku je obavezno polje
+                            </small>
+                            <small class="text-danger" *ngIf="changePasswordForm.controls['repeatPassword'].dirty && changePasswordForm.hasError('minlength', 'repeatPassword')">
+                                *Ponovljena lozinka mora imati minimum 8 karaktera
+                            </small>
+                            <small class="text-danger" *ngIf="changePasswordForm.controls['repeatPassword'].dirty && (!this.checkPasswordsMatch(passwordData) && passwordData.newPassword !== '' && passwordData.repeatPassword !== '')">
+                                *Lozinke se ne podudaraju
+                            </small>
+                        </div>
+                        <div class="col-12">
+                            <div class="d-flex flex-column flex-sm-row gap-2 my-2">
+                                <button [disabled]="!(this.changePasswordForm.valid && this.checkPasswordInputs(passwordData))" class="btn btn-warning mx-auto ms-md-0" type="submit"><i class="bi bi-pencil me-2"></i>Promeni lozinku</button>
+                            </div>
+                            <p class="text-warning m-0"><b>NAPOMENA: Nakon promene lozinke ćete biti odjavljeni</b></p>
+                        </div>
+                    </div>
+                </form>
+                <div class="col-12">
+                    <hr>
+                </div>
+                <div class="col-12">
+                    <h5 class="m-0">Brisanje naloga</h5>
+                    <button type="button" class="btn btn-danger my-2" data-bs-toggle="modal" data-bs-target="#confirmModalDialog"><i class="bi bi-trash me-2"></i>Obriši nalog</button>
+                    <p class="text-danger m-0"><b>UPOZORENJE: Brisanje naloga je trajno i ova radnja se ne može opozvati!</b></p>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
+
+    <app-confirm-dialog [modalID]="'confirmModalDialog'" [delete]="'User'"></app-confirm-dialog>
 </div>

@@ -5,14 +5,14 @@
             <div class="d-sm-flex justify-content-between">
                 <div class="mb-2">
                     <label for="inputFirstName">Ime*</label>
-                    <input id="inputFirstName" class="form-control border border-secondary" type="text" formControlName="firstName" placeholder="Ime" />
+                    <input id="inputFirstName" class="form-control border border-secondary" type="text" formControlName="firstName" placeholder="Ime" (input)="onInput()" />
                     <small class="text-danger" *ngIf="registerForm.controls['firstName'].dirty && registerForm.hasError('required', 'firstName')">
                         *Ime je obavezno polje
                     </small>
                 </div>
                 <div class="mb-2">
                     <label for="inputLastName">Prezime*</label>
-                    <input id="inputLastName" class="form-control border border-secondary" type="text" formControlName="lastName" placeholder="Prezime" />
+                    <input id="inputLastName" class="form-control border border-secondary" type="text" formControlName="lastName" placeholder="Prezime" (input)="onInput()"/>
                     <small class="text-danger" *ngIf="registerForm.controls['lastName'].dirty && registerForm.hasError('required', 'lastName')">
                         *Prezime je obavezno polje
                     </small>
@@ -20,7 +20,7 @@
             </div>
             <div class="mb-2">
                 <label for="inputEmail">E-mail adresa*</label>
-                <input id="inputEmail" class="form-control border border-secondary" type="text" formControlName="email" placeholder="text@example.com" />
+                <input id="inputEmail" class="form-control border border-secondary" type="text" formControlName="email" placeholder="text@example.com" (input)="onInput()" />
                 <small class="text-danger" *ngIf="registerForm.controls['email'].dirty && registerForm.hasError('required', 'email')">
                     *E-mail je obavezno polje
                 </small>
@@ -30,7 +30,7 @@
             </div>
             <div class="mb-2">
                 <label for="inputUsername">Korisničko ime*</label>
-                <input id="inputUsername" class="form-control border border-secondary" type="text" formControlName="username" placeholder="Korisničko ime" />
+                <input id="inputUsername" class="form-control border border-secondary" type="text" formControlName="username" placeholder="Korisničko ime" (input)="onInput()" />
                 <small class="text-danger" *ngIf="registerForm.controls['username'].dirty && registerForm.hasError('required', 'username')">
                     *Korisničko ime je obavezno polje
                 </small>

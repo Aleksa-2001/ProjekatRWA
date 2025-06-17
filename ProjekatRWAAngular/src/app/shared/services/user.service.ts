@@ -10,9 +10,9 @@ export class UserService {
 
     constructor(private httpClient: HttpClient) { }
 
-    getUserByID(userID: number) {
+    getUserByID(korisnikID: number) {
         return this.httpClient
-            .get<User>("http://localhost:3000/" + `user/${userID}`)
+            .get<User>("http://localhost:3000/" + `user/${korisnikID}`)
             .pipe(catchError(errorHandler))
     }
 
@@ -20,6 +20,25 @@ export class UserService {
         const { userID, ...userDto } = user
         return this.httpClient
             .post<User>("http://localhost:3000/" + "user", userDto)
+            .pipe(catchError(errorHandler))
+    }
+
+    updateUser(korisnikID: number, user: Partial<User>) {
+        const { userID, ...userDto } = user
+        return this.httpClient
+            .put<User>("http://localhost:3000/" + `user/${korisnikID}`, userDto)
+            .pipe(catchError(errorHandler))
+    }
+
+    changePassword(korisnikID: number, data: { password: string, newPassword: string }) {
+        return this.httpClient
+            .put<User>("http://localhost:3000/" + `changePassword/${korisnikID}`, data)
+            .pipe(catchError(errorHandler))
+    }
+
+    deleteUser(korisnikID: number) {
+        return this.httpClient
+            .delete<number>("http://localhost:3000/" + `user/${korisnikID}`)
             .pipe(catchError(errorHandler))
     }
 

@@ -58,5 +58,21 @@ export const authReducer = createReducer(
     token: null,
     user: null,
     isLoggedIn: false
+  })),
+  on(AuthActions.updateUserSuccess, (state, { user }) => ({
+    ...state,
+    user: user.changes as User
+  })),
+  on(AuthActions.changePasswordSuccess, (state) => ({
+    ...state,
+    token: null,
+    user: null,
+    isLoggedIn: false
+  })),
+  on(AuthActions.deleteUserSuccess, (state) => ({
+    ...state,
+    token: null,
+    user: null,
+    isLoggedIn: false
   }))
 )

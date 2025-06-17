@@ -1,10 +1,12 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app-state';
-import { selectSelectedProdavnica } from '../../../../store/prodavnica/prodavnica.selectors';
 import { filter, take, tap } from 'rxjs';
+import { selectUser } from '../../../../store/auth/auth.selectors';
+import { selectSelectedProdavnica } from '../../../../store/prodavnica/prodavnica.selectors';
 import { selectSelectedProizvod } from '../../../../store/proizvod/proizvod.selectors';
 import { Router } from '@angular/router';
+import * as AuthActions from '../../../../store/auth/auth.actions'
 import * as ProdavniceActions from '../../../../store/prodavnica/prodavnica.actions'
 import * as ProizvodiActions from '../../../../store/proizvod/proizvod.actions'
 
@@ -24,25 +26,39 @@ export class ConfirmDialogComponent implements OnInit {
   constructor(private router: Router, private store: Store<AppState>) { }
 
   ngOnInit(): void {
-    if (this.delete === 'Prodavnica') {
-      this.title = 'Obriši prodavnicu'
-    }
-    if (this.delete === 'Proizvod') {
-      this.title = 'Obriši proizvod'
-    }
-    if (this.delete === 'Proizvodi') {
-      this.title = 'Obriši sve proizvode'
+    switch (this.delete) {
+      case 'User':
+        this.title = 'Obriši nalog'
+        break
+      case 'Prodavnica':
+        this.title = 'Obriši prodavnicu'
+        break
+      case 'Proizvod':
+        this.title = 'Obriši proizvod'
+        break
+      case 'Proizvodi':
+        this.title = 'Obriši sve proizvode'
+        break
     }
   }
 
   onDelete() {
+    if (this.title.includes('Obriši nalog')) {
+      this.store.select(selectUser).pipe(
+        filter(user => !!user),
+        take(1),
+        tap(user => {
+          this.store.dispatch(AuthActions.deleteUser({ userID: user.userID }))
+        })
+      ).subscribe()
+    }
+
     if (this.title.includes('Obriši prodavnicu')) {
       this.store.select(selectSelectedProdavnica).pipe(
         filter(prodavnica => !!prodavnica),
         take(1),
         tap(prodavnica => {
           this.store.dispatch(ProdavniceActions.deleteItem({ selectedProdavnicaID: prodavnica.id }))
-          this.router.navigate(["ng"])
         })
       ).subscribe()
     }

@@ -7,7 +7,7 @@
             </div>
                 
             <div class="modal-body row">
-                <div class="col-12" [ngClass]="{ 'col-lg-6': tipProizvoda === 'RacunarskaKomponenta' }">
+                <div class="col-12" [ngClass]="{ 'col-md-6': tipProizvoda === 'RacunarskaKomponenta' }">
                     <div class="mb-2">
                         <label for="inputTip">Tip proizvoda*</label>
                         <select (change)="onChangeTip()" id="inputTip" class="form-select border-secondary" formControlName="tipProizvoda" aria-label="Izaberite tip proizvoda...">
@@ -49,7 +49,7 @@
                         <textarea id="inputOpis" class="form-control border-secondary" rows="3" maxlength="1000" formControlName="opis" placeholder="Opis"></textarea>
                     </div>
 
-                    <div class="mb-2 mb-lg-0">
+                    <div class="mb-2 mb-md-0">
                         <label for="inputSlika">Slika</label>
                         <input (change)="onFileSelected($event)" id="inputSlika" class="form-control border-secondary" type="file" accept="image/png, image/jpeg" formControlName="slika" #fileUpload />
                         <div class="file-upload d-flex align-items-center overflow-hidden border border-secondary rounded-2 position-relative">
@@ -60,7 +60,7 @@
                     </div>
                 </div>
 
-                <div [hidden]="tipProizvoda !== 'RacunarskaKomponenta'" class="col-12 col-lg-6">
+                <div [hidden]="tipProizvoda !== 'RacunarskaKomponenta'" class="col-12 col-md-6">
                     <div class="mb-2">
                         <label for="inputType">Tip računarske komponente</label>
                         <select (change)="onChangeTipKomponente()" id="inputType" class="form-select border-secondary" formControlName="type" aria-label="Izaberite tip računarske komponente...">
