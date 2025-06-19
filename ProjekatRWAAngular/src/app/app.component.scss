@@ -18,9 +18,14 @@
     opacity: 0;
     transition: 0.2s;
     z-index: 100;
+    box-shadow: 0 0 0.75rem 0 black;
 }
 
 .show-scroll-to-top {
     visibility: visible;
     opacity: 1;
+}
+
+.show-scroll-to-top:hover {
+    box-shadow: 0 0 1rem 0 black;
 }

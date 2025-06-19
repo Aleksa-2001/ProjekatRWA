@@ -10,6 +10,7 @@ import { RAM } from "src/models/komponente/ram.entity";
 import { MaticnaPloca } from "src/models/komponente/maticna-ploca.entity";
 import { Skladiste } from "src/models/komponente/skladiste.entity";
 import { Napajanje } from "src/models/komponente/napajanje.entity";
+import { Recenzija } from "src/models/recenzija.entity";
 
 export const typeOrmConfig: DataSourceOptions = {
     type: 'postgres',
@@ -29,7 +30,8 @@ export const typeOrmConfig: DataSourceOptions = {
         RAM, 
         MaticnaPloca, 
         Skladiste, 
-        Napajanje
+        Napajanje,
+        Recenzija
     ],
     synchronize: true
 }

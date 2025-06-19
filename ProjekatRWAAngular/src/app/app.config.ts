@@ -2,18 +2,23 @@ import { ApplicationConfig, provideZoneChangeDetection, isDevMode, importProvide
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideStore } from '@ngrx/store';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { JwtModule, JwtModuleOptions } from '@auth0/angular-jwt'
+import { authInterceptor } from './shared/services/auth.interceptor';
+
+import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { provideEffects } from '@ngrx/effects';
-import { AuthEffects } from './store/auth/auth.effects';
+
 import { authReducer } from './store/auth/auth.reducer';
 import { prodavnicaReducer } from './store/prodavnica/prodavnica.reducer';
-import { ProdavniceEffects } from './store/prodavnica/prodavnica.effects';
-import { JwtModule, JwtModuleOptions } from '@auth0/angular-jwt'
-import { ProizvodiEffects } from './store/proizvod/proizvod.effects';
 import { proizvodReducer } from './store/proizvod/proizvod.reducer';
-import { authInterceptor } from './shared/services/auth.interceptor';
+
+import { provideEffects } from '@ngrx/effects';
+import { AuthEffects } from './store/auth/auth.effects';
+import { ProdavniceEffects } from './store/prodavnica/prodavnica.effects';
+import { ProizvodiEffects } from './store/proizvod/proizvod.effects';
+import { recenzijaReducer } from './store/recenzija/recenzija.reducer';
+import { RecenzijeEffects } from './store/recenzija/recenzija.effects';
 
 const jwtOptions: JwtModuleOptions = {
   config: {
@@ -30,13 +35,15 @@ export const appConfig: ApplicationConfig = {
     provideStore({ 
       auth: authReducer, 
       prodavnice: prodavnicaReducer, 
-      proizvodi: proizvodReducer
+      proizvodi: proizvodReducer,
+      recenzije: recenzijaReducer
     }), 
     provideStoreDevtools({ maxAge: 25 /*, logOnly: !isDevMode()*/ }),
     provideEffects([
       AuthEffects, 
       ProdavniceEffects, 
-      ProizvodiEffects
+      ProizvodiEffects,
+      RecenzijeEffects
     ]),
     importProvidersFrom(JwtModule.forRoot(jwtOptions)),
   ]

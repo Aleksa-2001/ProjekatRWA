@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ProdavniceService } from './prodavnice.service';
 import { ProdavnicaDto } from '../dto/prodavnica.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -18,9 +18,9 @@ export class ProdavniceController {
         return this.service.getProdavnice()
     }
 
-    @Get('prodavnice/:search')
-    public getProdavniceBySearch(@Param('search') search: string) {
-        return this.service.getProdavniceBySearch(search)
+    @Get('prodavniceSearch')
+    public getProdavniceBySearch(@Query('query') query: string) {
+        return this.service.getProdavniceBySearch(query)
     }
 
     @Get('prodavnica/:id')

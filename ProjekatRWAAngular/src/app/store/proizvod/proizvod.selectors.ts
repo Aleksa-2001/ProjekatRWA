@@ -15,8 +15,8 @@ export const selectProizvodi = createSelector(
     //(state: KomponenteState) => state.entities
     (state: ProizvodiState) => Object
         .values(state.entities)
-        .filter(component => component != null)
-        .map(component => <Proizvod>component)
+        .filter(proizvod => !!proizvod)
+        .map(proizvod => <Proizvod>proizvod)
 )
 
 export const selectSelectedProizvodID = createSelector(

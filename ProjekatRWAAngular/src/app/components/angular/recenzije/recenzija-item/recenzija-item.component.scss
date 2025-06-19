@@ -4,15 +4,9 @@
 
 .row {
   margin: 0 0.75rem;
-  cursor: pointer;
   transition: 0.1s;
 }
 
 .row:hover {
   background-color: #DDDDDD;
-}
-
-img {
-  aspect-ratio: 1.333;
-  object-fit: cover;
 }

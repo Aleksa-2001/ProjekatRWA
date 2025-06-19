@@ -76,6 +76,10 @@
         </div>
     </div>
 
+    <hr>
+
+    <app-recenzije></app-recenzije>
+
     <app-proizvod-dialog *ngIf="isAdmin$ | async" [modalID]="'proizvodModalDialog'" [mode]="1"></app-proizvod-dialog>
     <app-confirm-dialog *ngIf="isAdmin$ | async" [modalID]="'confirmModalDialog'" [delete]="'Proizvod'"></app-confirm-dialog>
 </div>

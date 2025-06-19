@@ -13,13 +13,12 @@ export class ProizvodiService {
         @InjectRepository(Proizvod) private proizvodRepository: Repository<Proizvod>
     ) { }
 
-    //public async getAll() {
-    //    //return this.lista
-    //    return this.proizvodRepository.find()
-    //}
+    public async getAll() {
+        return await this.proizvodRepository.find()
+    }
 
     public async getProizvodi(prodavnicaID: number) {
-        return this.proizvodRepository.find({ 
+        return await this.proizvodRepository.find({ 
             where: { prodavnica: { id: prodavnicaID } }
         })
     }

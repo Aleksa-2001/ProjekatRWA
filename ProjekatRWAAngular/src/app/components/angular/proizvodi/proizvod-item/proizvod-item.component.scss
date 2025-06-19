@@ -2,8 +2,18 @@
   display: block;
 }
 
-a {
-  text-decoration: none;
+.info-list, .info-list .col {
+  padding: 0;
+}
+
+.row {
+  margin: 0 0.75rem;
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.row:hover {
+  background-color: #DDDDDD;
 }
 
 img {

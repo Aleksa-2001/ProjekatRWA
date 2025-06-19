@@ -5,7 +5,6 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app-state';
 import { CommonModule, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
-import * as ProizvodiActions from '../../../../store/proizvod/proizvod.actions'
 import { selectSelectedProizvod } from '../../../../store/proizvod/proizvod.selectors';
 import { NotFoundComponent } from "../../../../shared/components/not-found/not-found.component";
 import { KomponentaPageComponent } from "./komponenta-page/komponenta-page.component";
@@ -13,6 +12,9 @@ import { Title } from '@angular/platform-browser';
 import { isAdmin } from '../../../../store/auth/auth.selectors';
 import { ProizvodDialogComponent } from "../../dialog/proizvod-dialog/proizvod-dialog.component";
 import { ConfirmDialogComponent } from "../../dialog/confirm-dialog/confirm-dialog.component";
+import { RecenzijeComponent } from "../../recenzije/recenzije.component";
+import * as ProizvodiActions from '../../../../store/proizvod/proizvod.actions'
+import * as RecenzijeActions from '../../../../store/recenzija/recenzija.actions'
 
 @Component({
   selector: 'app-proizvod-page',
@@ -26,8 +28,9 @@ import { ConfirmDialogComponent } from "../../dialog/confirm-dialog/confirm-dial
     KomponentaPageComponent,
     NotFoundComponent,
     ProizvodDialogComponent,
-    ConfirmDialogComponent
-],
+    ConfirmDialogComponent,
+    RecenzijeComponent
+  ],
   templateUrl: './proizvod-page.component.html',
   styleUrl: './proizvod-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -58,6 +61,8 @@ export class ProizvodPageComponent implements OnInit, OnDestroy {
         this.setImage('http://localhost:3000/' + proizvod.slika)
       })
     ).subscribe()
+
+    this.store.dispatch(RecenzijeActions.loadItemsProizvod({ proizvodID: this.proizvodID }))
   }
 
   ngOnDestroy(): void {

@@ -11,17 +11,10 @@ export class Prodavnica {
     @Column()
     adresa: string
 
-    @Column()
+    @Column({ nullable: true })
     opis: string
     
-    @Column()
+    @Column({ nullable: true })
     slika: string
     
-    //constructor(id: number, naziv: string, adresa: string, opis: string, slika: string) {
-    //    id = 0
-    //    naziv = ''
-    //    adresa = ''
-    //    opis = ''
-    //    slika = ''
-    //}
 }

@@ -22,10 +22,10 @@ export abstract class Proizvod {
     @Column()
     cena: number
     
-    @Column()
+    @Column({ nullable: true })
     opis: string
     
-    @Column()
+    @Column({ nullable: true })
     slika: string
     
     @ManyToOne(() => Prodavnica)

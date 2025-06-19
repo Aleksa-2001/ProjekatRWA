@@ -6,7 +6,7 @@ export abstract class ProizvodDto {
     proizvodjac: string
     naziv: string
     cena: number
-    opis: string
-    slika: string
+    opis?: string
+    slika?: string
     prodavnica: Prodavnica
 }

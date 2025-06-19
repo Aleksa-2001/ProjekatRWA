@@ -1,0 +1,9 @@
+<div>
+    <h2 class="mb-3">Recenzije</h2>
+</div>
+<div *ngIf="recenzije$ | async as recenzije" class="row row-gap-2">
+    <div class="p-0 col-12" *ngFor="let recenzija of recenzije">
+        <app-recenzija-item [recenzija]="recenzija"></app-recenzija-item>
+    </div>
+    <p *ngIf="recenzije.length === 0" class="m-0"><i>Nema unetih recenzija</i></p>
+</div>

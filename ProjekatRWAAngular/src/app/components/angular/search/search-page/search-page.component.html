@@ -2,12 +2,15 @@
     <h1>Pretraga</h1>
     <app-search class="mb-3" [query]="query"></app-search>
     <div class="row row-gap-3">
-        <div [hidden]="brojProdavnica === 0 && brojProizvoda === 0" class="col-12">
+        <div *ngIf="brojProdavnica !== 0 || brojProizvoda !== 0" class="col-12 d-none d-md-block">
             <hr class="m-0">
         </div>
         <div *ngIf="query && (brojProdavnica !== 0 || brojProizvoda !== 0)" class="filter-menu col-12 col-md-3 col-xl-2 px-0">
             <div class="sticky-top">
                 <div class="row row-gap-1">
+                    <div class="col-12 d-md-none">
+                        <hr class="mt-0 mb-1">
+                    </div>
                     <h5 class="col-12 mb-0">Prikaz</h5>
                     <div class="row mx-0">
                         <div class="col-auto col-md-12 form-check">

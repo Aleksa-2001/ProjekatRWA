@@ -1,0 +1,7 @@
+<div class="row row-gap-2 border border-primary rounded-3 overflow-hidden">
+    <div class="col-12 py-2">
+        <h5>{{recenzija.user.firstName}} {{recenzija.user.lastName}} ({{recenzija.user.username}})</h5>
+        <p class="m-0">Ocena: {{recenzija.ocena}}</p>
+        <p *ngIf="recenzija.komentar" class="m-0">Komentar: {{recenzija.komentar}}</p>
+    </div>
+</div>

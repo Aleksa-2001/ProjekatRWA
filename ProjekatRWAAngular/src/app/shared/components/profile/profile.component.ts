@@ -56,7 +56,6 @@ export class ProfileComponent {
         this.userID = user.userID
 
         this.formData = this.editProfileForm.getRawValue()
-        this.passwordData = this.changePasswordForm.getRawValue()
       })
     )
   }
@@ -78,8 +77,6 @@ export class ProfileComponent {
       const checkEmail = user.email !== form.email
       const checkUsername = user.username !== form.username
       
-      //console.log("Data", checkFirstName, checklLastName, checkEmail, checkUsername)
-      //console.log(checkFirstName || checklLastName || checkEmail || checkUsername)
       return checkFirstName || checklLastName || checkEmail || checkUsername
     }
     return false
@@ -94,8 +91,6 @@ export class ProfileComponent {
       const passwordsMatch = this.checkPasswordsMatch(form)
       const passwordsAreEqual = this.checkPasswordsAreNotEqual(form)
 
-      //console.log("Password", currentPass, newPass, repeatPass, passwordsMatch, passwordsAreEqual)
-      //console.log(currentPass && newPass && repeatPass && passwordsMatch && passwordsAreEqual)
       return passwordsMatch && passwordsAreEqual
     }
     return false

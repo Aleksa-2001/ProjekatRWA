@@ -9,10 +9,11 @@ export class UsersController {
 
     constructor(private service: UsersService) { }
 
-    //@Get('users')
-    //public getUsers() {
-    //    return this.service.getUsers()
-    //}
+    @UseGuards(JwtAuthGuard)
+    @Get('users')
+    public getUsers() {
+        return this.service.getUsers()
+    }
     
     @UseGuards(JwtAuthGuard)
     @Get('user/:id')

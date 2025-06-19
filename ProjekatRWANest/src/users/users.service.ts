@@ -12,9 +12,9 @@ export class UsersService {
 		@InjectRepository(User) private userRepository: Repository<User>
 	) { }
 
-	//public async getUsers() {
-	//	return await this.userRepository.find()
-	//}
+	public async getUsers() {
+		return await this.userRepository.find()
+	}
 
 	public async getUserByID(userID: number) {
 		if (await this.userRepository.existsBy({ userID: userID })) {

@@ -12,19 +12,19 @@ export class ProizvodiController {
 
     constructor(private service: ProizvodiService) { }
     
-    //@Get('proizvodi')
-    //public getAll() {
-    //    return this.service.getAll()
-    //}
+    @Get('proizvodi')
+    public getAll() {
+        return this.service.getAll()
+    }
 
     @Get('proizvodi/:prodavnicaID')
     public getProizvodi(@Param('prodavnicaID', ParseIntPipe) prodavnicaID: number) {
         return this.service.getProizvodi(prodavnicaID)
     }
 
-    @Get('proizvodi')
-    public getProizvodiBySearch(@Query('search') search: string) {
-        return this.service.getProizvodiBySearch(search)
+    @Get('proizvodiSearch')
+    public getProizvodiBySearch(@Query('query') query: string) {
+        return this.service.getProizvodiBySearch(query)
     }
 
     @Get('proizvod/:id')

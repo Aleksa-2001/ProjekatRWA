@@ -38,7 +38,7 @@
 
                     <div class="mb-2">
                         <label for="inputCena">Cena (u RSD)*</label>
-                        <input id="inputCena" class="form-control border-secondary" type="number" formControlName="cena" min="0" placeholder="Cena" />
+                        <input id="inputCena" class="form-control border-secondary" type="number" formControlName="cena" min="0" placeholder="Cena (u RSD)" />
                         <small class="text-danger" *ngIf="form.controls['cena'].dirty && form.hasError('required', 'cena')">
                             *Cena je obavezno polje
                         </small>
@@ -107,7 +107,7 @@
     
                         <div>
                             <label for="inputGPUVRAM">VRAM (u GB)</label>
-                            <input id="inputGPUVRAM" class="form-control border-secondary" type="number" formControlName="gpuVRAM" min="0" placeholder="VRAM" />
+                            <input id="inputGPUVRAM" class="form-control border-secondary" type="number" formControlName="gpuVRAM" min="0" placeholder="VRAM (u GB)" />
                         </div>
                     </div>
 
@@ -124,7 +124,7 @@
 
                         <div class="mb-2">
                             <label for="inputRAMVelicina">Veličina (u GB)</label>
-                            <input id="inputRAMVelicina" class="form-control border-secondary" type="number" formControlName="ramVelicina" min="0" placeholder="Veličina" />
+                            <input id="inputRAMVelicina" class="form-control border-secondary" type="number" formControlName="ramVelicina" min="0" placeholder="Veličina (u GB)" />
                         </div>
 
                         <div>
@@ -183,7 +183,7 @@
                             <input id="inputNapajanjeSnaga" class="form-control border-secondary" type="number" formControlName="napajanjeSnaga" min="0" placeholder="Snaga (u W)" />
                         </div>
     
-                        <div class="d-flex d-sm-inline-flex flex-column">
+                        <div class="d-inline-flex flex-column">
                             <label for="inputNapajanjeModularno">Modularno</label>
                             <input id="inputNapajanjeModularno" class="btn-check" type="checkbox" formControlName="napajanjeModularno" placeholder="Modularno" />
                             <label for="inputNapajanjeModularno" class="btn btn-outline-primary">Modularno</label>

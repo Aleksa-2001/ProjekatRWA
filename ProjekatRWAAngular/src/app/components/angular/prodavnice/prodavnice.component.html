@@ -1,6 +1,6 @@
 <h2 class="mb-2">Prodavnice</h2>
 <div *ngIf="selectedProdavnice$ | async as prodavnice" class="row row-gap-3">
-    <div class="col-12 col-sm-6 col-lg-4 col-xl-3" *ngFor="let prodavnica of prodavnice">
-        <app-prodavnica-item class="menu-item" [prodavnica]="prodavnica"></app-prodavnica-item>
+    <div class="p-0 col-12 col-sm-6 col-xl-4" *ngFor="let prodavnica of prodavnice">
+        <app-prodavnica-item [prodavnica]="prodavnica"></app-prodavnica-item>
     </div>
 </div>

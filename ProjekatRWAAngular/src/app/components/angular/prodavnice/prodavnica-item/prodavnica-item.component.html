@@ -1,12 +1,10 @@
-<a class="text-black" [routerLink]="['/ng/prodavnica', prodavnica.id]">
-    <div class="row gap-3">
-        <div class="col-12">
-            <img *ngIf="prodavnica.slika" class="w-100" [src]="'http://localhost:3000/' + prodavnica.slika" alt={{prodavnica.slika}} />
-            <img *ngIf="!prodavnica.slika" class="w-100 border" src="images/image-default.png" />
-        </div>
-        <div class="col-12">
-            <h3 class="m-0">{{prodavnica.naziv}}</h3>
-            <h6 class="m-0">{{prodavnica.adresa}}</h6>
-        </div>
+<div class="row row-gap-2 border border-primary rounded-3 overflow-hidden" [routerLink]="['/ng/prodavnica', prodavnica.id]">
+    <div class="col-12 p-0">
+        <img *ngIf="prodavnica.slika" class="w-100" [src]="'http://localhost:3000/' + prodavnica.slika" alt={{prodavnica.slika}} />
+        <img *ngIf="!prodavnica.slika" class="w-100 border-bottom" src="images/image-default.png" />
     </div>
-</a>
+    <div class="col-12 px-2 pb-2">
+        <h3 class="m-0">{{prodavnica.naziv}}</h3>
+        <h6 class="m-0">{{prodavnica.adresa}}</h6>
+    </div>
+</div>
