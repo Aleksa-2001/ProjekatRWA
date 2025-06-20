@@ -1,7 +1,19 @@
-<div class="row row-gap-2 border border-primary rounded-3 overflow-hidden">
-    <div class="col-12 py-2">
-        <h5>{{recenzija.user.firstName}} {{recenzija.user.lastName}} ({{recenzija.user.username}})</h5>
-        <p class="m-0">Ocena: {{recenzija.ocena}}</p>
-        <p *ngIf="recenzija.komentar" class="m-0">Komentar: {{recenzija.komentar}}</p>
+<div class="row gap-2 border border-primary rounded-3 overflow-hidden p-2">
+    <div class="col-12 p-0">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+            <h4 class="m-0">{{recenzija.user.firstName}} {{recenzija.user.lastName}} ({{recenzija.user.username}})</h4>
+            <div class="d-flex justify-content-between stars">
+                <i class="text-center star bi" *ngFor="let star of rating; let index = index" [ngClass]="{ 'bi-star': recenzija.ocena <= index, 'bi-star-fill': recenzija.ocena > index }"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 p-0">
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center" [ngClass]="{ 'gap-2': recenzija.komentar }">
+            <p class="m-0">{{recenzija.komentar}}</p>
+            <div *ngIf="(isAdmin$ | async) || (user$ | async)?.userID === recenzija.user.userID" class="d-flex flex-row column-gap-2">
+                <button class="flex-fill btn btn-warning" data-bs-toggle="modal" data-bs-target="#recenzijaModalDialogEdit" (click)="selectRecenzija(recenzija.id)"><i class="bi bi-pencil"></i></button>
+                <button class="flex-fill btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModalDialogRecenzija" (click)="selectRecenzija(recenzija.id)"><i class="bi bi-trash"></i></button>
+            </div>
+        </div>
     </div>
 </div>

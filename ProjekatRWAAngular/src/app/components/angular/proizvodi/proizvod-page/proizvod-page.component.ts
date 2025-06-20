@@ -30,7 +30,7 @@ import * as RecenzijeActions from '../../../../store/recenzija/recenzija.actions
     ProizvodDialogComponent,
     ConfirmDialogComponent,
     RecenzijeComponent
-  ],
+],
   templateUrl: './proizvod-page.component.html',
   styleUrl: './proizvod-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -59,10 +59,9 @@ export class ProizvodPageComponent implements OnInit, OnDestroy {
       tap(proizvod => {
         this.title.setTitle(`${proizvod.naziv} - ProjekatRWA`)
         this.setImage('http://localhost:3000/' + proizvod.slika)
+        this.store.dispatch(RecenzijeActions.loadItemsProizvod({ proizvodID: this.proizvodID }))
       })
     ).subscribe()
-
-    this.store.dispatch(RecenzijeActions.loadItemsProizvod({ proizvodID: this.proizvodID }))
   }
 
   ngOnDestroy(): void {

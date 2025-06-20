@@ -21,6 +21,10 @@ img {
   object-fit: cover;
 }
 
+.image {
+  min-width: 72px;
+}
+
 @media screen and (max-width: 480px) {
   .info-list h5 {
     font-size: 1rem;

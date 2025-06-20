@@ -1,0 +1,38 @@
+<div class="modal fade" [id]="modalID" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="recenzijaModalDialogLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="modal-content border-secondary border-3 rounded-3">
+            <div class="modal-header">
+                <h5 class="modal-title" id="recenzijaModalDialogLabel">{{title}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+                
+            <div class="modal-body row">
+                <div class="col-12">
+                    <div class="mb-2">
+                        <label class="d-none" for="inputOcena">Ocena*</label>
+                        <input id="inputOcena" class="form-control border-secondary" type="number" formControlName="ocena" min="1" max="5" placeholder="Ocena" #inputOcena />
+                        <!--<small class="text-danger" *ngIf="form.controls['ocena'].dirty && form.hasError('required', 'ocena')">
+                            *Ocena je obavezno polje
+                        </small>-->
+                        
+                        <span>Oceni{{prodavnica ? ' prodavnicu' : ''}}{{proizvod ? ' proizvod' : ''}}*</span>
+                        <div class="d-flex flex-row justify-content-evenly mx-auto">
+                            <i class="flex-fill text-center star bi" *ngFor="let star of rating; let index = index" (mouseenter)="onMouseEnter(index)" (mouseleave)="onMouseLeave()" (click)="setRating(index)" [ngClass]="{ 'bi-star': selectedOcena <= index, 'bi-star-fill': selectedOcena > index }"></i>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="inputKomentar">Komentar</label>
+                        <textarea id="inputKomentar" class="form-control border-secondary" rows="3" maxlength="1000" formControlName="komentar" placeholder="Komentar"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="onCancel()">Otkaži</button>
+                <button type="button" class="btn btn-warning" (click)="resetForm()">Resetuj formu</button>
+                <button [disabled]="!this.form.valid" type="submit" class="btn btn-primary" data-bs-dismiss="modal">{{title === 'Izmeni recenziju' ? 'Izmeni' : 'Dodaj'}}</button>
+            </div>
+        </form>
+    </div>
+</div>

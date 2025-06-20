@@ -18,7 +18,7 @@ import { Napajanje } from '../../../../models/komponente/napajanje';
 
 @Component({
   selector: 'app-proizvod-dialog',
-  imports: [ReactiveFormsModule, NgIf, NgClass],
+  imports: [NgIf, NgClass, ReactiveFormsModule],
   templateUrl: './proizvod-dialog.component.html',
   styleUrl: './proizvod-dialog.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

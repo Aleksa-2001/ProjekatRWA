@@ -1,9 +1,9 @@
-<div class="row column-gap-3 border border-primary rounded-3 pe-2 overflow-hidden" *ngIf="displayMode === 1" [routerLink]="['/ng/proizvod', proizvod.id]">
-    <div class="col-3 col-md-2 col-xl-1 p-0">
-        <img *ngIf="proizvod.slika" class="w-100 border-end" [src]="'http://localhost:3000/' + proizvod.slika" alt={{proizvod.slika}} />
-        <img *ngIf="!proizvod.slika" class="w-100 border-end" src="images/image-default.png"/>
+<div class="row border border-primary rounded-3 overflow-hidden" *ngIf="displayMode === 1" [routerLink]="['/ng/proizvod', proizvod.id]">
+    <div class="image col-3 col-md-2 col-xl-1 p-0">
+        <img *ngIf="proizvod.slika" class="w-100" [src]="'http://localhost:3000/' + proizvod.slika" alt={{proizvod.slika}} />
+        <img *ngIf="!proizvod.slika" class="w-100" src="images/image-default.png"/>
     </div>
-    <div class="info-list col align-content-center">
+    <div class="info-list col align-content-center px-3 py-2 border-start">
         <div class="row m-0">
             <div class="col col-12 col-md-8 col-lg-9 align-content-center">
                 <h5 class="m-0">{{proizvod.naziv}}</h5>

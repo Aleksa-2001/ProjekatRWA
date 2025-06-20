@@ -19,9 +19,11 @@ export class RecenzijeService {
                     firstName: true,
                     lastName: true,
                     username: true
-                }
+                },
+                prodavnica: true,
+                proizvod: true
             },
-            relations: ['user']
+            relations: ['user', 'prodavnica', 'proizvod']
         })
     }
 
@@ -34,9 +36,10 @@ export class RecenzijeService {
                     firstName: true,
                     lastName: true,
                     username: true
-                }
+                },
+                prodavnica: true
             },
-            relations: ['user']
+            relations: ['user', 'prodavnica']
         })
     }
 
@@ -49,14 +52,15 @@ export class RecenzijeService {
                     firstName: true,
                     lastName: true,
                     username: true
-                }
+                },
+                proizvod: true
             },
-            relations: ['user']
+            relations: ['user', 'proizvod']
         })
     }
 
     public async getRecenzijaByID(recenzijaID: number) {
-        if (await this.recenzijaRepository.existsBy({ id: recenzijaID }))
+        if (await this.recenzijaRepository.existsBy({ id: recenzijaID })) {
             return await this.recenzijaRepository.findOne({
                 where: { id: recenzijaID },
                 select: {
@@ -65,10 +69,13 @@ export class RecenzijeService {
                         firstName: true,
                         lastName: true,
                         username: true
-                    }
+                    },
+                    prodavnica: true,
+                    proizvod: true
                 },
-                relations: ['user']
+                relations: ['user', 'prodavnica', 'proizvod']
             })
+        }
         else throw new NotFoundException(`Recenzija sa ID-jem ${recenzijaID} nije pronadjena!`)
     }
 

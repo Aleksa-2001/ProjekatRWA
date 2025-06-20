@@ -11,3 +11,13 @@ export const selectRecenzije = createSelector(
         .filter(recenzija => !!recenzija)
         .map(recenzija => <Recenzija>recenzija)
 )
+
+export const selectSelectedRecenzijaID = createSelector(
+    selectRecenzijeFeature,
+    (state: RecenzijeState) => state.selectedRecenzijaID
+)
+
+export const selectSelectedRecenzija = createSelector(
+    selectRecenzijeFeature,
+    (state: RecenzijeState) => state.selectedRecenzija
+)

@@ -10,3 +10,16 @@
 .row:hover {
   background-color: #DDDDDD;
 }
+
+.stars {
+  width: 128px;
+}
+
+.star {
+  font-size: 1.5rem;
+  transition: 0.1s;
+}
+
+.bi-star-fill {
+  color: #ffc107;
+}

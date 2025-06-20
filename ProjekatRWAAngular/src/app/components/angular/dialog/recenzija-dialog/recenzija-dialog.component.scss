@@ -1,0 +1,27 @@
+:host {
+  display: block;
+}
+
+#inputOcena {
+  display: none;
+}
+
+.star {
+  font-size: 3rem;
+  transition: 0.1s;
+  cursor: pointer;
+}
+
+.star:hover {
+  color: mix(white, #ffc107, 50%);
+}
+
+.bi-star-fill {
+  color: #ffc107;
+}
+
+@media screen and (max-width: 1199px) {
+  .star {
+    font-size: calc(1.5rem + 2vw);
+  }
+}

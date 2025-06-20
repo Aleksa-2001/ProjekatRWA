@@ -29,4 +29,16 @@ export class RecenzijeEffects {
         )
     })
 
+    loadRecenzija$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(RecenzijeActions.loadSelectedItem),
+            mergeMap(({ selectedRecenzijaID }) => this.service.getRecenzijaByID(selectedRecenzijaID)
+                .pipe(
+                    map((selectedRecenzija) => (RecenzijeActions.loadSelectedItemSuccess({selectedRecenzija}))),
+                    catchError(() => of({ type: "[Recenzija] Load error" }))
+                )
+            )
+        )
+    })
+
 }

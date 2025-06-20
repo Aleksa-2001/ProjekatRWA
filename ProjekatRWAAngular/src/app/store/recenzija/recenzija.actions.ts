@@ -21,3 +21,28 @@ export const loadItemsSuccess = createAction(
         recenzije: Recenzija[]
     }>()
 )
+
+export const setSelectedItemID = createAction(
+    "[Recenzija] Setuj ID recenzije",
+    props<{
+        recenzijaID: number
+    }>()
+)
+
+export const loadSelectedItem = createAction(
+    "[Recenzija] Ucitaj recenziju",
+    props<{
+        selectedRecenzijaID: number
+    }>()
+)
+
+export const deselectSelectedItem = createAction(
+    "[Recenzija] Deselektuj recenziju"
+)
+
+export const loadSelectedItemSuccess = createAction(
+    "[Recenzija] Ucitavanje recenzije je uspesno",
+    props<{
+        selectedRecenzija: Recenzija
+    }>()
+)

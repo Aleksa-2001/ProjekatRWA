@@ -18,7 +18,7 @@ export class RecenzijaService {
 
     getRecenzijeByProdavnicaID(prodavnicaID: number) {
         return this.httpClient
-            .get<Recenzija[]>("http://localhost:3000/" + `recenzijeProdavnica/${prodavnicaID}`)
+            .get<Recenzija[]>("http://localhost:3000/" + `recenzijeProdavnice/${prodavnicaID}`)
             .pipe(catchError(errorHandler))
     }
 

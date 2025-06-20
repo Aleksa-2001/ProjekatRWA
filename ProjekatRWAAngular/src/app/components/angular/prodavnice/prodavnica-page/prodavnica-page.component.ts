@@ -10,15 +10,27 @@ import { ProizvodiComponent } from "../../proizvodi/proizvodi.component";
 import { NotFoundComponent } from "../../../../shared/components/not-found/not-found.component";
 import { Title } from '@angular/platform-browser';
 import { isAdmin } from '../../../../store/auth/auth.selectors';
-import * as ProdavniceActions from '../../../../store/prodavnica/prodavnica.actions'
-import * as ProizvodiActions from '../../../../store/proizvod/proizvod.actions'
 import { ProdavnicaDialogComponent } from "../../dialog/prodavnica-dialog/prodavnica-dialog.component";
 import { ConfirmDialogComponent } from "../../dialog/confirm-dialog/confirm-dialog.component";
 import { ProizvodDialogComponent } from "../../dialog/proizvod-dialog/proizvod-dialog.component";
+import { RecenzijeComponent } from "../../recenzije/recenzije.component";
+import * as ProdavniceActions from '../../../../store/prodavnica/prodavnica.actions'
+import * as ProizvodiActions from '../../../../store/proizvod/proizvod.actions'
+import * as RecenzijeActions from '../../../../store/recenzija/recenzija.actions'
 
 @Component({
   selector: 'app-prodavnica-page',
-  imports: [NgIf, NgStyle, CommonModule, ProizvodiComponent, NotFoundComponent, ProdavnicaDialogComponent, ConfirmDialogComponent, ProizvodDialogComponent],
+  imports: [
+    NgIf,
+    NgStyle,
+    CommonModule,
+    ProizvodiComponent,
+    NotFoundComponent,
+    ProdavnicaDialogComponent,
+    ConfirmDialogComponent,
+    ProizvodDialogComponent,
+    RecenzijeComponent
+],
   templateUrl: './prodavnica-page.component.html',
   styleUrl: './prodavnica-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -38,7 +50,7 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isAdmin$ = this.store.select(isAdmin)
     
-    this.prodavnicaID = Number(this.route.snapshot.paramMap.get('id'));
+    this.prodavnicaID = Number(this.route.snapshot.paramMap.get('id'))
     this.store.dispatch(ProdavniceActions.setSelectedItemID({ prodavnicaID: this.prodavnicaID }))
     this.store.dispatch(ProdavniceActions.loadSelectedItem({ selectedProdavnicaID: this.prodavnicaID }))
     this.prodavnica$ = this.store.select(selectSelectedProdavnica)
@@ -48,6 +60,7 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
       tap(prodavnica => {
         this.title.setTitle(`${prodavnica.naziv} - ProjekatRWA`)
         this.setBackground('http://localhost:3000/' + prodavnica.slika)
+        this.store.dispatch(RecenzijeActions.loadItemsProdavnica({ prodavnicaID: this.prodavnicaID }))
       })
     ).subscribe()
 

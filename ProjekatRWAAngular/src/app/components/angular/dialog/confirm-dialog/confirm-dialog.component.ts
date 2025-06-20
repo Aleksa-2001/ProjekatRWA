@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import * as AuthActions from '../../../../store/auth/auth.actions'
 import * as ProdavniceActions from '../../../../store/prodavnica/prodavnica.actions'
 import * as ProizvodiActions from '../../../../store/proizvod/proizvod.actions'
+import { selectSelectedRecenzija } from '../../../../store/recenzija/recenzija.selectors';
 
 @Component({
   selector: 'app-confirm-dialog',
@@ -38,6 +39,9 @@ export class ConfirmDialogComponent implements OnInit {
         break
       case 'Proizvodi':
         this.title = 'Obriši sve proizvode'
+        break
+      case 'Recenzija':
+        this.title = 'Obriši recenziju'
         break
     }
   }
@@ -82,6 +86,18 @@ export class ConfirmDialogComponent implements OnInit {
           this.store.dispatch(ProizvodiActions.deleteAllItems({ prodavnicaID: prodavnica.id }))
         })
       ).subscribe()
+    }
+
+    if (this.title.includes('Obriši recenziju')) {
+      console.log("Brisanje recenzije")
+      //this.store.select(selectSelectedRecenzija).pipe(
+      //  filter(recenzija => !!recenzija),
+      //  take(1),
+      //  tap(recenzija => {
+      //    //this.store.dispatch(ProizvodiActions.deleteItem({ recenzijaID: recenzija.id }))
+      //    console.log("Brisanje recenzije sa ID-jem ", recenzija.id)
+      //  })
+      //).subscribe()
     }
   }
 
