@@ -1,15 +1,16 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app-state';
 import { filter, take, tap } from 'rxjs';
 import { selectUser } from '../../../../store/auth/auth.selectors';
 import { selectSelectedProdavnica } from '../../../../store/prodavnica/prodavnica.selectors';
 import { selectSelectedProizvod } from '../../../../store/proizvod/proizvod.selectors';
-import { Router } from '@angular/router';
+import { selectSelectedRecenzija } from '../../../../store/recenzija/recenzija.selectors';
 import * as AuthActions from '../../../../store/auth/auth.actions'
 import * as ProdavniceActions from '../../../../store/prodavnica/prodavnica.actions'
 import * as ProizvodiActions from '../../../../store/proizvod/proizvod.actions'
-import { selectSelectedRecenzija } from '../../../../store/recenzija/recenzija.selectors';
+import * as RecenzijeActions from '../../../../store/recenzija/recenzija.actions'
 
 @Component({
   selector: 'app-confirm-dialog',
@@ -89,15 +90,19 @@ export class ConfirmDialogComponent implements OnInit {
     }
 
     if (this.title.includes('Obriši recenziju')) {
-      console.log("Brisanje recenzije")
-      //this.store.select(selectSelectedRecenzija).pipe(
-      //  filter(recenzija => !!recenzija),
-      //  take(1),
-      //  tap(recenzija => {
-      //    //this.store.dispatch(ProizvodiActions.deleteItem({ recenzijaID: recenzija.id }))
-      //    console.log("Brisanje recenzije sa ID-jem ", recenzija.id)
-      //  })
-      //).subscribe()
+      this.store.select(selectSelectedRecenzija).pipe(
+        filter(recenzija => !!recenzija),
+        take(1),
+        tap(recenzija => {
+          this.store.dispatch(RecenzijeActions.deleteItem({ selectedRecenzijaID: recenzija.id }))
+        })
+      ).subscribe()
+    }
+  }
+
+  onCancel() {
+    if (this.title.includes('Obriši recenziju')) {
+      this.store.dispatch(RecenzijeActions.deselectSelectedItem())
     }
   }
 

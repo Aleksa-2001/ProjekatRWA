@@ -44,3 +44,21 @@ img {
 .specs .col:first-child h5 {
   font-weight: bolder;
 }
+
+.stars {
+  width: 128px;
+}
+
+.star {
+  font-size: 1.5rem;
+}
+
+.bi-star-half {
+  background: linear-gradient(to right, #ffc107 50%, black 50%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bi-star-fill {
+  color: #ffc107;
+}

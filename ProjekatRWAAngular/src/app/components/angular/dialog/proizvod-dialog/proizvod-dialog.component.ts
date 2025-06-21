@@ -186,6 +186,10 @@ export class ProizvodDialogComponent implements OnInit {
     this.filename = ""
   }
 
+  onCancel() {
+    if (this.mode === 0) this.resetForm()
+  }
+
   onSubmit() {
     if (this.form.valid) {
       const path = "images/proizvodi/"

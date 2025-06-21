@@ -90,6 +90,10 @@ export class ProdavnicaDialogComponent implements OnInit {
     this.formData = undefined
     this.filename = ""
   }
+  
+  onCancel() {
+    if (this.mode === 0) this.resetForm()
+  }
 
   onSubmit() {
     if (this.form.valid) {

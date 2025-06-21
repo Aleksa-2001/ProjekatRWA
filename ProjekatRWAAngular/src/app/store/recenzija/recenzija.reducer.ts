@@ -32,5 +32,22 @@ export const recenzijaReducer = createReducer(
         ...state,
         selectedRecenzijaID: -1,
         selectedRecenzija: null
-    }))
+    })),
+    on(RecenzijeActions.addItemSuccess, (state, {recenzija}) => 
+        adapter.addOne(recenzija, state)
+    ),
+    on(RecenzijeActions.updateItemSuccess, (state, {recenzija}) => (
+        adapter.updateOne(recenzija, {
+            ...state,
+            selectedRecenzijaID: -1,
+            selectedRecenzija: null
+        })
+    )),
+    on(RecenzijeActions.deleteItemSuccess, (state, {recenzijaID}) => (
+        adapter.removeOne(recenzijaID, {
+            ...state,
+            selectedRecenzijaID: -1,
+            selectedRecenzija: null
+        })
+    ))
 )

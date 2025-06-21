@@ -3,7 +3,7 @@
         <div class="modal-content border-secondary border-3 rounded-3">
             <div class="modal-header">
                 <h5 class="modal-title" id="confirmModalDialogLabel">{{title}}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="onCancel()"></button>
             </div>
             
             <div class="modal-body">
@@ -11,7 +11,7 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">NE</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="onCancel()">NE</button>
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="onDelete()">DA</button>
             </div>
         </div>

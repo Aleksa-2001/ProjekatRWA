@@ -1,6 +1,6 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { filter, Observable, of } from 'rxjs';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { filter, map, Observable, of, reduce, tap } from 'rxjs';
 import { Recenzija } from '../../../models/recenzija';
 import { RecenzijaItemComponent } from './recenzija-item/recenzija-item.component';
 import { AppState } from '../../../store/app-state';
@@ -30,12 +30,22 @@ export class RecenzijeComponent {
   user$: Observable<User | null> = of()
   recenzije$: Observable<readonly Recenzija[]> = of([])
 
+  prosek: number = 0
+
+  @Output() prosecnaOcena: EventEmitter<number> = new EventEmitter<number>()
+
   constructor(private store: Store<AppState>) {
     this.user$ = this.store.select(selectUser)
     this.recenzije$ = this.store.select(selectRecenzije)
 
     this.recenzije$.pipe(
-      filter(recenzije => !!recenzije)
+      filter(recenzije => !!recenzije),
+      map(recenzije => {
+        const ocene = recenzije.map(recenzija => recenzija.ocena)
+        const sum = ocene.reduce((a, b) => a + b, 0)
+        this.prosek = ocene.length ? sum / ocene.length : 0
+        this.prosecnaOcena.emit(this.prosek)
+      })
     ).subscribe()
   }
 

@@ -44,6 +44,9 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
   backgroundStyle: { [key: string]: string } = { }
   
   brojProizvoda: number = 0
+  
+  rating: any = Array(5).fill(0)
+  prosek: number = 0
 
   constructor(private title: Title, private route: ActivatedRoute, private store: Store<AppState>) { }
 
@@ -60,14 +63,16 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
       tap(prodavnica => {
         this.title.setTitle(`${prodavnica.naziv} - ProjekatRWA`)
         this.setBackground('http://localhost:3000/' + prodavnica.slika)
-        this.store.dispatch(RecenzijeActions.loadItemsProdavnica({ prodavnicaID: this.prodavnicaID }))
       })
     ).subscribe()
 
     this.prodavnica$.pipe(
       filter(prodavnica => !!prodavnica),
       take(1),
-      tap(prodavnica => this.store.dispatch(ProizvodiActions.loadItems({ prodavnicaID: prodavnica.id })))
+      tap(prodavnica => {
+        this.store.dispatch(ProizvodiActions.loadItems({ prodavnicaID: prodavnica.id }))
+        this.store.dispatch(RecenzijeActions.loadItemsProdavnica({ prodavnicaID: prodavnica.id }))
+      })
     ).subscribe()
   }
 
@@ -90,4 +95,17 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
   getBrojProizvoda(brojProizvoda: number) {
     this.brojProizvoda = brojProizvoda
   }
+
+  getProsek(prosek: number) {
+    this.prosek = prosek
+  }  
+
+  starHalf(i: number) {
+    return Math.floor(this.prosek) === i && this.prosek - Math.floor(this.prosek) >= 0.5
+  }
+
+  starEmpty(i: number) {
+    return Math.floor(this.prosek) === i && this.prosek - Math.floor(this.prosek) < 0.5
+  }
+
 }

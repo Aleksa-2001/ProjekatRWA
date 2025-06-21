@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { filter, Observable, of, tap } from 'rxjs';
+import { filter, Observable, of, take, tap } from 'rxjs';
 import { Proizvod } from '../../../../models/proizvod';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -44,6 +44,9 @@ export class ProizvodPageComponent implements OnInit, OnDestroy {
 
   image: string = ""
 
+  rating: any = Array(5).fill(0)
+  prosek: number = 0
+
   constructor(private title: Title, private route: ActivatedRoute, private store: Store<AppState>) { }
 
   ngOnInit(): void {
@@ -59,7 +62,14 @@ export class ProizvodPageComponent implements OnInit, OnDestroy {
       tap(proizvod => {
         this.title.setTitle(`${proizvod.naziv} - ProjekatRWA`)
         this.setImage('http://localhost:3000/' + proizvod.slika)
-        this.store.dispatch(RecenzijeActions.loadItemsProizvod({ proizvodID: this.proizvodID }))
+      })
+    ).subscribe()
+
+    this.proizvod$.pipe(
+      filter(proizvod => !!proizvod),
+      take(1),
+      tap(proizvod => {
+        this.store.dispatch(RecenzijeActions.loadItemsProizvod({ proizvodID: proizvod.id }))
       })
     ).subscribe()
   }
@@ -73,4 +83,16 @@ export class ProizvodPageComponent implements OnInit, OnDestroy {
     this.image = `${slika}?t=${timestamp}`
   }
 
+  getProsek(prosek: number) {
+    this.prosek = prosek
+  }  
+
+  starHalf(i: number) {
+    return Math.floor(this.prosek) === i && this.prosek - Math.floor(this.prosek) >= 0.5
+  }
+
+  starEmpty(i: number) {
+    return Math.floor(this.prosek) === i && this.prosek - Math.floor(this.prosek) < 0.5
+  }
+  
 }

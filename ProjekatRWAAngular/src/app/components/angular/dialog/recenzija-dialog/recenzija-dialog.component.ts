@@ -60,7 +60,6 @@ export class RecenzijaDialogComponent implements OnInit {
       this.recenzija$ = this.store.select(selectSelectedRecenzija)
 
       this.recenzija$.pipe(
-        filter(recenzija => !!recenzija),
         tap(recenzija => {
           if (recenzija) {
             this.recenzijaID = recenzija.id
@@ -72,20 +71,13 @@ export class RecenzijaDialogComponent implements OnInit {
             this.prevSelectedOcena = recenzija.ocena
 
             this.form.patchValue({
-              ocena: [recenzija.ocena, Validators.required],
-              komentar: [recenzija.komentar],
+              ocena: recenzija.ocena,
+              komentar: recenzija.komentar,
             })
           }
           else {
             this.recenzijaID = -1
-            
-            this.selectedOcena = 0
-            this.prevSelectedOcena = 0
-
-            this.form.patchValue({
-              ocena: ['', Validators.required],
-              komentar: [''],
-            })
+            this.resetForm()
           }
         })
       ).subscribe()
@@ -115,10 +107,6 @@ export class RecenzijaDialogComponent implements OnInit {
     }
   }
 
-  onCancel(): void {
-    this.store.dispatch(RecenzijeActions.deselectSelectedItem())
-  }
-
   onMouseEnter(index: number) {
     this.selectedOcena = index + 1
   }
@@ -139,6 +127,11 @@ export class RecenzijaDialogComponent implements OnInit {
     this.prevSelectedOcena = 0
   }
 
+  onCancel(): void {
+    if (this.mode === 1) this.store.dispatch(RecenzijeActions.deselectSelectedItem())
+    else this.resetForm()
+  }
+
   onSubmit() {
     if (this.form.valid) {
       const recenzija = this.form.getRawValue()
@@ -151,15 +144,12 @@ export class RecenzijaDialogComponent implements OnInit {
         prodavnica: this.prodavnica ?? null,
         proizvod: this.proizvod ?? null
       }
-
-      console.log(recenzijaData)
       
       if (this.mode === 1) {
-        console.log("edit")
-        //this.store.dispatch(ProdavniceActions.updateItem({ selectedProdavnicaID: this.prodavnicaID, selectedProdavnica: <Prodavnica>prodavnicaData, file: this.formData }))
+        this.store.dispatch(RecenzijeActions.updateItem({ selectedRecenzijaID: this.recenzijaID, selectedRecenzija: <Recenzija>recenzijaData }))
       }
       else {
-        //this.store.dispatch(ProdavniceActions.addItem({ prodavnica: <Prodavnica>prodavnicaData, file: this.formData }))
+        this.store.dispatch(RecenzijeActions.addItem({ recenzija: <Recenzija>recenzijaData }))
         this.resetForm()
       }
     }

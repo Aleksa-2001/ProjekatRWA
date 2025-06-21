@@ -41,4 +41,40 @@ export class RecenzijeEffects {
         )
     })
 
+    addRecenzija$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(RecenzijeActions.addItem),
+            mergeMap(({ recenzija }) => this.service.addRecenzija(recenzija)
+                .pipe(
+                    map((recenzija) => (RecenzijeActions.addItemSuccess({ recenzija }))),
+                    catchError(() => of({ type: "[Recenzija] Add error" }))
+                )
+            )
+        )
+    })
+
+    updateRecenzija$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(RecenzijeActions.updateItem),
+            mergeMap(({ selectedRecenzijaID, selectedRecenzija }) => this.service.updateRecenzija(selectedRecenzijaID, selectedRecenzija)
+                .pipe(
+                    map((recenzija) => (RecenzijeActions.updateItemSuccess({ recenzija: { id: recenzija.id, changes: recenzija } }))),
+                    catchError(() => of({ type: "[Recenzija] Update error" }))
+                )
+            )
+        )
+    })
+
+    deleteRecenzija$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(RecenzijeActions.deleteItem),
+            mergeMap(({ selectedRecenzijaID }) => this.service.deleteRecenzija(selectedRecenzijaID)
+                .pipe(
+                    map((recenzijaID) => (RecenzijeActions.deleteItemSuccess({recenzijaID}))),
+                    catchError(() => of({ type: "[Recenzija] Delete error" }))
+                )
+            )
+        )
+    })
+
 }
