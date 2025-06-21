@@ -3,16 +3,19 @@
     <div class="row row-gap-3">
         <div class="col-12 col-md-4 col-lg-3">
             <div class="sticky-top btn-group-vertical w-100" role="group">
-                <input type="radio" class="btn-check" (click)="onChangeProfileOption(false)" name="radioProfile" id="radioProfileInfo" checked>
-                <label class="btn btn-lg btn-outline-primary rounded-0" for="radioProfileInfo"><i class="bi bi-person-fill me-2"></i>Pregled profila</label>
-                <input type="radio" class="btn-check" (click)="onChangeProfileOption(true)" name="radioProfile" id="radioProfileEdit">
+                <input type="radio" class="btn-check" (click)="onChangeProfileOption(1)" name="radioProfile" id="radioProfileInfo" checked>
+                <label class="btn btn-lg btn-outline-primary rounded-0" for="radioProfileInfo"><i class="bi bi-person me-2"></i>Pregled profila</label>
+                <input type="radio" class="btn-check" (click)="onChangeProfileOption(2)" name="radioProfile" id="radioProfileReviews">
+                <label class="btn btn-lg btn-outline-primary rounded-0" for="radioProfileReviews"><i class="bi bi-star me-2"></i>Vaše recenzije</label>
+                <input type="radio" class="btn-check" (click)="onChangeProfileOption(3)" name="radioProfile" id="radioProfileEdit">
                 <label class="btn btn-lg btn-outline-primary rounded-0" for="radioProfileEdit"><i class="bi bi-pencil me-2"></i>Izmeni profil</label>
             </div>
         </div>
         <div class="col-12 d-md-none">
             <hr class="m-0">
         </div>
-        <div *ngIf="!editProfileMode" class="col">
+        <div *ngIf="displayMode === 1" class="col col-12 col-md-8 col-lg-9">
+            <h2>Pregled profila</h2>
             <div class="table-responsive">
                 <div class="profile-info container border border-primary">
                     <div class="head row bg-secondary text-white">
@@ -47,10 +50,13 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="editProfileMode" class="col">
+        <div *ngIf="displayMode === 2" class="col col-12 col-md-8 col-lg-9">
+            <app-recenzije [profileMode]="true"></app-recenzije>
+        </div>
+        <div *ngIf="displayMode === 3" class="col col-12 col-md-8 col-lg-9">
             <div class="row">
                 <form [formGroup]="editProfileForm" (ngSubmit)="changeUser(user)" class="col-12 col-lg-6">
-                    <h2 class="text-center text-md-start">Izmeni profil</h2>
+                    <h2>Izmeni profil</h2>
                     <div class="row row-gap-2">
                         <div class="col-12 col-sm-6">
                             <label for="inputFirstName">Ime*</label>
@@ -94,7 +100,7 @@
                     <hr>
                 </div>
                 <form [formGroup]="changePasswordForm" (ngSubmit)="changePassword()" class="col-12 col-lg-6">
-                    <h2 class="text-center text-md-start">Promeni lozinku</h2>
+                    <h2>Promeni lozinku</h2>
                     <div class="row row-gap-2">
                         <div class="col-12">
                             <label for="inputPassword">Trenutna lozinka*</label>

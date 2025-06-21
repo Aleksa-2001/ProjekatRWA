@@ -7,8 +7,10 @@ import { selectUser } from '../../../store/auth/auth.selectors';
 import { CommonModule, NgIf } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import * as AuthActions from '../../../store/auth/auth.actions'
 import { ConfirmDialogComponent } from "../../../components/angular/dialog/confirm-dialog/confirm-dialog.component";
+import { RecenzijeComponent } from "../../../components/angular/recenzije/recenzije.component";
+import * as AuthActions from '../../../store/auth/auth.actions';
+import * as RecenzijeActions from '../../../store/recenzija/recenzija.actions';
 
 @Component({
   selector: 'app-profile',
@@ -16,8 +18,9 @@ import { ConfirmDialogComponent } from "../../../components/angular/dialog/confi
     NgIf,
     CommonModule,
     ReactiveFormsModule,
-    ConfirmDialogComponent
-  ],
+    ConfirmDialogComponent,
+    RecenzijeComponent
+],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -30,7 +33,7 @@ export class ProfileComponent {
   changePasswordForm!: FormGroup
   passwordData: any
 
-  editProfileMode: boolean = false
+  displayMode: number = 1
 
   user$: Observable<User | null>
   userID: number = -1
@@ -54,16 +57,18 @@ export class ProfileComponent {
         })
 
         this.userID = user.userID
-
         this.formData = this.editProfileForm.getRawValue()
+        
+        this.store.dispatch(RecenzijeActions.loadItemsUser({ userID: this.userID }))
       })
     )
   }
 
-  onChangeProfileOption(editMode: boolean) {
-    this.editProfileMode = editMode
-    if (editMode) this.title.setTitle("Izmeni Profil - ProjekatRWA")
-    else this.title.setTitle("Profil - ProjekatRWA")
+  onChangeProfileOption(displayMode: number) {
+    this.displayMode = displayMode
+    if (displayMode === 1) this.title.setTitle("Profil - ProjekatRWA")
+    if (displayMode === 2) this.title.setTitle("Recenzije - ProjekatRWA")
+    if (displayMode === 3) this.title.setTitle("Izmeni Profil - ProjekatRWA")
   }
   
   onDataInput() {

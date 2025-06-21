@@ -14,6 +14,11 @@ export class RecenzijeController {
         return this.service.getAll()
     }
 
+    @Get('recenzijeKorisnika/:id')
+    public getRecenzijeByUserID(@Param('id', ParseIntPipe) userID: number) {
+        return this.service.getRecenzijeByUserID(userID)
+    }
+
     @Get('recenzijeProdavnice/:id')
     public getRecenzijeByProdavnicaID(@Param('id', ParseIntPipe) prodavnicaID: number) {
         return this.service.getRecenzijeByProdavnicaID(prodavnicaID)

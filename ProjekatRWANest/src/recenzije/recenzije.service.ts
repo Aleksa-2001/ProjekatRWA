@@ -19,9 +19,22 @@ export class RecenzijeService {
                     firstName: true,
                     lastName: true,
                     username: true
-                },
-                prodavnica: true,
-                proizvod: true
+                }
+            },
+            relations: ['user', 'prodavnica', 'proizvod']
+        })
+    }
+
+    public async getRecenzijeByUserID(userID: number) {
+        return await this.recenzijaRepository.find({
+            where: { user: { userID: userID } },
+            select: {
+                user: {
+                    userID: true,
+                    firstName: true,
+                    lastName: true,
+                    username: true
+                }
             },
             relations: ['user', 'prodavnica', 'proizvod']
         })
@@ -36,8 +49,7 @@ export class RecenzijeService {
                     firstName: true,
                     lastName: true,
                     username: true
-                },
-                prodavnica: true
+                }
             },
             relations: ['user', 'prodavnica']
         })
@@ -52,8 +64,7 @@ export class RecenzijeService {
                     firstName: true,
                     lastName: true,
                     username: true
-                },
-                proizvod: true
+                }
             },
             relations: ['user', 'proizvod']
         })

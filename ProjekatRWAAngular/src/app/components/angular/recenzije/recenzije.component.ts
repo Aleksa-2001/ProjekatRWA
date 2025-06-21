@@ -32,6 +32,7 @@ export class RecenzijeComponent {
 
   prosek: number = 0
 
+  @Input() profileMode: boolean = false
   @Output() prosecnaOcena: EventEmitter<number> = new EventEmitter<number>()
 
   constructor(private store: Store<AppState>) {

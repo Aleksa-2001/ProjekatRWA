@@ -9,6 +9,13 @@ export const loadItemsProdavnica = createAction(
     }>()
 )
 
+export const loadItemsUser = createAction(
+    "[Recenzija] Ucitaj listu recenzija korisnika",
+    props<{
+        userID: number
+    }>()
+)
+
 export const loadItemsProizvod = createAction(
     "[Recenzija] Ucitaj listu recenzija proizvoda",
     props<{
@@ -74,7 +81,6 @@ export const updateItemSuccess = createAction(
     "[Recenzija] Izmena recenzije je uspesna",
     props<{
         recenzija: Update<Recenzija>
-        //selectedRecenzija: Recenzija
     }>()
 )
 

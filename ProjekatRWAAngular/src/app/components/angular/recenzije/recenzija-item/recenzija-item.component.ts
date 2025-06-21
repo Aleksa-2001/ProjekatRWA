@@ -7,10 +7,11 @@ import { AppState } from '../../../../store/app-state';
 import { isAdmin, selectUser } from '../../../../store/auth/auth.selectors';
 import { User } from '../../../../models/user';
 import * as RecenzijeActions from '../../../../store/recenzija/recenzija.actions'
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-recenzija-item',
-  imports: [NgIf, CommonModule],
+  imports: [NgIf, CommonModule, RouterModule],
   templateUrl: './recenzija-item.component.html',
   styleUrl: './recenzija-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,6 +22,7 @@ export class RecenzijaItemComponent implements OnInit {
   isAdmin$: Observable<boolean> = of(false)
 
   @Input() recenzija!: Recenzija
+  @Input() profileMode!: boolean
 
   rating: readonly any[] = Array(5).fill(0)
 

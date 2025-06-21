@@ -9,6 +9,16 @@ export class RecenzijeEffects {
     private actions$ = inject(Actions)
     private service = inject(RecenzijaService)
 
+    loadEffectUser = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(RecenzijeActions.loadItemsUser),
+            mergeMap(({ userID }) => this.service.getRecenzijeByUserID(userID).pipe(
+                map(recenzije => RecenzijeActions.loadItemsSuccess({ recenzije })),
+                catchError(() => of({ type: "[Recenzija] Load Items Error" }))
+            )) 
+        )
+    })
+
     loadEffectProdavnica = createEffect(() => {
         return this.actions$.pipe(
             ofType(RecenzijeActions.loadItemsProdavnica),
