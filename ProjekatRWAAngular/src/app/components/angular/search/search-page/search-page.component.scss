@@ -22,6 +22,66 @@
   border-color: $green-500;
 }
 
+.range-slider {
+  position: relative;
+}
+
+.range-slider input {
+  position: absolute;
+  pointer-events: none;
+}
+
+.range-slider input::-webkit-slider-runnable-track {
+  background: transparent;
+}
+
+.range-slider input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  pointer-events: auto;
+  background: $green-500;
+}
+
+.range-slider input::-moz-range-track {
+  background: transparent;
+}
+
+.range-slider input::-moz-range-thumb {
+  pointer-events: auto;
+  background: $green-500;
+}
+
+.range-slider .range-background {
+  position: absolute;
+  height: 6px;
+  transform: translateY(150%);
+}
+
+.range-slider .range-background, .range-slider .range-highlight {
+  position: absolute;
+  width: calc(100% - 12px);
+  left: 6px;
+  transform: translateY(150%);
+  height: 6px;
+  border-radius: 3px;
+  z-index: 1;
+}
+
+.range-slider .range-background {
+  background-color: #E9ECEF;
+}
+
+.range-slider .range-highlight {
+  background-color: $green-500;
+}
+
+#inputMaxCena {
+  z-index: 3
+}
+
+#inputMinCena {
+  z-index: 4
+}
+
 @media screen and (max-width: 767px) {
   .filter-menu {
     border-right: 0

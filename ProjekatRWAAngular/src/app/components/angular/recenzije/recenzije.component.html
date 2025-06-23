@@ -1,6 +1,6 @@
-<div class="d-flex justify-content-between align-items-center mb-2">
+<div class="d-flex flex-column flex-sm-row row-gap-2 justify-content-between align-items-sm-center mb-2">
     <h2 class="m-0">{{profileMode ? 'Vaše recenzije' : 'Recenzije'}}</h2>
-    <button *ngIf="!profileMode" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#recenzijaModalDialog"><i class="bi bi-plus-lg me-2"></i>Dodaj recenziju</button>
+    <button [disabled]="unetaRecenzija$ | async" *ngIf="!profileMode" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#recenzijaModalDialog"><i class="bi bi-plus-lg me-2"></i>Dodaj recenziju</button>
 </div>
 <div *ngIf="recenzije$ | async as recenzije" class="row row-gap-2">
     <div class="p-0 col-12" *ngFor="let recenzija of recenzije">

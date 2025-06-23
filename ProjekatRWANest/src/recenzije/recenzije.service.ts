@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RecenzijaDto } from 'src/dto/recenzija.dto';
 import { Recenzija } from 'src/models/recenzija.entity';
@@ -92,8 +92,15 @@ export class RecenzijeService {
 
     public async create(recenzijaDto: RecenzijaDto) {
         if (!((recenzijaDto.prodavnica && recenzijaDto.proizvod) || (!recenzijaDto.prodavnica && !recenzijaDto.proizvod))) {
-            const recenzija = this.recenzijaRepository.create(recenzijaDto)
-            return await this.recenzijaRepository.save(recenzija)
+            if (!(await this.recenzijaRepository.findOneBy({ 
+                user: { userID: recenzijaDto.user.userID }, 
+                prodavnica: recenzijaDto.prodavnica, 
+                proizvod: recenzijaDto.proizvod }
+            ))) {
+                const recenzija = this.recenzijaRepository.create(recenzijaDto)
+                return await this.recenzijaRepository.save(recenzija)
+            }
+            else throw new ForbiddenException(`Vec ste uneli recenziju za ${recenzijaDto.prodavnica ? 'ovu prodavnicu' : 'ovaj proizvod'}!`)
         }
         else throw new BadRequestException("Unos nije ispravan!")
     }

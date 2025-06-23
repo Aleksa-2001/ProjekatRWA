@@ -2,17 +2,17 @@ import { createAction, props } from "@ngrx/store"
 import { Recenzija } from "../../models/recenzija"
 import { Update } from "@ngrx/entity"
 
-export const loadItemsProdavnica = createAction(
-    "[Recenzija] Ucitaj listu recenzija prodavnice",
-    props<{
-        prodavnicaID: number
-    }>()
-)
-
 export const loadItemsUser = createAction(
     "[Recenzija] Ucitaj listu recenzija korisnika",
     props<{
         userID: number
+    }>()
+)
+
+export const loadItemsProdavnica = createAction(
+    "[Recenzija] Ucitaj listu recenzija prodavnice",
+    props<{
+        prodavnicaID: number
     }>()
 )
 

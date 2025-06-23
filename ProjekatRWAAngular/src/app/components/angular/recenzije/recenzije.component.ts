@@ -1,11 +1,11 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { filter, map, Observable, of, reduce, tap } from 'rxjs';
 import { Recenzija } from '../../../models/recenzija';
 import { RecenzijaItemComponent } from './recenzija-item/recenzija-item.component';
 import { AppState } from '../../../store/app-state';
 import { Store } from '@ngrx/store';
-import { selectRecenzije } from '../../../store/recenzija/recenzija.selectors';
+import { selectRecenzije, selectUnetaRecenzija } from '../../../store/recenzija/recenzija.selectors';
 import { RecenzijaDialogComponent } from "../dialog/recenzija-dialog/recenzija-dialog.component";
 import { ConfirmDialogComponent } from "../dialog/confirm-dialog/confirm-dialog.component";
 import { User } from '../../../models/user';
@@ -25,19 +25,23 @@ import { selectUser } from '../../../store/auth/auth.selectors';
   styleUrl: './recenzije.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RecenzijeComponent { 
+export class RecenzijeComponent implements OnInit { 
 
   user$: Observable<User | null> = of()
   recenzije$: Observable<readonly Recenzija[]> = of([])
+  unetaRecenzija$: Observable<boolean> = of()
 
   prosek: number = 0
 
   @Input() profileMode: boolean = false
   @Output() prosecnaOcena: EventEmitter<number> = new EventEmitter<number>()
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>) { }
+
+  ngOnInit(): void {
     this.user$ = this.store.select(selectUser)
     this.recenzije$ = this.store.select(selectRecenzije)
+    this.unetaRecenzija$ = this.store.select(selectUnetaRecenzija)
 
     this.recenzije$.pipe(
       filter(recenzije => !!recenzije),

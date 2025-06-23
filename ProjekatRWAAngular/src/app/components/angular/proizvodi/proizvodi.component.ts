@@ -23,10 +23,13 @@ export class ProizvodiComponent {
 
   displayMode: number = 1;
   
+  @Input() selectedCenaRange: { min: number, max: number } = { min: 0, max: Infinity }
   @Input() selectedTypes: string[] = []
   @Input() selectedTipoviProizvoda: string[] = []
   @Input() selectedProizvodjaci: string[] = []
+
   @Output() brojProizvoda = new EventEmitter<number>()
+  @Output() cenaRange = new EventEmitter<{ min: number, max: number }>()
   
   constructor(private route: ActivatedRoute, private store: Store<AppState>) { 
     this.prodavnicaID = Number(this.route.snapshot.paramMap.get('id'))
@@ -35,7 +38,12 @@ export class ProizvodiComponent {
 
     this.selectedProizvodi$.pipe(
       filter(proizvodi => !!proizvodi),
-      tap(proizvodi => this.brojProizvoda.emit(proizvodi.length))
+      tap(proizvodi => {
+        this.brojProizvoda.emit(proizvodi.length)
+        const cene = proizvodi.map(proizvod => proizvod.cena)
+        this.selectedCenaRange = { min: Math.min(...cene), max: Math.max(...cene) }
+        this.cenaRange.emit(this.selectedCenaRange)
+      })
     ).subscribe()
 
     if (localStorage.getItem('proizvod_display_mode')) {
@@ -51,18 +59,19 @@ export class ProizvodiComponent {
   ngOnChanges(): void {
     this.selectedProizvodi$ = combineLatest([
       this.proizvodi$,
+      of(this.selectedCenaRange),
       of(this.selectedTipoviProizvoda),
       of(this.selectedTypes),
       of(this.selectedProizvodjaci),
     ]).pipe(
       filter(([proizvodi]) => !!proizvodi),
-      map(([proizvodi, selectedTipoviProizvoda, selectedTypes, selectedProizvodjaci]) => {        
+      map(([proizvodi, selectedCenaRange, selectedTipoviProizvoda, selectedTypes, selectedProizvodjaci]) => {        
         const filteredProizvodi = proizvodi.filter(proizvod => {
           const tipProizvodaMatch = selectedTipoviProizvoda.length ? selectedTipoviProizvoda.includes(proizvod.tipProizvoda) : proizvodi
           const typeMatch = selectedTypes.length ? selectedTypes.includes(proizvod.type) : proizvodi
           const proizvodjacMatch = selectedProizvodjaci.length ? selectedProizvodjaci.includes(proizvod.proizvodjac) : proizvodi
           return tipProizvodaMatch && typeMatch && proizvodjacMatch
-        })
+        }).filter(proizvod => proizvod.cena >= selectedCenaRange.min && proizvod.cena <= selectedCenaRange.max)
         
         //this.brojProizvoda.emit(filteredProizvodi.length)
         return filteredProizvodi

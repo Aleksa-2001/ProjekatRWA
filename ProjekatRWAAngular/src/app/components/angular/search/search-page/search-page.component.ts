@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -32,9 +32,16 @@ import { selectProizvodjaci, selectTipoviProizvoda, selectType } from '../../../
 })
 export class SearchPageComponent implements OnInit { 
 
+  @ViewChild('inputMinCena') inputMinCena!: ElementRef<HTMLInputElement>;
+  @ViewChild('inputMaxCena') inputMaxCena!: ElementRef<HTMLInputElement>;
+
   query: string = ''
+  
   brojProdavnica: number = 0
   brojProizvoda: number = 0
+  cenaRange: { min: number, max: number } = { min: 0, max: Infinity }
+  minCena: number = 0
+  maxCena: number = Infinity
 
   prikaziProdavnice: boolean = true
   prikaziProizvode: boolean = true
@@ -47,6 +54,7 @@ export class SearchPageComponent implements OnInit {
 
   selectedNaziviProdavnica: string[] = []
 
+  selectedCenaRange: { min: number, max: number } = { min: 0, max: Infinity }
   selectedTipoviProizvoda: string[] = []
   selectedTypes: string[] = []
   selectedProizvodjaci: string[] = []
@@ -83,7 +91,41 @@ export class SearchPageComponent implements OnInit {
     this.brojProizvoda = brojProizvoda
   }
 
+  getCenaRange(cenaRange: { min: number, max: number }) {
+    this.cenaRange = cenaRange
+    this.selectedCenaRange = this.cenaRange
+    this.minCena = cenaRange.min
+    this.maxCena = cenaRange.max
+  }
 
+  onChangeMinCena(event: Event) {
+    const cena = parseInt((event.target as HTMLInputElement).value)
+    this.minCena = cena
+
+    if(cena >= this.maxCena) {
+      this.maxCena = cena
+      this.inputMaxCena.nativeElement.value = this.maxCena.toString()
+    }
+
+    this.selectedCenaRange = { min: this.minCena, max: this.maxCena }
+  }
+
+  onChangeMaxCena(event: Event) {
+    const cena = parseInt((event.target as HTMLInputElement).value)
+    this.maxCena = cena
+
+    if(cena <= this.minCena) {
+      this.minCena = cena
+      this.inputMinCena.nativeElement.value = this.minCena.toString()
+    }
+
+    this.selectedCenaRange = { min: this.minCena, max: this.maxCena }
+  }
+
+  getPercent(value: number) {
+    const range = this.cenaRange.max - this.cenaRange.min;
+    return ((value - this.cenaRange.min) / range) * 100;
+  }
 
   onSelectPrikaz(value: number) {
     switch (value) {
@@ -94,6 +136,9 @@ export class SearchPageComponent implements OnInit {
       case 2: 
         this.prikaziProdavnice = true
         this.prikaziProizvode = false
+        this.selectedCenaRange = this.cenaRange
+        this.minCena = this.cenaRange.min
+        this.maxCena = this.cenaRange.max
         this.selectedTipoviProizvoda = []
         this.selectedTypes = []
         this.selectedProizvodjaci = []

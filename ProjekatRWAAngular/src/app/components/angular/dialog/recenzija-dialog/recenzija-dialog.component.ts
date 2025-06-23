@@ -145,7 +145,7 @@ export class RecenzijaDialogComponent implements OnInit {
         proizvod: this.proizvod ?? null
       }
 
-      console.log(recenzijaData)
+      //console.log(recenzijaData)
       
       if (this.mode === 1) {
         this.store.dispatch(RecenzijeActions.updateItem({ selectedRecenzijaID: this.recenzijaID, selectedRecenzija: <Recenzija>recenzijaData }))

@@ -107,6 +107,8 @@ export class ProdavnicaDialogComponent implements OnInit {
         opis: prodavnica.opis ?? "",
         slika: (prodavnica.slika && this.filename) ? prodavnica.slika : "",
       }
+
+      //console.log(prodavnicaData)
       
       if (this.mode === 1) {
         prodavnicaData.slika = this.generatePath(path, this.filename, this.prodavnicaID)

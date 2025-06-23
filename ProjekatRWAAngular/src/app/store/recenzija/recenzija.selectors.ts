@@ -1,6 +1,8 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store"
 import { RecenzijeState } from "./recenzija.reducer"
 import { Recenzija } from "../../models/recenzija"
+import { selectUser } from "../auth/auth.selectors"
+import { User } from "../../models/user"
 
 export const selectRecenzijeFeature = createFeatureSelector<RecenzijeState>('recenzije')
 
@@ -20,4 +22,10 @@ export const selectSelectedRecenzijaID = createSelector(
 export const selectSelectedRecenzija = createSelector(
     selectRecenzijeFeature,
     (state: RecenzijeState) => state.selectedRecenzija
+)
+
+export const selectUnetaRecenzija = createSelector(
+    selectRecenzije,
+    selectUser,
+    (recenzije: Recenzija[], user: User | null) => recenzije.find(r => r.user.userID === user?.userID) ? true : false
 )
