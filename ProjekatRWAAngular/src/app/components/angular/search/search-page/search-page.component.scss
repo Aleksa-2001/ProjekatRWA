@@ -15,6 +15,7 @@
   overflow-x: hidden;
   overflow-y: auto;
   padding: 0 0.75rem;
+  z-index: 50;
 }
 
 .form-check-input:checked {
@@ -22,8 +23,13 @@
   border-color: $green-500;
 }
 
+.range-input label {
+  width: 1.5rem
+}
+
 .range-slider {
   position: relative;
+  height: 1.5rem
 }
 
 .range-slider input {
@@ -63,7 +69,6 @@
   transform: translateY(150%);
   height: 6px;
   border-radius: 3px;
-  z-index: 1;
 }
 
 .range-slider .range-background {

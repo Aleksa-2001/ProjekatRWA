@@ -32,8 +32,11 @@ import { selectProizvodjaci, selectTipoviProizvoda, selectType } from '../../../
 })
 export class SearchPageComponent implements OnInit { 
 
-  @ViewChild('inputMinCena') inputMinCena!: ElementRef<HTMLInputElement>;
-  @ViewChild('inputMaxCena') inputMaxCena!: ElementRef<HTMLInputElement>;
+  @ViewChild('inputMinCena') inputMinCena!: ElementRef<HTMLInputElement>
+  @ViewChild('inputMaxCena') inputMaxCena!: ElementRef<HTMLInputElement>
+
+  @ViewChild('rangeMinCena') rangeMinCena!: ElementRef<HTMLInputElement>
+  @ViewChild('rangeMaxCena') rangeMaxCena!: ElementRef<HTMLInputElement>
 
   query: string = ''
   
@@ -100,11 +103,18 @@ export class SearchPageComponent implements OnInit {
 
   onChangeMinCena(event: Event) {
     const cena = parseInt((event.target as HTMLInputElement).value)
-    this.minCena = cena
+    
+    if (cena < this.cenaRange.min) this.minCena = this.cenaRange.min
+    else if (cena > this.cenaRange.max) this.minCena = this.cenaRange.max
+    else this.minCena = Number.isNaN(cena) ? this.minCena : cena
+
+    this.inputMinCena.nativeElement.value = this.minCena.toString()
+    this.rangeMinCena.nativeElement.value = this.minCena.toString()
 
     if(cena >= this.maxCena) {
-      this.maxCena = cena
+      this.maxCena = this.minCena
       this.inputMaxCena.nativeElement.value = this.maxCena.toString()
+      this.rangeMaxCena.nativeElement.value = this.maxCena.toString()
     }
 
     this.selectedCenaRange = { min: this.minCena, max: this.maxCena }
@@ -112,11 +122,18 @@ export class SearchPageComponent implements OnInit {
 
   onChangeMaxCena(event: Event) {
     const cena = parseInt((event.target as HTMLInputElement).value)
-    this.maxCena = cena
+
+    if (cena > this.cenaRange.max) this.maxCena = this.cenaRange.max
+    else if (cena < this.cenaRange.min) this.maxCena = this.cenaRange.min
+    else this.maxCena = Number.isNaN(cena) ? this.maxCena : cena
+
+    this.inputMaxCena.nativeElement.value = this.maxCena.toString()
+    this.rangeMaxCena.nativeElement.value = this.maxCena.toString()
 
     if(cena <= this.minCena) {
-      this.minCena = cena
+      this.minCena = this.maxCena
       this.inputMinCena.nativeElement.value = this.minCena.toString()
+      this.rangeMinCena.nativeElement.value = this.minCena.toString()
     }
 
     this.selectedCenaRange = { min: this.minCena, max: this.maxCena }

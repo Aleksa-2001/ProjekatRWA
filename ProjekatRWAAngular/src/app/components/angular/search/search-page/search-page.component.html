@@ -28,7 +28,7 @@
                     </div>
                 </div>
 
-                <div *ngIf="brojProdavnica !== 0 && prikaziProdavnice">
+                <div *ngIf="brojProdavnica > 1 && prikaziProdavnice">
                     <hr class="my-2">
 
                     <div class="row row-gap-1">
@@ -42,23 +42,34 @@
                     </div>
                 </div>
 
-                <div *ngIf="brojProizvoda !== 0 && prikaziProizvode">
+                <div *ngIf="brojProizvoda > 1 && prikaziProizvode">
                     <hr class="my-2">
 
                     <div class="row row-gap-1">
                         <h5 class="col-12 mb-0">Cena (u RSD)</h5>
                         <div class="col-12">
-                            <span>{{minCena}} - {{maxCena}} RSD</span>
+                            <div class="range-input row gap-1">
+                                <div class="col-12 d-flex flex-row align-items-center column-gap-1">
+                                    <label for="inputMinCena">Od:</label>
+                                    <input #inputMinCena id="inputMinCena" (change)="onChangeMinCena($event)" class="form-control form-control-sm border-secondary" type="number" [min]="cenaRange.min" [max]="cenaRange.max" [value]="cenaRange.min" />
+                                </div>
+                                <div class="col-12 d-flex flex-row align-items-center column-gap-1">
+                                    <label for="inputMaxCena">Do:</label>
+                                    <input #inputMaxCena id="inputMaxCena" (change)="onChangeMaxCena($event)" class="form-control form-control-sm border-secondary" type="number" [min]="cenaRange.min" [max]="cenaRange.max" [value]="cenaRange.max" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
                             <div class="range-slider">
                                 <div class="range-background"></div>
                                 <div class="range-highlight" [ngStyle]="{
                                     left: getPercent(minCena) + '%',
                                     width: (getPercent(maxCena) - getPercent(minCena)) + '%'
                                 }"></div>
-                                <input #inputMinCena id="inputMinCena" (input)="onChangeMinCena($event)" class="form-range" type="range" [min]="cenaRange.min" [max]="cenaRange.max" [value]="cenaRange.min" />
-                                <input #inputMaxCena id="inputMaxCena" (input)="onChangeMaxCena($event)" class="form-range" type="range" [min]="cenaRange.min" [max]="cenaRange.max" [value]="cenaRange.max" />
+                                <input #rangeMinCena id="rangeMinCena" (input)="onChangeMinCena($event)" class="form-range" type="range" [min]="cenaRange.min" [max]="cenaRange.max" [value]="cenaRange.min" />
+                                <input #rangeMaxCena id="rangeMaxCena" (input)="onChangeMaxCena($event)" class="form-range" type="range" [min]="cenaRange.min" [max]="cenaRange.max" [value]="cenaRange.max" />
                             </div>
-                            <div class="mt-4 d-flex justify-content-between">
+                            <div class="d-flex justify-content-between">
                                 <span>{{cenaRange.min}}</span>
                                 <span>{{cenaRange.max}}</span>
                             </div>

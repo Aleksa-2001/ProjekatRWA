@@ -1,5 +1,6 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, TableInheritance } from "typeorm"
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, TableInheritance } from "typeorm"
 import { Prodavnica } from "./prodavnica.entity"
+import { Recenzija } from "./recenzija.entity"
 
 @Entity()
 @TableInheritance({ column: { type: "varchar", name: "type" } })
@@ -30,5 +31,8 @@ export abstract class Proizvod {
     
     @ManyToOne(() => Prodavnica)
     prodavnica: Prodavnica
+
+    @OneToMany(() => Recenzija, recenzija => recenzija.proizvod)
+    recenzije: Recenzija[]
 
 }

@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Recenzija } from "./recenzija.entity"
 
 @Entity()
 export class Prodavnica {
@@ -16,5 +17,8 @@ export class Prodavnica {
     
     @Column({ nullable: true })
     slika: string
+
+    @OneToMany(() => Recenzija, recenzija => recenzija.prodavnica)
+    recenzije: Recenzija[]
     
 }

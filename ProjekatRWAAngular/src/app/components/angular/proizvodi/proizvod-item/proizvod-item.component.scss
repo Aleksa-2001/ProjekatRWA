@@ -25,6 +25,24 @@ img {
   min-width: 72px;
 }
 
+.stars {
+    width: 100px;
+}
+
+.star {
+    font-size: 1.25rem;
+}
+
+.bi-star-half {
+    background: linear-gradient(to right, #ffc107 50%, black 50%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bi-star-fill {
+    color: #ffc107;
+}
+
 @media screen and (max-width: 480px) {
   .info-list h5 {
     font-size: 1rem;

@@ -16,13 +16,64 @@ export class ProdavniceService {
     ) { }
 
     public async getProdavnice() {
-        return await this.prodavnicaRepository.find()
+        //return await this.prodavnicaRepository.find()
+
+        const prodavnice = await this.prodavnicaRepository
+            .createQueryBuilder('prodavnica')
+            .leftJoin('prodavnica.recenzije', 'recenzija')
+            .select(['prodavnica.id', 'prodavnica.naziv', 'prodavnica.adresa', 'prodavnica.slika'])
+            .addSelect('COUNT(recenzija)', 'brojRecenzija')
+            .addSelect('COALESCE(AVG(recenzija.ocena), 0)', 'prosecna_ocena')
+            .groupBy('prodavnica.id')
+            .getRawAndEntities()
+        
+        return prodavnice.entities.map((prodavnica, i) => ({
+            ...prodavnica,
+            brojRecenzija: parseInt(prodavnice.raw[i].brojRecenzija),
+            prosecnaOcena: parseFloat(prodavnice.raw[i].prosecna_ocena)
+        }))
+
+        //const prodavnice = await this.prodavnicaRepository.find({
+        //    relations: ['recenzije'],
+        //    select: {
+        //        recenzije: { ocena: true }
+        //    }
+        //})
+        //
+        //return prodavnice.map(prodavnica => {
+        //    const ocene = prodavnica.recenzije.map(recenzija => recenzija.ocena)
+        //    const prosecnaOcena = ocene.length ? ocene.reduce((a, b) => a + b, 0) : 0
+        //
+        //    return {
+        //        ...prodavnica,
+        //        prosecnaOcena
+        //    }
+        //})
     }
 
     public async getProdavniceBySearch(search: string) {
-        return await this.prodavnicaRepository.findBy({
-            naziv: ILike(`%${search.toLowerCase()}%`)
-        })
+        //return await this.prodavnicaRepository.findBy({
+        //    naziv: ILike(`%${search.toLowerCase()}%`)
+        //})
+
+        if (search) {
+            const prodavnice = await this.prodavnicaRepository
+                .createQueryBuilder('prodavnica')
+                .leftJoin('prodavnica.recenzije', 'recenzija')
+                .select(['prodavnica.id', 'prodavnica.naziv', 'prodavnica.adresa', 'prodavnica.slika'])
+                .addSelect('COUNT(recenzija)', 'brojRecenzija')
+                .addSelect('COALESCE(AVG(recenzija.ocena), 0)', 'prosecnaOcena')
+                .groupBy('prodavnica.id')
+                .where('prodavnica.naziv ILIKE :search', { search: `%${search}%` })
+                .getRawAndEntities()
+            
+            return prodavnice.entities.map((prodavnica, i) => ({
+                ...prodavnica,
+                brojRecenzija: parseInt(prodavnice.raw[i].brojRecenzija),
+                prosecnaOcena: parseFloat(prodavnice.raw[i].prosecnaOcena)
+            }))
+        }
+        else throw new BadRequestException("Molimo da popunite polje za pretragu!")
     }
 
     public async getProdavnicaByID(prodavnicaID: number) {

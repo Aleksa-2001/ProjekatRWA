@@ -98,7 +98,7 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
 
   getProsek(prosek: number) {
     this.prosek = prosek
-  }  
+  }
 
   starHalf(i: number) {
     return Math.floor(this.prosek) === i && this.prosek - Math.floor(this.prosek) >= 0.5

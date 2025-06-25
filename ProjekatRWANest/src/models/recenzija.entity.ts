@@ -17,10 +17,10 @@ export class Recenzija {
     @ManyToOne(() => User)
     user: User
 
-    @ManyToOne(() => Prodavnica, { nullable: true })
+    @ManyToOne(() => Prodavnica, { nullable: true, onDelete: "CASCADE" })
     prodavnica: Prodavnica
 
-    @ManyToOne(() => Proizvod, { nullable: true })
+    @ManyToOne(() => Proizvod, { nullable: true, onDelete: "CASCADE" })
     proizvod: Proizvod
     
 }
