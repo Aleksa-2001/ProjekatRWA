@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
 import { ProdavnicaItemComponent } from "./prodavnica-item/prodavnica-item.component";
 import { CommonModule, NgFor } from '@angular/common';
 import { combineLatest, filter, map, Observable, of, tap } from 'rxjs';
@@ -20,7 +20,14 @@ export class ProdavniceComponent implements OnChanges {
   selectedProdavnice$: Observable<readonly Prodavnica[]> = of([])
 
   @Input() selectedNaziviProdavnica: string[] = []
+
   @Output() brojProdavnica = new EventEmitter<number>()
+
+  @ViewChild('inputProdavnicaSort') inputProdavnicaSort!: ElementRef<HTMLSelectElement>
+  @ViewChild('inputProdavnicaRedosledSortiranja') inputProdavnicaRedosledSortiranja!: ElementRef<HTMLSelectElement>
+
+  sort: string = ""
+  redosledSortiranja: number = 1
 
   constructor(private store: Store<AppState>) { 
     this.prodavnice$ = this.store.select(selectProdavnice)
@@ -44,10 +51,23 @@ export class ProdavniceComponent implements OnChanges {
           return nazivMatch
         })
 
+        if (this.sort === "brojRecenzija") filteredProdavnice.sort((a, b) => (a as any).brojRecenzija > (b as any).brojRecenzija ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
+        if (this.sort === "prosecnaOcena") filteredProdavnice.sort((a, b) => (a as any).prosecnaOcena > (b as any).prosecnaOcena ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
+
         //this.brojProdavnica.emit(filteredProdavnice.length)
         return filteredProdavnice
       })
     )
+  }
+
+  onChangeSort() {
+    this.sort = this.inputProdavnicaSort.nativeElement.value
+    this.ngOnChanges()
+  }
+
+  onChangeRedosled() {
+    this.redosledSortiranja = parseInt(this.inputProdavnicaRedosledSortiranja.nativeElement.value)
+    this.ngOnChanges()
   }
 
 }

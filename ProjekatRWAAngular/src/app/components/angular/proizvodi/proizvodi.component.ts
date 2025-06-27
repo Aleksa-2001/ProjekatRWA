@@ -1,5 +1,5 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ProizvodItemComponent } from './proizvod-item/proizvod-item.component';
 import { combineLatest, filter, map, Observable, of, tap } from 'rxjs';
 import { Proizvod } from '../../../models/proizvod';
@@ -30,6 +30,12 @@ export class ProizvodiComponent {
 
   @Output() brojProizvoda = new EventEmitter<number>()
   @Output() cenaRange = new EventEmitter<{ min: number, max: number }>()
+
+  @ViewChild('inputProizvodSort') inputProizvodSort!: ElementRef<HTMLSelectElement>
+  @ViewChild('inputProizvodRedosledSortiranja') inputProizvodRedosledSortiranja!: ElementRef<HTMLSelectElement>
+
+  sort: string = ""
+  redosledSortiranja: number = 1
   
   constructor(private route: ActivatedRoute, private store: Store<AppState>) { 
     this.prodavnicaID = Number(this.route.snapshot.paramMap.get('id'))
@@ -73,10 +79,24 @@ export class ProizvodiComponent {
           return tipProizvodaMatch && typeMatch && proizvodjacMatch
         }).filter(proizvod => proizvod.cena >= selectedCenaRange.min && proizvod.cena <= selectedCenaRange.max)
         
+        if (this.sort === "cena") filteredProizvodi.sort((a, b) => a.cena > b.cena ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
+        if (this.sort === "brojRecenzija") filteredProizvodi.sort((a, b) => (a as any).brojRecenzija > (b as any).brojRecenzija ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
+        if (this.sort === "prosecnaOcena") filteredProizvodi.sort((a, b) => (a as any).prosecnaOcena > (b as any).prosecnaOcena ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
+
         //this.brojProizvoda.emit(filteredProizvodi.length)
         return filteredProizvodi
       })
     )
+  }
+
+  onChangeSort() {
+    this.sort = this.inputProizvodSort.nativeElement.value
+    this.ngOnChanges()
+  }
+
+  onChangeRedosled() {
+    this.redosledSortiranja = parseInt(this.inputProizvodRedosledSortiranja.nativeElement.value)
+    this.ngOnChanges()
   }
 
 }

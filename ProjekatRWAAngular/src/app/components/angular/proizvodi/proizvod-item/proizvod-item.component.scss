@@ -1,32 +1,35 @@
 :host {
-  display: block;
+    display: block;
 }
 
-.info-list, .info-list .col {
-  padding: 0;
+.info-list,
+.info-list .col {
+    padding: 0;
 }
 
 .row {
-  margin: 0 0.75rem;
-  cursor: pointer;
-  transition: 0.1s;
+    margin: 0 0.75rem;
+    cursor: pointer;
+    transition: 0.1s;
 }
 
 .row:hover {
-  background-color: #DDDDDD;
+    background-color: #DDDDDD;
 }
 
 img {
-  aspect-ratio: 1.333;
-  object-fit: cover;
+    aspect-ratio: 1.333;
+    object-fit: cover;
 }
 
 .image {
-  min-width: 72px;
+    min-width: 96px;
 }
 
 .stars {
     width: 100px;
+    height: 1.25rem;
+    align-items: center;
 }
 
 .star {
@@ -44,13 +47,17 @@ img {
 }
 
 @media screen and (max-width: 480px) {
-  .info-list h5 {
-    font-size: 1rem;
-  }
+    .info-list h5 {
+        font-size: 1rem;
+    }
+
+    .image {
+        min-width: 72px;
+    }
 }
 
 @media screen and (max-width: 240px) {
-  .info-grid h5 {
-    font-size: 1rem;
-  }
+    .info-grid h5 {
+        font-size: 1rem;
+    }
 }

@@ -1,6 +1,26 @@
 <h2 class="mb-2">Prodavnice</h2>
-<div *ngIf="selectedProdavnice$ | async as prodavnice" class="row row-gap-3">
+<div *ngIf="selectedProdavnice$ | async as prodavnice" class="row row-gap-2" [ngClass]="{ 'row-gap-3': prodavnice.length !== 0 }">
+    <div class="col-12">
+        <div class="row row-gap-1">
+            <div class="col-12 col-sm-6 col-md-auto col-xl-3 d-flex flex-row align-items-center column-gap-1">
+                <label for="inputProdavnicaSort">Sortiraj:</label>
+                <select (change)="onChangeSort()" #inputProdavnicaSort id="inputProdavnicaSort" class="form-select form-select-sm border-secondary" formControlName="sort" aria-label="Sortiraj po...">
+                    <option value="" selected>Sortiraj po...</option>
+                    <option value="brojRecenzija">Broj recenzija</option>
+                    <option value="prosecnaOcena">Prosečna ocena</option>
+                </select>
+            </div>
+            <div class="col-12 col-sm-6 col-md-auto col-xl-3 d-flex flex-row align-items-center column-gap-1">
+                <label for="inputProdavnicaRedosledSortiranja">Redosled:</label>
+                <select (change)="onChangeRedosled()" #inputProdavnicaRedosledSortiranja id="inputProdavnicaRedosledSortiranja" class="form-select form-select-sm border-secondary" formControlName="redosledSortiranja">
+                    <option value="1" selected>Rastući</option>
+                    <option value="-1">Opadajući</option>
+                </select>
+            </div>
+        </div>
+    </div>
     <div class="p-0 col-12 col-sm-6 col-xl-4" *ngFor="let prodavnica of prodavnice">
         <app-prodavnica-item [prodavnica]="prodavnica"></app-prodavnica-item>
     </div>
+    <p *ngIf="prodavnice.length === 0"><i>Nema unetih prodavnica</i></p>
 </div>

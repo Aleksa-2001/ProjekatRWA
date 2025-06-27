@@ -7,7 +7,27 @@
         <label class="btn btn-outline-primary" for="radioDisplayModeGrid"><i class="bi bi-grid-fill"></i></label>
     </div>
 </div>
-<div *ngIf="selectedProizvodi$ | async as proizvodi" class="row row-gap-2" [ngClass]="{ 'row-gap-4': displayMode === 2 }">
+<div *ngIf="selectedProizvodi$ | async as proizvodi" class="row row-gap-2" [ngClass]="{ 'row-gap-3': displayMode === 2 && proizvodi.length !== 0 }">
+    <div class="col-12">
+        <div class="row row-gap-1">
+            <div class="col-12 col-sm-6 col-md-auto col-xl-3 d-flex flex-row align-items-center column-gap-1">
+                <label for="inputProizvodSort">Sortiraj:</label>
+                <select (change)="onChangeSort()" #inputProizvodSort id="inputProizvodSort" class="form-select form-select-sm border-secondary" aria-label="Sortiraj po...">
+                    <option value="" selected>Sortiraj po...</option>
+                    <option value="cena">Cena</option>
+                    <option value="brojRecenzija">Broj recenzija</option>
+                    <option value="prosecnaOcena">Prosečna ocena</option>
+                </select>
+            </div>
+            <div class="col-12 col-sm-6 col-md-auto col-xl-3 d-flex flex-row align-items-center column-gap-1">
+                <label for="inputProizvodRedosledSortiranja">Redosled:</label>
+                <select (change)="onChangeRedosled()" #inputProizvodRedosledSortiranja id="inputProizvodRedosledSortiranja" class="form-select form-select-sm border-secondary">
+                    <option value="1" selected>Rastući</option>
+                    <option value="-1">Opadajući</option>
+                </select>
+            </div>
+        </div>
+    </div>
     <div class="p-0 col-12" [ngClass]="{ 'col-sm-6 col-lg-4 col-xl-3': displayMode === 2 }" *ngFor="let proizvod of proizvodi">
         <app-proizvod-item [proizvod]="proizvod" [displayMode]="displayMode"></app-proizvod-item>
     </div>

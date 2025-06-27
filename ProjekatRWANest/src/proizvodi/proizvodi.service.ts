@@ -74,6 +74,13 @@ export class ProizvodiService {
         if (await this.proizvodRepository.existsBy({ id: proizvodID }))
             return await this.proizvodRepository.findOne({
                 where: { id: proizvodID },
+                select: {
+                    prodavnica: {
+                        id: true,
+                        naziv: true,
+                        adresa: true
+                    }
+                },
                 relations: ['prodavnica']
             })
         else throw new NotFoundException(`Proizvod sa ID-jem ${proizvodID} nije pronadjen!`)
