@@ -21,14 +21,9 @@
                     <a class="text-primary" [routerLink]="['/ng/prodavnica', proizvod.prodavnica.id]" routerLinkActive="router-link-active">{{proizvod.prodavnica.naziv}} - {{proizvod.prodavnica.adresa}}</a>
                 </div>
                 <div class="col-12">
-                    <h5 class="flex-fill">Prosečna ocena: {{prosek.toFixed(2)}}</h5>
-                    <div class="d-flex justify-content-between align-items-center stars">
-                        <i class="flex-fill text-center star bi" *ngFor="let star of rating; let index = index" [ngClass]="{ 
-                            'bi-star': prosek < index || starEmpty(index), 
-                            'bi-star-half': starHalf(index),
-                            'bi-star-fill': prosek-1 >= index, 
-                        }"></i>
-                    </div>
+                    <h5 class="mb-0">Prosečna ocena: {{prosek.toFixed(2)}}</h5>
+                    <h5>Broj recenzija: {{brojRecenzija}}</h5>
+                    <app-stars [ocena]="prosek"></app-stars>
                 </div>
                 <div class="col-12">
                     <h2 class="m-0">{{proizvod.cena}} RSD</h2>
@@ -88,7 +83,7 @@
 
     <hr>
 
-    <app-recenzije (prosecnaOcena)="getProsek($event)"></app-recenzije>
+    <app-recenzije (prosecnaOcena)="getProsek($event)" (brojRecenzija)="getBrojRecenzija($event)"></app-recenzije>
 
     <app-proizvod-dialog *ngIf="isAdmin$ | async" [modalID]="'proizvodModalDialog'" [mode]="1"></app-proizvod-dialog>
     <app-confirm-dialog *ngIf="isAdmin$ | async" [modalID]="'confirmModalDialog'" [delete]="'Proizvod'"></app-confirm-dialog>

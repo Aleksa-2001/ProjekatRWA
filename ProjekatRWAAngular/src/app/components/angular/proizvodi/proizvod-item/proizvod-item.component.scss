@@ -2,8 +2,7 @@
     display: block;
 }
 
-.info-list,
-.info-list .col {
+.info-list, .info-list .col {
     padding: 0;
 }
 
@@ -24,26 +23,6 @@ img {
 
 .image {
     min-width: 96px;
-}
-
-.stars {
-    width: 100px;
-    height: 1.25rem;
-    align-items: center;
-}
-
-.star {
-    font-size: 1.25rem;
-}
-
-.bi-star-half {
-    background: linear-gradient(to right, #ffc107 50%, black 50%);
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.bi-star-fill {
-    color: #ffc107;
 }
 
 @media screen and (max-width: 480px) {

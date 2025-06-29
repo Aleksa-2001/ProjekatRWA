@@ -8,16 +8,7 @@
             <div class="col col-12 col-md-8 col-lg-9 align-content-center">
                 <h5 class="m-0">{{proizvod.naziv}}</h5>
                 <h5 class="m-0 d-md-none">{{proizvod.cena}} RSD</h5>
-                <div class="row m-0 column-gap-2">
-                    <div class="col-auto p-0 d-flex align-content-center stars">
-                        <i class="text-center star bi" *ngFor="let star of rating; let index = index" [ngClass]="{ 
-                            'bi-star': prosek < index || starEmpty(index), 
-                            'bi-star-half': starHalf(index),
-                            'bi-star-fill': prosek - 1 >= index, 
-                        }"></i>
-                    </div>
-                    <div class="col-auto p-0 align-content-center flex-fill">{{prosek.toFixed(2)}} ({{brojRecenzija}})</div>
-                </div>
+                <app-stars [ocena]="prosek" [brojRecenzija]="brojRecenzija" [small]="true" [prikaziBrojeve]="true"></app-stars>
             </div>
             <div class="col col-12 col-md-4 col-lg-3 align-content-center d-none d-md-block">
                 <h5 class="m-0 text-md-end">{{proizvod.cena}} RSD</h5>
@@ -33,15 +24,6 @@
     <div class="info-grid col-12 px-2 pb-2">
         <h5 class="m-0">{{proizvod.naziv}}</h5>
         <h5 class="m-0">{{proizvod.cena}} RSD</h5>
-        <div class="row mx-0 mt-2 column-gap-2">
-            <div class="col-auto p-0 d-flex align-content-center stars">
-                <i class="text-center star bi" *ngFor="let star of rating; let index = index" [ngClass]="{ 
-                    'bi-star': prosek < index || starEmpty(index), 
-                    'bi-star-half': starHalf(index),
-                    'bi-star-fill': prosek - 1 >= index, 
-                }"></i>
-            </div>
-            <div class="col-auto p-0 align-content-center flex-fill">{{prosek.toFixed(2)}} ({{brojRecenzija}})</div>
-        </div>
+        <app-stars class="mt-2" [ocena]="prosek" [brojRecenzija]="brojRecenzija" [small]="true" [prikaziBrojeve]="true"></app-stars>
     </div>
 </div>

@@ -14,6 +14,8 @@ import { ProdavnicaDialogComponent } from "../../dialog/prodavnica-dialog/prodav
 import { ConfirmDialogComponent } from "../../dialog/confirm-dialog/confirm-dialog.component";
 import { ProizvodDialogComponent } from "../../dialog/proizvod-dialog/proizvod-dialog.component";
 import { RecenzijeComponent } from "../../recenzije/recenzije.component";
+import { StarsComponent } from "../../stars/stars.component";
+import { FilterComponent } from "../../filter/filter.component";
 import * as ProdavniceActions from '../../../../store/prodavnica/prodavnica.actions'
 import * as ProizvodiActions from '../../../../store/proizvod/proizvod.actions'
 import * as RecenzijeActions from '../../../../store/recenzija/recenzija.actions'
@@ -29,7 +31,9 @@ import * as RecenzijeActions from '../../../../store/recenzija/recenzija.actions
     ProdavnicaDialogComponent,
     ConfirmDialogComponent,
     ProizvodDialogComponent,
-    RecenzijeComponent
+    RecenzijeComponent,
+    StarsComponent,
+    FilterComponent
 ],
   templateUrl: './prodavnica-page.component.html',
   styleUrl: './prodavnica-page.component.scss',
@@ -44,9 +48,17 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
   backgroundStyle: { [key: string]: string } = { }
   
   brojProizvoda: number = 0
-  
-  rating: any = Array(5).fill(0)
   prosek: number = 0
+  brojRecenzija: number = 0
+  
+  cenaRange: { min: number, max: number } = { min: 0, max: Infinity }
+  minCena: number = 0
+  maxCena: number = Infinity
+
+  selectedCenaRange: { min: number, max: number } = { min: 0, max: Infinity }
+  selectedTipoviProizvoda: string[] = []
+  selectedTypes: string[] = []
+  selectedProizvodjaci: string[] = []
 
   constructor(private title: Title, private route: ActivatedRoute, private store: Store<AppState>) { }
 
@@ -100,12 +112,31 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
     this.prosek = prosek
   }
 
-  starHalf(i: number) {
-    return Math.floor(this.prosek) === i && this.prosek - Math.floor(this.prosek) >= 0.5
+  getBrojRecenzija(brojRecenzija: number) {
+    this.brojRecenzija = brojRecenzija
+  }
+  
+  getCenaRange(cenaRange: { min: number, max: number }) {
+    this.cenaRange = cenaRange
+    this.selectedCenaRange = this.cenaRange
+    this.minCena = cenaRange.min
+    this.maxCena = cenaRange.max
   }
 
-  starEmpty(i: number) {
-    return Math.floor(this.prosek) === i && this.prosek - Math.floor(this.prosek) < 0.5
+  getSelectedCenaRange(selectedCenaRange: { min: number, max: number }) {
+    this.selectedCenaRange = selectedCenaRange
+  }
+
+  getSelectedTipoviProizvoda(selectedTipoviProizvoda: string[]) {
+    this.selectedTipoviProizvoda = selectedTipoviProizvoda
+  }
+
+  getSelectedTypes(selectedTypes: string[]) {
+    this.selectedTypes = selectedTypes
+  }
+
+  getSelectedProizvodjaci(selectedProizvodjaci: string[]) {
+    this.selectedProizvodjaci = selectedProizvodjaci
   }
 
 }

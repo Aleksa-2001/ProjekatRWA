@@ -26,14 +26,9 @@
             <p class="m-0" *ngIf="prodavnica.opis">{{prodavnica.opis}}</p>
         </div>
         <div class="col-12">
-            <h5 class="flex-fill">Prosečna ocena: {{prosek.toFixed(2)}}</h5>
-            <div class="d-flex justify-content-between align-items-center stars">
-                <i class="flex-fill text-center star bi" *ngFor="let star of rating; let index = index" [ngClass]="{ 
-                    'bi-star': prosek < index || starEmpty(index), 
-                    'bi-star-half': starHalf(index),
-                    'bi-star-fill': prosek-1 >= index, 
-                }"></i>
-            </div>
+            <h5 class="mb-0">Prosečna ocena: {{prosek.toFixed(2)}}</h5>
+            <h5>Broj recenzija: {{brojRecenzija}}</h5>
+            <app-stars [ocena]="prosek"></app-stars>
         </div>
     </div>
 
@@ -46,12 +41,32 @@
         </div>
         <hr>
     </div>
-
-    <app-proizvodi (brojProizvoda)="getBrojProizvoda($event)"></app-proizvodi>
+    <div class="row row-gap-3">
+        <app-filter *ngIf="brojProizvoda > 1" class="filter-menu col-12 col-md-3 col-xl-2 px-0" 
+            [sakrijIzborPrikaza]="true" 
+            [prikaziProdavnice]="false" 
+            [brojProizvoda]="brojProizvoda" 
+            [cenaRange]="cenaRange" 
+            (selectedCenaRangeOutput)="getSelectedCenaRange($event)" 
+            (selectedTipoviProizvodaOutput)="getSelectedTipoviProizvoda($event)" 
+            (selectedTypesOutput)="getSelectedTypes($event)" 
+            (selectedProizvodjaciOutput)="getSelectedProizvodjaci($event)"
+        ></app-filter>
+        <div class="col">
+            <app-proizvodi 
+                [selectedCenaRange]="selectedCenaRange" 
+                [selectedTipoviProizvoda]="selectedTipoviProizvoda" 
+                [selectedTypes]="selectedTypes" 
+                [selectedProizvodjaci]="selectedProizvodjaci" 
+                (brojProizvoda)="getBrojProizvoda($event)" 
+                (cenaRange)="getCenaRange($event)"
+            ></app-proizvodi>
+        </div>
+    </div>
 
     <hr>
 
-    <app-recenzije (prosecnaOcena)="getProsek($event)"></app-recenzije>
+    <app-recenzije (prosecnaOcena)="getProsek($event)" (brojRecenzija)="getBrojRecenzija($event)"></app-recenzije>
 
     <app-prodavnica-dialog *ngIf="isAdmin$ | async" [modalID]="'prodavnicaModalDialog'" [mode]="1"></app-prodavnica-dialog>
     <app-confirm-dialog *ngIf="isAdmin$ | async" [modalID]="'confirmModalDialogProdavnica'" [delete]="'Prodavnica'"></app-confirm-dialog>

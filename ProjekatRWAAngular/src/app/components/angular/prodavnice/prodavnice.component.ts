@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { ProdavnicaItemComponent } from "./prodavnica-item/prodavnica-item.component";
 import { CommonModule, NgFor } from '@angular/common';
 import { combineLatest, filter, map, Observable, of, tap } from 'rxjs';
@@ -14,7 +14,7 @@ import { selectProdavnice } from '../../../store/prodavnica/prodavnica.selectors
   styleUrl: './prodavnice.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProdavniceComponent implements OnChanges { 
+export class ProdavniceComponent implements OnInit, OnChanges { 
 
   prodavnice$: Observable<readonly Prodavnica[]> = of([])
   selectedProdavnice$: Observable<readonly Prodavnica[]> = of([])
@@ -29,7 +29,9 @@ export class ProdavniceComponent implements OnChanges {
   sort: string = ""
   redosledSortiranja: number = 1
 
-  constructor(private store: Store<AppState>) { 
+  constructor(private store: Store<AppState>) { }
+
+  ngOnInit(): void {
     this.prodavnice$ = this.store.select(selectProdavnice)
     this.selectedProdavnice$ = this.prodavnice$
 

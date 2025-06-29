@@ -1,0 +1,31 @@
+:host {
+    display: block;
+}
+
+.stars {
+    width: 120px;
+    height: 1.5rem;
+}
+
+.stars-small {
+    width: 100px;
+    height: 1.25rem;
+}
+
+.star {
+    font-size: 1.5rem;
+}
+
+.star-small {
+    font-size: 1.25rem;
+}
+
+.bi-star-half {
+    background: linear-gradient(to right, #ffc107 50%, black 50%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bi-star-fill {
+    color: #ffc107;
+}

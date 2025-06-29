@@ -1,0 +1,12 @@
+<div class="row mx-0 column-gap-2">
+    <div class="col-auto p-0 d-flex align-items-center" [ngClass]="{ 'stars': !small, 'stars-small': small }">
+        <i class="text-center bi" *ngFor="let star of rating; let index = index" [ngClass]="{ 
+            'star': !small, 
+            'star-small': small, 
+            'bi-star': ocena < index || starEmpty(index), 
+            'bi-star-half': starHalf(index),
+            'bi-star-fill': ocena - 1 >= index, 
+        }"></i>
+    </div>
+    <div *ngIf="prikaziBrojeve" class="col-auto p-0 align-content-center flex-fill">{{ocena.toFixed(2)}} ({{brojRecenzija}})</div>
+</div>

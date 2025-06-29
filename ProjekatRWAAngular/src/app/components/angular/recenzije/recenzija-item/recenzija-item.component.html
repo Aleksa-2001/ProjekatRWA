@@ -2,9 +2,7 @@
     <div class="col-12 p-0">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center row-gap-1">
             <h4 class="m-0">{{recenzija.user.firstName}} {{recenzija.user.lastName}} ({{recenzija.user.username}})</h4>
-            <div class="d-flex justify-content-between stars">
-                <i class="text-center star bi" *ngFor="let star of rating; let index = index" [ngClass]="{ 'bi-star': recenzija.ocena <= index, 'bi-star-fill': recenzija.ocena > index }"></i>
-            </div>
+            <app-stars [ocena]="recenzija.ocena"></app-stars>
         </div>
     </div>
     <div class="col-12 p-0">
@@ -17,14 +15,13 @@
         </div>
     </div>
 </div>
+
 <div *ngIf="profileMode" class="profile-mode row border border-primary rounded-3 overflow-hidden p-2 row-gap-1 row-gap-md-0" [routerLink]="recenzija.prodavnica ? ['/ng/prodavnica', recenzija.prodavnica.id] : ['/ng/proizvod', recenzija.proizvod.id]">
     <div class="col-12 p-0">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center row-gap-1">
             <h4 *ngIf="recenzija.prodavnica" class="m-0">{{recenzija.prodavnica.naziv}}</h4>
             <h4 *ngIf="recenzija.proizvod" class="m-0">{{recenzija.proizvod.naziv}}</h4>
-            <div class="d-flex justify-content-between stars">
-                <i class="text-center star bi" *ngFor="let star of rating; let index = index" [ngClass]="{ 'bi-star': recenzija.ocena <= index, 'bi-star-fill': recenzija.ocena > index }"></i>
-            </div>
+            <app-stars [ocena]="recenzija.ocena"></app-stars>
         </div>
     </div>
     <div class="col-12 p-0">

@@ -2,7 +2,25 @@
     <h2 class="m-0">{{profileMode ? 'Vaše recenzije' : 'Recenzije'}}</h2>
     <button [disabled]="unetaRecenzija$ | async" *ngIf="!profileMode" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#recenzijaModalDialog"><i class="bi bi-plus-lg me-2"></i>Dodaj recenziju</button>
 </div>
-<div *ngIf="recenzije$ | async as recenzije" class="row row-gap-2">
+<div *ngIf="selectedRecenzije$ | async as recenzije" class="row row-gap-2">
+    <div class="col-12">
+        <div class="row row-gap-1">
+            <div class="col-12 col-sm-6 col-md-auto col-xl-3 d-flex flex-row align-items-center column-gap-1">
+                <label for="inputRecenzijaSort">Sortiraj:</label>
+                <select (change)="onChangeSort()" #inputRecenzijaSort id="inputRecenzijaSort" class="form-select form-select-sm border-secondary" aria-label="Sortiraj po...">
+                    <option value="" selected>Sortiraj po...</option>
+                    <option value="ocena">Ocena</option>
+                </select>
+            </div>
+            <div class="col-12 col-sm-6 col-md-auto col-xl-3 d-flex flex-row align-items-center column-gap-1">
+                <label for="inputRecenzijaRedosledSortiranja">Redosled:</label>
+                <select (change)="onChangeRedosled()" #inputRecenzijaRedosledSortiranja id="inputRecenzijaRedosledSortiranja" class="form-select form-select-sm border-secondary">
+                    <option value="1" selected>Rastući</option>
+                    <option value="-1">Opadajući</option>
+                </select>
+            </div>
+        </div>
+    </div>
     <div class="p-0 col-12" *ngFor="let recenzija of recenzije">
         <app-recenzija-item [recenzija]="recenzija" [profileMode]="profileMode"></app-recenzija-item>
     </div>

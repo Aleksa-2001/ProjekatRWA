@@ -5,129 +5,18 @@
         <div *ngIf="brojProdavnica !== 0 || brojProizvoda !== 0" class="col-12 d-none d-md-block">
             <hr class="m-0">
         </div>
-        <div *ngIf="query && (brojProdavnica !== 0 || brojProizvoda !== 0)" class="filter-menu col-12 col-md-3 col-xl-2 px-0">
-            <div class="sticky-top">
-                <div class="row row-gap-1">
-                    <div class="col-12 d-md-none">
-                        <hr class="mt-0 mb-1">
-                    </div>
-                    <h5 class="col-12 mb-0">Prikaz</h5>
-                    <div class="row mx-0">
-                        <div class="col-auto col-md-12 form-check">
-                            <input (change)="onSelectPrikaz(1)" class="form-check-input" type="radio" name="inputRadioPrikaz" id="radioSve" value="1" checked>
-                            <label class="form-check-label" for="radioSve">Sve</label>
-                        </div>
-                        <div class="col-auto col-md-12 form-check">
-                            <input (change)="onSelectPrikaz(2)" class="form-check-input" type="radio" name="inputRadioPrikaz" id="radioProdavnice" value="2">
-                            <label class="form-check-label" for="radioProdavnice">Prodavnice</label>
-                        </div>
-                        <div class="col-auto col-md-12 form-check">
-                            <input (change)="onSelectPrikaz(3)" class="form-check-input" type="radio" name="inputRadioPrikaz" id="radioProizvodi" value="3">
-                            <label class="form-check-label" for="radioProizvodi">Proizvodi</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div *ngIf="brojProdavnica > 1 && prikaziProdavnice">
-                    <hr class="my-2">
-
-                    <div class="row row-gap-1">
-                        <h5 class="col-12 mb-0">Prodavnica</h5>
-                        <div class="row mx-0">
-                            <div class="col-auto col-md-12 form-check" *ngFor="let nazivProdavnice of naziviProdavnica$ | async">
-                                <input (change)="onSelectProdavnica(nazivProdavnice)" class="form-check-input" type="checkbox" name="inputCheckbox{{nazivProdavnice}}" id="checkbox{{nazivProdavnice}}" value={{nazivProdavnice}}>
-                                <label class="form-check-label" for="checkbox{{nazivProdavnice}}">{{nazivProdavnice}}</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div *ngIf="brojProizvoda > 1 && prikaziProizvode">
-                    <hr class="my-2">
-
-                    <div class="row row-gap-1">
-                        <h5 class="col-12 mb-0">Cena (u RSD)</h5>
-                        <div class="col-12">
-                            <div class="range-input row gap-1">
-                                <div class="col-12 d-flex flex-row align-items-center column-gap-1">
-                                    <label for="inputMinCena">Od:</label>
-                                    <input #inputMinCena id="inputMinCena" (change)="onChangeMinCena($event)" class="form-control form-control-sm border-secondary" type="number" [min]="cenaRange.min" [max]="cenaRange.max" [value]="cenaRange.min" />
-                                </div>
-                                <div class="col-12 d-flex flex-row align-items-center column-gap-1">
-                                    <label for="inputMaxCena">Do:</label>
-                                    <input #inputMaxCena id="inputMaxCena" (change)="onChangeMaxCena($event)" class="form-control form-control-sm border-secondary" type="number" [min]="cenaRange.min" [max]="cenaRange.max" [value]="cenaRange.max" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="range-slider">
-                                <div class="range-background"></div>
-                                <div class="range-highlight" [ngStyle]="{
-                                    left: getPercent(minCena) + '%',
-                                    width: (getPercent(maxCena) - getPercent(minCena)) + '%'
-                                }"></div>
-                                <input #rangeMinCena id="rangeMinCena" (input)="onChangeMinCena($event)" class="form-range" type="range" [min]="cenaRange.min" [max]="cenaRange.max" [value]="cenaRange.min" />
-                                <input #rangeMaxCena id="rangeMaxCena" (input)="onChangeMaxCena($event)" class="form-range" type="range" [min]="cenaRange.min" [max]="cenaRange.max" [value]="cenaRange.max" />
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span>{{cenaRange.min}}</span>
-                                <span>{{cenaRange.max}}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr class="my-2">
-
-                    <div class="row row-gap-1">
-                        <h5 class="col-12 mb-0">Proizvod</h5>
-                        <div class="row mx-0">
-                            <div class="col-auto col-md-12 form-check" *ngFor="let tipProizvoda of tipoviProizvoda$ | async">
-                                <input (change)="onSelectTipProizvoda(tipProizvoda)" class="form-check-input" type="checkbox" name="inputCheckbox{{tipProizvoda}}" id="checkbox{{tipProizvoda}}" value={{tipProizvoda}}>
-                                <label class="form-check-label" for="checkbox{{tipProizvoda}}" [ngSwitch]="tipProizvoda">
-                                    <span *ngSwitchCase="'Racunar'">Računar</span>
-                                    <span *ngSwitchCase="'RacunarskaKomponenta'">Računarska komponenta</span>
-                                    <span *ngSwitchDefault>{{tipProizvoda}}</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr class="my-2">
-
-                    <div class="row row-gap-1">
-                        <h5 class="col-12 mb-0">Tip proizvoda</h5>
-                        <div class="row mx-0">
-                            <div class="col-auto col-md-12 form-check" *ngFor="let type of types$ | async">
-                                <input (change)="onSelectType(type)" class="form-check-input" type="checkbox" name="inputCheckbox{{type}}" id="checkbox{{type}}" value={{type}}>
-                                <label class="form-check-label" for="checkbox{{type}}" [ngSwitch]="type">
-                                    <span *ngSwitchCase="'CPU'">Procesor</span>
-                                    <span *ngSwitchCase="'GPU'">Grafička karta</span>
-                                    <span *ngSwitchCase="'RAM'">RAM memorija</span>
-                                    <span *ngSwitchCase="'MaticnaPloca'">Matična ploča</span>
-                                    <span *ngSwitchCase="'Skladiste'">Skladišna memorija</span>
-                                    <span *ngSwitchCase="'Napajanje'">Napajanje</span>
-                                    <span *ngSwitchDefault>{{type}}</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr class="my-2">
-
-                    <div class="row row-gap-1">
-                        <h5 class="col-12 mb-0">Proizvođač</h5>
-                        <div class="row mx-0">
-                            <div class="col-auto col-md-12 form-check" *ngFor="let proizvodjac of proizvodjaci$ | async">
-                                <input (change)="onSelectProizvodjac(proizvodjac)" class="form-check-input" type="checkbox" name="inputCheckbox{{proizvodjac}}" id="checkbox{{proizvodjac}}" value={{proizvodjac}}>
-                                <label class="form-check-label" for="checkbox{{proizvodjac}}">{{proizvodjac}}</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <hr class="mt-2 mb-0 d-md-none">
-            </div>
-        </div>
+        <app-filter *ngIf="query && (brojProdavnica !== 0 || brojProizvoda !== 0)" class="filter-menu col-12 col-md-3 col-xl-2 px-0" 
+            [brojProdavnica]="brojProdavnica" 
+            [brojProizvoda]="brojProizvoda" 
+            [cenaRange]="cenaRange" 
+            (prikaziProdavniceOutput)="getPrikaziProdavnice($event)" 
+            (prikaziProizvodeOutput)="getPrikaziProizvode($event)" 
+            (selectedNaziviProdavnicaOutput)="getSelectedNaziviProdavnica($event)" 
+            (selectedCenaRangeOutput)="getSelectedCenaRange($event)" 
+            (selectedTipoviProizvodaOutput)="getSelectedTipoviProizvoda($event)" 
+            (selectedTypesOutput)="getSelectedTypes($event)" 
+            (selectedProizvodjaciOutput)="getSelectedProizvodjaci($event)"
+        ></app-filter>
         <div class="col">
             <app-prodavnice *ngIf="query" [hidden]="brojProdavnica === 0 || !prikaziProdavnice" 
                 [selectedNaziviProdavnica]="selectedNaziviProdavnica" 

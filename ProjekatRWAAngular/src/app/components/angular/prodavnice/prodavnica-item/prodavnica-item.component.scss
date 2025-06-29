@@ -16,23 +16,3 @@ img {
   aspect-ratio: 1.333;
   object-fit: cover;
 }
-
-.stars {
-    width: 120px;
-    height: 1.5rem;
-    align-items: center;
-}
-
-.star {
-    font-size: 1.5rem;
-}
-
-.bi-star-half {
-    background: linear-gradient(to right, #ffc107 50%, black 50%);
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.bi-star-fill {
-    color: #ffc107;
-}

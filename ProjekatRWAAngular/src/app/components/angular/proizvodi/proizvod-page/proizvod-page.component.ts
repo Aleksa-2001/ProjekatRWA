@@ -8,6 +8,7 @@ import { CommonModule, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@an
 import { selectSelectedProizvod } from '../../../../store/proizvod/proizvod.selectors';
 import { NotFoundComponent } from "../../../../shared/components/not-found/not-found.component";
 import { KomponentaPageComponent } from "./komponenta-page/komponenta-page.component";
+import { StarsComponent } from "../../stars/stars.component";
 import { Title } from '@angular/platform-browser';
 import { isAdmin } from '../../../../store/auth/auth.selectors';
 import { ProizvodDialogComponent } from "../../dialog/proizvod-dialog/proizvod-dialog.component";
@@ -29,7 +30,8 @@ import * as RecenzijeActions from '../../../../store/recenzija/recenzija.actions
     NotFoundComponent,
     ProizvodDialogComponent,
     ConfirmDialogComponent,
-    RecenzijeComponent
+    RecenzijeComponent,
+    StarsComponent
 ],
   templateUrl: './proizvod-page.component.html',
   styleUrl: './proizvod-page.component.scss',
@@ -44,8 +46,8 @@ export class ProizvodPageComponent implements OnInit, OnDestroy {
 
   image: string = ""
 
-  rating: any = Array(5).fill(0)
   prosek: number = 0
+  brojRecenzija: number = 0
 
   constructor(private title: Title, private route: ActivatedRoute, private store: Store<AppState>) { }
 
@@ -85,14 +87,10 @@ export class ProizvodPageComponent implements OnInit, OnDestroy {
 
   getProsek(prosek: number) {
     this.prosek = prosek
-  }  
-
-  starHalf(i: number) {
-    return Math.floor(this.prosek) === i && this.prosek - Math.floor(this.prosek) >= 0.5
   }
 
-  starEmpty(i: number) {
-    return Math.floor(this.prosek) === i && this.prosek - Math.floor(this.prosek) < 0.5
+  getBrojRecenzija(brojRecenzija: number) {
+    this.brojRecenzija = brojRecenzija
   }
   
 }

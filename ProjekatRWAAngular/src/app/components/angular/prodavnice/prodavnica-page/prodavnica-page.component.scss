@@ -8,22 +8,12 @@
     line-height: calc(2.5rem + 1.5vw);
 }
 
-.stars {
-    width: 128px;
-    height: 1.5rem;
-    align-items: center
+.filter-menu {
+  border-right: 1px solid #C3C3C3
 }
 
-.star {
-    font-size: 1.5rem;
-}
-
-.bi-star-half {
-    background: linear-gradient(to right, #ffc107 50%, black 50%);
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.bi-star-fill {
-    color: #ffc107;
+@media screen and (max-width: 767px) {
+  .filter-menu {
+    border-right: 0
+  }
 }

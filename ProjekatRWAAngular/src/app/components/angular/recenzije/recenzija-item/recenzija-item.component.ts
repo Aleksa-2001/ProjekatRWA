@@ -1,17 +1,18 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Recenzija } from '../../../../models/recenzija';
 import { CommonModule, NgIf } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app-state';
 import { isAdmin, selectUser } from '../../../../store/auth/auth.selectors';
 import { User } from '../../../../models/user';
+import { StarsComponent } from "../../stars/stars.component";
 import * as RecenzijeActions from '../../../../store/recenzija/recenzija.actions'
-import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-recenzija-item',
-  imports: [NgIf, CommonModule, RouterModule],
+  imports: [NgIf, CommonModule, RouterModule, StarsComponent],
   templateUrl: './recenzija-item.component.html',
   styleUrl: './recenzija-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,8 +24,6 @@ export class RecenzijaItemComponent implements OnInit {
 
   @Input() recenzija!: Recenzija
   @Input() profileMode!: boolean
-
-  rating: readonly any[] = Array(5).fill(0)
 
   constructor(private store: Store<AppState>) { }
 

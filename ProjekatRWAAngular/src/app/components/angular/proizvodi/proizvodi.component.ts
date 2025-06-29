@@ -1,5 +1,5 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { ProizvodItemComponent } from './proizvod-item/proizvod-item.component';
 import { combineLatest, filter, map, Observable, of, tap } from 'rxjs';
 import { Proizvod } from '../../../models/proizvod';
@@ -15,9 +15,9 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './proizvodi.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProizvodiComponent { 
+export class ProizvodiComponent implements OnInit, OnChanges { 
 
-  prodavnicaID: number
+  prodavnicaID: number = -1
   proizvodi$: Observable<readonly Proizvod[]> = of([])
   selectedProizvodi$: Observable<readonly Proizvod[]> = of([])
 
@@ -37,7 +37,9 @@ export class ProizvodiComponent {
   sort: string = ""
   redosledSortiranja: number = 1
   
-  constructor(private route: ActivatedRoute, private store: Store<AppState>) { 
+  constructor(private route: ActivatedRoute, private store: Store<AppState>) { }
+  
+  ngOnInit(): void { 
     this.prodavnicaID = Number(this.route.snapshot.paramMap.get('id'))
     this.proizvodi$ = this.store.select(selectProizvodi)
     this.selectedProizvodi$ = this.proizvodi$
@@ -55,11 +57,6 @@ export class ProizvodiComponent {
     if (localStorage.getItem('proizvod_display_mode')) {
       this.displayMode = parseInt(localStorage.getItem('proizvod_display_mode')!)
     }
-  }
-
-  onDisplayModeChange(mode: number) {
-    localStorage.setItem('proizvod_display_mode', mode.toString())
-    this.displayMode = mode;
   }
 
   ngOnChanges(): void {
@@ -87,6 +84,11 @@ export class ProizvodiComponent {
         return filteredProizvodi
       })
     )
+  }
+
+  onDisplayModeChange(mode: number) {
+    localStorage.setItem('proizvod_display_mode', mode.toString())
+    this.displayMode = mode;
   }
 
   onChangeSort() {
