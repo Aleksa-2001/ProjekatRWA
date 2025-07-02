@@ -4,7 +4,6 @@ import { RecenzijaDto } from 'src/dto/recenzija.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller()
-@UseGuards(JwtAuthGuard)
 export class RecenzijeController {
 
     constructor(private service: RecenzijeService) { }
@@ -35,16 +34,19 @@ export class RecenzijeController {
     }
 
     @Post('recenzija')
+    @UseGuards(JwtAuthGuard)
     public addRecenzija(@Body() dto: RecenzijaDto) {
         return this.service.create(dto)
     }
 
     @Put('recenzija/:id')
+    @UseGuards(JwtAuthGuard)
     public updateRecenzija(@Param('id', ParseIntPipe) recenzijaID: number, @Body() dto: RecenzijaDto) {
         return this.service.update(recenzijaID, dto)
     }
 
     @Delete('recenzija/:id')
+    @UseGuards(JwtAuthGuard)
     public deleteRecenzija(@Param('id', ParseIntPipe) recenzijaID: number) {
         return this.service.delete(recenzijaID)
     }

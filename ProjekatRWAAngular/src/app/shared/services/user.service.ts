@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { catchError, throwError } from "rxjs";
 import { User } from "../../models/user";
 import { Injectable } from "@angular/core";
+import { environment } from "../../../environments/environment";
 
 @Injectable({
     providedIn: 'root'
@@ -12,33 +13,33 @@ export class UserService {
 
     getUserByID(korisnikID: number) {
         return this.httpClient
-            .get<User>("http://localhost:3000/" + `user/${korisnikID}`)
+            .get<User>(environment.apiUrl + `user/${korisnikID}`)
             .pipe(catchError(errorHandler))
     }
 
     addUser(user: User) {
         const { userID, ...userDto } = user
         return this.httpClient
-            .post<User>("http://localhost:3000/" + "user", userDto)
+            .post<User>(environment.apiUrl + "user", userDto)
             .pipe(catchError(errorHandler))
     }
 
     updateUser(korisnikID: number, user: Partial<User>) {
         const { userID, ...userDto } = user
         return this.httpClient
-            .put<User>("http://localhost:3000/" + `user/${korisnikID}`, userDto)
+            .put<User>(environment.apiUrl + `user/${korisnikID}`, userDto)
             .pipe(catchError(errorHandler))
     }
 
     changePassword(korisnikID: number, data: { password: string, newPassword: string }) {
         return this.httpClient
-            .put<User>("http://localhost:3000/" + `changePassword/${korisnikID}`, data)
+            .put<User>(environment.apiUrl + `changePassword/${korisnikID}`, data)
             .pipe(catchError(errorHandler))
     }
 
     deleteUser(korisnikID: number) {
         return this.httpClient
-            .delete<number>("http://localhost:3000/" + `user/${korisnikID}`)
+            .delete<number>(environment.apiUrl + `user/${korisnikID}`)
             .pipe(catchError(errorHandler))
     }
 

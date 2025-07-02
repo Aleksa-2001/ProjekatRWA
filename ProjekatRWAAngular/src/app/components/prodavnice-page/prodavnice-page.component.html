@@ -1,0 +1,28 @@
+<div class="container my-3">
+    <h1>Prodavnice</h1>
+    <div *ngIf="isAdmin$ | async" class="mb-3">
+        <div class="d-flex flex-column flex-sm-row gap-2">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#prodavnicaModalDialog"><i class="bi bi-plus-lg me-2"></i>Dodaj prodavnicu</button>
+        </div>
+        <hr>
+    </div>
+    <input (input)="onChangeInput()" #inputSearchProdavnice id="inputSearchProdavnice" class="form-control form-control-lg border-secondary" placeholder="Pretraži prodavnice..." />
+    <hr>
+    <div class="row row-gap-3">
+        <app-filter *ngIf="brojProdavnica > 1" class="filter-menu col-12 col-md-3 col-xl-2 px-0" 
+            [sakrijIzborPrikaza]="true" 
+            [prikaziProizvode]="false" 
+            [brojProdavnica]="brojProdavnica" 
+            (selectedNaziviProdavnicaOutput)="getSelectedNaziviProdavnica($event)"
+        ></app-filter>
+        <div class="col">
+            <app-prodavnice 
+                [search]="search" 
+                [selectedNaziviProdavnica]="selectedNaziviProdavnica" 
+                (brojProdavnica)="getBrojProdavnica($event)"
+            ></app-prodavnice>
+        </div>
+    </div>
+</div>
+
+<app-prodavnica-dialog *ngIf="isAdmin$ | async" [modalID]="'prodavnicaModalDialog'"></app-prodavnica-dialog>

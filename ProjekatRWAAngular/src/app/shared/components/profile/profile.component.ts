@@ -7,8 +7,8 @@ import { selectUser } from '../../../store/auth/auth.selectors';
 import { CommonModule, NgIf } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ConfirmDialogComponent } from "../../../components/angular/dialog/confirm-dialog/confirm-dialog.component";
-import { RecenzijeComponent } from "../../../components/angular/recenzije/recenzije.component";
+import { ConfirmDialogComponent } from '../../../components/dialog/confirm-dialog/confirm-dialog.component';
+import { RecenzijeComponent } from '../../../components/recenzije/recenzije.component';
 import * as AuthActions from '../../../store/auth/auth.actions';
 import * as RecenzijeActions from '../../../store/recenzija/recenzija.actions';
 

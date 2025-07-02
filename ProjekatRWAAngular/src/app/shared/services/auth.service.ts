@@ -2,30 +2,29 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 import { User } from '../../models/user';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
 
-    constructor(private httpClient: HttpClient, private jwtHelper: JwtHelperService) { }
+    constructor(private httpClient: HttpClient) { }
 
     login(username: string, password: string) {
         return this.httpClient
-            .post<string>("http://localhost:3000/" + "auth/login", { username, password })
+            .post<string>(environment.apiUrl + "auth/login", { username, password })
             .pipe(catchError(errorHandler))
     }
 
     validateToken() {
         return this.httpClient
-            .get<User>("http://localhost:3000/" + "auth/validate")
+            .get<User>(environment.apiUrl + "auth/validate")
             .pipe(catchError(errorHandler))
     }
 
     logout() {
-        localStorage.removeItem('token');
-        localStorage.removeItem('expires_at');
+        localStorage.removeItem('token')
     }
 
 }

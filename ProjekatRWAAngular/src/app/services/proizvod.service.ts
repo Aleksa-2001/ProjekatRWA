@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Proizvod } from '../models/proizvod';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, of, throwError } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -12,59 +13,59 @@ export class ProizvodService {
 
     //getAll() {
     //  return this.httpClient
-    //    .get<Proizvod[]>("http://localhost:3000/" + "proizvodi")
+    //    .get<Proizvod[]>(environment.apiUrl + "proizvodi")
     //    .pipe(catchError(errorHandler))
     //}
 
     getProizvodi(prodavnicaID: number) {
         return this.httpClient
-            .get<Proizvod[]>("http://localhost:3000/" + `proizvodi/${prodavnicaID}`)
+            .get<Proizvod[]>(environment.apiUrl + `proizvodi/${prodavnicaID}`)
             .pipe(catchError(errorHandler))
     }
 
     getProizvodiBySearch(query: string) {
         return this.httpClient
-            .get<Proizvod[]>("http://localhost:3000/" + `proizvodiSearch?query=${query}`)
+            .get<Proizvod[]>(environment.apiUrl + `proizvodiSearch?query=${query}`)
             .pipe(catchError(errorHandler))
     }
 
 
     getProizvodByID(proizvodID: number) {
         return this.httpClient
-            .get<Proizvod>("http://localhost:3000/" + `proizvod/${proizvodID}`)
+            .get<Proizvod>(environment.apiUrl + `proizvod/${proizvodID}`)
             .pipe(catchError(errorHandler))
     }
 
     addProizvod(proizvod: Proizvod) {
         const { id, ...proizvodDto } = proizvod
         return this.httpClient
-            .post<Proizvod>("http://localhost:3000/" + "proizvod", proizvodDto)
+            .post<Proizvod>(environment.apiUrl + "proizvod", proizvodDto)
             .pipe(catchError(errorHandler))
     }
 
     updateProizvod(proizvodID: number, proizvod: Partial<Proizvod>) {
         const { id, ...proizvodDto } = proizvod
         return this.httpClient
-            .put<Proizvod>("http://localhost:3000/" + `proizvod/${proizvodID}`, proizvodDto)
+            .put<Proizvod>(environment.apiUrl + `proizvod/${proizvodID}`, proizvodDto)
             .pipe(catchError(errorHandler))
     }
 
     deleteProizvod(proizvodID: number) {
         return this.httpClient
-            .delete<number>("http://localhost:3000/" + `proizvod/${proizvodID}`)
+            .delete<number>(environment.apiUrl + `proizvod/${proizvodID}`)
             .pipe(catchError(errorHandler))
     }
 
     deleteProizvodi(prodavnicaID: number) {
         return this.httpClient
-            .delete<Proizvod[]>("http://localhost:3000/" + `proizvodi/${prodavnicaID}`)
+            .delete<Proizvod[]>(environment.apiUrl + `proizvodi/${prodavnicaID}`)
             .pipe(catchError(errorHandler))
     }
 
     uploadImage(proizvodID: number, file?: FormData) {
         if (file) {
             return this.httpClient
-                .post<{ proizvodID: number, path: string }>("http://localhost:3000/" + `proizvod/upload/${proizvodID}`, file)
+                .post<{ proizvodID: number, path: string }>(environment.apiUrl + `proizvod/upload/${proizvodID}`, file)
                 .pipe(catchError(errorHandler))
         }
         else {

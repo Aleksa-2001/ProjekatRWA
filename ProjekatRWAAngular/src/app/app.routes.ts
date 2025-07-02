@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
-import { RxjsComponent } from './components/rxjs/rxjs.component';
-import { AngularComponent } from './components/angular/angular.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { AuthComponent } from './shared/components/auth/auth.component';
 import { AuthGuard, AuthRedirectGuard } from './shared/guards/auth.guard';
@@ -9,19 +7,19 @@ import { RolesGuard } from './shared/guards/roles.guard';
 import { ValidateGuard } from './shared/guards/auth-validate.guard';
 import { RegisterComponent } from './shared/components/register/register.component';
 import { ProfileComponent } from './shared/components/profile/profile.component';
-import { ProdavnicaPageComponent } from './components/angular/prodavnice/prodavnica-page/prodavnica-page.component';
-import { ProizvodPageComponent } from './components/angular/proizvodi/proizvod-page/proizvod-page.component';
-import { SearchPageComponent } from './components/angular/search/search-page/search-page.component';
+import { ProdavnicaPageComponent } from './components/prodavnice/prodavnica-page/prodavnica-page.component';
+import { ProizvodPageComponent } from './components/proizvodi/proizvod-page/proizvod-page.component';
+import { SearchPageComponent } from './components/search/search-page/search-page.component';
+import { ProdavnicePageComponent } from './components/prodavnice-page/prodavnice-page.component';
 
 export const routes: Routes = [
     { path: "", component: HomeComponent, pathMatch: 'full' },
 
-    { path: "rxjs", component: RxjsComponent },
+    { path: "prodavnice", component: ProdavnicePageComponent },
 
-    { path: "ng", component: AngularComponent, canActivate: [AuthGuard, ValidateGuard] },
-    { path: "ng/search", component: SearchPageComponent, canActivate: [AuthGuard, ValidateGuard] },
-    { path: "ng/prodavnica/:id", component: ProdavnicaPageComponent, canActivate: [AuthGuard, ValidateGuard, /*RolesGuard*/] },
-    { path: "ng/proizvod/:id", component: ProizvodPageComponent, canActivate: [AuthGuard, ValidateGuard] },
+    { path: "search", component: SearchPageComponent },
+    { path: "prodavnica/:id", component: ProdavnicaPageComponent },
+    { path: "proizvod/:id", component: ProizvodPageComponent },
 
     { path: "login", component: AuthComponent, canActivate: [AuthRedirectGuard] },
     { path: "register", component: RegisterComponent, canActivate: [AuthRedirectGuard] },

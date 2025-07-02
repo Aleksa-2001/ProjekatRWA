@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Prodavnica } from '../models/prodavnica';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, of, throwError } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -12,46 +13,46 @@ export class ProdavnicaService {
 
     getProdavnice() {
         return this.httpClient
-            .get<Prodavnica[]>("http://localhost:3000/" + "prodavnice")
+            .get<Prodavnica[]>(environment.apiUrl + "prodavnice")
             .pipe(catchError(errorHandler))
     }
 
     getProdavniceBySearch(query: string) {
         return this.httpClient
-            .get<Prodavnica[]>("http://localhost:3000/" + `prodavniceSearch?query=${query}`)
+            .get<Prodavnica[]>(environment.apiUrl + `prodavniceSearch?query=${query}`)
             .pipe(catchError(errorHandler))
     }
 
     getProdavnicaByID(prodavnicaID: number) {
         return this.httpClient
-            .get<Prodavnica>("http://localhost:3000/" + `prodavnica/${prodavnicaID}`)
+            .get<Prodavnica>(environment.apiUrl + `prodavnica/${prodavnicaID}`)
             .pipe(catchError(errorHandler))
     }
 
     addProdavnica(prodavnica: Prodavnica) {
         const { id, ...prodavnicaDto } = prodavnica
         return this.httpClient
-            .post<Prodavnica>("http://localhost:3000/" + "prodavnica", prodavnicaDto)
+            .post<Prodavnica>(environment.apiUrl + "prodavnica", prodavnicaDto)
             .pipe(catchError(errorHandler))
     }
 
     updateProdavnica(prodavnicaID: number, prodavnica: Partial<Prodavnica>) {
         const { id, ...prodavnicaDto } = prodavnica
         return this.httpClient
-            .put<Prodavnica>("http://localhost:3000/" + `prodavnica/${prodavnicaID}`, prodavnicaDto)
+            .put<Prodavnica>(environment.apiUrl + `prodavnica/${prodavnicaID}`, prodavnicaDto)
             .pipe(catchError(errorHandler))
     }
 
     deleteProdavnica(prodavnicaID: number) {
         return this.httpClient
-            .delete<number>("http://localhost:3000/" + `prodavnica/${prodavnicaID}`)
+            .delete<number>(environment.apiUrl + `prodavnica/${prodavnicaID}`)
             .pipe(catchError(errorHandler))
     }
 
     uploadImage(prodavnicaID: number, file?: FormData) {
         if (file) {
             return this.httpClient
-                .post<{ prodavnicaID: number, path: string }>("http://localhost:3000/" + `prodavnica/upload/${prodavnicaID}`, file)
+                .post<{ prodavnicaID: number, path: string }>(environment.apiUrl + `prodavnica/upload/${prodavnicaID}`, file)
                 .pipe(catchError(errorHandler))
         }
         else {

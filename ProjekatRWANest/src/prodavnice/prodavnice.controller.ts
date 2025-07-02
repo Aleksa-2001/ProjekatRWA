@@ -8,7 +8,6 @@ import { extname } from 'path';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller()
-@UseGuards(JwtAuthGuard)
 export class ProdavniceController {
 
     constructor(private service: ProdavniceService) { }
@@ -29,21 +28,25 @@ export class ProdavniceController {
     }
 
     @Post('prodavnica')
+    @UseGuards(JwtAuthGuard)
     public addProdavnica(@Body() dto: ProdavnicaDto) {
         return this.service.create(dto)
     }
     
     @Put('prodavnica/:id')
+    @UseGuards(JwtAuthGuard)
     public updateProdavnica(@Param('id', ParseIntPipe) prodavnicaID: number, @Body() dto: ProdavnicaDto) {
         return this.service.update(prodavnicaID, dto)
     }
 
     @Delete('prodavnica/:id')
+    @UseGuards(JwtAuthGuard)
     public deleteProdavnica(@Param('id', ParseIntPipe) prodavnicaID: number) {
         return this.service.delete(prodavnicaID)
     }
 
     @Post('prodavnica/upload/:id')
+    @UseGuards(JwtAuthGuard)
     @UseInterceptors(FileInterceptor('file', {
         storage: diskStorage({
             destination: 'images/prodavnice',
