@@ -2,91 +2,92 @@
 @import "bootstrap/scss/variables";
 
 :host {
-  display: block;
+    display: block;
 }
 
 .sticky-top {
-  top: calc(56px + 1rem);
-  max-height: calc(100vh - 56px - 2rem);
-  overflow-x: hidden;
-  overflow-y: auto;
-  padding: 0 0.75rem;
-  z-index: 50;
+    top: calc(56px + 1rem);
+    max-height: calc(100vh - 56px - 2rem);
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0 0.75rem;
+    z-index: 50;
 }
 
 .form-check-input:checked {
-  background-color: $green-500;
-  border-color: $green-500;
+    background-color: $green-500;
+    border-color: $green-500;
 }
 
 .range-input label {
-  width: 1.5rem;
+    width: 1.5rem;
 }
 
 .range-slider {
-  position: relative;
-  height: 1.5rem;
+    position: relative;
+    height: 1.5rem;
 }
 
 .range-slider input {
-  position: absolute;
-  pointer-events: none;
+    position: absolute;
+    pointer-events: none;
 }
 
 .range-slider input::-webkit-slider-runnable-track {
-  background: transparent;
+    background: transparent;
 }
 
 .range-slider input::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  pointer-events: auto;
-  background: $green-500;
+    -webkit-appearance: none;
+    pointer-events: auto;
+    background: $green-500;
 }
 
 .range-slider input::-moz-range-track {
-  background: transparent;
+    background: transparent;
 }
 
 .range-slider input::-moz-range-thumb {
-  cursor: pointer;
-  pointer-events: auto;
-  background: $green-500;
+    cursor: pointer;
+    pointer-events: auto;
+    background: $green-500;
 }
 
 .range-slider .range-background {
-  position: absolute;
-  height: 6px;
-  transform: translateY(150%);
+    position: absolute;
+    height: 6px;
+    transform: translateY(150%);
 }
 
-.range-slider .range-background, .range-slider .range-highlight {
-  position: absolute;
-  width: calc(100% - 12px);
-  left: 6px;
-  transform: translateY(150%);
-  height: 6px;
-  border-radius: 3px;
+.range-slider .range-background,
+.range-slider .range-highlight {
+    position: absolute;
+    width: calc(100% - 12px);
+    left: 6px;
+    transform: translateY(150%);
+    height: 6px;
+    border-radius: 3px;
 }
 
 .range-slider .range-background {
-  background-color: #E9ECEF;
+    background-color: #E9ECEF;
 }
 
 .range-slider .range-highlight {
-  background-color: $green-500;
+    background-color: $green-500;
 }
 
 #rangeMinCena {
-  z-index: 3;
+    z-index: 3;
 }
 
 #rangeMaxCena {
-  z-index: 4;
+    z-index: 4;
 }
 
 @media screen and (max-width: 767px) {
-  .sticky-top {
-    max-height: initial;
-    overflow-y: visible;
-  }
+    .sticky-top {
+        max-height: initial;
+        overflow-y: visible;
+    }
 }

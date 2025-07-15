@@ -1,0 +1,11 @@
+<div [formGroup]="formGroup">
+    <div class="mb-2">
+        <label for="inputFrekvencija">Frekvencija (u MHz)</label>
+        <input id="inputFrekvencija" class="form-control border-secondary" type="number" formControlName="frekvencija" min="0" placeholder="Frekvencija (u MHz)" />
+    </div>
+
+    <div>
+        <label for="inputVRAM">VRAM (u GB)</label>
+        <input id="inputVRAM" class="form-control border-secondary" type="number" formControlName="VRAM" min="0" placeholder="VRAM (u GB)" />
+    </div>
+</div>

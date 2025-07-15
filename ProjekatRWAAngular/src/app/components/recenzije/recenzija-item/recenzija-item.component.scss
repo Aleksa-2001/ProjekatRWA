@@ -1,31 +1,32 @@
 :host {
-  display: block;
+    display: block;
 }
 
 .row {
-  margin: 0 0.75rem;
-  transition: 0.1s;
+    margin: 0 0.75rem;
+    transition: 0.1s;
 }
 
 .row:hover {
-  background-color: #DDDDDD;
+    background-color: #DDDDDD;
+    box-shadow: 0 0 0.5rem 0 black;
 }
 
 .stars {
-  width: 128px;
-  height: 1.5rem;
-  align-items: center
+    width: 128px;
+    height: 1.5rem;
+    align-items: center
 }
 
 .star {
-  font-size: 1.5rem;
-  transition: 0.1s;
+    font-size: 1.5rem;
+    transition: 0.1s;
 }
 
 .bi-star-fill {
-  color: #ffc107;
+    color: #ffc107;
 }
 
 .profile-mode {
-  cursor: pointer;
+    cursor: pointer;
 }

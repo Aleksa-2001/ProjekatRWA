@@ -1,0 +1,21 @@
+<div [formGroup]="formGroup">
+    <div class="mb-2">
+        <label for="inputTipMemorije">Tip memorije</label>
+        <input id="inputTipMemorije" class="form-control border-secondary" type="text" formControlName="tipMemorije" placeholder="Tip memorije" />
+    </div>
+
+    <div class="mb-2">
+        <label for="inputBrojModula">Broj  modula</label>
+        <input id="inputBrojModula" class="form-control border-secondary" type="number" formControlName="brojModula" min="0" placeholder="Broj  modula" />
+    </div>
+
+    <div class="mb-2">
+        <label for="inputVelicina">Veličina (u GB)</label>
+        <input id="inputVelicina" class="form-control border-secondary" type="number" formControlName="velicina" min="0" placeholder="Veličina (u GB)" />
+    </div>
+
+    <div>
+        <label for="inputFrekvencija">Frekvencija (u MHz)</label>
+        <input id="inputFrekvencija" class="form-control border-secondary" type="number" formControlName="frekvencija" min="0" placeholder="Frekvencija (u MHz)" />
+    </div>
+</div>

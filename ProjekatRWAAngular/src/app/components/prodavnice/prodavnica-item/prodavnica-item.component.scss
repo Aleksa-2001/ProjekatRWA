@@ -1,18 +1,19 @@
 :host {
-  display: block;
+    display: block;
 }
 
 .row {
-  margin: 0 0.75rem;
-  cursor: pointer;
-  transition: 0.1s;
+    margin: 0 0.75rem;
+    cursor: pointer;
+    transition: 0.1s;
 }
 
 .row:hover {
-  background-color: #DDDDDD;
+    background-color: #DDDDDD;
+    box-shadow: 0 0 0.5rem 0 black;
 }
 
 img {
-  aspect-ratio: 1.333;
-  object-fit: cover;
+    aspect-ratio: 1.333;
+    object-fit: cover;
 }

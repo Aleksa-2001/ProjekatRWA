@@ -43,7 +43,6 @@ export class ProdavniceComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
-    console.log(this.search)
     this.selectedProdavnice$ = combineLatest([
       this.prodavnice$,
       of(this.search),

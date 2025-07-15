@@ -1,0 +1,31 @@
+<div [formGroup]="formGroup">
+    <div class="mb-2">
+        <label for="inputTipMaticnePloce">Tip matične ploče</label>
+        <input id="inputTipMaticnePloce" class="form-control border-secondary" type="text" formControlName="tipMaticnePloce" placeholder="Tip matične ploče" />
+    </div>
+
+    <div class="mb-2">
+        <label for="inputSocket">Socket</label>
+        <input id="inputSocket" class="form-control border-secondary" type="text" formControlName="socket" placeholder="Socket" />
+    </div>
+
+    <div class="mb-2">
+        <label for="inputBrojRAMSlotova">Broj RAM slotova</label>
+        <input id="inputBrojRAMSlotova" class="form-control border-secondary" type="number" formControlName="brojRAMSlotova" min="0" max="16" placeholder="Broj RAM slotova" />
+    </div>
+
+    <div class="mb-2">
+        <label for="inputBrojUSB20Portova">Broj USB 2.0 portova</label>
+        <input id="inputBrojUSB20Portova" class="form-control border-secondary" type="number" formControlName="brojUSB20Portova" min="0" placeholder="Broj USB 2.0 portova" />
+    </div>
+
+    <div class="mb-2">
+        <label for="inputBrojUSB30Portova">Broj USB 3.0 portova</label>
+        <input id="inputBrojUSB30Portova" class="form-control border-secondary" type="number" formControlName="brojUSB30Portova" min="0" placeholder="Broj USB 3.0 portova" />
+    </div>
+
+    <div>
+        <label for="inputBrojUSB31Portova">Broj USB 3.1 portova</label>
+        <input id="inputBrojUSB31Portova" class="form-control border-secondary" type="number" formControlName="brojUSB31Portova" min="0" placeholder="Broj USB 3.1 portova" />
+    </div>
+</div>
