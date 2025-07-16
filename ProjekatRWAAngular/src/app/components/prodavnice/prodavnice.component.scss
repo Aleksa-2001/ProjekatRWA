@@ -1,3 +1,25 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+
 :host {
   display: block;
+}
+
+.page-link {
+  color: mix(black, $green-500, 25%);
+  cursor: pointer;
+}
+
+.active {
+  .page-link {
+    color: white;
+    background-color: mix(black, $green-500, 25%);
+    border-color: mix(black, $green-500, 25%);
+  }
+}
+
+.disabled {
+  .page-link {
+    color: #54575B;
+  }
 }

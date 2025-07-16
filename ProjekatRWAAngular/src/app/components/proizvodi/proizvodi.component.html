@@ -10,7 +10,7 @@
 <div *ngIf="selectedProizvodi$ | async as proizvodi" class="row row-gap-2" [ngClass]="{ 'row-gap-3': displayMode === 2 && proizvodi.length !== 0 }">
     <div class="col-12">
         <div class="row row-gap-1">
-            <div class="col-12 col-sm-6 col-md-auto col-xl-3 d-flex flex-row align-items-center column-gap-1">
+            <div class="col-12 col-sm-6 col-md-5 col-xl-3 d-flex flex-row align-items-center column-gap-1 pe-sm-0">
                 <label for="inputProizvodSort">Sortiraj:</label>
                 <select (change)="onChangeSort()" #inputProizvodSort id="inputProizvodSort" class="form-select form-select-sm border-secondary" aria-label="Sortiraj po...">
                     <option value="" selected>Sortiraj po...</option>
@@ -19,11 +19,20 @@
                     <option value="prosecnaOcena">Prosečna ocena</option>
                 </select>
             </div>
-            <div class="col-12 col-sm-6 col-md-auto col-xl-3 d-flex flex-row align-items-center column-gap-1">
+            <div class="col-12 col-sm-6 col-md-4 col-xl-3 d-flex flex-row align-items-center column-gap-1">
                 <label for="inputProizvodRedosledSortiranja">Redosled:</label>
                 <select (change)="onChangeRedosled()" #inputProizvodRedosledSortiranja id="inputProizvodRedosledSortiranja" class="form-select form-select-sm border-secondary">
                     <option value="1" selected>Rastući</option>
                     <option value="-1">Opadajući</option>
+                </select>
+            </div>
+            <div class="col-12 col-md-3 col-xl-3 d-flex flex-row align-items-center column-gap-1 ps-md-0">
+                <label for="inputBrojProizvodaPoStranici">Prikaži:</label>
+                <select (change)="onChangeBrojProizvodaPoStranici()" #inputBrojProizvodaPoStranici id="inputBrojProizvodaPoStranici" class="form-select form-select-sm border-secondary">
+                    <option value="4">4</option>
+                    <option value="8">8</option>
+                    <option value="12" selected>12</option>
+                    <option value="24">24</option>
                 </select>
             </div>
         </div>
@@ -31,5 +40,18 @@
     <div class="p-0 col-12" [ngClass]="{ 'col-sm-6 col-lg-4 col-xl-3': displayMode === 2 }" *ngFor="let proizvod of proizvodi">
         <app-proizvod-item [proizvod]="proizvod" [displayMode]="displayMode"></app-proizvod-item>
     </div>
-    <p *ngIf="proizvodi.length === 0"><i>Nema unetih proizvoda</i></p>
+    <div *ngIf="proizvodi.length > 0" class="col-12 d-flex">
+        <ul class="pagination mx-auto mt-1 mb-0 border border-primary rounded-2">
+            <li class="page-item border-0" [ngClass]="{'disabled': currentPage === 1}">
+                <a class="page-link border-top-0 border-bottom-0 border-start-0" (click)="selectPage(currentPage - 1)"><i class="bi bi-caret-left-fill"></i></a>
+            </li>
+            <li *ngFor="let item of paginationList" class="page-item" [ngClass]="{'active': currentPage === item}">
+                <a class="page-link border-top-0 border-bottom-0" (click)="selectPage(item)">{{item}}</a>
+            </li>
+            <li class="page-item" [ngClass]="{'disabled': currentPage === paginationList.length}">
+                <a class="page-link border-top-0 border-bottom-0 border-end-0" (click)="selectPage(currentPage + 1)"><i class="bi bi-caret-right-fill"></i></a>
+            </li>
+        </ul>
+    </div>
+    <p class="m-0" *ngIf="proizvodi.length === 0"><i>Nema unetih proizvoda</i></p>
 </div>

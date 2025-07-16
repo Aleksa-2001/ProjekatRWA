@@ -1,7 +1,7 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { ProizvodItemComponent } from './proizvod-item/proizvod-item.component';
-import { combineLatest, filter, map, Observable, of, tap } from 'rxjs';
+import { combineLatest, filter, map, Observable, of, take, tap } from 'rxjs';
 import { Proizvod } from '../../models/proizvod';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app-state';
@@ -10,7 +10,12 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-proizvodi',
-  imports: [NgIf, NgFor, CommonModule, ProizvodItemComponent],
+  imports: [
+    NgIf, 
+    NgFor, 
+    CommonModule, 
+    ProizvodItemComponent
+  ],
   templateUrl: './proizvodi.component.html',
   styleUrl: './proizvodi.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,7 +26,11 @@ export class ProizvodiComponent implements OnInit, OnChanges {
   proizvodi$: Observable<readonly Proizvod[]> = of([])
   selectedProizvodi$: Observable<readonly Proizvod[]> = of([])
 
-  displayMode: number = 1;
+  displayMode: number = 1
+  
+  paginationList: number[] = []
+  itemsPerPage: number = 12
+  currentPage: number = 1
   
   @Input() search: string = ''
   @Input() selectedCenaRange: { min: number, max: number } = { min: 0, max: Infinity }
@@ -34,6 +43,7 @@ export class ProizvodiComponent implements OnInit, OnChanges {
 
   @ViewChild('inputProizvodSort') inputProizvodSort!: ElementRef<HTMLSelectElement>
   @ViewChild('inputProizvodRedosledSortiranja') inputProizvodRedosledSortiranja!: ElementRef<HTMLSelectElement>
+  @ViewChild('inputBrojProizvodaPoStranici') inputBrojProizvodaPoStranici!: ElementRef<HTMLSelectElement>
 
   sort: string = ""
   redosledSortiranja: number = 1
@@ -52,6 +62,12 @@ export class ProizvodiComponent implements OnInit, OnChanges {
         const cene = proizvodi.map(proizvod => proizvod.cena)
         this.selectedCenaRange = { min: Math.min(...cene), max: Math.max(...cene) }
         this.cenaRange.emit(this.selectedCenaRange)
+        
+        const numberOfPages = Math.ceil(proizvodi.length / this.itemsPerPage)
+        this.paginationList = []
+        for (let i = 1; i <= numberOfPages; i++) {
+          this.paginationList.push(i)
+        }
       })
     ).subscribe()
 
@@ -84,7 +100,19 @@ export class ProizvodiComponent implements OnInit, OnChanges {
         if (this.sort === "prosecnaOcena") filteredProizvodi.sort((a, b) => (a as any).prosecnaOcena > (b as any).prosecnaOcena ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
 
         //this.brojProizvoda.emit(filteredProizvodi.length)
-        return filteredProizvodi
+
+        const numberOfPages = Math.ceil(filteredProizvodi.length / this.itemsPerPage)
+        this.paginationList = []
+        for (let i = 1; i <= numberOfPages; i++) {
+          this.paginationList.push(i)
+        }
+
+        if (this.currentPage > this.paginationList.length) this.currentPage = this.paginationList.length ? this.paginationList.length : 1
+
+        const start = (this.currentPage - 1) * this.itemsPerPage
+        const end = start + this.itemsPerPage
+        
+        return filteredProizvodi.slice(start, end)
       })
     )
   }
@@ -94,6 +122,11 @@ export class ProizvodiComponent implements OnInit, OnChanges {
     this.displayMode = mode;
   }
 
+  selectPage(page: number) {
+    this.currentPage = page
+    this.ngOnChanges()
+  }
+
   onChangeSort() {
     this.sort = this.inputProizvodSort.nativeElement.value
     this.ngOnChanges()
@@ -101,6 +134,11 @@ export class ProizvodiComponent implements OnInit, OnChanges {
 
   onChangeRedosled() {
     this.redosledSortiranja = parseInt(this.inputProizvodRedosledSortiranja.nativeElement.value)
+    this.ngOnChanges()
+  }
+
+  onChangeBrojProizvodaPoStranici() {
+    this.itemsPerPage = parseInt(this.inputBrojProizvodaPoStranici.nativeElement.value)
     this.ngOnChanges()
   }
 

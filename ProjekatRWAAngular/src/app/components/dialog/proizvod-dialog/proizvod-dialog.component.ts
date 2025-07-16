@@ -74,16 +74,17 @@ export class ProizvodDialogComponent implements OnInit {
       const formInputDataGroup = this.form.get('formInputData') as FormGroup
       formInputDataGroup.reset()
 
-      if (tipProizvoda !== '') {
+      if (tipProizvoda === 'RacunarskaKomponenta') {
         formInputDataGroup.addControl('type', this.fb.control('', Validators.required))
 
         formInputDataGroup.get('type')?.valueChanges.subscribe(type => {
           this.addControlsForType(type!, formInputDataGroup)
         })
       }
-      //else {
-      //  formInputDataGroup.removeControl('type')
-      //}
+      else {
+        formInputDataGroup.removeControl('type')
+        this.type = ""
+      }
     })
 
     if (this.mode === 1) {

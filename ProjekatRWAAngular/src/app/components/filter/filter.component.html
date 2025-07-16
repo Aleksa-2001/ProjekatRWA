@@ -1,5 +1,5 @@
 <div class="sticky-top">
-    <div *ngIf="!sakrijIzborPrikaza" class="row row-gap-1">
+    <div *ngIf="!sakrijIzborPrikaza && !(brojProdavnica === 0 || brojProizvoda === 0)" class="row row-gap-1">
         <div class="col-12 d-md-none">
             <hr class="mt-0 mb-1">
         </div>
@@ -21,7 +21,7 @@
     </div>
 
     <div *ngIf="brojProdavnica > 1 && prikaziProdavnice">
-        <hr *ngIf="!sakrijIzborPrikaza" class="my-2">
+        <hr *ngIf="!sakrijIzborPrikaza && !(brojProdavnica === 0 || brojProizvoda === 0)" class="my-2">
 
         <div class="row row-gap-1">
             <h5 class="col-12 mb-0">Prodavnica</h5>
@@ -35,7 +35,7 @@
     </div>
 
     <div *ngIf="brojProizvoda > 1 && prikaziProizvode">
-        <hr *ngIf="!sakrijIzborPrikaza" class="my-2">
+        <hr *ngIf="!sakrijIzborPrikaza && !(brojProdavnica === 0 || brojProizvoda === 0)" class="my-2">
 
         <div class="row row-gap-1">
             <h5 class="col-12 mb-0">Cena (u RSD)</h5>

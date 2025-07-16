@@ -19,6 +19,10 @@ export class ProdavniceComponent implements OnInit, OnChanges {
   prodavnice$: Observable<readonly Prodavnica[]> = of([])
   selectedProdavnice$: Observable<readonly Prodavnica[]> = of([])
 
+  paginationList: number[] = []
+  itemsPerPage: number = 6
+  currentPage: number = 1
+
   @Input() search: string = ''
   @Input() selectedNaziviProdavnica: string[] = []
 
@@ -26,6 +30,7 @@ export class ProdavniceComponent implements OnInit, OnChanges {
 
   @ViewChild('inputProdavnicaSort') inputProdavnicaSort!: ElementRef<HTMLSelectElement>
   @ViewChild('inputProdavnicaRedosledSortiranja') inputProdavnicaRedosledSortiranja!: ElementRef<HTMLSelectElement>
+  @ViewChild('inputBrojProdavnicaPoStranici') inputBrojProdavnicaPoStranici!: ElementRef<HTMLSelectElement>
 
   sort: string = ""
   redosledSortiranja: number = 1
@@ -38,7 +43,17 @@ export class ProdavniceComponent implements OnInit, OnChanges {
 
     this.selectedProdavnice$.pipe(
       filter(prodavnice => !!prodavnice),
-      tap(prodavnice => this.brojProdavnica.emit(prodavnice.length))
+      tap(prodavnice => {
+        this.brojProdavnica.emit(prodavnice.length)
+
+        console.log(prodavnice.length)
+
+        const numberOfPages = Math.ceil(prodavnice.length / this.itemsPerPage)
+        this.paginationList = []
+        for (let i = 1; i <= numberOfPages; i++) {
+          this.paginationList.push(i)
+        }
+      })
     ).subscribe()
   }
 
@@ -58,11 +73,28 @@ export class ProdavniceComponent implements OnInit, OnChanges {
 
         if (this.sort === "brojRecenzija") filteredProdavnice.sort((a, b) => (a as any).brojRecenzija > (b as any).brojRecenzija ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
         if (this.sort === "prosecnaOcena") filteredProdavnice.sort((a, b) => (a as any).prosecnaOcena > (b as any).prosecnaOcena ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
-
+        
         //this.brojProdavnica.emit(filteredProdavnice.length)
-        return filteredProdavnice
+
+        const numberOfPages = Math.ceil(filteredProdavnice.length / this.itemsPerPage)
+        this.paginationList = []
+        for (let i = 1; i <= numberOfPages; i++) {
+          this.paginationList.push(i)
+        }
+
+        if (this.currentPage > this.paginationList.length) this.currentPage = this.paginationList.length ? this.paginationList.length : 1
+
+        const start = (this.currentPage - 1) * this.itemsPerPage
+        const end = start + this.itemsPerPage
+        
+        return filteredProdavnice.slice(start, end)
       })
     )
+  }
+
+  selectPage(page: number) {
+    this.currentPage = page
+    this.ngOnChanges()
   }
 
   onChangeSort() {
@@ -72,6 +104,11 @@ export class ProdavniceComponent implements OnInit, OnChanges {
 
   onChangeRedosled() {
     this.redosledSortiranja = parseInt(this.inputProdavnicaRedosledSortiranja.nativeElement.value)
+    this.ngOnChanges()
+  }
+
+  onChangeBrojProdavnicaPoStranici() {
+    this.itemsPerPage = parseInt(this.inputBrojProdavnicaPoStranici.nativeElement.value)
     this.ngOnChanges()
   }
 

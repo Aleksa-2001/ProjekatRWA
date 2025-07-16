@@ -16,7 +16,7 @@
     </div>
 </div>
 
-<div *ngIf="profileMode" class="profile-mode row border border-primary rounded-3 overflow-hidden p-2 row-gap-1 row-gap-md-0" [routerLink]="recenzija.prodavnica ? ['/ng/prodavnica', recenzija.prodavnica.id] : ['/ng/proizvod', recenzija.proizvod.id]">
+<div *ngIf="profileMode" class="profile-mode row border border-primary rounded-3 overflow-hidden p-2 row-gap-1 row-gap-md-0" [routerLink]="recenzija.prodavnica ? ['/prodavnica', recenzija.prodavnica.id] : ['/proizvod', recenzija.proizvod.id]">
     <div class="col-12 p-0">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center row-gap-1">
             <h4 *ngIf="recenzija.prodavnica" class="m-0">{{recenzija.prodavnica.naziv}}</h4>
