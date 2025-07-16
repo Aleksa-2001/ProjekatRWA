@@ -1,11 +1,17 @@
 <div [formGroup]="formGroup">
     <div class="mb-2">
-        <label for="inputFrekvencija">Frekvencija (u MHz)</label>
+        <label for="inputFrekvencija">Frekvencija (u MHz)*</label>
         <input id="inputFrekvencija" class="form-control border-secondary" type="number" formControlName="frekvencija" min="0" placeholder="Frekvencija (u MHz)" />
+        <small class="text-danger" *ngIf="formGroup.controls['frekvencija'].dirty && formGroup.hasError('required', 'frekvencija')">
+            *Frekvencija je obavezno polje
+        </small>
     </div>
 
     <div>
-        <label for="inputVRAM">VRAM (u GB)</label>
+        <label for="inputVRAM">VRAM (u GB)*</label>
         <input id="inputVRAM" class="form-control border-secondary" type="number" formControlName="VRAM" min="0" placeholder="VRAM (u GB)" />
+        <small class="text-danger" *ngIf="formGroup.controls['VRAM'].dirty && formGroup.hasError('required', 'VRAM')">
+            *VRAM je obavezno polje
+        </small>
     </div>
 </div>

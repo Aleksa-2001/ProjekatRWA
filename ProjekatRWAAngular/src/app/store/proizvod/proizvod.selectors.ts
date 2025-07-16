@@ -36,7 +36,9 @@ export const selectTipoviProizvoda = createSelector(
 
 export const selectType = createSelector(
     selectProizvodi,
-    (proizvodi) => [...new Set(proizvodi.map(proizvod => proizvod.type))].sort((a, b) => a.toLowerCase() < b.toLowerCase() ? -1 : 1)
+    (proizvodi) => [...new Set(proizvodi.map(proizvod => proizvod.type))]
+        .filter(proizvod => proizvod !== "Racunar")
+        .sort((a, b) => a.toLowerCase() < b.toLowerCase() ? -1 : 1)
 )
 
 export const selectProizvodjaci = createSelector(

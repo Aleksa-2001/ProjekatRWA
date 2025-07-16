@@ -1,21 +1,33 @@
 <div [formGroup]="formGroup">
     <div class="mb-2">
-        <label for="inputSocket">Socket</label>
+        <label for="inputSocket">Socket*</label>
         <input id="inputSocket" class="form-control border-secondary" type="text" formControlName="socket" placeholder="Socket" />
+        <small class="text-danger" *ngIf="formGroup.controls['socket'].dirty && formGroup.hasError('required', 'socket')">
+            *Socket je obavezno polje
+        </small>
     </div>
 
     <div class="mb-2">
-        <label for="inputFrekvencija">Frekvencija (u GHz)</label>
+        <label for="inputFrekvencija">Frekvencija (u GHz)*</label>
         <input id="inputFrekvencija" class="form-control border-secondary" type="number" formControlName="frekvencija" min="0" max="10" step="0.1" placeholder="Frekvencija (u GHz)" />
+        <small class="text-danger" *ngIf="formGroup.controls['frekvencija'].dirty && formGroup.hasError('required', 'frekvencija')">
+            *Frekvencija je obavezno polje
+        </small>
     </div>
 
     <div class="mb-2">
-        <label for="inputBrojJezgara">Broj jezgara</label>
+        <label for="inputBrojJezgara">Broj jezgara*</label>
         <input id="inputBrojJezgara" class="form-control border-secondary" type="number" formControlName="brojJezgara" min="0" placeholder="Broj jezgara" />
+        <small class="text-danger" *ngIf="formGroup.controls['brojJezgara'].dirty && formGroup.hasError('required', 'brojJezgara')">
+            *Broj jezgara je obavezno polje
+        </small>
     </div>
 
     <div>
-        <label for="inputBrojNiti">Broj niti</label>
+        <label for="inputBrojNiti">Broj niti*</label>
         <input id="inputBrojNiti" class="form-control border-secondary" type="number" formControlName="brojNiti" min="0" placeholder="Broj niti" />
+        <small class="text-danger" *ngIf="formGroup.controls['brojNiti'].dirty && formGroup.hasError('required', 'brojNiti')">
+            *Broj niti je obavezno polje
+        </small>
     </div>
 </div>

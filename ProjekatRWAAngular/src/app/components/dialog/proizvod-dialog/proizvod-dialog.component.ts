@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app-state';
 import { selectSelectedProdavnica } from '../../../store/prodavnica/prodavnica.selectors';
-import { filter, Observable, of, take, tap } from 'rxjs';
+import { filter, Observable, of, switchMap, take, tap } from 'rxjs';
 import { selectSelectedProizvod } from '../../../store/proizvod/proizvod.selectors';
 import { Prodavnica } from '../../../models/prodavnica';
 import { CPUFormComponent } from "./komponente/cpu-form/cpu-form.component";
@@ -64,27 +64,37 @@ export class ProizvodDialogComponent implements OnInit {
       proizvodjac: ['', Validators.required],
       naziv: ['', Validators.required],
       cena: ['', Validators.required],
-      opis: [''],
-      slika: [''],
+      opis: [],
+      slika: [],
       formInputData: this.fb.group([])
     })
 
-    //TODO: Ukloniti ugnjezdeni subscribe
-    this.form.get('tipProizvoda')?.valueChanges.subscribe(tipProizvoda => {
-      const formInputDataGroup = this.form.get('formInputData') as FormGroup
-      formInputDataGroup.reset()
+    this.form.get('tipProizvoda')!.valueChanges.pipe(
+      tap(tipProizvoda => {
+        this.formInputData.reset()
 
-      if (tipProizvoda === 'RacunarskaKomponenta') {
-        formInputDataGroup.addControl('type', this.fb.control('', Validators.required))
-
-        formInputDataGroup.get('type')?.valueChanges.subscribe(type => {
-          this.addControlsForType(type!, formInputDataGroup)
-        })
-      }
-      else {
-        formInputDataGroup.removeControl('type')
-        this.type = ""
-      }
+        if (tipProizvoda === "Racunar") {
+          this.type = "Racunar"
+          this.formInputData.addControl('type', this.fb.control('', Validators.required))
+          this.formInputData.get('type')!.setValue(this.type)
+        }
+        else if (tipProizvoda === "RacunarskaKomponenta") {
+          this.type = ""
+          this.formInputData.addControl('type', this.fb.control('', Validators.required))
+          this.formInputData.get('type')!.setValue(this.type)
+        }
+        else {
+          this.type = ""
+          this.formInputData.removeControl('type')
+        }
+      }),
+      switchMap(tipProizvoda => {
+        return tipProizvoda === "RacunarskaKomponenta" ? this.form.get('formInputData.type')!.valueChanges : of(null)
+      }),
+      filter(type => !!type)
+    ).subscribe(type => {
+      this.type = type
+      if (this.type) this.addControlsForType(this.type, this.formInputData)
     })
 
     if (this.mode === 1) {
@@ -115,10 +125,10 @@ export class ProizvodDialogComponent implements OnInit {
 
           const kontrole = komponentaFormMetadata[proizvod.type]
           if (kontrole) {
-            const patchObj: any = {};
+            const patchObj: any = { }
             for (const key of Object.keys(kontrole())) {
               if (key in proizvod) {
-                patchObj[key] = (proizvod as any)[key];
+                patchObj[key] = (proizvod as any)[key]
               }
             }
 
@@ -208,13 +218,13 @@ export class ProizvodDialogComponent implements OnInit {
         proizvodjac: proizvod.proizvodjac,
         naziv: proizvod.naziv,
         cena: proizvod.cena,
-        opis: proizvod.opis ?? "",
-        slika: (proizvod.slika && this.filename) ? proizvod.slika : "",
+        opis: proizvod.opis,// ?? "",
+        slika: (proizvod.slika && this.filename) ? proizvod.slika : null,//"",
         prodavnica: this.prodavnica,
         ...this.formInputData.getRawValue()
       }
 
-      //console.log(proizvodData)
+      console.log(proizvodData)
 
       if (this.mode === 1) {
         proizvodData.slika = this.generatePath(path, this.filename, this.proizvodID)

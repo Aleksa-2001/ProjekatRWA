@@ -12,13 +12,13 @@ export class MaticnaPloca extends RacunarskaKomponenta {
     @Column()
     brojRAMSlotova: number
 
-    @Column()
+    @Column({ nullable: true })
     brojUSB20Portova: number
 
-    @Column()
+    @Column({ nullable: true })
     brojUSB30Portova: number
 
-    @Column()
+    @Column({ nullable: true })
     brojUSB31Portova: number
     
 }

@@ -1,9 +1,10 @@
+import { NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-ram-form',
-  imports: [ReactiveFormsModule],
+  imports: [NgIf, ReactiveFormsModule],
   templateUrl: './ram-form.component.html',
   styleUrl: './ram-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

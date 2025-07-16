@@ -1,4 +1,4 @@
-<div *ngIf="!profileMode" class="row border border-primary rounded-3 overflow-hidden p-2 gap-1 gap-md-0" [ngClass]="{ 'gap-md-2': ((isAdmin$ | async) || (user$ | async)?.userID === recenzija.user.userID) }">
+<div *ngIf="!profileMode" class="row border border-primary rounded-3 overflow-hidden p-2 gap-2 gap-md-0" [ngClass]="{ 'gap-md-2': ((isAdmin$ | async) || (user$ | async)?.userID === recenzija.user.userID) }">
     <div class="col-12 p-0">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center row-gap-1">
             <h4 class="m-0">{{recenzija.user.firstName}} {{recenzija.user.lastName}} ({{recenzija.user.username}})</h4>
@@ -6,9 +6,9 @@
         </div>
     </div>
     <div class="col-12 p-0">
-        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center" [ngClass]="{ 'row-gap-1': recenzija.komentar }">
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center" [ngClass]="{ 'gap-2': recenzija.komentar }">
             <p class="m-0">{{recenzija.komentar}}</p>
-            <div *ngIf="(isAdmin$ | async) || (user$ | async)?.userID === recenzija.user.userID" class="d-flex flex-row column-gap-2">
+            <div *ngIf="(isAdmin$ | async) || (user$ | async)?.userID === recenzija.user.userID" class="d-flex flex-row column-gap-2 align-self-sm-end">
                 <button class="flex-fill btn btn-warning" data-bs-toggle="modal" data-bs-target="#recenzijaModalDialogEdit" (click)="selectRecenzija(recenzija.id)"><i class="bi bi-pencil"></i></button>
                 <button class="flex-fill btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModalDialogRecenzija" (click)="selectRecenzija(recenzija.id)"><i class="bi bi-trash"></i></button>
             </div>

@@ -46,8 +46,6 @@ export class ProdavniceComponent implements OnInit, OnChanges {
       tap(prodavnice => {
         this.brojProdavnica.emit(prodavnice.length)
 
-        console.log(prodavnice.length)
-
         const numberOfPages = Math.ceil(prodavnice.length / this.itemsPerPage)
         this.paginationList = []
         for (let i = 1; i <= numberOfPages; i++) {

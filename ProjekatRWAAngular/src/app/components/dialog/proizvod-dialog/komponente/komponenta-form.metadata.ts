@@ -15,19 +15,19 @@ export const komponentaFormMetadata: Record<string, () => { [key: string]: any }
     tipMemorije: ['', Validators.required],
     brojModula: ['', Validators.required],
     velicina: ['', Validators.required],
-    frekvencija: ['', Validators.required],
+    frekvencija: ['', Validators.required]
   }),
   MaticnaPloca: () => ({
     tipMaticnePloce: ['', Validators.required],
     socket: ['', Validators.required], 
     brojRAMSlotova: ['', Validators.required], 
-    brojUSB20Portova: ['', Validators.required],
-    brojUSB30Portova: ['', Validators.required],
-    brojUSB31Portova: ['', Validators.required],
+    brojUSB20Portova: [],
+    brojUSB30Portova: [],
+    brojUSB31Portova: []
   }),
   Skladiste: () => ({
     tipMemorije: ['', Validators.required], 
-    velicina: ['', Validators.required],
+    velicina: ['', Validators.required]
   }),
   Napajanje: () => ({
     snaga: ['', Validators.required],

@@ -1,9 +1,10 @@
+import { NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-napajanje-form',
-  imports: [ReactiveFormsModule],
+  imports: [NgIf, ReactiveFormsModule],
   templateUrl: './napajanje-form.component.html',
   styleUrl: './napajanje-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
