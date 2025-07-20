@@ -38,7 +38,7 @@ export class ProdavnicePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.isAdmin$ = this.store.select(isAdmin)
-    this.title.setTitle("Angular - ProjekatRWA")
+    this.title.setTitle("Prodavnice - ProjekatRWA")
 
     this.store.dispatch(ProdavniceActions.loadItems())
   }

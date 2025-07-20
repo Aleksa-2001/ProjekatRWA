@@ -11,6 +11,7 @@
                 <span *ngSwitchCase="'MaticnaPloca'">Matična ploča</span>
                 <span *ngSwitchCase="'Skladiste'">Skladišna memorija</span>
                 <span *ngSwitchCase="'Napajanje'">Napajanje</span>
+                <span *ngSwitchCase="'Kuciste'">Kućište</span>
                 <span *ngSwitchDefault>Tip komponente nije pronađen!</span>
             </h5>
         </div>
@@ -22,5 +23,6 @@
         <app-maticna-ploca *ngSwitchCase="'MaticnaPloca'" [maticnaPloca]="getMaticnaPloca()"></app-maticna-ploca>
         <app-skladiste *ngSwitchCase="'Skladiste'" [skladiste]="getSkladiste()"></app-skladiste>
         <app-napajanje *ngSwitchCase="'Napajanje'" [napajanje]="getNapajanje()"></app-napajanje>
+        <app-kuciste *ngSwitchCase="'Kuciste'" [kuciste]="getKuciste()"></app-kuciste>
     </div>
 </div>

@@ -45,6 +45,8 @@ export class FilterComponent implements OnInit, OnChanges {
   @Input() prikaziProdavnice: boolean = true
   @Input() prikaziProizvode: boolean = true
 
+  @Input() selectMode: boolean = false
+
   selectedNaziviProdavnica: string[] = []
 
   selectedCenaRange: { min: number, max: number } = { min: 0, max: Infinity }

@@ -74,7 +74,6 @@ export class ConfirmDialogComponent implements OnInit {
         take(1),
         tap(proizvod => {
           this.store.dispatch(ProizvodiActions.deleteItem({ selectedProizvodID: proizvod.id }))
-          this.router.navigate(["ng/prodavnica", proizvod.prodavnica.id])
         })
       ).subscribe()
     }

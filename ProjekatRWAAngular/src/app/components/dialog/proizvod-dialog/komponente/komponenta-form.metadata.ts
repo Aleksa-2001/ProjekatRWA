@@ -32,5 +32,11 @@ export const komponentaFormMetadata: Record<string, () => { [key: string]: any }
   Napajanje: () => ({
     snaga: ['', Validators.required],
     modularno: [false]
+  }),
+  Kuciste: () => ({
+    tipKucista: ['', Validators.required],
+    duzina: ['', Validators.required],
+    sirina: ['', Validators.required],
+    visina: ['', Validators.required]
   })
 }

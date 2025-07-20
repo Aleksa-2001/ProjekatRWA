@@ -108,15 +108,15 @@ export class ProizvodiService {
     }
 
     public async delete(proizvodID: number) {
-        if (await this.proizvodRepository.existsBy({ id: proizvodID })) {
-            const proizvod = await this.proizvodRepository.findOneBy({ id: proizvodID })
+        const proizvod = await this.getProizvodByID(proizvodID)
+        if (proizvod) {
             return await this.proizvodRepository.delete(proizvodID).then(res => {
                 if (res.affected === 1) {
                     if (proizvod.slika) {
                         const putanja = join(__dirname, '..', '..', '..', proizvod.slika)
                         if (fs.existsSync(putanja)) fs.unlinkSync(putanja)
                     }
-                    return proizvodID
+                    return { proizvodID: proizvodID, prodavnicaID: proizvod.prodavnica.id }
                 }
             })
         }

@@ -8,12 +8,14 @@ import { CommonModule, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@an
 import { selectSelectedProizvod } from '../../../store/proizvod/proizvod.selectors';
 import { NotFoundComponent } from "../../../shared/components/not-found/not-found.component";
 import { KomponentaPageComponent } from "./komponenta-page/komponenta-page.component";
+import { RacunarPageComponent } from "./racunar-page/racunar-page.component";
 import { StarsComponent } from "../../stars/stars.component";
 import { Title } from '@angular/platform-browser';
 import { isAdmin } from '../../../store/auth/auth.selectors';
 import { ProizvodDialogComponent } from "../../dialog/proizvod-dialog/proizvod-dialog.component";
 import { ConfirmDialogComponent } from "../../dialog/confirm-dialog/confirm-dialog.component";
 import { RecenzijeComponent } from "../../recenzije/recenzije.component";
+import { Racunar } from '../../../models/racunar';
 import * as ProizvodiActions from '../../../store/proizvod/proizvod.actions'
 import * as RecenzijeActions from '../../../store/recenzija/recenzija.actions'
 
@@ -31,7 +33,8 @@ import * as RecenzijeActions from '../../../store/recenzija/recenzija.actions'
     ProizvodDialogComponent,
     ConfirmDialogComponent,
     RecenzijeComponent,
-    StarsComponent
+    StarsComponent,
+    RacunarPageComponent
 ],
   templateUrl: './proizvod-page.component.html',
   styleUrl: './proizvod-page.component.scss',
@@ -78,6 +81,10 @@ export class ProizvodPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.store.dispatch(ProizvodiActions.deselectSelectedItem())
+  }
+
+  getRacunar(proizvod: Proizvod) {
+    return proizvod as Racunar
   }
 
   setImage(slika: string) {

@@ -1,0 +1,31 @@
+<div class="container my-3">
+    <h1>Izaberi</h1>
+    <input (input)="onChangeInput()" #inputSearchProizvodi id="inputSearchProizvodi" class="form-control form-control-lg border-secondary" placeholder="Pretraži proizvode..." />
+    <hr>
+    <div class="row row-gap-3">
+        <app-filter *ngIf="brojProizvoda > 1" class="filter-menu col-12 col-md-3 col-xl-2 px-0" 
+            [sakrijIzborPrikaza]="true" 
+            [prikaziProdavnice]="false" 
+            [selectMode]="true" 
+            [brojProizvoda]="brojProizvoda" 
+            [cenaRange]="cenaRange" 
+            (selectedCenaRangeOutput)="getSelectedCenaRange($event)" 
+            (selectedTipoviProizvodaOutput)="getSelectedTipoviProizvoda($event)" 
+            (selectedTypesOutput)="getSelectedTypes($event)" 
+            (selectedProizvodjaciOutput)="getSelectedProizvodjaci($event)"
+        ></app-filter>
+        <div class="col">
+            <app-proizvodi 
+                [search]="search" 
+                [selectMode]="true" 
+                [selectedRacunarID]="proizvodID"
+                [selectedCenaRange]="selectedCenaRange" 
+                [selectedTipoviProizvoda]="['RacunarskaKomponenta']" 
+                [selectedTypes]="[type]" 
+                [selectedProizvodjaci]="selectedProizvodjaci" 
+                (brojProizvoda)="getBrojProizvoda($event)" 
+                (cenaRange)="getCenaRange($event)"
+            ></app-proizvodi>
+        </div>
+    </div>
+</div>

@@ -38,7 +38,7 @@
         </div>
     </div>
     <div class="p-0 col-12" [ngClass]="{ 'col-sm-6 col-lg-4 col-xl-3': displayMode === 2 }" *ngFor="let proizvod of proizvodi">
-        <app-proizvod-item [proizvod]="proizvod" [displayMode]="displayMode"></app-proizvod-item>
+        <app-proizvod-item [proizvod]="proizvod" [displayMode]="displayMode" [selectMode]="selectMode" [selectedRacunarID]="selectedRacunarID"></app-proizvod-item>
     </div>
     <div *ngIf="proizvodi.length > 0" class="col-12 d-flex">
         <ul class="pagination mx-auto mt-1 mb-0 border border-primary rounded-2">

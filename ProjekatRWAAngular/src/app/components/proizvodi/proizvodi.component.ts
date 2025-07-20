@@ -33,6 +33,8 @@ export class ProizvodiComponent implements OnInit, OnChanges {
   currentPage: number = 1
   
   @Input() search: string = ''
+  @Input() selectMode: boolean = false
+  @Input() selectedRacunarID: number = -1
   @Input() selectedCenaRange: { min: number, max: number } = { min: 0, max: Infinity }
   @Input() selectedTypes: string[] = []
   @Input() selectedTipoviProizvoda: string[] = []

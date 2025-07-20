@@ -69,7 +69,8 @@ export const updateItem = createAction(
     props<{
         selectedProizvodID: number,
         selectedProizvod: Proizvod
-        file?: FormData
+        file?: FormData,
+        selectMode?: boolean
     }>()
 )
 

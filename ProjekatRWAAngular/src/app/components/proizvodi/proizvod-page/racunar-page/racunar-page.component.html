@@ -1,0 +1,73 @@
+<div *ngIf="racunar">
+    <div class="row">
+        <div class="col col-5">
+            <h5>Matična ploča</h5>
+        </div>
+        <div class="col">
+            <h5 *ngIf="racunar.maticnaPloca"><a [routerLink]="['/proizvod', racunar.maticnaPloca.id]" (click)="navigate(racunar.maticnaPloca.id)" class="text-primary">{{racunar.maticnaPloca.naziv}}</a></h5>
+            <button [routerLink]="['/select', racunar.id]" [queryParams]="{ type: 'MaticnaPloca' }" class="btn btn-sm btn-primary" *ngIf="(isAdmin$ | async) && !racunar.maticnaPloca"><i class="bi bi-plus-lg me-2"></i>Dodaj matičnu ploču</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-5">
+            <h5>Procesor</h5>
+        </div>
+        <div class="col">
+            <h5 *ngIf="racunar.cpu"><a [routerLink]="['/proizvod', racunar.cpu.id]" (click)="navigate(racunar.cpu.id)" class="text-primary">{{racunar.cpu.naziv}}</a></h5>
+            <button [routerLink]="['/select', racunar.id]" [queryParams]="{ type: 'CPU' }" class="btn btn-sm btn-primary" *ngIf="(isAdmin$ | async) && !racunar.cpu"><i class="bi bi-plus-lg me-2"></i>Dodaj procesor</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-5">
+            <h5>RAM memorija</h5>
+        </div>
+        <div class="col">
+            <h5 *ngIf="racunar.ram"><a [routerLink]="['/proizvod', racunar.ram.id]" (click)="navigate(racunar.ram.id)" class="text-primary">{{racunar.ram.naziv}}</a></h5>
+            <button [routerLink]="['/select', racunar.id]" [queryParams]="{ type: 'RAM' }" class="btn btn-sm btn-primary" *ngIf="(isAdmin$ | async) && !racunar.ram"><i class="bi bi-plus-lg me-2"></i>Dodaj RAM memoriju</button>
+        </div>
+    </div>
+    <div class="row" *ngFor="let item of racunar.skladiste; let i = index">
+        <div class="col col-5">
+            <h5 *ngIf="i === 0">Skladišna memorija</h5>
+        </div>
+        <div class="col">
+            <h5 *ngIf="item"><a [routerLink]="['/proizvod', item.id]" (click)="navigate(item.id)" class="text-primary">{{item.naziv}}</a></h5>
+            <button [routerLink]="['/select', racunar.id]" [queryParams]="{ type: 'Skladiste' }" class="btn btn-sm btn-primary" *ngIf="(isAdmin$ | async) && i === racunar.skladiste.length - 1"><i class="bi bi-plus-lg me-2"></i>Dodaj skladišnu memoriju</button>
+        </div>
+    </div>
+    <div class="row" *ngIf="!racunar.skladiste">
+        <div class="col col-5">
+            <h5>Skladišna memorija</h5>
+        </div>
+        <div class="col">
+            <button [routerLink]="['/select', racunar.id]" [queryParams]="{ type: 'Skladiste' }" class="btn btn-sm btn-primary" *ngIf="isAdmin$ | async"><i class="bi bi-plus-lg me-2"></i>Dodaj skladišnu memoriju</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-5">
+            <h5>Grafička karta</h5>
+        </div>
+        <div class="col">
+            <h5 *ngIf="racunar.gpu"><a [routerLink]="['/proizvod', racunar.gpu.id]" (click)="navigate(racunar.gpu.id)" class="text-primary">{{racunar.gpu.naziv}}</a></h5>
+            <button [routerLink]="['/select', racunar.id]" [queryParams]="{ type: 'GPU' }" class="btn btn-sm btn-primary" *ngIf="(isAdmin$ | async) && !racunar.gpu"><i class="bi bi-plus-lg me-2"></i>Dodaj grafičku kartu</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-5">
+            <h5>Napajanje</h5>
+        </div>
+        <div class="col">
+            <h5 *ngIf="racunar.napajanje"><a [routerLink]="['/proizvod', racunar.napajanje.id]" (click)="navigate(racunar.napajanje.id)" class="text-primary">{{racunar.napajanje.naziv}}</a></h5>
+            <button [routerLink]="['/select', racunar.id]" [queryParams]="{ type: 'Napajanje' }" class="btn btn-sm btn-primary" *ngIf="(isAdmin$ | async) && !racunar.napajanje"><i class="bi bi-plus-lg me-2"></i>Dodaj napajanje</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-5">
+            <h5>Kućište</h5>
+        </div>
+        <div class="col">
+            <h5 *ngIf="racunar.kuciste"><a [routerLink]="['/proizvod', racunar.kuciste.id]" (click)="navigate(racunar.kuciste.id)" class="text-primary">{{racunar.kuciste.naziv}}</a></h5>
+            <button [routerLink]="['/select', racunar.id]" [queryParams]="{ type: 'Kuciste' }" class="btn btn-sm btn-primary" *ngIf="(isAdmin$ | async) && !racunar.kuciste"><i class="bi bi-plus-lg me-2"></i>Dodaj kućište</button>
+        </div>
+    </div>
+</div>

@@ -49,7 +49,7 @@
                         <textarea id="inputOpis" class="form-control border-secondary" rows="3" maxlength="1000" formControlName="opis" placeholder="Opis"></textarea>
                     </div>
 
-                    <div class="mb-2 mb-md-0">
+                    <div class="mb-md-0 mb-0" [ngClass]="{ 'mb-2': tipProizvoda === 'RacunarskaKomponenta' }">
                         <label for="inputSlika">Slika</label>
                         <input (change)="onFileSelected($event)" id="inputSlika" class="form-control border-secondary" type="file" accept="image/png, image/jpeg" formControlName="slika" #fileUpload />
                         <div class="file-upload d-flex align-items-center overflow-hidden border border-secondary rounded-2 position-relative">
@@ -61,8 +61,8 @@
                 </div>
 
                 <div *ngIf="tipProizvoda === 'RacunarskaKomponenta'" class="col-12 col-md-6" formGroupName="formInputData">
-                    <div class="mb-2">
-                        <label for="inputType">Tip računarske komponente</label>
+                    <div class="mb-0" [ngClass]="{ 'mb-2': type !== '' }">
+                        <label for="inputType">Tip računarske komponente*</label>
                         <select (change)="onChangeTipKomponente()" id="inputType" class="form-select border-secondary" formControlName="type" aria-label="Izaberite tip računarske komponente...">
                             <option value="" selected>Izaberite tip računarske komponente...</option>
                             <option value="CPU">Procesor</option>
@@ -71,9 +71,10 @@
                             <option value="MaticnaPloca">Matična ploča</option>
                             <option value="Skladiste">Skladišna memorija</option>
                             <option value="Napajanje">Napajanje</option>
+                            <option value="Kuciste">Kućište</option>
                         </select>
                         <small class="text-danger" *ngIf="formInputData.controls['type'].dirty && formInputData.hasError('required', 'type')">
-                            *Tip je obavezno polje
+                            *Tip računarske komponente je obavezno polje
                         </small>
                     </div>
 
@@ -83,6 +84,7 @@
                     <app-maticna-ploca-form *ngIf="type === 'MaticnaPloca'" [formGroup]="formInputData"></app-maticna-ploca-form>
                     <app-skladiste-form *ngIf="type === 'Skladiste'" [formGroup]="formInputData"></app-skladiste-form>
                     <app-napajanje-form *ngIf="type === 'Napajanje'" [formGroup]="formInputData"></app-napajanje-form>
+                    <app-kuciste-form *ngIf="type === 'Kuciste'" [formGroup]="formInputData"></app-kuciste-form>
                 </div>
 
             </div>

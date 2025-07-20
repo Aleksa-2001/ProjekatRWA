@@ -14,6 +14,7 @@ import { RAMFormComponent } from "./komponente/ram-form/ram-form.component";
 import { MaticnaPlocaFormComponent } from "./komponente/maticna-ploca-form/maticna-ploca-form.component";
 import { SkladisteFormComponent } from "./komponente/skladiste-form/skladiste-form.component";
 import { NapajanjeFormComponent } from "./komponente/napajanje-form/napajanje-form.component";
+import { KucisteFormComponent } from "./komponente/kuciste-form/kuciste-form.component";
 import { komponentaFormMetadata } from './komponente/komponenta-form.metadata';
 import * as ProizvodiActions from "../../../store/proizvod/proizvod.actions"
 
@@ -28,7 +29,8 @@ import * as ProizvodiActions from "../../../store/proizvod/proizvod.actions"
     RAMFormComponent,
     MaticnaPlocaFormComponent,
     SkladisteFormComponent,
-    NapajanjeFormComponent
+    NapajanjeFormComponent,
+    KucisteFormComponent
 ],
   templateUrl: './proizvod-dialog.component.html',
   styleUrl: './proizvod-dialog.component.scss',
@@ -224,7 +226,7 @@ export class ProizvodDialogComponent implements OnInit {
         ...this.formInputData.getRawValue()
       }
 
-      console.log(proizvodData)
+      //console.log(proizvodData)
 
       if (this.mode === 1) {
         proizvodData.slika = this.generatePath(path, this.filename, this.proizvodID)

@@ -13,6 +13,8 @@ import { Skladiste } from '../../../../models/komponente/skladiste';
 import { Napajanje } from '../../../../models/komponente/napajanje';
 import { SkladisteComponent } from "./skladiste/skladiste.component";
 import { NapajanjeComponent } from "./napajanje/napajanje.component";
+import { KucisteComponent } from "./kuciste/kuciste.component";
+import { Kuciste } from '../../../../models/komponente/kuciste';
 
 @Component({
   selector: 'app-komponenta-page',
@@ -26,7 +28,8 @@ import { NapajanjeComponent } from "./napajanje/napajanje.component";
     RAMComponent,
     MaticnaPlocaComponent,
     SkladisteComponent,
-    NapajanjeComponent
+    NapajanjeComponent,
+    KucisteComponent
 ],
   templateUrl: './komponenta-page.component.html',
   styleUrl: './komponenta-page.component.scss',
@@ -58,6 +61,10 @@ export class KomponentaPageComponent {
 
   getNapajanje(): Napajanje {
     return this.komponenta as Napajanje
+  }
+
+  getKuciste(): Kuciste {
+    return this.komponenta as Kuciste
   }
 
 }

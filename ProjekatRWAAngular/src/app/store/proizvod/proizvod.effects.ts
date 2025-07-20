@@ -3,12 +3,14 @@ import { Actions, createEffect, ofType } from "@ngrx/effects"
 import { ProizvodService } from "../../services/proizvod.service"
 import * as ProizvodiActions from "./proizvod.actions"
 import { Observable, of } from "rxjs"
-import { catchError, map, mergeMap } from "rxjs/operators"
+import { catchError, map, mergeMap, tap } from "rxjs/operators"
+import { Router } from "@angular/router"
 
 @Injectable()
 export class ProizvodiEffects {
     private actions$ = inject(Actions)
     private service = inject(ProizvodService)
+    private router = inject(Router)
 
     //constructor(private service: RacunarskaKomponentaService, private actions$: Actions) { }
 
@@ -63,13 +65,16 @@ export class ProizvodiEffects {
     updateProizvod$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ProizvodiActions.updateItem),
-            mergeMap(({ selectedProizvodID, selectedProizvod, file }) => this.service.updateProizvod(selectedProizvodID, selectedProizvod)
+            mergeMap(({ selectedProizvodID, selectedProizvod, file, selectMode }) => this.service.updateProizvod(selectedProizvodID, selectedProizvod)
                 .pipe(
-                    map((selectedProizvod) => (ProizvodiActions.updateItemSuccess({ 
-                        proizvod: { id: selectedProizvod.id, changes: selectedProizvod }, 
-                        selectedProizvod: selectedProizvod,
-                        file: file
-                    }))),
+                    map((selectedProizvod) => {
+                        if (selectMode) this.router.navigate(['/proizvod', selectedProizvodID])
+                        return ProizvodiActions.updateItemSuccess({ 
+                            proizvod: { id: selectedProizvod.id, changes: selectedProizvod }, 
+                            selectedProizvod: selectedProizvod,
+                            file: file
+                        }
+                    )}),
                     catchError(() => of({ type: "[Proizvod] Update error" }))
                 )
             )
@@ -81,7 +86,10 @@ export class ProizvodiEffects {
             ofType(ProizvodiActions.deleteItem),
             mergeMap(({ selectedProizvodID }) => this.service.deleteProizvod(selectedProizvodID)
                 .pipe(
-                    map((proizvodID) => (ProizvodiActions.deleteItemSuccess({proizvodID}))),
+                    map((data) => {
+                        this.router.navigate(["/prodavnica", data.prodavnicaID])
+                        return ProizvodiActions.deleteItemSuccess({proizvodID: data.proizvodID})
+                    }),
                     catchError(() => of({ type: "[Proizvod] Delete error" }))
                 )
             )

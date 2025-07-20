@@ -3,6 +3,19 @@ import { Proizvod } from '../../../models/proizvod';
 import { RouterModule } from '@angular/router';
 import { CommonModule, NgIf } from '@angular/common';
 import { StarsComponent } from "../../stars/stars.component";
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../store/app-state';
+import * as ProizvodiActions from '../../../store/proizvod/proizvod.actions'
+import { selectSelectedProizvod } from '../../../store/proizvod/proizvod.selectors';
+import { filter, map, take, tap } from 'rxjs';
+import { Racunar } from '../../../models/racunar';
+import { MaticnaPloca } from '../../../models/komponente/maticna-ploca';
+import { CPU } from '../../../models/komponente/cpu';
+import { RAM } from '../../../models/komponente/ram';
+import { Skladiste } from '../../../models/komponente/skladiste';
+import { GPU } from '../../../models/komponente/gpu';
+import { Napajanje } from '../../../models/komponente/napajanje';
+import { Kuciste } from '../../../models/komponente/kuciste';
 
 @Component({
   selector: 'app-proizvod-item',
@@ -15,13 +28,55 @@ export class ProizvodItemComponent {
 
   @Input() proizvod!: Proizvod
   @Input() displayMode!: number
+  @Input() selectMode!: boolean
+  @Input() selectedRacunarID!: number
 
   prosek: number = 0
   brojRecenzija: number = 0
 
+  constructor(private store: Store<AppState>) { }
+
   ngOnInit(): void {
     this.prosek = (this.proizvod as any).prosecnaOcena ?? 0
     this.brojRecenzija = (this.proizvod as any).brojRecenzija ?? 0
+  }
+
+  updateRacunar(type: string) {
+    this.store.select(selectSelectedProizvod).pipe(
+      filter(proizvod => !!proizvod),
+      take(1),
+      tap(proizvod => {
+        const racunar = { ...proizvod } as Racunar
+
+        switch (type) {
+          case 'MaticnaPloca':
+            racunar.maticnaPloca = this.proizvod as MaticnaPloca
+            break
+          case 'CPU':
+            racunar.cpu = this.proizvod as CPU
+            break
+          case 'RAM':
+            racunar.ram = this.proizvod as RAM
+            break
+          case 'Skladiste':
+            racunar.skladiste.push(this.proizvod as Skladiste)
+            break
+          case 'GPU':
+            racunar.gpu = this.proizvod as GPU
+            break
+          case 'Napajanje':
+            racunar.napajanje = this.proizvod as Napajanje
+            break
+          case 'Kuciste':
+            racunar.kuciste = this.proizvod as Kuciste
+            break
+        }
+
+        //console.log(racunar)
+
+        this.store.dispatch(ProizvodiActions.updateItem({ selectedProizvodID: this.selectedRacunarID, selectedProizvod: racunar, selectMode: this.selectMode }))
+      })
+    ).subscribe()
   }
 
 }

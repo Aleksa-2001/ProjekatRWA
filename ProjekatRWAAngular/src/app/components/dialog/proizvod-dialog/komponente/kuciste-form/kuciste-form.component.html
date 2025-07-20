@@ -1,0 +1,33 @@
+<div [formGroup]="formGroup">
+    <div class="mb-2">
+        <label for="inputTipKucista">Tip kućišta*</label>
+        <input id="inputTipKucista" class="form-control border-secondary" type="text" formControlName="tipKucista" placeholder="Tip kućišta" />
+        <small class="text-danger" *ngIf="formGroup.controls['tipKucista'].dirty && formGroup.hasError('required', 'tipKucista')">
+            *Tip kućišta je obavezno polje
+        </small>
+    </div>
+
+    <div class="mb-2">
+        <label for="inputDuzina">Dužina (u cm)*</label>
+        <input id="inputDuzina" class="form-control border-secondary" type="number" formControlName="duzina" min="0" max="1000" step="0.1" placeholder="Dužina (u cm)" />
+        <small class="text-danger" *ngIf="formGroup.controls['duzina'].dirty && formGroup.hasError('required', 'duzina')">
+            *Dužina je obavezno polje
+        </small>
+    </div>
+
+    <div class="mb-2">
+        <label for="inputSirina">Širina (u cm)*</label>
+        <input id="inputSirina" class="form-control border-secondary" type="number" formControlName="sirina" min="0" max="1000" step="0.1" placeholder="Širina (u cm)" />
+        <small class="text-danger" *ngIf="formGroup.controls['sirina'].dirty && formGroup.hasError('required', 'sirina')">
+            *Širina je obavezno polje
+        </small>
+    </div>
+
+    <div class="mb-2">
+        <label for="inputVisina">Visina (u cm)*</label>
+        <input id="inputVisina" class="form-control border-secondary" type="number" formControlName="visina" min="0" max="1000" step="0.1" placeholder="Visina (u cm)" />
+        <small class="text-danger" *ngIf="formGroup.controls['visina'].dirty && formGroup.hasError('required', 'visina')">
+            *Visina je obavezno polje
+        </small>
+    </div>
+</div>

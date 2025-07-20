@@ -52,7 +52,7 @@ export class ProizvodService {
 
     deleteProizvod(proizvodID: number) {
         return this.httpClient
-            .delete<number>(environment.apiUrl + `proizvod/${proizvodID}`)
+            .delete<{ proizvodID: number, prodavnicaID: number }>(environment.apiUrl + `proizvod/${proizvodID}`)
             .pipe(catchError(errorHandler))
     }
 

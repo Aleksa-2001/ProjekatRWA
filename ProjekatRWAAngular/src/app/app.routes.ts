@@ -11,6 +11,7 @@ import { ProdavnicaPageComponent } from './components/prodavnice/prodavnica-page
 import { ProizvodPageComponent } from './components/proizvodi/proizvod-page/proizvod-page.component';
 import { SearchPageComponent } from './components/search/search-page/search-page.component';
 import { ProdavnicePageComponent } from './components/prodavnice-page/prodavnice-page.component';
+import { SelectItemComponent } from './components/select-item/select-item.component';
 
 export const routes: Routes = [
     { path: "", component: HomeComponent, pathMatch: 'full' },
@@ -20,6 +21,8 @@ export const routes: Routes = [
     { path: "search", component: SearchPageComponent },
     { path: "prodavnica/:id", component: ProdavnicaPageComponent },
     { path: "proizvod/:id", component: ProizvodPageComponent },
+
+    { path: "select/:id", component: SelectItemComponent, canActivate: [AuthGuard, ValidateGuard] },
 
     { path: "login", component: AuthComponent, canActivate: [AuthRedirectGuard] },
     { path: "register", component: RegisterComponent, canActivate: [AuthRedirectGuard] },

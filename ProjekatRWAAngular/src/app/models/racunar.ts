@@ -6,6 +6,7 @@ import { RAM } from "./komponente/ram";
 import { MaticnaPloca } from "./komponente/maticna-ploca";
 import { Napajanje } from "./komponente/napajanje";
 import { Skladiste } from "./komponente/skladiste";
+import { Kuciste } from "./komponente/kuciste";
 
 export class Racunar extends Proizvod {
     
@@ -19,19 +20,21 @@ export class Racunar extends Proizvod {
         opis: string, 
         slika: string, 
         prodavnica: Prodavnica, 
-        maticnaPloca: MaticnaPloca,
-        cpu: CPU, 
-        ram: RAM, 
-        skladiste: Skladiste[], 
-        napajanje: Napajanje,
-        gpu: GPU
+        public maticnaPloca: MaticnaPloca | null,
+        public cpu: CPU | null, 
+        public ram: RAM | null, 
+        public skladiste: Skladiste[], 
+        public napajanje: Napajanje | null,
+        public gpu: GPU | null,
+        public kuciste: Kuciste | null
     ) {
         super(id, type, tipProizvoda, proizvodjac, naziv, cena, opis, slika, prodavnica)
-        maticnaPloca
-        cpu
-        ram
-        skladiste
-        napajanje
-        gpu
+        maticnaPloca = null
+        cpu = null
+        ram = null
+        skladiste = []
+        napajanje = null
+        gpu = null
+        kuciste = null
     }
 }
