@@ -1,6 +1,7 @@
 import { createAction, props } from "@ngrx/store";
 import { Proizvod } from "../../models/proizvod";
 import { Update } from "@ngrx/entity";
+import { Racunar } from "../../models/racunar";
 
 export const loadItems = createAction(
     "[Proizvod] Ucitaj listu",
@@ -51,7 +52,7 @@ export const deselectSelectedItem = createAction(
 export const addItem = createAction(
     "[Proizvod] Dodaj proizvod",
     props<{
-        proizvod: Proizvod
+        proizvod: Proizvod,
         file?: FormData
     }>()
 )
@@ -68,7 +69,7 @@ export const updateItem = createAction(
     "[Proizvod] Izmeni proizvod",
     props<{
         selectedProizvodID: number,
-        selectedProizvod: Proizvod
+        selectedProizvod: Proizvod,
         file?: FormData,
         selectMode?: boolean
     }>()
@@ -77,9 +78,25 @@ export const updateItem = createAction(
 export const updateItemSuccess = createAction(
     "[Proizvod] Izmena proizvoda je uspesna",
     props<{
-        proizvod: Update<Proizvod>
-        selectedProizvod: Proizvod
+        proizvod: Update<Proizvod>,
+        selectedProizvod: Proizvod,
         file?: FormData
+    }>()
+)
+
+export const updateRacunar = createAction(
+    "[Proizvod] Izmeni racunar",
+    props<{
+        selectedProizvodID: number,
+        selectedProizvod: Racunar
+    }>()
+)
+
+export const updateRacunarSuccess = createAction(
+    "[Proizvod] Izmena racunara je uspesna",
+    props<{
+        proizvod: Update<Racunar>,
+        selectedProizvod: Racunar
     }>()
 )
 

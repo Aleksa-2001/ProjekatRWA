@@ -47,34 +47,37 @@ export class ProizvodItemComponent {
       take(1),
       tap(proizvod => {
         const racunar = { ...proizvod } as Racunar
+        const data: any = { }
 
         switch (type) {
           case 'MaticnaPloca':
-            racunar.maticnaPloca = this.proizvod as MaticnaPloca
+            data.maticnaPloca = this.proizvod as MaticnaPloca
             break
           case 'CPU':
-            racunar.cpu = this.proizvod as CPU
+            data.cpu = this.proizvod as CPU
             break
           case 'RAM':
-            racunar.ram = this.proizvod as RAM
+            data.ram = this.proizvod as RAM
             break
           case 'Skladiste':
-            racunar.skladiste.push(this.proizvod as Skladiste)
+            data.skladiste = []
+            racunar.skladiste.forEach(item => data.skladiste.push(item.id))
+            data.skladiste.push(this.proizvod.id)
             break
           case 'GPU':
-            racunar.gpu = this.proizvod as GPU
+            data.gpu = this.proizvod as GPU
             break
           case 'Napajanje':
-            racunar.napajanje = this.proizvod as Napajanje
+            data.napajanje = this.proizvod as Napajanje
             break
           case 'Kuciste':
-            racunar.kuciste = this.proizvod as Kuciste
+            data.kuciste = this.proizvod as Kuciste
             break
         }
 
-        //console.log(racunar)
+        console.log(data)
 
-        this.store.dispatch(ProizvodiActions.updateItem({ selectedProizvodID: this.selectedRacunarID, selectedProizvod: racunar, selectMode: this.selectMode }))
+        this.store.dispatch(ProizvodiActions.updateRacunar({ selectedProizvodID: this.selectedRacunarID, selectedProizvod: data }))
       })
     ).subscribe()
   }

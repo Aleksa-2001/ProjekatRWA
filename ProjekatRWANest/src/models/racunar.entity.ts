@@ -6,7 +6,7 @@ import { Skladiste } from "./komponente/skladiste.entity";
 import { GPU } from "./komponente/gpu.entity";
 import { Napajanje } from "./komponente/napajanje.entity";
 import { Kuciste } from "./komponente/kuciste.entity";
-import { ChildEntity, ManyToMany, ManyToOne } from "typeorm";
+import { ChildEntity, JoinTable, ManyToMany, ManyToOne } from "typeorm";
 
 @ChildEntity()
 export class Racunar extends Proizvod {
@@ -19,7 +19,12 @@ export class Racunar extends Proizvod {
     @ManyToOne(() => RAM, { nullable: true, eager: true, onDelete: "SET NULL" })
     ram: RAM
 
-    @ManyToMany(() => Skladiste, { nullable: true })
+    @ManyToMany(() => Skladiste, { nullable: true, eager: true })
+    @JoinTable({
+        name: 'skladiste',
+        joinColumn: { name: 'racunarID', referencedColumnName: 'id' },
+        inverseJoinColumn: { name: 'skladisteID', referencedColumnName: 'id' }
+    })
     skladiste: Skladiste[]
 
     @ManyToOne(() => Napajanje, {  nullable: true, eager: true, onDelete: "SET NULL" })

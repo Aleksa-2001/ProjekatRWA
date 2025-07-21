@@ -73,8 +73,26 @@ export class ProizvodiEffects {
                             proizvod: { id: selectedProizvod.id, changes: selectedProizvod }, 
                             selectedProizvod: selectedProizvod,
                             file: file
-                        }
-                    )}),
+                        })
+                    }),
+                    catchError(() => of({ type: "[Proizvod] Update error" }))
+                )
+            )
+        )
+    })
+
+    updateRacunar$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ProizvodiActions.updateRacunar),
+            mergeMap(({ selectedProizvodID, selectedProizvod }) => this.service.updateRacunar(selectedProizvodID, selectedProizvod)
+                .pipe(
+                    map((selectedProizvod) => {
+                        this.router.navigate(['/proizvod', selectedProizvodID])
+                        return ProizvodiActions.updateRacunarSuccess({
+                            proizvod: { id: selectedProizvod.id, changes: selectedProizvod }, 
+                            selectedProizvod: selectedProizvod
+                        })
+                    }),
                     catchError(() => of({ type: "[Proizvod] Update error" }))
                 )
             )

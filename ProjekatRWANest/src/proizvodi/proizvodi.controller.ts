@@ -5,6 +5,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { RacunarDto } from 'src/dto/racunar.dto';
 
 @Controller()
 export class ProizvodiController {
@@ -41,6 +42,12 @@ export class ProizvodiController {
     @UseGuards(JwtAuthGuard)
     public updateProizvod(@Param('id', ParseIntPipe) proizvodID: number, @Body() dto: ProizvodDto) {
         return this.service.update(proizvodID, dto)
+    }
+
+    @Put('proizvodRacunar/:id')
+    @UseGuards(JwtAuthGuard)
+    public updateRacunar(@Param('id', ParseIntPipe) racunarID: number, @Body() dto: RacunarDto) {
+        return this.service.updateRacunar(racunarID, dto)
     }
 
     @Delete('proizvod/:id')

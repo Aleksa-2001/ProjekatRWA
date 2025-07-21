@@ -26,21 +26,15 @@
             <button [routerLink]="['/select', racunar.id]" [queryParams]="{ type: 'RAM' }" class="btn btn-sm btn-primary" *ngIf="(isAdmin$ | async) && !racunar.ram"><i class="bi bi-plus-lg me-2"></i>Dodaj RAM memoriju</button>
         </div>
     </div>
-    <div class="row" *ngFor="let item of racunar.skladiste; let i = index">
-        <div class="col col-5">
-            <h5 *ngIf="i === 0">Skladišna memorija</h5>
-        </div>
-        <div class="col">
-            <h5 *ngIf="item"><a [routerLink]="['/proizvod', item.id]" (click)="navigate(item.id)" class="text-primary">{{item.naziv}}</a></h5>
-            <button [routerLink]="['/select', racunar.id]" [queryParams]="{ type: 'Skladiste' }" class="btn btn-sm btn-primary" *ngIf="(isAdmin$ | async) && i === racunar.skladiste.length - 1"><i class="bi bi-plus-lg me-2"></i>Dodaj skladišnu memoriju</button>
-        </div>
-    </div>
-    <div class="row" *ngIf="!racunar.skladiste">
+    <div class="row">
         <div class="col col-5">
             <h5>Skladišna memorija</h5>
         </div>
         <div class="col">
-            <button [routerLink]="['/select', racunar.id]" [queryParams]="{ type: 'Skladiste' }" class="btn btn-sm btn-primary" *ngIf="isAdmin$ | async"><i class="bi bi-plus-lg me-2"></i>Dodaj skladišnu memoriju</button>
+            <h5 *ngFor="let item of racunar.skladiste; let i = index">
+                <span *ngIf="i !== 0">, </span><a [routerLink]="['/proizvod', item.id]" (click)="navigate(item.id)" class="text-primary">{{item.naziv}}</a>
+            </h5>
+            <button [routerLink]="['/select', racunar.id]" [queryParams]="{ type: 'Skladiste' }" class="btn btn-sm btn-primary d-block" [ngClass]="{ 'mt-2': racunar.skladiste.length > 0 }" *ngIf="isAdmin$ | async"><i class="bi bi-plus-lg me-2"></i>Dodaj skladišnu memoriju</button>
         </div>
     </div>
     <div class="row">

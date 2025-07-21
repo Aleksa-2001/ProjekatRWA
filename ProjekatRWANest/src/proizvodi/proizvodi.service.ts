@@ -1,16 +1,21 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ILike, Repository } from 'typeorm';
+import { ILike, In, Repository } from 'typeorm';
 import * as fs from 'fs';
 import { join } from 'path';
 import { ProizvodDto } from '../dto/proizvod.dto';
 import { Proizvod } from '../models/proizvod.entity';
+import { Racunar } from 'src/models/racunar.entity';
+import { RacunarDto } from 'src/dto/racunar.dto';
+import { Skladiste } from 'src/models/komponente/skladiste.entity';
 
 @Injectable()
 export class ProizvodiService {
 
     constructor(
-        @InjectRepository(Proizvod) private proizvodRepository: Repository<Proizvod>
+        @InjectRepository(Proizvod) private proizvodRepository: Repository<Proizvod>, 
+        @InjectRepository(Racunar) private racunarRepository: Repository<Racunar>, 
+        @InjectRepository(Skladiste) private skladisteRepository: Repository<Skladiste>
     ) { }
 
     public async getAll() {
@@ -105,6 +110,23 @@ export class ProizvodiService {
             })
         }
         else throw new NotFoundException(`Proizvod sa ID-jem ${proizvodID} nije pronadjen!`)
+    }
+
+    public async updateRacunar(racunarID: number, racunarDto: RacunarDto) {
+        const racunar = await this.getProizvodByID(racunarID) as Racunar
+        if (racunar) {
+            if (racunarDto.skladiste) {
+                const skladiste = await this.skladisteRepository.findBy({ id: In(racunarDto.skladiste) })
+                racunar.skladiste = skladiste
+                return await this.racunarRepository.save(racunar)
+            }
+            else return await this.racunarRepository.update(racunarID, racunarDto).then(res => {
+                if (res.affected === 1) {
+                    return this.getProizvodByID(racunarID)
+                }
+            })
+        }
+        else throw new NotFoundException(`Racunar sa ID-jem ${racunarID} nije pronadjen!`)
     }
 
     public async delete(proizvodID: number) {

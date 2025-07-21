@@ -3,6 +3,7 @@ import { Proizvod } from '../models/proizvod';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, of, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { Racunar } from '../models/racunar';
 
 @Injectable({
     providedIn: 'root'
@@ -47,6 +48,13 @@ export class ProizvodService {
         const { id, ...proizvodDto } = proizvod
         return this.httpClient
             .put<Proizvod>(environment.apiUrl + `proizvod/${proizvodID}`, proizvodDto)
+            .pipe(catchError(errorHandler))
+    }
+
+    updateRacunar(racunarID: number, racunar: Partial<Racunar>) {
+        const { id, ...racunarDto } = racunar
+        return this.httpClient
+            .put<Racunar>(environment.apiUrl + `proizvodRacunar/${racunarID}`, racunarDto)
             .pipe(catchError(errorHandler))
     }
 

@@ -12,6 +12,7 @@ import { MaticnaPloca } from 'src/models/komponente/maticna-ploca.entity';
 import { Skladiste } from 'src/models/komponente/skladiste.entity';
 import { Napajanje } from 'src/models/komponente/napajanje.entity';
 import { Kuciste } from 'src/models/komponente/kuciste.entity';
+import { Racunar } from 'src/models/racunar.entity';
 
 @Module({
   imports: [
@@ -26,7 +27,8 @@ import { Kuciste } from 'src/models/komponente/kuciste.entity';
         MaticnaPloca,
         Skladiste,
         Napajanje,
-        Kuciste
+        Kuciste,
+        Racunar
       ]
     )
   ],
