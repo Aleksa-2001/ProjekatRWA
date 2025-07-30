@@ -24,6 +24,13 @@ export const loadItemsSuccess = createAction(
     }>()
 )
 
+export const loadItemsFailure = createAction(
+    "[Proizvod] Greska pri ucitavanju liste proizvoda",
+    props<{
+        error: any
+    }>()
+)
+
 export const setSelectedItemID = createAction(
     "[Proizvod] Setuj ID proizvoda",
     props<{
@@ -42,6 +49,13 @@ export const loadSelectedItemSuccess = createAction(
     "[Proizvod] Ucitavanje proizvoda je uspesno",
     props<{
         selectedProizvod: Proizvod
+    }>()
+)
+
+export const loadSelectedItemFailure = createAction(
+    "[Proizvod] Greska pri ucitavanju proizvoda",
+    props<{
+        error: any
     }>()
 )
 
@@ -65,6 +79,13 @@ export const addItemSuccess = createAction(
     }>()
 )
 
+export const addItemFailure = createAction(
+    "[Proizvod] Greska pri dodavanju proizvoda",
+    props<{
+        error: any
+    }>()
+)
+
 export const updateItem = createAction(
     "[Proizvod] Izmeni proizvod",
     props<{
@@ -84,6 +105,13 @@ export const updateItemSuccess = createAction(
     }>()
 )
 
+export const updateItemFailure = createAction(
+    "[Proizvod] Greska pri izmeni proizvoda",
+    props<{
+        error: any
+    }>()
+)
+
 export const updateRacunar = createAction(
     "[Proizvod] Izmeni racunar",
     props<{
@@ -97,6 +125,13 @@ export const updateRacunarSuccess = createAction(
     props<{
         proizvod: Update<Racunar>,
         selectedProizvod: Racunar
+    }>()
+)
+
+export const updateRacunarFailure = createAction(
+    "[Proizvod] Greska pri izmeni racunara",
+    props<{
+        error: any
     }>()
 )
 
@@ -114,6 +149,13 @@ export const deleteItemSuccess = createAction(
     }>()
 )
 
+export const deleteItemFailure = createAction(
+    "[Proizvod] Greska pri brisanju proizvoda",
+    props<{
+        error: any
+    }>()
+)
+
 export const deleteAllItems = createAction(
     "[Proizvod] Obrisi sve proizvode",
     props<{
@@ -125,6 +167,13 @@ export const deleteAllItemsSuccess = createAction(
     "[Proizvod] Proizvodi uspesno obrisani",
     props<{
         proizvodi: Proizvod[]
+    }>()
+)
+
+export const deleteAllItemsFailure = createAction(
+    "[Proizvod] Greska pri brisanju svih proizvoda",
+    props<{
+        error: any
     }>()
 )
 
@@ -140,7 +189,7 @@ export const uploadImageIgnore = createAction(
     "[Proizvod] Slika nije prosledjena"
 )
 
-export const updatePathSucces = createAction(
+export const updatePathSuccess = createAction(
     "[Proizvod] Azuriranje putanje uspesno",
     props<{
         proizvod: Update<Proizvod>

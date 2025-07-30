@@ -1,5 +1,6 @@
 <h2 class="mb-2">Prodavnice</h2>
-<div *ngIf="selectedProdavnice$ | async as prodavnice" class="row row-gap-2" [ngClass]="{ 'row-gap-3': prodavnice.length !== 0 }">
+<app-loading *ngIf="loading$ | async"></app-loading>
+<div *ngIf="!(loading$ | async) && (selectedProdavnice$ | async) as prodavnice" class="row row-gap-2" [ngClass]="{ 'row-gap-3': prodavnice.length !== 0 }">
     <div class="col-12">
         <div class="row row-gap-1">
             <div class="col-12 col-sm-6 col-md-5 col-xl-3 d-flex flex-row align-items-center column-gap-1">

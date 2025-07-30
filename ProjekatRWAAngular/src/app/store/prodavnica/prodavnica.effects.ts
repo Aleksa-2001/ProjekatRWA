@@ -18,7 +18,7 @@ export class ProdavniceEffects {
             mergeMap(() => this.service.getProdavnice()
                 .pipe(
                     map((prodavnice) => (ProdavniceActions.loadItemsSuccess({prodavnice}))),
-                    catchError(() => of({ type: "[Prodavnica] Load error" }))
+                    catchError((error) => of(ProdavniceActions.loadItemsFailure({ error })))
                 )
             )
         )
@@ -30,7 +30,7 @@ export class ProdavniceEffects {
             mergeMap(({ search }) => this.service.getProdavniceBySearch(search)
                 .pipe(
                     map((prodavnice) => (ProdavniceActions.loadItemsSuccess({prodavnice}))),
-                    catchError(() => of({ type: "[Prodavnica] Load error" }))
+                    catchError((error) => of(ProdavniceActions.loadItemsFailure({ error })))
                 )
             )
         )
@@ -42,7 +42,7 @@ export class ProdavniceEffects {
             mergeMap(({ selectedProdavnicaID }) => this.service.getProdavnicaByID(selectedProdavnicaID)
                 .pipe(
                     map((selectedProdavnica) => (ProdavniceActions.loadSelectedItemSuccess({selectedProdavnica}))),
-                    catchError(() => of({ type: "[Prodavnica] Load error" }))
+                    catchError((error) => of(ProdavniceActions.loadSelectedItemFailure({ error })))
                 )
             )
         )
@@ -57,7 +57,7 @@ export class ProdavniceEffects {
                         file?.append('id', prodavnica.id.toString())
                         return ProdavniceActions.addItemSuccess({ prodavnica, file })
                     }),
-                    catchError(() => of({ type: "[Prodavnica] Add error" }))
+                    catchError((error) => of(ProdavniceActions.addItemFailure({ error })))
                 )
             )
         )
@@ -73,7 +73,7 @@ export class ProdavniceEffects {
                         selectedProdavnica: prodavnica,
                         file: file
                     }))),
-                    catchError(() => of({ type: "[Prodavnica] Update error" }))
+                    catchError((error) => of(ProdavniceActions.updateItemFailure({ error })))
                 )
             )
         )
@@ -88,7 +88,7 @@ export class ProdavniceEffects {
                         this.router.navigate(["ng"])
                         return ProdavniceActions.deleteItemSuccess({prodavnicaID})
                     }),
-                    catchError(() => of({ type: "[Prodavnica] Delete error" }))
+                    catchError((error) => of(ProdavniceActions.deleteItemFailure({ error })))
                 )
             )
         )
@@ -114,7 +114,7 @@ export class ProdavniceEffects {
             ofType(ProdavniceActions.uploadImageSuccess),
             mergeMap(({ prodavnicaID, path }) => this.service.updateProdavnica(prodavnicaID, { slika: path })
                 .pipe(
-                    map((prodavnica) => ProdavniceActions.updatePathSucces({
+                    map((prodavnica) => ProdavniceActions.updatePathSuccess({
                         prodavnica: { id: prodavnica.id, changes: prodavnica },
                         selectedProdavnica: prodavnica
                     })),

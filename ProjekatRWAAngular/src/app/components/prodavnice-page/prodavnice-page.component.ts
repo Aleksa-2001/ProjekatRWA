@@ -9,6 +9,8 @@ import { isAdmin } from '../../store/auth/auth.selectors';
 import { ProdavnicaDialogComponent } from "../dialog/prodavnica-dialog/prodavnica-dialog.component";
 import { FilterComponent } from "../filter/filter.component";
 import * as ProdavniceActions from '../../store/prodavnica/prodavnica.actions';
+import { selectError, selectLoading } from '../../store/prodavnica/prodavnica.selectors';
+import { LoadingComponent } from "../../shared/components/loading/loading.component";
 
 @Component({
   selector: 'app-angular',
@@ -17,13 +19,17 @@ import * as ProdavniceActions from '../../store/prodavnica/prodavnica.actions';
     NgIf,
     ProdavniceComponent,
     ProdavnicaDialogComponent,
-    FilterComponent
-  ],
+    FilterComponent,
+    LoadingComponent
+],
   templateUrl: './prodavnice-page.component.html',
   styleUrl: './prodavnice-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProdavnicePageComponent implements OnInit {
+
+  loading$: Observable<boolean> = of(true)
+  error$: Observable<any> = of()
 
   @ViewChild('inputSearchProdavnice') inputSearchProdavnice!: ElementRef<HTMLInputElement>
 
@@ -37,6 +43,9 @@ export class ProdavnicePageComponent implements OnInit {
   constructor(private title: Title, private store: Store<AppState>) { }
 
   ngOnInit(): void {
+    this.loading$ = this.store.select(selectLoading)
+    this.error$ = this.store.select(selectError)
+
     this.isAdmin$ = this.store.select(isAdmin)
     this.title.setTitle("Prodavnice - ProjekatRWA")
 

@@ -1,3 +1,7 @@
+<div *ngIf="loading$ | async" class="container my-3">
+    <app-loading></app-loading>
+</div>
+
 <div *ngIf="proizvod$ | async as proizvod" class="container my-3">
     <h1>Proizvod</h1>
     <div *ngIf="isAdmin$ | async" class="mb-3">
@@ -94,4 +98,4 @@
     <app-confirm-dialog *ngIf="isAdmin$ | async" [modalID]="'confirmModalDialog'" [delete]="'Proizvod'"></app-confirm-dialog>
 </div>
 
-<app-not-found *ngIf="!(proizvod$ | async)"></app-not-found>
+<app-not-found *ngIf="!(loading$ | async) && (error$ | async)"></app-not-found>

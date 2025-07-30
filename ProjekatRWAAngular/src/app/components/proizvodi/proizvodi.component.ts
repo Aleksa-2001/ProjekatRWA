@@ -1,26 +1,31 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { ProizvodItemComponent } from './proizvod-item/proizvod-item.component';
-import { combineLatest, filter, map, Observable, of, take, tap } from 'rxjs';
+import { combineLatest, filter, map, Observable, of, tap } from 'rxjs';
 import { Proizvod } from '../../models/proizvod';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app-state';
-import { selectProizvodi } from '../../store/proizvod/proizvod.selectors';
+import { selectProizvodi, selectLoading, selectError } from '../../store/proizvod/proizvod.selectors';
 import { ActivatedRoute } from '@angular/router';
+import { LoadingComponent } from "../../shared/components/loading/loading.component";
 
 @Component({
   selector: 'app-proizvodi',
   imports: [
-    NgIf, 
-    NgFor, 
-    CommonModule, 
-    ProizvodItemComponent
-  ],
+    NgIf,
+    NgFor,
+    CommonModule,
+    ProizvodItemComponent,
+    LoadingComponent
+],
   templateUrl: './proizvodi.component.html',
   styleUrl: './proizvodi.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProizvodiComponent implements OnInit, OnChanges { 
+
+  loading$: Observable<boolean> = of(true)
+  error$: Observable<any> = of()
 
   prodavnicaID: number = -1
   proizvodi$: Observable<readonly Proizvod[]> = of([])
@@ -53,6 +58,9 @@ export class ProizvodiComponent implements OnInit, OnChanges {
   constructor(private route: ActivatedRoute, private store: Store<AppState>) { }
   
   ngOnInit(): void { 
+    this.loading$ = this.store.select(selectLoading)
+    this.error$ = this.store.select(selectError)
+  
     this.prodavnicaID = Number(this.route.snapshot.paramMap.get('id'))
     this.proizvodi$ = this.store.select(selectProizvodi)
     this.selectedProizvodi$ = this.proizvodi$

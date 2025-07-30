@@ -3,7 +3,7 @@ import { filter, Observable, of, take, tap } from 'rxjs';
 import { Prodavnica } from '../../../models/prodavnica';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app-state';
-import { selectSelectedProdavnica } from '../../../store/prodavnica/prodavnica.selectors';
+import { selectError, selectLoading, selectSelectedProdavnica } from '../../../store/prodavnica/prodavnica.selectors';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule, NgIf, NgStyle } from '@angular/common';
 import { ProizvodiComponent } from "../../proizvodi/proizvodi.component";
@@ -19,6 +19,7 @@ import { FilterComponent } from "../../filter/filter.component";
 import * as ProdavniceActions from '../../../store/prodavnica/prodavnica.actions'
 import * as ProizvodiActions from '../../../store/proizvod/proizvod.actions'
 import * as RecenzijeActions from '../../../store/recenzija/recenzija.actions'
+import { LoadingComponent } from "../../../shared/components/loading/loading.component";
 
 @Component({
   selector: 'app-prodavnica-page',
@@ -33,13 +34,17 @@ import * as RecenzijeActions from '../../../store/recenzija/recenzija.actions'
     ProizvodDialogComponent,
     RecenzijeComponent,
     StarsComponent,
-    FilterComponent
+    FilterComponent,
+    LoadingComponent
 ],
   templateUrl: './prodavnica-page.component.html',
   styleUrl: './prodavnica-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProdavnicaPageComponent implements OnInit, OnDestroy { 
+
+  loading$: Observable<boolean> = of(true)
+  error$: Observable<any> = of()
   
   @ViewChild('inputSearchProizvodi') inputSearchProizvodi!: ElementRef<HTMLInputElement>
 
@@ -67,6 +72,9 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
   constructor(private title: Title, private route: ActivatedRoute, private store: Store<AppState>) { }
 
   ngOnInit(): void {
+    this.loading$ = this.store.select(selectLoading)
+    this.error$ = this.store.select(selectError)
+
     this.isAdmin$ = this.store.select(isAdmin)
     
     this.prodavnicaID = Number(this.route.snapshot.paramMap.get('id'))

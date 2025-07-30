@@ -10,6 +10,11 @@ import { AppState } from "../app-state";
 
 export const selectProizvodiFeature = createFeatureSelector<ProizvodiState>('proizvodi')
 
+export const selectLoading = createSelector(
+    selectProizvodiFeature,
+    (state: ProizvodiState) => state.loading
+)
+
 export const selectProizvodi = createSelector(
     selectProizvodiFeature,
     //(state: KomponenteState) => state.entities
@@ -44,4 +49,9 @@ export const selectType = createSelector(
 export const selectProizvodjaci = createSelector(
     selectProizvodi,
     (proizvodi) => [...new Set(proizvodi.map(proizvod => proizvod.proizvodjac))].sort((a, b) => a.toLowerCase() < b.toLowerCase() ? -1 : 1)
+)
+
+export const selectError = createSelector(
+    selectProizvodiFeature,
+    (state: ProizvodiState) => state.error
 )

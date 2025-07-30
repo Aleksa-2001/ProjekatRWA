@@ -5,7 +5,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app-state';
 import { CommonModule, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
-import { selectSelectedProizvod } from '../../../store/proizvod/proizvod.selectors';
+import { selectError, selectLoading, selectSelectedProizvod } from '../../../store/proizvod/proizvod.selectors';
 import { NotFoundComponent } from "../../../shared/components/not-found/not-found.component";
 import { KomponentaPageComponent } from "./komponenta-page/komponenta-page.component";
 import { RacunarPageComponent } from "./racunar-page/racunar-page.component";
@@ -18,6 +18,7 @@ import { RecenzijeComponent } from "../../recenzije/recenzije.component";
 import { Racunar } from '../../../models/racunar';
 import * as ProizvodiActions from '../../../store/proizvod/proizvod.actions'
 import * as RecenzijeActions from '../../../store/recenzija/recenzija.actions'
+import { LoadingComponent } from "../../../shared/components/loading/loading.component";
 
 @Component({
   selector: 'app-proizvod-page',
@@ -34,13 +35,17 @@ import * as RecenzijeActions from '../../../store/recenzija/recenzija.actions'
     ConfirmDialogComponent,
     RecenzijeComponent,
     StarsComponent,
-    RacunarPageComponent
+    RacunarPageComponent,
+    LoadingComponent
 ],
   templateUrl: './proizvod-page.component.html',
   styleUrl: './proizvod-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProizvodPageComponent implements OnInit, OnDestroy { 
+
+  loading$: Observable<boolean> = of(true)
+  error$: Observable<any> = of()
 
   isAdmin$: Observable<boolean> = of(false)
 
@@ -55,6 +60,9 @@ export class ProizvodPageComponent implements OnInit, OnDestroy {
   constructor(private title: Title, private route: ActivatedRoute, private store: Store<AppState>) { }
 
   ngOnInit(): void {
+    this.loading$ = this.store.select(selectLoading)
+    this.error$ = this.store.select(selectError)
+
     this.isAdmin$ = this.store.select(isAdmin)
 
     this.proizvodID = Number(this.route.snapshot.paramMap.get('id'))

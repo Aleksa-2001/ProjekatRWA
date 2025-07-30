@@ -20,6 +20,13 @@ export const loadItemsSuccess = createAction(
     }>()
 )
 
+export const loadItemsFailure = createAction(
+    "[Prodavnica] Greska pri ucitavanju liste prodavnica",
+    props<{
+        error: any
+    }>()
+)
+
 export const setSelectedItemID = createAction(
     "[Prodavnica] Setuj ID prodavnice",
     props<{
@@ -38,6 +45,13 @@ export const loadSelectedItemSuccess = createAction(
     "[Prodavnica] Ucitavanje prodavnice je uspesno",
     props<{
         selectedProdavnica: Prodavnica
+    }>()
+)
+
+export const loadSelectedItemFailure = createAction(
+    "[Prodavnica] Greska pri ucitavanju prodavnice",
+    props<{
+        error: any
     }>()
 )
 
@@ -61,6 +75,13 @@ export const addItemSuccess = createAction(
     }>()
 )
 
+export const addItemFailure = createAction(
+    "[Prodavnica] Greska pri dodavanju prodavnice",
+    props<{
+        error: any
+    }>()
+)
+
 export const updateItem = createAction(
     "[Prodavnica] Izmeni prodavnicu",
     props<{
@@ -79,6 +100,13 @@ export const updateItemSuccess = createAction(
     }>()
 )
 
+export const updateItemFailure = createAction(
+    "[Prodavnica] Greska pri izmeni prodavnice",
+    props<{
+        error: any
+    }>()
+)
+
 export const deleteItem = createAction(
     "[Prodavnica] Obrisi prodavnicu",
     props<{
@@ -90,6 +118,13 @@ export const deleteItemSuccess = createAction(
     "[Prodavnica] Prodavnica uspesno obrisana",
     props<{
         prodavnicaID: number
+    }>()
+)
+
+export const deleteItemFailure = createAction(
+    "[Prodavnica] Greska pri brisanju prodavnice",
+    props<{
+        error: any
     }>()
 )
 
@@ -105,7 +140,7 @@ export const uploadImageIgnore = createAction(
     "[Prodavnica] Slika nije prosledjena"
 )
 
-export const updatePathSucces = createAction(
+export const updatePathSuccess = createAction(
     "[Prodavnica] Azuriranje putanje uspesno",
     props<{
         prodavnica: Update<Prodavnica>

@@ -5,16 +5,19 @@ import { combineLatest, debounceTime, distinctUntilChanged, filter, map, Observa
 import { Prodavnica } from '../../models/prodavnica';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app-state';
-import { selectProdavnice } from '../../store/prodavnica/prodavnica.selectors';
+import { selectLoading, selectProdavnice } from '../../store/prodavnica/prodavnica.selectors';
+import { LoadingComponent } from "../../shared/components/loading/loading.component";
 
 @Component({
   selector: 'app-prodavnice',
-  imports: [NgFor, CommonModule, ProdavnicaItemComponent],
+  imports: [NgFor, CommonModule, ProdavnicaItemComponent, LoadingComponent],
   templateUrl: './prodavnice.component.html',
   styleUrl: './prodavnice.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProdavniceComponent implements OnInit, OnChanges { 
+
+  loading$: Observable<boolean> = of(true)
 
   prodavnice$: Observable<readonly Prodavnica[]> = of([])
   selectedProdavnice$: Observable<readonly Prodavnica[]> = of([])
@@ -38,6 +41,8 @@ export class ProdavniceComponent implements OnInit, OnChanges {
   constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
+    this.loading$ = this.store.select(selectLoading)
+
     this.prodavnice$ = this.store.select(selectProdavnice)
     this.selectedProdavnice$ = this.prodavnice$
 

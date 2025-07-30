@@ -20,7 +20,7 @@ export class ProizvodiEffects {
             mergeMap(({ prodavnicaID }) => this.service.getProizvodi(prodavnicaID)
                 .pipe(
                     map((proizvodi) => (ProizvodiActions.loadItemsSuccess({proizvodi}))),
-                    catchError(() => of({ type: "[Proizvod] Load error" }))
+                    catchError((error) => of(ProizvodiActions.loadItemsFailure({ error })))
                 )
             )
         )
@@ -32,7 +32,7 @@ export class ProizvodiEffects {
             mergeMap(({ search }) => this.service.getProizvodiBySearch(search)
                 .pipe(
                     map((proizvodi) => (ProizvodiActions.loadItemsSuccess({proizvodi}))),
-                    catchError(() => of({ type: "[Proizvod] Load error" }))
+                    catchError((error) => of(ProizvodiActions.loadItemsFailure({ error })))
                 )
             )
         )
@@ -44,7 +44,7 @@ export class ProizvodiEffects {
             mergeMap(({ selectedProizvodID }) => this.service.getProizvodByID(selectedProizvodID)
                 .pipe(
                     map((selectedProizvod) => (ProizvodiActions.loadSelectedItemSuccess({selectedProizvod}))),
-                    catchError(() => of({ type: "[Proizvod] Load item error" }))
+                    catchError((error) => of(ProizvodiActions.loadSelectedItemFailure({ error })))
                 )
             )
         )
@@ -56,7 +56,7 @@ export class ProizvodiEffects {
             mergeMap(({ proizvod, file }) => this.service.addProizvod(proizvod)
                 .pipe(
                     map((proizvod) => (ProizvodiActions.addItemSuccess({ proizvod, file }))),
-                    catchError(() => of({ type: "[Proizvod] Add error" }))
+                    catchError((error) => of(ProizvodiActions.addItemFailure({ error })))
                 )
             )
         )
@@ -75,7 +75,7 @@ export class ProizvodiEffects {
                             file: file
                         })
                     }),
-                    catchError(() => of({ type: "[Proizvod] Update error" }))
+                    catchError((error) => of(ProizvodiActions.updateItemFailure({ error })))
                 )
             )
         )
@@ -93,7 +93,7 @@ export class ProizvodiEffects {
                             selectedProizvod: selectedProizvod
                         })
                     }),
-                    catchError(() => of({ type: "[Proizvod] Update error" }))
+                    catchError((error) => of(ProizvodiActions.updateRacunarFailure({ error })))
                 )
             )
         )
@@ -108,7 +108,7 @@ export class ProizvodiEffects {
                         this.router.navigate(["/prodavnica", data.prodavnicaID])
                         return ProizvodiActions.deleteItemSuccess({proizvodID: data.proizvodID})
                     }),
-                    catchError(() => of({ type: "[Proizvod] Delete error" }))
+                    catchError((error) => of(ProizvodiActions.deleteItemFailure({ error })))
                 )
             )
         )
@@ -120,7 +120,7 @@ export class ProizvodiEffects {
             mergeMap(({ prodavnicaID }) => this.service.deleteProizvodi(prodavnicaID)
                 .pipe(
                     map((proizvodi) => ProizvodiActions.deleteAllItemsSuccess({proizvodi})),
-                    catchError(() => of({ type: "[Proizvod] Delete all error" }))
+                    catchError((error) => of(ProizvodiActions.deleteAllItemsFailure({ error })))
                 )
             )
         )
@@ -146,7 +146,7 @@ export class ProizvodiEffects {
             ofType(ProizvodiActions.uploadImageSuccess),
             mergeMap(({ proizvodID, path }) => this.service.updateProizvod(proizvodID, { slika: path })
                 .pipe(
-                    map((proizvod) => ProizvodiActions.updatePathSucces({
+                    map((proizvod) => ProizvodiActions.updatePathSuccess({
                         proizvod: { id: proizvod.id, changes: proizvod },
                         selectedProizvod: proizvod
                     })),

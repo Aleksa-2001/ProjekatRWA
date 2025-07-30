@@ -7,7 +7,8 @@
         <label class="btn btn-outline-primary" for="radioDisplayModeGrid"><i class="bi bi-grid-fill"></i></label>
     </div>
 </div>
-<div *ngIf="selectedProizvodi$ | async as proizvodi" class="row row-gap-2" [ngClass]="{ 'row-gap-3': displayMode === 2 && proizvodi.length !== 0 }">
+<app-loading *ngIf="loading$ | async"></app-loading>
+<div *ngIf="!(loading$ | async) && (selectedProizvodi$ | async) as proizvodi" class="row row-gap-2" [ngClass]="{ 'row-gap-3': displayMode === 2 && proizvodi.length !== 0 }">
     <div class="col-12">
         <div class="row row-gap-1">
             <div class="col-12 col-sm-6 col-md-5 col-xl-3 d-flex flex-row align-items-center column-gap-1 pe-sm-0">
