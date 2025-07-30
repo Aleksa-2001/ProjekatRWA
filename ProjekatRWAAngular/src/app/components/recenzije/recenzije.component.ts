@@ -5,11 +5,12 @@ import { Recenzija } from '../../models/recenzija';
 import { RecenzijaItemComponent } from './recenzija-item/recenzija-item.component';
 import { AppState } from '../../store/app-state';
 import { Store } from '@ngrx/store';
-import { selectRecenzije, selectUnetaRecenzija } from '../../store/recenzija/recenzija.selectors';
+import { selectError, selectLoading, selectRecenzije, selectUnetaRecenzija } from '../../store/recenzija/recenzija.selectors';
 import { RecenzijaDialogComponent } from "../dialog/recenzija-dialog/recenzija-dialog.component";
 import { ConfirmDialogComponent } from "../dialog/confirm-dialog/confirm-dialog.component";
 import { User } from '../../models/user';
 import { selectUser } from '../../store/auth/auth.selectors';
+import { LoadingComponent } from "../../shared/components/loading/loading.component";
 
 @Component({
   selector: 'app-recenzije',
@@ -19,13 +20,17 @@ import { selectUser } from '../../store/auth/auth.selectors';
     CommonModule,
     RecenzijaItemComponent,
     RecenzijaDialogComponent,
-    ConfirmDialogComponent
-  ],
+    ConfirmDialogComponent,
+    LoadingComponent
+],
   templateUrl: './recenzije.component.html',
   styleUrl: './recenzije.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RecenzijeComponent implements OnInit, OnChanges { 
+  
+  loading$: Observable<boolean> = of(true)
+  error$: Observable<any> = of()
 
   user$: Observable<User | null> = of()
   recenzije$: Observable<readonly Recenzija[]> = of([])
@@ -47,6 +52,9 @@ export class RecenzijeComponent implements OnInit, OnChanges {
   constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
+    this.loading$ = this.store.select(selectLoading)
+    this.error$ = this.store.select(selectError)
+
     this.user$ = this.store.select(selectUser)
     this.recenzije$ = this.store.select(selectRecenzije)
     this.selectedRecenzije$ = this.recenzije$

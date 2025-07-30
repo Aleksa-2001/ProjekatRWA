@@ -6,6 +6,11 @@ import { User } from "../../models/user"
 
 export const selectRecenzijeFeature = createFeatureSelector<RecenzijeState>('recenzije')
 
+export const selectLoading = createSelector(
+    selectRecenzijeFeature,
+    (state: RecenzijeState) => state.loading
+)
+
 export const selectRecenzije = createSelector(
     selectRecenzijeFeature,
     (state: RecenzijeState) => Object
@@ -28,4 +33,9 @@ export const selectUnetaRecenzija = createSelector(
     selectRecenzije,
     selectUser,
     (recenzije: Recenzija[], user: User | null) => recenzije.find(r => r.user.userID === user?.userID) ? true : false
+)
+
+export const selectError = createSelector(
+    selectRecenzijeFeature,
+    (state: RecenzijeState) => state.error
 )

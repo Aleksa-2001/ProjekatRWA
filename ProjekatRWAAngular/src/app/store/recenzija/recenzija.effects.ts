@@ -14,7 +14,7 @@ export class RecenzijeEffects {
             ofType(RecenzijeActions.loadItemsUser),
             mergeMap(({ userID }) => this.service.getRecenzijeByUserID(userID).pipe(
                 map(recenzije => RecenzijeActions.loadItemsSuccess({ recenzije })),
-                catchError(() => of({ type: "[Recenzija] Load Items Error" }))
+                catchError((error) => of(RecenzijeActions.loadItemsFailure({ error })))
             )) 
         )
     })
@@ -24,7 +24,7 @@ export class RecenzijeEffects {
             ofType(RecenzijeActions.loadItemsProdavnica),
             mergeMap(({ prodavnicaID }) => this.service.getRecenzijeByProdavnicaID(prodavnicaID).pipe(
                 map(recenzije => RecenzijeActions.loadItemsSuccess({ recenzije })),
-                catchError(() => of({ type: "[Recenzija] Load Items Error" }))
+                catchError((error) => of(RecenzijeActions.loadItemsFailure({ error })))
             )) 
         )
     })
@@ -34,7 +34,7 @@ export class RecenzijeEffects {
             ofType(RecenzijeActions.loadItemsProizvod),
             mergeMap(({ proizvodID }) => this.service.getRecenzijeByProizvodID(proizvodID).pipe(
                 map(recenzije => RecenzijeActions.loadItemsSuccess({ recenzije })),
-                catchError(() => of({ type: "[Recenzija] Load Items Error" }))
+                catchError((error) => of(RecenzijeActions.loadItemsFailure({ error })))
             )) 
         )
     })
@@ -45,7 +45,7 @@ export class RecenzijeEffects {
             mergeMap(({ selectedRecenzijaID }) => this.service.getRecenzijaByID(selectedRecenzijaID)
                 .pipe(
                     map((selectedRecenzija) => (RecenzijeActions.loadSelectedItemSuccess({selectedRecenzija}))),
-                    catchError(() => of({ type: "[Recenzija] Load error" }))
+                    catchError((error) => of(RecenzijeActions.loadSelectedItemFailure({ error })))
                 )
             )
         )
@@ -57,7 +57,7 @@ export class RecenzijeEffects {
             mergeMap(({ recenzija }) => this.service.addRecenzija(recenzija)
                 .pipe(
                     map((recenzija) => (RecenzijeActions.addItemSuccess({ recenzija }))),
-                    catchError(() => of({ type: "[Recenzija] Add error" }))
+                    catchError((error) => of(RecenzijeActions.addItemFailure({ error })))
                 )
             )
         )
@@ -69,7 +69,7 @@ export class RecenzijeEffects {
             mergeMap(({ selectedRecenzijaID, selectedRecenzija }) => this.service.updateRecenzija(selectedRecenzijaID, selectedRecenzija)
                 .pipe(
                     map((recenzija) => (RecenzijeActions.updateItemSuccess({ recenzija: { id: recenzija.id, changes: recenzija } }))),
-                    catchError(() => of({ type: "[Recenzija] Update error" }))
+                    catchError((error) => of(RecenzijeActions.updateItemFailure({ error })))
                 )
             )
         )
@@ -81,7 +81,7 @@ export class RecenzijeEffects {
             mergeMap(({ selectedRecenzijaID }) => this.service.deleteRecenzija(selectedRecenzijaID)
                 .pipe(
                     map((recenzijaID) => (RecenzijeActions.deleteItemSuccess({recenzijaID}))),
-                    catchError(() => of({ type: "[Recenzija] Delete error" }))
+                    catchError((error) => of(RecenzijeActions.deleteItemFailure({ error })))
                 )
             )
         )

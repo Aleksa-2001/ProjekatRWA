@@ -26,7 +26,7 @@ export const prodavnicaReducer = createReducer(
         loading: true,
         error: null
     })),
-    on(ProdavniceActions.loadItemsSuccess, (state, {prodavnice}) => 
+    on(ProdavniceActions.loadItemsSuccess, (state, { prodavnice }) => 
         adapter.setAll(prodavnice, {
             ...state,
             loading: false,
@@ -38,7 +38,7 @@ export const prodavnicaReducer = createReducer(
         loading: false,
         error
     })),
-    on(ProdavniceActions.setSelectedItemID, (state, {prodavnicaID}) => ({
+    on(ProdavniceActions.setSelectedItemID, (state, { prodavnicaID }) => ({
         ...state,
         selectedProdavnicaID: prodavnicaID
     })),
@@ -47,7 +47,7 @@ export const prodavnicaReducer = createReducer(
         loading: true,
         error: null
     })),
-    on(ProdavniceActions.loadSelectedItemSuccess, (state, {selectedProdavnica}) => ({
+    on(ProdavniceActions.loadSelectedItemSuccess, (state, { selectedProdavnica }) => ({
         ...state,
         loading: false,
         selectedProdavnica: selectedProdavnica,
@@ -63,14 +63,14 @@ export const prodavnicaReducer = createReducer(
         selectedProdavnicaID: -1,
         selectedProdavnica: null
     })),
-    on(ProdavniceActions.addItemSuccess, (state, {prodavnica}) => 
+    on(ProdavniceActions.addItemSuccess, (state, { prodavnica }) => 
         adapter.addOne(prodavnica, state)
     ),
     on(ProdavniceActions.addItemFailure, (state, { error }) => ({
         ...state,
         error
     })),
-    on(ProdavniceActions.updateItemSuccess, (state, {prodavnica, selectedProdavnica}) => (
+    on(ProdavniceActions.updateItemSuccess, (state, { prodavnica, selectedProdavnica }) => (
         adapter.updateOne(prodavnica, {
             ...state,
             selectedProdavnica: selectedProdavnica
@@ -80,18 +80,18 @@ export const prodavnicaReducer = createReducer(
         ...state,
         error
     })),
-    on(ProdavniceActions.deleteItemSuccess, (state, {prodavnicaID}) => (
+    on(ProdavniceActions.deleteItemSuccess, (state, { prodavnicaID }) => (
         adapter.removeOne(prodavnicaID, {
             ...state,
             selectedProdavnicaID: -1,
             selectedProdavnica: null
         })
     )),
-    on(ProdavniceActions.deleteItemFailure, (state, {    error }) => ({
+    on(ProdavniceActions.deleteItemFailure, (state, { error }) => ({
         ...state,
         error
     })),
-    on(ProdavniceActions.updatePathSuccess, (state, {prodavnica, selectedProdavnica}) => (
+    on(ProdavniceActions.updatePathSuccess, (state, { prodavnica, selectedProdavnica }) => (
         adapter.updateOne(prodavnica, {
             ...state,
             selectedProdavnica: selectedProdavnica

@@ -26,7 +26,7 @@ export const proizvodReducer = createReducer(
         loading: true,
         error: null
     })),
-    on(ProizvodiActions.loadItemsSuccess, (state, {proizvodi}) => 
+    on(ProizvodiActions.loadItemsSuccess, (state, { proizvodi }) => 
         adapter.setAll(proizvodi, {
             ...state,
             loading: false,
@@ -38,7 +38,7 @@ export const proizvodReducer = createReducer(
         loading: false,
         error
     })),
-    on(ProizvodiActions.setSelectedItemID, (state, {proizvodID}) => ({
+    on(ProizvodiActions.setSelectedItemID, (state, { proizvodID }) => ({
         ...state,
         selectedProizvodID: proizvodID
     })),
@@ -47,7 +47,7 @@ export const proizvodReducer = createReducer(
         loading: true,
         error: null
     })),
-    on(ProizvodiActions.loadSelectedItemSuccess, (state, {selectedProizvod}) => ({
+    on(ProizvodiActions.loadSelectedItemSuccess, (state, { selectedProizvod }) => ({
         ...state,
         loading: false,
         selectedProizvod: selectedProizvod,
@@ -63,14 +63,14 @@ export const proizvodReducer = createReducer(
         selectedProizvodID: -1,
         selectedProizvod: null
     })),
-    on(ProizvodiActions.addItemSuccess, (state, {proizvod}) => 
+    on(ProizvodiActions.addItemSuccess, (state, { proizvod }) => 
         adapter.addOne(proizvod, state)
     ),
     on(ProizvodiActions.addItemFailure, (state, { error }) => ({
         ...state,
         error
     })),
-    on(ProizvodiActions.updateItemSuccess, (state, {proizvod, selectedProizvod}) => (
+    on(ProizvodiActions.updateItemSuccess, (state, { proizvod, selectedProizvod }) => (
         adapter.updateOne(proizvod, {
             ...state,
             selectedProizvod: selectedProizvod
@@ -80,7 +80,7 @@ export const proizvodReducer = createReducer(
         ...state,
         error
     })),
-    on(ProizvodiActions.deleteItemSuccess, (state, {proizvodID}) => (
+    on(ProizvodiActions.deleteItemSuccess, (state, { proizvodID }) => (
         adapter.removeOne(proizvodID, {
             ...state,
             selectedProizvodID: -1,
@@ -91,11 +91,11 @@ export const proizvodReducer = createReducer(
         ...state,
         error
     })),
-    on(ProizvodiActions.deleteAllItemsSuccess, (state/*, {proizvodi}*/) => (
+    on(ProizvodiActions.deleteAllItemsSuccess, (state/*, { proizvodi }*/) => (
         //adapter.removeMany(proizvodi.map(proizvod => proizvod.id), state)
         adapter.removeAll(state)
     )),
-    on(ProizvodiActions.updatePathSuccess, (state, {proizvod, selectedProizvod}) => (
+    on(ProizvodiActions.updatePathSuccess, (state, { proizvod, selectedProizvod }) => (
         adapter.updateOne(proizvod, {
             ...state,
             selectedProizvod: selectedProizvod

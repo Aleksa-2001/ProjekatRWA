@@ -30,6 +30,13 @@ export const loadItemsSuccess = createAction(
     }>()
 )
 
+export const loadItemsFailure = createAction(
+    "[Recenzija] Greska pri ucitavanju liste recenzija",
+    props<{
+        error: any
+    }>()
+)
+
 export const setSelectedItemID = createAction(
     "[Recenzija] Setuj ID recenzije",
     props<{
@@ -55,6 +62,13 @@ export const loadSelectedItemSuccess = createAction(
     }>()
 )
 
+export const loadSelectedItemFailure = createAction(
+    "[Recenzija] Greska pri ucitavanju recenzije",
+    props<{
+        error: any
+    }>()
+)
+
 export const addItem = createAction(
     "[Recenzija] Dodaj recenziju",
     props<{
@@ -66,6 +80,13 @@ export const addItemSuccess = createAction(
     "[Recenzija] Dodavanje recenzije je uspesno",
     props<{
         recenzija: Recenzija
+    }>()
+)
+
+export const addItemFailure = createAction(
+    "[Recenzija] Greska pri dodavanju recenzije",
+    props<{
+        error: any
     }>()
 )
 
@@ -84,6 +105,13 @@ export const updateItemSuccess = createAction(
     }>()
 )
 
+export const updateItemFailure = createAction(
+    "[Recenzija] Greska pri izmeni recenzije",
+    props<{
+        error: any
+    }>()
+)
+
 export const deleteItem = createAction(
     "[Recenzija] Obrisi recenziju",
     props<{
@@ -95,5 +123,12 @@ export const deleteItemSuccess = createAction(
     "[Recenzija] Recenzija uspesno obrisana",
     props<{
         recenzijaID: number
+    }>()
+)
+
+export const deleteItemFailure = createAction(
+    "[Recenzija] Greska pri brisanju recenzije",
+    props<{
+        error: any
     }>()
 )
