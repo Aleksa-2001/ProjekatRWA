@@ -24,6 +24,11 @@ export const selectProizvodi = createSelector(
         .map(proizvod => <Proizvod>proizvod)
 )
 
+export const selectBrojProizvoda = createSelector(
+    selectProizvodi,
+    (proizvodi) => proizvodi.length
+)
+
 export const selectSelectedProizvodID = createSelector(
     selectProizvodiFeature,
     (state: ProizvodiState) => state.selectedProizvodID
@@ -32,6 +37,16 @@ export const selectSelectedProizvodID = createSelector(
 export const selectSelectedProizvod = createSelector(
     selectProizvodiFeature,
     (state: ProizvodiState) => state.selectedProizvod
+)
+
+export const selectCenaRange = createSelector(
+    selectProizvodi,
+    (proizvodi) => {
+        const ceneProizvoda = proizvodi.map(proizvod => proizvod.cena)
+        const minCena = Math.min(...ceneProizvoda)
+        const maxCena = Math.max(...ceneProizvoda)
+        return { min: minCena, max: maxCena }
+    }
 )
 
 export const selectTipoviProizvoda = createSelector(

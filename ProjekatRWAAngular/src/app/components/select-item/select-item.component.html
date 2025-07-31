@@ -1,8 +1,12 @@
-<div class="container my-3">
+<div *ngIf="loading$ | async" class="container my-3">
+    <app-loading></app-loading>
+</div>
+
+<div *ngIf="!(loading$ | async) && !(error$ | async) && (brojProizvoda$ | async) as brojProizvoda" class="container my-3">
     <h1>Izaberi</h1>
     <input (input)="onChangeInput()" #inputSearchProizvodi id="inputSearchProizvodi" class="form-control form-control-lg border-secondary" placeholder="Pretraži proizvode..." />
     <hr>
-    <div class="row row-gap-3">
+    <div class="row row-gap-3" *ngIf="cenaRange$ | async as cenaRange">
         <app-filter *ngIf="brojProizvoda > 1" class="filter-menu col-12 col-md-3 col-xl-2 px-0" 
             [sakrijIzborPrikaza]="true" 
             [prikaziProdavnice]="false" 
@@ -15,7 +19,7 @@
             (selectedProizvodjaciOutput)="getSelectedProizvodjaci($event)"
         ></app-filter>
         <div class="col">
-            <app-proizvodi 
+            <app-proizvodi *ngIf="type$ | async as type"
                 [search]="search" 
                 [selectMode]="true" 
                 [selectedRacunarID]="proizvodID"
@@ -23,8 +27,6 @@
                 [selectedTipoviProizvoda]="['RacunarskaKomponenta']" 
                 [selectedTypes]="[type]" 
                 [selectedProizvodjaci]="selectedProizvodjaci" 
-                (brojProizvoda)="getBrojProizvoda($event)" 
-                (cenaRange)="getCenaRange($event)"
             ></app-proizvodi>
         </div>
     </div>

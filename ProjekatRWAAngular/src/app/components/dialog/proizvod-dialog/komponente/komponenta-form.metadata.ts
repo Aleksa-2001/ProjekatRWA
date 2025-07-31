@@ -13,7 +13,7 @@ export const komponentaFormMetadata: Record<string, () => { [key: string]: any }
   }),
   RAM: () => ({
     tipMemorije: ['', Validators.required],
-    brojModula: ['', Validators.required],
+    brojRAMModula: ['', Validators.required],
     velicina: ['', Validators.required],
     frekvencija: ['', Validators.required]
   }),

@@ -3,7 +3,7 @@
 <div *ngIf="!(loading$ | async) && (selectedProdavnice$ | async) as prodavnice" class="row row-gap-2" [ngClass]="{ 'row-gap-3': prodavnice.length !== 0 }">
     <div class="col-12">
         <div class="row row-gap-1">
-            <div class="col-12 col-sm-6 col-md-5 col-xl-3 d-flex flex-row align-items-center column-gap-1">
+            <div class="col-12 col-sm-6 col-md-5 col-xl-3 d-flex flex-row align-items-center column-gap-1 pe-md-0">
                 <label for="inputProdavnicaSort">Sortiraj:</label>
                 <select (change)="onChangeSort()" #inputProdavnicaSort id="inputProdavnicaSort" class="form-select form-select-sm border-secondary" formControlName="sort" aria-label="Sortiraj po...">
                     <option value="" selected>Sortiraj po...</option>

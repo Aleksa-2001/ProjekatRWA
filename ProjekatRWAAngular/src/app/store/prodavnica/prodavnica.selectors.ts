@@ -22,6 +22,11 @@ export const selectProdavnice = createSelector(
         .filter(prodavnica => !!prodavnica)
         .map(prodavnica => <Prodavnica>prodavnica)
 )
+
+export const selectBrojProdavnica = createSelector(
+    selectProdavnice,
+    (prodavnice) => prodavnice.length
+)
     
 export const selectSelectedProdavnicaID = createSelector(
     selectProdavniceFeature,

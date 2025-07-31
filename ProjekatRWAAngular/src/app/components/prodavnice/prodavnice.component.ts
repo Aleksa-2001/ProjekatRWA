@@ -30,7 +30,7 @@ export class ProdavniceComponent implements OnInit, OnChanges {
   @Input() search: string = ''
   @Input() selectedNaziviProdavnica: string[] = []
 
-  @Output() brojProdavnica = new EventEmitter<number>()
+  //@Output() brojProdavnica = new EventEmitter<number>()
 
   @ViewChild('inputProdavnicaSort') inputProdavnicaSort!: ElementRef<HTMLSelectElement>
   @ViewChild('inputProdavnicaRedosledSortiranja') inputProdavnicaRedosledSortiranja!: ElementRef<HTMLSelectElement>
@@ -51,8 +51,6 @@ export class ProdavniceComponent implements OnInit, OnChanges {
     this.selectedProdavnice$.pipe(
       filter(prodavnice => !!prodavnice),
       tap(prodavnice => {
-        this.brojProdavnica.emit(prodavnice.length)
-
         const numberOfPages = Math.ceil(prodavnice.length / this.itemsPerPage)
         this.paginationList = []
         for (let i = 1; i <= numberOfPages; i++) {
@@ -78,8 +76,6 @@ export class ProdavniceComponent implements OnInit, OnChanges {
 
         if (this.sort === "brojRecenzija") filteredProdavnice.sort((a, b) => (a as any).brojRecenzija > (b as any).brojRecenzija ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
         if (this.sort === "prosecnaOcena") filteredProdavnice.sort((a, b) => (a as any).prosecnaOcena > (b as any).prosecnaOcena ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
-        
-        //this.brojProdavnica.emit(filteredProdavnice.length)
 
         const numberOfPages = Math.ceil(filteredProdavnice.length / this.itemsPerPage)
         this.paginationList = []

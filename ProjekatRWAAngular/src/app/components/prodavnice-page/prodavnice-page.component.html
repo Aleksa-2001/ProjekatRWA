@@ -9,11 +9,11 @@
     
     <app-loading *ngIf="loading$ | async"></app-loading>
 
-    <div *ngIf="!(loading$ | async) && !(error$ | async)">
+    <div *ngIf="!(loading$ | async) && !(error$ | async) && (brojProdavnica$ | async) as brojProdavnica">
         <input (input)="onChangeInput()" #inputSearchProdavnice id="inputSearchProdavnice" class="form-control form-control-lg border-secondary" placeholder="Pretraži prodavnice..." />
         <hr>
         <div class="row row-gap-3">
-            <app-filter *ngIf="brojProdavnica > 1" class="filter-menu col-12 col-md-3 col-xl-2 px-0" 
+            <app-filter *ngIf="!(loading$ | async) && brojProdavnica > 1" class="filter-menu col-12 col-md-3 col-xl-2 px-0" 
                 [sakrijIzborPrikaza]="true" 
                 [prikaziProizvode]="false" 
                 [brojProdavnica]="brojProdavnica" 
@@ -23,7 +23,6 @@
                 <app-prodavnice 
                     [search]="search" 
                     [selectedNaziviProdavnica]="selectedNaziviProdavnica" 
-                    (brojProdavnica)="getBrojProdavnica($event)"
                 ></app-prodavnice>
             </div>
         </div>

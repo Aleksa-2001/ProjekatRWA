@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app-state';
-import { tap } from 'rxjs';
+import { combineLatest, map, Observable, of, tap } from 'rxjs';
 import { ProizvodiComponent } from "../../proizvodi/proizvodi.component";
 import { ProdavniceComponent } from "../../prodavnice/prodavnice.component";
 import { loadItemsBySearch as loadProdavnice } from '../../../store/prodavnica/prodavnica.actions';
@@ -11,6 +11,8 @@ import { loadItemsBySearch as loadProizvodi } from '../../../store/proizvod/proi
 import { SearchComponent } from '../search.component';
 import { CommonModule, NgIf } from '@angular/common';
 import { FilterComponent } from "../../filter/filter.component";
+import { selectBrojProdavnica } from '../../../store/prodavnica/prodavnica.selectors';
+import { selectBrojProizvoda } from '../../../store/proizvod/proizvod.selectors';
 
 @Component({
   selector: 'app-search-page',
@@ -30,8 +32,10 @@ export class SearchPageComponent implements OnInit {
 
   query: string = ''
   
-  brojProdavnica: number = 0
-  brojProizvoda: number = 0
+  brojProdavnica$: Observable<number> = of(0)
+  brojProizvoda$: Observable<number> = of(0)
+  data$: Observable<{ brojProdavnica: number, brojProizvoda: number }> = of()
+
   cenaRange: { min: number, max: number } = { min: 0, max: Infinity }
   minCena: number = 0
   maxCena: number = Infinity
@@ -56,6 +60,13 @@ export class SearchPageComponent implements OnInit {
           this.title.setTitle(`Pretraga: \"${this.query}\" - ProjekatRWA`)
           this.store.dispatch(loadProdavnice({ search: this.query }))
           this.store.dispatch(loadProizvodi({ search: this.query }))
+
+          this.brojProdavnica$ = this.store.select(selectBrojProdavnica)
+          this.brojProizvoda$ = this.store.select(selectBrojProizvoda)
+
+          this.data$ = combineLatest([this.brojProdavnica$, this.brojProizvoda$]).pipe(
+            map(([brojProdavnica, brojProizvoda]) => ({ brojProdavnica, brojProizvoda }))
+          )
         }
         else {
           this.title.setTitle(`Pretraga - ProjekatRWA`)
@@ -64,13 +75,13 @@ export class SearchPageComponent implements OnInit {
     ).subscribe()
   }
 
-  getBrojProdavnica(brojProdavnica: number) {
-    this.brojProdavnica = brojProdavnica
-  }
+  //getBrojProdavnica(brojProdavnica: number) {
+    //this.brojProdavnica = brojProdavnica
+  //}
 
-  getBrojProizvoda(brojProizvoda: number) {
-    this.brojProizvoda = brojProizvoda
-  }
+  //getBrojProizvoda(brojProizvoda: number) {
+    //this.brojProizvoda = brojProizvoda
+  //}
 
   getCenaRange(cenaRange: { min: number, max: number }) {
     this.cenaRange = cenaRange

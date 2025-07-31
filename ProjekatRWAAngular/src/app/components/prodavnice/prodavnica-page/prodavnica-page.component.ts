@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { filter, Observable, of, take, tap } from 'rxjs';
+import { distinctUntilChanged, filter, map, Observable, of, take, tap } from 'rxjs';
 import { Prodavnica } from '../../../models/prodavnica';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app-state';
@@ -20,6 +20,9 @@ import * as ProdavniceActions from '../../../store/prodavnica/prodavnica.actions
 import * as ProizvodiActions from '../../../store/proizvod/proizvod.actions'
 import * as RecenzijeActions from '../../../store/recenzija/recenzija.actions'
 import { LoadingComponent } from "../../../shared/components/loading/loading.component";
+import { selectBrojProizvoda } from '../../../store/proizvod/proizvod.selectors';
+import { environment } from '../../../../environments/environment';
+import { selectLoading as selectLoadingProizvodi } from '../../../store/proizvod/proizvod.selectors';
 
 @Component({
   selector: 'app-prodavnica-page',
@@ -44,6 +47,7 @@ import { LoadingComponent } from "../../../shared/components/loading/loading.com
 export class ProdavnicaPageComponent implements OnInit, OnDestroy { 
 
   loading$: Observable<boolean> = of(true)
+  loadingProizvodi$: Observable<boolean> = of(true)
   error$: Observable<any> = of()
   
   @ViewChild('inputSearchProizvodi') inputSearchProizvodi!: ElementRef<HTMLInputElement>
@@ -56,7 +60,7 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
 
   backgroundStyle: { [key: string]: string } = { }
   
-  brojProizvoda: number = 0
+  brojProizvoda$: Observable<number> = of(0)
   prosek: number = 0
   brojRecenzija: number = 0
   
@@ -73,31 +77,39 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading$ = this.store.select(selectLoading)
+    this.loadingProizvodi$ = this.store.select(selectLoadingProizvodi)
     this.error$ = this.store.select(selectError)
 
-    this.isAdmin$ = this.store.select(isAdmin)
-    
-    this.prodavnicaID = Number(this.route.snapshot.paramMap.get('id'))
-    this.store.dispatch(ProdavniceActions.setSelectedItemID({ prodavnicaID: this.prodavnicaID }))
-    this.store.dispatch(ProdavniceActions.loadSelectedItem({ selectedProdavnicaID: this.prodavnicaID }))
     this.prodavnica$ = this.store.select(selectSelectedProdavnica)
+    let firstLoad = true
+
+    this.isAdmin$ = this.store.select(isAdmin)
+
+    this.route.paramMap.pipe(
+      map(params => Number(params.get('id'))),
+      distinctUntilChanged(),
+      tap(prodavnicaID => {
+        this.store.dispatch(ProdavniceActions.setSelectedItemID({ prodavnicaID: prodavnicaID }))
+        this.store.dispatch(ProdavniceActions.loadSelectedItem({ selectedProdavnicaID: prodavnicaID }))
+        firstLoad = true
+      })
+    ).subscribe()
 
     this.prodavnica$.pipe(
       filter(prodavnica => !!prodavnica),
       tap(prodavnica => {
         this.title.setTitle(`${prodavnica.naziv} - ProjekatRWA`)
-        this.setBackground('http://localhost:3000/' + prodavnica.slika)
+        this.setBackground(environment.apiUrl + prodavnica.slika)
+
+        if (firstLoad) {
+          this.store.dispatch(ProizvodiActions.loadItems({ prodavnicaID: prodavnica.id }))
+          this.store.dispatch(RecenzijeActions.loadItemsProdavnica({ prodavnicaID: prodavnica.id }))
+          firstLoad = false
+        }
       })
     ).subscribe()
 
-    this.prodavnica$.pipe(
-      filter(prodavnica => !!prodavnica),
-      take(1),
-      tap(prodavnica => {
-        this.store.dispatch(ProizvodiActions.loadItems({ prodavnicaID: prodavnica.id }))
-        this.store.dispatch(RecenzijeActions.loadItemsProdavnica({ prodavnicaID: prodavnica.id }))
-      })
-    ).subscribe()
+    this.brojProizvoda$ = this.store.select(selectBrojProizvoda)
   }
 
   ngOnDestroy(): void {
@@ -120,9 +132,9 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
     this.search = this.inputSearchProizvodi.nativeElement.value
   }
 
-  getBrojProizvoda(brojProizvoda: number) {
-    this.brojProizvoda = brojProizvoda
-  }
+  //getBrojProizvoda(brojProizvoda: number) {
+    //this.brojProizvoda = brojProizvoda
+  //}
 
   getProsek(prosek: number) {
     this.prosek = prosek

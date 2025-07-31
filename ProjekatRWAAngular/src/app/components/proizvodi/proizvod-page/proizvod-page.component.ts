@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { filter, Observable, of, take, tap } from 'rxjs';
+import { distinctUntilChanged, filter, map, Observable, of, take, tap } from 'rxjs';
 import { Proizvod } from '../../../models/proizvod';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -19,6 +19,7 @@ import { Racunar } from '../../../models/racunar';
 import * as ProizvodiActions from '../../../store/proizvod/proizvod.actions'
 import * as RecenzijeActions from '../../../store/recenzija/recenzija.actions'
 import { LoadingComponent } from "../../../shared/components/loading/loading.component";
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-proizvod-page',
@@ -63,28 +64,33 @@ export class ProizvodPageComponent implements OnInit, OnDestroy {
     this.loading$ = this.store.select(selectLoading)
     this.error$ = this.store.select(selectError)
 
+    this.proizvod$ = this.store.select(selectSelectedProizvod)
+    let firstLoad = true
+    
     this.isAdmin$ = this.store.select(isAdmin)
 
-    this.proizvodID = Number(this.route.snapshot.paramMap.get('id'))
-    this.store.dispatch(ProizvodiActions.setSelectedItemID({ proizvodID: this.proizvodID }))
-    this.store.dispatch(ProizvodiActions.loadSelectedItem({ selectedProizvodID: this.proizvodID }))
-    this.proizvod$ = this.store.select(selectSelectedProizvod)
-
-    this.proizvod$.pipe(
-      filter(proizvod => !!proizvod),
-      tap(proizvod => {
-        this.title.setTitle(`${proizvod.naziv} - ProjekatRWA`)
-        this.setImage('http://localhost:3000/' + proizvod.slika)
+    this.route.paramMap.pipe(
+      map(params => Number(params.get('id'))),
+      distinctUntilChanged(),
+      tap(proizvodID => {
+        this.store.dispatch(ProizvodiActions.setSelectedItemID({ proizvodID }))
+        this.store.dispatch(ProizvodiActions.loadSelectedItem({ selectedProizvodID: proizvodID }))
+        firstLoad = true
       })
     ).subscribe()
 
     this.proizvod$.pipe(
       filter(proizvod => !!proizvod),
-      take(1),
       tap(proizvod => {
-        this.store.dispatch(RecenzijeActions.loadItemsProizvod({ proizvodID: proizvod.id }))
+        this.title.setTitle(`${proizvod.naziv} - ProjekatRWA`);
+        this.setImage(environment.apiUrl + proizvod.slika);
+
+        if (firstLoad) {
+          this.store.dispatch(RecenzijeActions.loadItemsProizvod({ proizvodID: proizvod.id }));
+          firstLoad = false;
+        }
       })
-    ).subscribe()
+    ).subscribe();
   }
 
   ngOnDestroy(): void {

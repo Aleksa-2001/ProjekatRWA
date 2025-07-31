@@ -9,7 +9,7 @@ import { isAdmin } from '../../store/auth/auth.selectors';
 import { ProdavnicaDialogComponent } from "../dialog/prodavnica-dialog/prodavnica-dialog.component";
 import { FilterComponent } from "../filter/filter.component";
 import * as ProdavniceActions from '../../store/prodavnica/prodavnica.actions';
-import { selectError, selectLoading } from '../../store/prodavnica/prodavnica.selectors';
+import { selectBrojProdavnica, selectError, selectLoading } from '../../store/prodavnica/prodavnica.selectors';
 import { LoadingComponent } from "../../shared/components/loading/loading.component";
 
 @Component({
@@ -35,7 +35,7 @@ export class ProdavnicePageComponent implements OnInit {
 
   isAdmin$: Observable<boolean> = of(false)
 
-  brojProdavnica: number = 0
+  brojProdavnica$: Observable<number> = of(0)
 
   search: string = ''
   selectedNaziviProdavnica: string[] = []
@@ -50,15 +50,17 @@ export class ProdavnicePageComponent implements OnInit {
     this.title.setTitle("Prodavnice - ProjekatRWA")
 
     this.store.dispatch(ProdavniceActions.loadItems())
+
+    this.brojProdavnica$ = this.store.select(selectBrojProdavnica)
   }
   
   onChangeInput() {
     this.search = this.inputSearchProdavnice.nativeElement.value
   }
 
-  getBrojProdavnica(brojProdavnica: number) {
-    this.brojProdavnica = brojProdavnica
-  }
+  //getBrojProdavnica(brojProdavnica: number) {
+    //this.brojProdavnica = brojProdavnica
+  //}
 
   getSelectedNaziviProdavnica(selectedNaziviProdavnica: string[]) {
     this.selectedNaziviProdavnica = selectedNaziviProdavnica
