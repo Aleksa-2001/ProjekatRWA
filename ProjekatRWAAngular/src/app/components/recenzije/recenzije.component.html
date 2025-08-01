@@ -4,7 +4,7 @@
 </div>
 <app-loading *ngIf="loading$ | async"></app-loading>
 <div *ngIf="!(loading$ | async) && (selectedRecenzije$ | async) as recenzije" class="row row-gap-2">
-    <div class="col-12">
+    <div *ngIf="recenzije.length > 1" class="col-12">
         <div class="row row-gap-1">
             <div class="col-12 col-sm-6 col-md-auto col-xl-3 d-flex flex-row align-items-center column-gap-1">
                 <label for="inputRecenzijaSort">Sortiraj:</label>

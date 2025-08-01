@@ -35,7 +35,8 @@ export class SelectItemComponent implements OnInit {
   @ViewChild('inputSearchProizvodi') inputSearchProizvodi!: ElementRef<HTMLInputElement>
 
   proizvodID!: number
-  type$: Observable<string> = of('')
+  type: string = ''
+  //type$: Observable<string> = of('')
 
   proizvod$: Observable<Proizvod | null> = of()
   isAdmin$: Observable<boolean> = of(false)
@@ -67,10 +68,7 @@ export class SelectItemComponent implements OnInit {
     this.title.setTitle("Izaberi - ProjekatRWA")
 
     this.proizvodID = Number(this.route.snapshot.paramMap.get('id'))
-    this.type$ = this.route.queryParamMap.pipe(
-      map(queryParams => queryParams.get('type') ?? '')
-    )
-    this.cenaRange$
+    this.type = this.route.snapshot.queryParamMap.get('type') ?? ''
     
     this.store.dispatch(ProizvodiActions.setSelectedItemID({ proizvodID: this.proizvodID }))
     this.store.dispatch(ProizvodiActions.loadSelectedItem({ selectedProizvodID: this.proizvodID }))
@@ -80,7 +78,7 @@ export class SelectItemComponent implements OnInit {
       filter(proizvod => !!proizvod),
       take(1),
       tap(proizvod => {
-        this.store.dispatch(ProizvodiActions.loadItems({ prodavnicaID: proizvod.prodavnica.id }))
+        this.store.dispatch(ProizvodiActions.loadItems({ prodavnicaID: proizvod.prodavnica.id, tip: this.type }))
       })
     ).subscribe()
 

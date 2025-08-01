@@ -18,8 +18,8 @@ export class ProizvodiController {
     }
 
     @Get('proizvodi/:prodavnicaID')
-    public getProizvodi(@Param('prodavnicaID', ParseIntPipe) prodavnicaID: number) {
-        return this.service.getProizvodi(prodavnicaID)
+    public getProizvodi(@Param('prodavnicaID', ParseIntPipe) prodavnicaID: number, @Query('type') type?: string) {
+        return this.service.getProizvodi(prodavnicaID, type)
     }
 
     @Get('proizvodiSearch')

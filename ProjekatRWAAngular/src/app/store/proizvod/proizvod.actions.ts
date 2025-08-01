@@ -6,7 +6,8 @@ import { Racunar } from "../../models/racunar";
 export const loadItems = createAction(
     "[Proizvod] Ucitaj listu",
     props<{
-        prodavnicaID: number
+        prodavnicaID: number,
+        tip?: string
     }>()
 )
 

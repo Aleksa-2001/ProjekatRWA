@@ -70,13 +70,13 @@ export const proizvodReducer = createReducer(
         ...state,
         error
     })),
-    on(ProizvodiActions.updateItemSuccess, (state, { proizvod, selectedProizvod }) => (
+    on(ProizvodiActions.updateItemSuccess, ProizvodiActions.updateRacunarSuccess, (state, { proizvod, selectedProizvod }) => (
         adapter.updateOne(proizvod, {
             ...state,
             selectedProizvod: selectedProizvod
         })
     )),
-    on(ProizvodiActions.updateItemFailure, (state, { error }) => ({
+    on(ProizvodiActions.updateItemFailure, ProizvodiActions.updateRacunarFailure, (state, { error }) => ({
         ...state,
         error
     })),

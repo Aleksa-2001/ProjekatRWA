@@ -22,12 +22,12 @@ export class ProizvodiService {
         return await this.proizvodRepository.find()
     }
 
-    public async getProizvodi(prodavnicaID: number) {
+    public async getProizvodi(prodavnicaID: number, type?: string) {
         //return await this.proizvodRepository.find({ 
         //    where: { prodavnica: { id: prodavnicaID } }
         //})
         
-        const proizvodi = await this.proizvodRepository
+        let query = this.proizvodRepository
             .createQueryBuilder('proizvod')
             .leftJoin('proizvod.recenzije', 'recenzija')
             .select(['proizvod.id', 'proizvod.type', 'proizvod.tipProizvoda', 'proizvod.proizvodjac', 'proizvod.naziv', 'proizvod.cena', 'proizvod.slika'])
@@ -35,8 +35,14 @@ export class ProizvodiService {
             .addSelect('COALESCE(AVG(recenzija.ocena), 0)', 'prosecnaOcena')
             .groupBy('proizvod.id')
             .where('proizvod.prodavnica.id = :id', { id: prodavnicaID })
-            .getRawAndEntities()
-        
+
+            
+        if (type) {
+            query = query.andWhere('proizvod.type = :type', { type })
+        }
+
+        const proizvodi = await query.getRawAndEntities()
+            
         return proizvodi.entities.map((proizvod, i) => ({
             ...proizvod,
             brojRecenzija: parseInt(proizvodi.raw[i].brojRecenzija),

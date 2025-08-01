@@ -17,7 +17,7 @@ export class ProizvodiEffects {
     loadEffect$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ProizvodiActions.loadItems),
-            mergeMap(({ prodavnicaID }) => this.service.getProizvodi(prodavnicaID)
+            mergeMap(({ prodavnicaID, tip }) => this.service.getProizvodi(prodavnicaID, tip)
                 .pipe(
                     map((proizvodi) => (ProizvodiActions.loadItemsSuccess({proizvodi}))),
                     catchError((error) => of(ProizvodiActions.loadItemsFailure({ error })))

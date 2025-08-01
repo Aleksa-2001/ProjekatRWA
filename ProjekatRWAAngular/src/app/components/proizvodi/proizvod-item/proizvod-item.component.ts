@@ -75,8 +75,6 @@ export class ProizvodItemComponent {
             break
         }
 
-        console.log(data)
-
         this.store.dispatch(ProizvodiActions.updateRacunar({ selectedProizvodID: this.selectedRacunarID, selectedProizvod: data }))
       })
     ).subscribe()

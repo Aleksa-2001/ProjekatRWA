@@ -27,6 +27,7 @@ export class ProdavniceComponent implements OnInit, OnChanges {
   itemsPerPage: number = 6
   currentPage: number = 1
 
+  @Input() prodavnicePage: boolean = false
   @Input() search: string = ''
   @Input() selectedNaziviProdavnica: string[] = []
 

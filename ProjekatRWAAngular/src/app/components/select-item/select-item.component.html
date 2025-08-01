@@ -1,4 +1,5 @@
 <div *ngIf="loading$ | async" class="container my-3">
+    <h1>Izaberi</h1>
     <app-loading></app-loading>
 </div>
 
@@ -19,7 +20,7 @@
             (selectedProizvodjaciOutput)="getSelectedProizvodjaci($event)"
         ></app-filter>
         <div class="col">
-            <app-proizvodi *ngIf="type$ | async as type"
+            <app-proizvodi
                 [search]="search" 
                 [selectMode]="true" 
                 [selectedRacunarID]="proizvodID"

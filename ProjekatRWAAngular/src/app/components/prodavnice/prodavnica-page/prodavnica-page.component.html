@@ -39,43 +39,38 @@
 
         <hr>
         
-        <div *ngIf="loadingProizvodi$ | async">
-            <h2>Proizvodi</h2>
-            <app-loading></app-loading>
+        <div *ngIf="isAdmin$ | async" class="mb-3">
+            <div class="d-flex flex-column flex-sm-row gap-2">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#proizvodModalDialog"><i class="bi bi-plus-lg me-2"></i>Dodaj proizvod</button>
+                <button *ngIf="brojProizvoda$ | async as brojProizvoda" [disabled]="brojProizvoda === 0" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModalDialogProizvod"><i class="bi bi-trash me-2"></i>Obriši sve proizvode</button>
+            </div>
+            <hr>
         </div>
 
-        <div *ngIf="!(loadingProizvodi$ | async) && (brojProizvoda$ | async) as brojProizvoda">
-            <div *ngIf="isAdmin$ | async" class="mb-3">
-                <div class="d-flex flex-column flex-sm-row gap-2">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#proizvodModalDialog"><i class="bi bi-plus-lg me-2"></i>Dodaj proizvod</button>
-                    <button [disabled]="brojProizvoda === 0" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModalDialogProizvod"><i class="bi bi-trash me-2"></i>Obriši sve proizvode</button>
-                </div>
-                <hr>
-            </div>
-
+        <div *ngIf="!(loadingProizvodi$ | async) && (brojProizvoda$ | async)">
             <input (input)="onChangeInput()" #inputSearchProizvodi id="inputSearchProizvodi" class="form-control form-control-lg border-secondary" placeholder="Pretraži proizvode..." />
             <hr>
-            <div class="row row-gap-3">
-                <app-filter *ngIf="brojProizvoda > 1" class="filter-menu col-12 col-md-3 col-xl-2 px-0" 
-                    [sakrijIzborPrikaza]="true" 
-                    [prikaziProdavnice]="false" 
-                    [brojProizvoda]="brojProizvoda" 
-                    [cenaRange]="cenaRange" 
-                    (selectedCenaRangeOutput)="getSelectedCenaRange($event)" 
-                    (selectedTipoviProizvodaOutput)="getSelectedTipoviProizvoda($event)" 
-                    (selectedTypesOutput)="getSelectedTypes($event)" 
-                    (selectedProizvodjaciOutput)="getSelectedProizvodjaci($event)"
-                ></app-filter>
-                <div class="col">
-                    <app-proizvodi 
-                        [search]="search" 
-                        [selectedCenaRange]="selectedCenaRange" 
-                        [selectedTipoviProizvoda]="selectedTipoviProizvoda" 
-                        [selectedTypes]="selectedTypes" 
-                        [selectedProizvodjaci]="selectedProizvodjaci" 
-                        (cenaRange)="getCenaRange($event)"
-                    ></app-proizvodi>
-                </div>
+        </div>
+        <div class="row row-gap-3">
+            <app-filter *ngIf="(brojProizvoda$ | async) as brojProizvoda" [hidden]="brojProizvoda <= 1" class="filter-menu col-12 col-md-3 col-xl-2 px-0" 
+                [sakrijIzborPrikaza]="true" 
+                [prikaziProdavnice]="false" 
+                [brojProizvoda]="brojProizvoda" 
+                [cenaRange]="cenaRange" 
+                (selectedCenaRangeOutput)="getSelectedCenaRange($event)" 
+                (selectedTipoviProizvodaOutput)="getSelectedTipoviProizvoda($event)" 
+                (selectedTypesOutput)="getSelectedTypes($event)" 
+                (selectedProizvodjaciOutput)="getSelectedProizvodjaci($event)"
+            ></app-filter>
+            <div class="col">
+                <app-proizvodi 
+                    [search]="search" 
+                    [selectedCenaRange]="selectedCenaRange" 
+                    [selectedTipoviProizvoda]="selectedTipoviProizvoda" 
+                    [selectedTypes]="selectedTypes" 
+                    [selectedProizvodjaci]="selectedProizvodjaci" 
+                    (cenaRange)="getCenaRange($event)"
+                ></app-proizvodi>
             </div>
         </div>
 

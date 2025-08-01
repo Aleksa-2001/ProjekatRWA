@@ -18,9 +18,9 @@ export class ProizvodService {
     //    .pipe(catchError(errorHandler))
     //}
 
-    getProizvodi(prodavnicaID: number) {
+    getProizvodi(prodavnicaID: number, type?: string) {
         return this.httpClient
-            .get<Proizvod[]>(environment.apiUrl + `proizvodi/${prodavnicaID}`)
+            .get<Proizvod[]>(environment.apiUrl + `proizvodi/${prodavnicaID}` + (type ? `?type=${type}` : ''))
             .pipe(catchError(errorHandler))
     }
 
