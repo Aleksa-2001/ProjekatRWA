@@ -77,13 +77,6 @@
                 </div>
             </div>
             <div [ngSwitch]="proizvod.tipProizvoda">
-                <!-- <div *ngSwitchCase="'Racunar'">
-                    <div class="row" style="background-color: #AAAAAA;">
-                        <div class="col">
-                            <h5>TODO: Prikazati specifikacije računara</h5>
-                        </div>
-                    </div>
-                </div> -->
                 <app-racunar-page *ngSwitchCase="'Racunar'" [racunar]="getRacunar(proizvod)"></app-racunar-page>
                 <app-komponenta-page *ngSwitchCase="'RacunarskaKomponenta'" [komponenta]="proizvod"></app-komponenta-page>
             </div>

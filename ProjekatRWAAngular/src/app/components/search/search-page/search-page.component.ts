@@ -4,26 +4,22 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app-state';
 import { combineLatest, map, Observable, of, tap } from 'rxjs';
-import { ProizvodiComponent } from "../../proizvodi/proizvodi.component";
-import { ProdavniceComponent } from "../../prodavnice/prodavnice.component";
 import { loadItemsBySearch as loadProdavnice } from '../../../store/prodavnica/prodavnica.actions';
 import { loadItemsBySearch as loadProizvodi } from '../../../store/proizvod/proizvod.actions';
 import { SearchComponent } from '../search.component';
 import { CommonModule, NgIf } from '@angular/common';
-import { FilterComponent } from "../../filter/filter.component";
 import { selectBrojProdavnica } from '../../../store/prodavnica/prodavnica.selectors';
 import { selectBrojProizvoda } from '../../../store/proizvod/proizvod.selectors';
+import { ItemListComponent } from "../../item-list/item-list.component";
 
 @Component({
   selector: 'app-search-page',
   imports: [
     NgIf,
     CommonModule,
-    ProdavniceComponent,
-    ProizvodiComponent,
     SearchComponent,
-    FilterComponent
-  ],
+    ItemListComponent
+],
   templateUrl: './search-page.component.html',
   styleUrl: './search-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -74,14 +70,6 @@ export class SearchPageComponent implements OnInit {
       })
     ).subscribe()
   }
-
-  //getBrojProdavnica(brojProdavnica: number) {
-    //this.brojProdavnica = brojProdavnica
-  //}
-
-  //getBrojProizvoda(brojProizvoda: number) {
-    //this.brojProizvoda = brojProizvoda
-  //}
 
   getCenaRange(cenaRange: { min: number, max: number }) {
     this.cenaRange = cenaRange

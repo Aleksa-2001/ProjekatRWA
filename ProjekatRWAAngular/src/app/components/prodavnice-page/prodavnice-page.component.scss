@@ -1,9 +1,3 @@
-.filter-menu {
-  border-right: 1px solid #C3C3C3
-}
-
-@media screen and (max-width: 767px) {
-  .filter-menu {
-    border-right: 0
-  }
+:host {
+  display: block;
 }

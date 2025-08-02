@@ -47,33 +47,11 @@
             <hr>
         </div>
 
-        <div *ngIf="!(loadingProizvodi$ | async) && (brojProizvoda$ | async)">
-            <input (input)="onChangeInput()" #inputSearchProizvodi id="inputSearchProizvodi" class="form-control form-control-lg border-secondary" placeholder="Pretraži proizvode..." />
-            <hr>
-        </div>
-        <div class="row row-gap-3">
-            <app-filter *ngIf="(brojProizvoda$ | async) as brojProizvoda" [hidden]="brojProizvoda <= 1" class="filter-menu col-12 col-md-3 col-xl-2 px-0" 
-                [sakrijIzborPrikaza]="true" 
-                [prikaziProdavnice]="false" 
-                [brojProizvoda]="brojProizvoda" 
-                [cenaRange]="cenaRange" 
-                (selectedCenaRangeOutput)="getSelectedCenaRange($event)" 
-                (selectedTipoviProizvodaOutput)="getSelectedTipoviProizvoda($event)" 
-                (selectedTypesOutput)="getSelectedTypes($event)" 
-                (selectedProizvodjaciOutput)="getSelectedProizvodjaci($event)"
-            ></app-filter>
-            <div class="col">
-                <app-proizvodi 
-                    [search]="search" 
-                    [selectedCenaRange]="selectedCenaRange" 
-                    [selectedTipoviProizvoda]="selectedTipoviProizvoda" 
-                    [selectedTypes]="selectedTypes" 
-                    [selectedProizvodjaci]="selectedProizvodjaci" 
-                    (cenaRange)="getCenaRange($event)"
-                ></app-proizvodi>
-            </div>
-        </div>
-
+        <app-item-list
+            [sakrijIzborPrikaza]="true" 
+            [prikaziProdavnice]="false"
+        ></app-item-list>
+        
         <hr>
 
         <app-recenzije (prosecnaOcena)="getProsek($event)" (brojRecenzija)="getBrojRecenzija($event)"></app-recenzije>

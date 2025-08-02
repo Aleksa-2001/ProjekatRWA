@@ -7,13 +7,3 @@
     font-size: calc(2.5rem + 1.5vw);
     line-height: calc(2.5rem + 1.5vw);
 }
-
-.filter-menu {
-  border-right: 1px solid #C3C3C3
-}
-
-@media screen and (max-width: 767px) {
-  .filter-menu {
-    border-right: 0
-  }
-}

@@ -1,39 +1,9 @@
 <div class="container my-3">
     <h1>Pretraga</h1>
     <app-search class="mb-3" [query]="query"></app-search>
-    <div class="row row-gap-3" *ngIf="data$ | async as data">
-        <div *ngIf="data.brojProdavnica !== 0 || data.brojProizvoda !== 0" class="col-12 d-none d-md-block">
-            <hr class="m-0">
-        </div>
-        <app-filter *ngIf="query && ((data.brojProdavnica !== 0 || data.brojProizvoda !== 0) && !((data.brojProdavnica <= 1 && data.brojProizvoda === 0) || (data.brojProdavnica === 0 && data.brojProizvoda <= 1)))" class="filter-menu col-12 col-md-3 col-xl-2 px-0" 
-            [brojProdavnica]="data.brojProdavnica" 
-            [brojProizvoda]="data.brojProizvoda" 
-            [cenaRange]="cenaRange" 
-            (prikaziProdavniceOutput)="getPrikaziProdavnice($event)" 
-            (prikaziProizvodeOutput)="getPrikaziProizvode($event)" 
-            (selectedNaziviProdavnicaOutput)="getSelectedNaziviProdavnica($event)" 
-            (selectedCenaRangeOutput)="getSelectedCenaRange($event)" 
-            (selectedTipoviProizvodaOutput)="getSelectedTipoviProizvoda($event)" 
-            (selectedTypesOutput)="getSelectedTypes($event)" 
-            (selectedProizvodjaciOutput)="getSelectedProizvodjaci($event)"
-        ></app-filter>
-        <div class="col">
-            <app-prodavnice *ngIf="query" [hidden]="data.brojProdavnica === 0 || !prikaziProdavnice" 
-                [selectedNaziviProdavnica]="selectedNaziviProdavnica" 
-            ></app-prodavnice>
-
-            <hr *ngIf="query && data.brojProdavnica !== 0 && data.brojProizvoda !== 0 && prikaziProdavnice && prikaziProizvode">
-
-            <app-proizvodi *ngIf="query" [hidden]="data.brojProizvoda === 0 || !prikaziProizvode" 
-                [selectedCenaRange]="selectedCenaRange" 
-                [selectedTipoviProizvoda]="selectedTipoviProizvoda" 
-                [selectedTypes]="selectedTypes" 
-                [selectedProizvodjaci]="selectedProizvodjaci" 
-                (cenaRange)="getCenaRange($event)"
-            ></app-proizvodi>
-            
-            <p *ngIf="query && data.brojProdavnica === 0 && data.brojProizvoda === 0">Nije pronađen nijedan rezultat!</p>
-            <p *ngIf="!query">Molimo da popunite polje za pretragu!</p>
-        </div>
+    <div *ngIf="data$ | async as data">
+        <hr *ngIf="data.brojProdavnica !== 0 || data.brojProizvoda !== 0" class="col-12 d-none d-md-block">
+        <app-item-list></app-item-list>
     </div>
+    <p *ngIf="!query">Molimo da popunite polje za pretragu!</p>
 </div>

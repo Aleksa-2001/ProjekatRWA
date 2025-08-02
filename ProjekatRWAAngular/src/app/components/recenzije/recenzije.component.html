@@ -3,7 +3,7 @@
     <button [disabled]="unetaRecenzija$ | async" *ngIf="(user$ | async) && !profileMode" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#recenzijaModalDialog"><i class="bi bi-plus-lg me-2"></i>Dodaj recenziju</button>
 </div>
 <app-loading *ngIf="loading$ | async"></app-loading>
-<div *ngIf="!(loading$ | async) && (selectedRecenzije$ | async) as recenzije" class="row row-gap-2">
+<div *ngIf="!(loading$ | async) && !(error$ | async) && (selectedRecenzije$ | async) as recenzije" class="row row-gap-2">
     <div *ngIf="recenzije.length > 1" class="col-12">
         <div class="row row-gap-1">
             <div class="col-12 col-sm-6 col-md-auto col-xl-3 d-flex flex-row align-items-center column-gap-1">
@@ -27,6 +27,7 @@
     </div>
     <p *ngIf="recenzije.length === 0" class="m-0"><i>Nema unetih recenzija</i></p>
 </div>
+<p class="m-0 text-danger" *ngIf="!(loading$ | async) && (error$ | async) as error"><i>{{error}}</i></p>
 
 <app-recenzija-dialog *ngIf="(user$ | async) && !profileMode" [modalID]="'recenzijaModalDialog'"></app-recenzija-dialog>
 <app-recenzija-dialog *ngIf="(user$ | async) && !profileMode" [modalID]="'recenzijaModalDialogEdit'" [mode]="1"></app-recenzija-dialog>

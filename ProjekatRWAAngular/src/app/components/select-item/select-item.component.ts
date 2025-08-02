@@ -1,27 +1,23 @@
 import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule, NgIf } from '@angular/common';
-import { FilterComponent } from "../filter/filter.component";
-import { ProizvodiComponent } from "../proizvodi/proizvodi.component";
 import { AppState } from '../../store/app-state';
 import { Store } from '@ngrx/store';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { filter, map, Observable, of, take, tap } from 'rxjs';
-import { Prodavnica } from '../../models/prodavnica';
+import { distinctUntilChanged, filter, map, Observable, of, take, tap } from 'rxjs';
 import { Proizvod } from '../../models/proizvod';
-import * as ProdavniceActions from '../../store/prodavnica/prodavnica.actions'
 import * as ProizvodiActions from '../../store/proizvod/proizvod.actions'
 import { selectBrojProizvoda, selectCenaRange, selectError, selectLoading, selectSelectedProizvod } from '../../store/proizvod/proizvod.selectors';
 import { LoadingComponent } from "../../shared/components/loading/loading.component";
+import { ItemListComponent } from "../item-list/item-list.component";
 
 @Component({
   selector: 'app-select-item',
   imports: [
     NgIf,
     CommonModule,
-    FilterComponent,
-    ProizvodiComponent,
-    LoadingComponent
+    LoadingComponent,
+    ItemListComponent
 ],
   templateUrl: './select-item.component.html',
   styleUrl: './select-item.component.scss',
@@ -34,7 +30,8 @@ export class SelectItemComponent implements OnInit {
 
   @ViewChild('inputSearchProizvodi') inputSearchProizvodi!: ElementRef<HTMLInputElement>
 
-  proizvodID!: number
+  proizvodID$: Observable<number> = of(-1)
+  proizvodID: number = -1
   type: string = ''
   //type$: Observable<string> = of('')
 
@@ -67,11 +64,17 @@ export class SelectItemComponent implements OnInit {
 
     this.title.setTitle("Izaberi - ProjekatRWA")
 
-    this.proizvodID = Number(this.route.snapshot.paramMap.get('id'))
+    this.route.paramMap.pipe(
+      map(params => Number(params.get('id'))), 
+      distinctUntilChanged(), 
+      tap(proizvodID => {
+        this.store.dispatch(ProizvodiActions.setSelectedItemID({ proizvodID: proizvodID }))
+        this.store.dispatch(ProizvodiActions.loadSelectedItem({ selectedProizvodID: proizvodID }))
+      })
+    ).subscribe()
+    
     this.type = this.route.snapshot.queryParamMap.get('type') ?? ''
     
-    this.store.dispatch(ProizvodiActions.setSelectedItemID({ proizvodID: this.proizvodID }))
-    this.store.dispatch(ProizvodiActions.loadSelectedItem({ selectedProizvodID: this.proizvodID }))
     this.proizvod$ = this.store.select(selectSelectedProizvod)
 
     this.proizvod$.pipe(
@@ -100,29 +103,6 @@ export class SelectItemComponent implements OnInit {
 
   getBrojRecenzija(brojRecenzija: number) {
     this.brojRecenzija = brojRecenzija
-  }
-  
-  // getCenaRange(cenaRange: { min: number, max: number }) {
-  //   this.cenaRange = cenaRange
-  //   this.selectedCenaRange = this.cenaRange
-  //   this.minCena = cenaRange.min
-  //   this.maxCena = cenaRange.max
-  // }
-
-  getSelectedCenaRange(selectedCenaRange: { min: number, max: number }) {
-    this.selectedCenaRange = selectedCenaRange
-  }
-
-  getSelectedTipoviProizvoda(selectedTipoviProizvoda: string[]) {
-    this.selectedTipoviProizvoda = selectedTipoviProizvoda
-  }
-
-  getSelectedTypes(selectedTypes: string[]) {
-    this.selectedTypes = selectedTypes
-  }
-
-  getSelectedProizvodjaci(selectedProizvodjaci: string[]) {
-    this.selectedProizvodjaci = selectedProizvodjaci
   }
 
 }

@@ -29,7 +29,6 @@ export class ProizvodItemComponent {
   @Input() proizvod!: Proizvod
   @Input() displayMode!: number
   @Input() selectMode!: boolean
-  @Input() selectedRacunarID!: number
 
   prosek: number = 0
   brojRecenzija: number = 0
@@ -75,7 +74,7 @@ export class ProizvodItemComponent {
             break
         }
 
-        this.store.dispatch(ProizvodiActions.updateRacunar({ selectedProizvodID: this.selectedRacunarID, selectedProizvod: data }))
+        this.store.dispatch(ProizvodiActions.updateRacunar({ selectedProizvodID: proizvod.id, selectedProizvod: data }))
       })
     ).subscribe()
   }

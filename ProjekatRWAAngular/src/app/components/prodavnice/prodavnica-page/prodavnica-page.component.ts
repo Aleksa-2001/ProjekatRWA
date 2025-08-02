@@ -6,7 +6,6 @@ import { AppState } from '../../../store/app-state';
 import { selectError, selectLoading, selectSelectedProdavnica } from '../../../store/prodavnica/prodavnica.selectors';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule, NgIf, NgStyle } from '@angular/common';
-import { ProizvodiComponent } from "../../proizvodi/proizvodi.component";
 import { NotFoundComponent } from "../../../shared/components/not-found/not-found.component";
 import { Title } from '@angular/platform-browser';
 import { isAdmin } from '../../../store/auth/auth.selectors';
@@ -15,14 +14,14 @@ import { ConfirmDialogComponent } from "../../dialog/confirm-dialog/confirm-dial
 import { ProizvodDialogComponent } from "../../dialog/proizvod-dialog/proizvod-dialog.component";
 import { RecenzijeComponent } from "../../recenzije/recenzije.component";
 import { StarsComponent } from "../../stars/stars.component";
-import { FilterComponent } from "../../filter/filter.component";
-import * as ProdavniceActions from '../../../store/prodavnica/prodavnica.actions'
-import * as ProizvodiActions from '../../../store/proizvod/proizvod.actions'
-import * as RecenzijeActions from '../../../store/recenzija/recenzija.actions'
 import { LoadingComponent } from "../../../shared/components/loading/loading.component";
 import { selectBrojProizvoda } from '../../../store/proizvod/proizvod.selectors';
 import { environment } from '../../../../environments/environment';
 import { selectLoading as selectLoadingProizvodi } from '../../../store/proizvod/proizvod.selectors';
+import { ItemListComponent } from "../../item-list/item-list.component";
+import * as ProdavniceActions from '../../../store/prodavnica/prodavnica.actions'
+import * as ProizvodiActions from '../../../store/proizvod/proizvod.actions'
+import * as RecenzijeActions from '../../../store/recenzija/recenzija.actions'
 
 @Component({
   selector: 'app-prodavnica-page',
@@ -30,15 +29,14 @@ import { selectLoading as selectLoadingProizvodi } from '../../../store/proizvod
     NgIf,
     NgStyle,
     CommonModule,
-    ProizvodiComponent,
     NotFoundComponent,
     ProdavnicaDialogComponent,
     ConfirmDialogComponent,
     ProizvodDialogComponent,
     RecenzijeComponent,
     StarsComponent,
-    FilterComponent,
-    LoadingComponent
+    LoadingComponent,
+    ItemListComponent
 ],
   templateUrl: './prodavnica-page.component.html',
   styleUrl: './prodavnica-page.component.scss',

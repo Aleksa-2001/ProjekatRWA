@@ -31,8 +31,6 @@ export class ProdavniceComponent implements OnInit, OnChanges {
   @Input() search: string = ''
   @Input() selectedNaziviProdavnica: string[] = []
 
-  //@Output() brojProdavnica = new EventEmitter<number>()
-
   @ViewChild('inputProdavnicaSort') inputProdavnicaSort!: ElementRef<HTMLSelectElement>
   @ViewChild('inputProdavnicaRedosledSortiranja') inputProdavnicaRedosledSortiranja!: ElementRef<HTMLSelectElement>
   @ViewChild('inputBrojProdavnicaPoStranici') inputBrojProdavnicaPoStranici!: ElementRef<HTMLSelectElement>
