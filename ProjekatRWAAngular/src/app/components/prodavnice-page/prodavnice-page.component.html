@@ -1,12 +1,11 @@
 <div class="container my-3">
     <h1>Prodavnice</h1>
-    <hr>
     <div *ngIf="isAdmin$ | async" class="mb-3">
         <div class="d-flex flex-column flex-sm-row gap-2">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#prodavnicaModalDialog"><i class="bi bi-plus-lg me-2"></i>Dodaj prodavnicu</button>
         </div>
-        <hr>
     </div>
+    <hr>
     <app-item-list
         [prodavnicePage]="true" 
         [sakrijIzborPrikaza]="true" 

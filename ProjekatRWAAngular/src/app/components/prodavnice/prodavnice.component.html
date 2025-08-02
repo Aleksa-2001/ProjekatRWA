@@ -1,6 +1,9 @@
 <h2 class="mb-2" [hidden]="prodavnicePage">Prodavnice</h2>
 <app-loading *ngIf="loading$ | async"></app-loading>
 <div *ngIf="!(loading$ | async) && !(error$ | async) && (selectedProdavnice$ | async) as prodavnice" class="row row-gap-2" [ngClass]="{ 'row-gap-3': prodavnice.length !== 0 }">
+    <div class="col-12">
+        <input (input)="onChangeInput()" #inputSearch id="inputSearch" class="form-control border-secondary" placeholder="Pretraži prodavnice..." />
+    </div>
     <div [hidden]="prodavnice.length <= 1"  class="col-12">
         <div class="row row-gap-1">
             <div class="col-12 col-sm-6 col-md-5 col-xl-3 d-flex flex-row align-items-center column-gap-1 pe-md-0">

@@ -23,13 +23,16 @@ export class ProdavniceComponent implements OnInit, OnChanges {
   prodavnice$: Observable<readonly Prodavnica[]> = of([])
   selectedProdavnice$: Observable<readonly Prodavnica[]> = of([])
 
+  search: string = ''
+
   paginationList: number[] = []
   itemsPerPage: number = 6
   currentPage: number = 1
 
   @Input() prodavnicePage: boolean = false
-  @Input() search: string = ''
   @Input() selectedNaziviProdavnica: string[] = []
+
+  @ViewChild('inputSearch') inputSearch!: ElementRef<HTMLInputElement>
 
   @ViewChild('inputProdavnicaSort') inputProdavnicaSort!: ElementRef<HTMLSelectElement>
   @ViewChild('inputProdavnicaRedosledSortiranja') inputProdavnicaRedosledSortiranja!: ElementRef<HTMLSelectElement>
@@ -90,6 +93,11 @@ export class ProdavniceComponent implements OnInit, OnChanges {
         return filteredProdavnice.slice(start, end)
       })
     )
+  }
+
+  onChangeInput() {
+    this.search = this.inputSearch.nativeElement.value
+    this.ngOnChanges()
   }
 
   selectPage(page: number) {

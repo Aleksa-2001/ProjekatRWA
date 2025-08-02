@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { distinctUntilChanged, filter, map, Observable, of, take, tap } from 'rxjs';
+import { filter, map, Observable, of, tap } from 'rxjs';
 import { Proizvod } from '../../../models/proizvod';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -16,10 +16,10 @@ import { ProizvodDialogComponent } from "../../dialog/proizvod-dialog/proizvod-d
 import { ConfirmDialogComponent } from "../../dialog/confirm-dialog/confirm-dialog.component";
 import { RecenzijeComponent } from "../../recenzije/recenzije.component";
 import { Racunar } from '../../../models/racunar';
-import * as ProizvodiActions from '../../../store/proizvod/proizvod.actions'
-import * as RecenzijeActions from '../../../store/recenzija/recenzija.actions'
 import { LoadingComponent } from "../../../shared/components/loading/loading.component";
 import { environment } from '../../../../environments/environment';
+import * as ProizvodiActions from '../../../store/proizvod/proizvod.actions'
+import * as RecenzijeActions from '../../../store/recenzija/recenzija.actions'
 
 @Component({
   selector: 'app-proizvod-page',
@@ -71,7 +71,6 @@ export class ProizvodPageComponent implements OnInit, OnDestroy {
 
     this.route.paramMap.pipe(
       map(params => Number(params.get('id'))),
-      distinctUntilChanged(),
       tap(proizvodID => {
         this.store.dispatch(ProizvodiActions.setSelectedItemID({ proizvodID }))
         this.store.dispatch(ProizvodiActions.loadSelectedItem({ selectedProizvodID: proizvodID }))
@@ -82,15 +81,15 @@ export class ProizvodPageComponent implements OnInit, OnDestroy {
     this.proizvod$.pipe(
       filter(proizvod => !!proizvod),
       tap(proizvod => {
-        this.title.setTitle(`${proizvod.naziv} - ProjekatRWA`);
-        this.setImage(environment.apiUrl + proizvod.slika);
+        this.title.setTitle(`${proizvod.naziv} - ProjekatRWA`)
+        this.setImage(environment.apiUrl + proizvod.slika)
 
         if (firstLoad) {
-          this.store.dispatch(RecenzijeActions.loadItemsProizvod({ proizvodID: proizvod.id }));
-          firstLoad = false;
+          this.store.dispatch(RecenzijeActions.loadItemsProizvod({ proizvodID: proizvod.id }))
+          firstLoad = false
         }
       })
-    ).subscribe();
+    ).subscribe()
   }
 
   ngOnDestroy(): void {

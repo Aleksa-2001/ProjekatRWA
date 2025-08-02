@@ -19,33 +19,19 @@
             (selectedProizvodjaciOutput)="getSelectedProizvodjaci($event)"
         ></app-filter>
         <div class="col">
-            <div *ngIf="prikaziProdavnice" [hidden]="data.brojProdavnica === 0">
-                <div *ngIf="data.brojProdavnica > 1">
-                    <input (input)="onChangeInputProdavnice()" #inputSearchProdavnice id="inputSearchProdavnice" class="form-control border-secondary" placeholder="Pretraži prodavnice..." />
-                    <hr>
-                </div>
-                <app-prodavnice 
-                    [prodavnicePage]="prodavnicePage" 
-                    [search]="searchProdavnice" 
-                    [selectedNaziviProdavnica]="selectedNaziviProdavnica"
-                ></app-prodavnice>
-            </div>
+            <app-prodavnice *ngIf="prikaziProdavnice" [hidden]="data.brojProdavnica === 0 && searchPage"
+                [prodavnicePage]="prodavnicePage" 
+                [selectedNaziviProdavnica]="selectedNaziviProdavnica"
+            ></app-prodavnice>
             <hr *ngIf="data.brojProdavnica !== 0 && data.brojProizvoda !== 0 && prikaziProdavnice && prikaziProizvode">
-            <div *ngIf="prikaziProizvode" [hidden]="data.brojProizvoda === 0">
-                <div *ngIf="data.brojProizvoda > 1">
-                    <input (input)="onChangeInputProizvodi()" #inputSearchProizvodi id="inputSearchProizvodi" class="form-control border-secondary" placeholder="Pretraži proizvode..." />
-                    <hr>
-                </div>
-                <app-proizvodi
-                    [selectMode]="selectMode" 
-                    [search]="searchProizvodi" 
-                    [selectedCenaRange]="selectedCenaRange" 
-                    [selectedTipoviProizvoda]="selectedTipoviProizvoda" 
-                    [selectedTypes]="selectedTypes" 
-                    [selectedProizvodjaci]="selectedProizvodjaci"
-                ></app-proizvodi>
-            </div>
+            <app-proizvodi *ngIf="prikaziProizvode" [hidden]="data.brojProizvoda === 0 && searchPage"
+                [selectMode]="selectMode" 
+                [selectedCenaRange]="selectedCenaRange" 
+                [selectedTipoviProizvoda]="selectedTipoviProizvoda" 
+                [selectedTypes]="selectedTypes" 
+                [selectedProizvodjaci]="selectedProizvodjaci"
+            ></app-proizvodi>
         </div>
     </div>
-    <p *ngIf="data.brojProdavnica === 0 && data.brojProizvoda === 0">Nije pronađen nijedan rezultat!</p>
+    <p *ngIf="data.brojProdavnica === 0 && data.brojProizvoda === 0 && searchPage">Nije pronađen nijedan rezultat!</p>
 </div>

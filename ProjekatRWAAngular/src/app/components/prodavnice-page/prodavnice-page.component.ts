@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { CommonModule, NgIf } from '@angular/common';
 import { Observable, of } from 'rxjs';
@@ -27,14 +27,9 @@ export class ProdavnicePageComponent implements OnInit {
   loading$: Observable<boolean> = of(true)
   error$: Observable<any> = of()
 
-  @ViewChild('inputSearchProdavnice') inputSearchProdavnice!: ElementRef<HTMLInputElement>
-
   isAdmin$: Observable<boolean> = of(false)
 
   brojProdavnica$: Observable<number> = of(0)
-
-  search: string = ''
-  selectedNaziviProdavnica: string[] = []
 
   constructor(private title: Title, private store: Store<AppState>) { }
 
@@ -49,9 +44,5 @@ export class ProdavnicePageComponent implements OnInit {
 
     this.brojProdavnica$ = this.store.select(selectBrojProdavnica)
   }
-
-  //getBrojProdavnica(brojProdavnica: number) {
-    //this.brojProdavnica = brojProdavnica
-  //}
 
 }

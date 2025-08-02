@@ -3,7 +3,9 @@
     <app-search class="mb-3" [query]="query"></app-search>
     <div *ngIf="data$ | async as data">
         <hr *ngIf="data.brojProdavnica !== 0 || data.brojProizvoda !== 0" class="col-12 d-none d-md-block">
-        <app-item-list></app-item-list>
+        <app-item-list
+            [searchPage]="true"
+        ></app-item-list>
     </div>
     <p *ngIf="!query">Molimo da popunite polje za pretragu!</p>
 </div>

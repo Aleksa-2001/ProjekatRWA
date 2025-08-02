@@ -28,33 +28,13 @@ export class SelectItemComponent implements OnInit {
   loading$: Observable<boolean> = of(true)
   error$: Observable<any> = of()
 
-  @ViewChild('inputSearchProizvodi') inputSearchProizvodi!: ElementRef<HTMLInputElement>
-
-  proizvodID$: Observable<number> = of(-1)
   proizvodID: number = -1
   type: string = ''
-  //type$: Observable<string> = of('')
 
   proizvod$: Observable<Proizvod | null> = of()
-  isAdmin$: Observable<boolean> = of(false)
-
-  search: string = ''
-
-  backgroundStyle: { [key: string]: string } = { }
-  
   brojProizvoda$: Observable<number> = of(0)
-  prosek: number = 0
-  brojRecenzija: number = 0
   
-  cenaRange$: Observable<{ min: number, max: number }> = of({ min: 0, max: Infinity })
-  //cenaRange: { min: number, max: number } = { min: 0, max: Infinity }
-  minCena: number = 0
-  maxCena: number = Infinity
-
-  selectedCenaRange: { min: number, max: number } = { min: 0, max: Infinity }
-  selectedTipoviProizvoda: string[] = []
-  selectedTypes: string[] = []
-  selectedProizvodjaci: string[] = []
+  isAdmin$: Observable<boolean> = of(false)
 
   constructor(private title: Title, private route: ActivatedRoute, private store: Store<AppState>) { }
 
@@ -86,23 +66,6 @@ export class SelectItemComponent implements OnInit {
     ).subscribe()
 
     this.brojProizvoda$ = this.store.select(selectBrojProizvoda)
-    this.cenaRange$ = this.store.select(selectCenaRange)
-  }
-
-  onChangeInput() {
-    this.search = this.inputSearchProizvodi.nativeElement.value
-  }
-
-  //getBrojProizvoda(brojProizvoda: number) {
-    //this.brojProizvoda = brojProizvoda
-  //}
-
-  getProsek(prosek: number) {
-    this.prosek = prosek
-  }
-
-  getBrojRecenzija(brojRecenzija: number) {
-    this.brojRecenzija = brojRecenzija
   }
 
 }

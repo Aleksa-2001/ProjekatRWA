@@ -26,16 +26,15 @@ import { LoadingComponent } from "../../shared/components/loading/loading.compon
 })
 export class ItemListComponent implements OnInit { 
   
-  loadingProdavnice$ = of(false)
-  loadingProizvodi$ = of(false)
+  loadingProdavnice$: Observable<boolean> = of(false)
+  loadingProizvodi$: Observable<boolean> = of(false)
 
   data$: Observable<any> = of()
-
-  searchProdavnice: string = ''
-  searchProizvodi: string = ''
   
   @ViewChild('inputSearchProdavnice') inputSearchProdavnice!: ElementRef<HTMLInputElement>
   @ViewChild('inputSearchProizvodi') inputSearchProizvodi!: ElementRef<HTMLInputElement>
+
+  @Input() searchPage: boolean = false
   
   @Input() prodavnicePage: boolean = false
 
@@ -65,17 +64,13 @@ export class ItemListComponent implements OnInit {
       this.store.select(selectCenaRange)
     ]).pipe(
       map(([brojProdavnica, brojProizvoda, cenaRange]) => {
-        return { brojProdavnica, brojProizvoda, cenaRange }
+        return {
+          brojProdavnica: this.prikaziProdavnice ? brojProdavnica : 0, 
+          brojProizvoda: this.prikaziProizvode ? brojProizvoda : 0, 
+          cenaRange
+        }
       })
     )
-  }
-
-  onChangeInputProdavnice() {
-    this.searchProdavnice = this.inputSearchProdavnice.nativeElement.value
-  }
-
-  onChangeInputProizvodi() {
-    this.searchProizvodi = this.inputSearchProizvodi.nativeElement.value
   }
 
   getPrikaziProdavnice(prikaziProdavnice: boolean) {

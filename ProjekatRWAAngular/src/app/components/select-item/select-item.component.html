@@ -1,14 +1,14 @@
-<div *ngIf="loading$ | async" class="container my-3">
+<div class="container my-3">
     <h1>Izaberi</h1>
-    <app-loading></app-loading>
-</div>
-
-<div *ngIf="!(loading$ | async) && !(error$ | async) && (brojProizvoda$ | async) as brojProizvoda" class="container my-3">
-    <h1>Izaberi</h1>
-    <hr>
-    <app-item-list
-        [selectMode]="true" 
-        [sakrijIzborPrikaza]="true" 
-        [prikaziProdavnice]="false"
-    ></app-item-list>
+    <div *ngIf="loading$ | async">
+        <app-loading></app-loading>
+    </div>
+    <div *ngIf="!(loading$ | async) && !(error$ | async) && (brojProizvoda$ | async) as brojProizvoda">
+        <hr>
+        <app-item-list
+            [selectMode]="true" 
+            [sakrijIzborPrikaza]="true" 
+            [prikaziProdavnice]="false"
+        ></app-item-list>
+    </div>
 </div>

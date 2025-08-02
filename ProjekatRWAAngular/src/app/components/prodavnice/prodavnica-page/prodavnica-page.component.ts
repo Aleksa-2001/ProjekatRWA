@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { distinctUntilChanged, filter, map, Observable, of, take, tap } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { filter, map, Observable, of, tap } from 'rxjs';
 import { Prodavnica } from '../../../models/prodavnica';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app-state';
@@ -47,29 +47,16 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
   loading$: Observable<boolean> = of(true)
   loadingProizvodi$: Observable<boolean> = of(true)
   error$: Observable<any> = of()
-  
-  @ViewChild('inputSearchProizvodi') inputSearchProizvodi!: ElementRef<HTMLInputElement>
 
   prodavnicaID!: number
   prodavnica$: Observable<Prodavnica | null> = of()
   isAdmin$: Observable<boolean> = of(false)
-
-  search: string = ''
 
   backgroundStyle: { [key: string]: string } = { }
   
   brojProizvoda$: Observable<number> = of(0)
   prosek: number = 0
   brojRecenzija: number = 0
-  
-  cenaRange: { min: number, max: number } = { min: 0, max: Infinity }
-  minCena: number = 0
-  maxCena: number = Infinity
-
-  selectedCenaRange: { min: number, max: number } = { min: 0, max: Infinity }
-  selectedTipoviProizvoda: string[] = []
-  selectedTypes: string[] = []
-  selectedProizvodjaci: string[] = []
 
   constructor(private title: Title, private route: ActivatedRoute, private store: Store<AppState>) { }
 
@@ -85,7 +72,6 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
 
     this.route.paramMap.pipe(
       map(params => Number(params.get('id'))),
-      distinctUntilChanged(),
       tap(prodavnicaID => {
         this.store.dispatch(ProdavniceActions.setSelectedItemID({ prodavnicaID: prodavnicaID }))
         this.store.dispatch(ProdavniceActions.loadSelectedItem({ selectedProdavnicaID: prodavnicaID }))
@@ -126,43 +112,12 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
     }
   }
   
-  onChangeInput() {
-    this.search = this.inputSearchProizvodi.nativeElement.value
-  }
-
-  //getBrojProizvoda(brojProizvoda: number) {
-    //this.brojProizvoda = brojProizvoda
-  //}
-
   getProsek(prosek: number) {
     this.prosek = prosek
   }
 
   getBrojRecenzija(brojRecenzija: number) {
     this.brojRecenzija = brojRecenzija
-  }
-  
-  getCenaRange(cenaRange: { min: number, max: number }) {
-    this.cenaRange = cenaRange
-    this.selectedCenaRange = this.cenaRange
-    this.minCena = cenaRange.min
-    this.maxCena = cenaRange.max
-  }
-
-  getSelectedCenaRange(selectedCenaRange: { min: number, max: number }) {
-    this.selectedCenaRange = selectedCenaRange
-  }
-
-  getSelectedTipoviProizvoda(selectedTipoviProizvoda: string[]) {
-    this.selectedTipoviProizvoda = selectedTipoviProizvoda
-  }
-
-  getSelectedTypes(selectedTypes: string[]) {
-    this.selectedTypes = selectedTypes
-  }
-
-  getSelectedProizvodjaci(selectedProizvodjaci: string[]) {
-    this.selectedProizvodjaci = selectedProizvodjaci
   }
 
 }

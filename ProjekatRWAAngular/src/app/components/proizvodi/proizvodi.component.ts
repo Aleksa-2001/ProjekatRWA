@@ -32,20 +32,22 @@ export class ProizvodiComponent implements OnInit, OnChanges {
   selectedProizvodi$: Observable<readonly Proizvod[]> = of([])
 
   displayMode: number = 1
+
+  search: string = ''
   
   paginationList: number[] = []
   itemsPerPage: number = 12
   currentPage: number = 1
-  
-  @Input() search: string = ''
+
   @Input() selectMode: boolean = false
-  @Input() selectedRacunarID: number = -1
   @Input() selectedCenaRange: { min: number, max: number } = { min: 0, max: Infinity }
   @Input() selectedTypes: string[] = []
   @Input() selectedTipoviProizvoda: string[] = []
   @Input() selectedProizvodjaci: string[] = []
 
   @Output() cenaRange = new EventEmitter<{ min: number, max: number }>()
+
+  @ViewChild('inputSearch') inputSearch!: ElementRef<HTMLInputElement>
 
   @ViewChild('inputProizvodSort') inputProizvodSort!: ElementRef<HTMLSelectElement>
   @ViewChild('inputProizvodRedosledSortiranja') inputProizvodRedosledSortiranja!: ElementRef<HTMLSelectElement>
@@ -121,6 +123,11 @@ export class ProizvodiComponent implements OnInit, OnChanges {
         return filteredProizvodi.slice(start, end)
       })
     )
+  }
+
+  onChangeInput() {
+    this.search = this.inputSearch.nativeElement.value
+    this.ngOnChanges()
   }
 
   onDisplayModeChange(mode: number) {

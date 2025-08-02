@@ -28,23 +28,7 @@ export class SearchPageComponent implements OnInit {
 
   query: string = ''
   
-  brojProdavnica$: Observable<number> = of(0)
-  brojProizvoda$: Observable<number> = of(0)
   data$: Observable<{ brojProdavnica: number, brojProizvoda: number }> = of()
-
-  cenaRange: { min: number, max: number } = { min: 0, max: Infinity }
-  minCena: number = 0
-  maxCena: number = Infinity
-
-  prikaziProdavnice: boolean = true
-  prikaziProizvode: boolean = true
-
-  selectedNaziviProdavnica: string[] = []
-
-  selectedCenaRange: { min: number, max: number } = { min: 0, max: Infinity }
-  selectedTipoviProizvoda: string[] = []
-  selectedTypes: string[] = []
-  selectedProizvodjaci: string[] = []
 
   constructor(private title: Title, private route: ActivatedRoute, private store: Store<AppState>) { }
 
@@ -57,10 +41,10 @@ export class SearchPageComponent implements OnInit {
           this.store.dispatch(loadProdavnice({ search: this.query }))
           this.store.dispatch(loadProizvodi({ search: this.query }))
 
-          this.brojProdavnica$ = this.store.select(selectBrojProdavnica)
-          this.brojProizvoda$ = this.store.select(selectBrojProizvoda)
-
-          this.data$ = combineLatest([this.brojProdavnica$, this.brojProizvoda$]).pipe(
+          this.data$ = combineLatest([
+            this.store.select(selectBrojProdavnica), 
+            this.store.select(selectBrojProizvoda)
+          ]).pipe(
             map(([brojProdavnica, brojProizvoda]) => ({ brojProdavnica, brojProizvoda }))
           )
         }
@@ -69,41 +53,6 @@ export class SearchPageComponent implements OnInit {
         }
       })
     ).subscribe()
-  }
-
-  getCenaRange(cenaRange: { min: number, max: number }) {
-    this.cenaRange = cenaRange
-    this.selectedCenaRange = this.cenaRange
-    this.minCena = cenaRange.min
-    this.maxCena = cenaRange.max
-  }
-
-  getPrikaziProdavnice(prikaziProdavnice: boolean) {
-    this.prikaziProdavnice = prikaziProdavnice
-  }
-
-  getPrikaziProizvode(prikaziProizvode: boolean) {
-    this.prikaziProizvode = prikaziProizvode
-  }
-
-  getSelectedNaziviProdavnica(selectedNaziviProdavnica: string[]) {
-    this.selectedNaziviProdavnica = selectedNaziviProdavnica
-  }
-
-  getSelectedCenaRange(selectedCenaRange: { min: number, max: number }) {
-    this.selectedCenaRange = selectedCenaRange
-  }
-
-  getSelectedTipoviProizvoda(selectedTipoviProizvoda: string[]) {
-    this.selectedTipoviProizvoda = selectedTipoviProizvoda
-  }
-
-  getSelectedTypes(selectedTypes: string[]) {
-    this.selectedTypes = selectedTypes
-  }
-
-  getSelectedProizvodjaci(selectedProizvodjaci: string[]) {
-    this.selectedProizvodjaci = selectedProizvodjaci
   }
 
 }
