@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { filter, map, Observable, of, tap } from 'rxjs';
+import { concatMap, filter, map, Observable, of, Subscription, tap } from 'rxjs';
 import { Proizvod } from '../../../models/proizvod';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -52,6 +52,7 @@ export class ProizvodPageComponent implements OnInit, OnDestroy {
 
   proizvodID!: number
   proizvod$: Observable<Proizvod | null> = of()
+  routeSub!: Subscription
 
   image: string = ""
 
@@ -69,16 +70,7 @@ export class ProizvodPageComponent implements OnInit, OnDestroy {
     
     this.isAdmin$ = this.store.select(isAdmin)
 
-    this.route.paramMap.pipe(
-      map(params => Number(params.get('id'))),
-      tap(proizvodID => {
-        this.store.dispatch(ProizvodiActions.setSelectedItemID({ proizvodID }))
-        this.store.dispatch(ProizvodiActions.loadSelectedItem({ selectedProizvodID: proizvodID }))
-        firstLoad = true
-      })
-    ).subscribe()
-
-    this.proizvod$.pipe(
+    const proizvodPipe$ = this.proizvod$.pipe(
       filter(proizvod => !!proizvod),
       tap(proizvod => {
         this.title.setTitle(`${proizvod.naziv} - ProjekatRWA`)
@@ -89,11 +81,22 @@ export class ProizvodPageComponent implements OnInit, OnDestroy {
           firstLoad = false
         }
       })
+    )
+
+    this.routeSub = this.route.paramMap.pipe(
+      map(params => Number(params.get('id'))),
+      tap(proizvodID => {
+        this.store.dispatch(ProizvodiActions.setSelectedItemID({ proizvodID }))
+        this.store.dispatch(ProizvodiActions.loadSelectedItem({ selectedProizvodID: proizvodID }))
+        firstLoad = true
+      }),
+      concatMap(proizvodID => proizvodID > 0 ? proizvodPipe$ : of(null))
     ).subscribe()
   }
 
   ngOnDestroy(): void {
     this.store.dispatch(ProizvodiActions.deselectSelectedItem())
+    this.routeSub.unsubscribe()
   }
 
   getRacunar(proizvod: Proizvod) {

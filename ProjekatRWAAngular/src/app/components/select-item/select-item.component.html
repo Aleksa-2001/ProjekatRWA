@@ -1,5 +1,5 @@
 <div class="container my-3">
-    <h1>Izaberi</h1>
+    <h1>Izaberi {{tipKomponenteTitle}}</h1>
     <div *ngIf="loading$ | async">
         <app-loading></app-loading>
     </div>
@@ -10,5 +10,8 @@
             [sakrijIzborPrikaza]="true" 
             [prikaziProdavnice]="false"
         ></app-item-list>
+    </div>
+    <div *ngIf="!(loading$ | async) && (error$ | async) as error">
+        {{error}}
     </div>
 </div>

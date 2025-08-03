@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { ProdavnicaItemComponent } from "./prodavnica-item/prodavnica-item.component";
 import { CommonModule, NgFor } from '@angular/common';
-import { combineLatest, debounceTime, distinctUntilChanged, filter, map, Observable, of, startWith, tap } from 'rxjs';
+import { combineLatest, debounceTime, distinctUntilChanged, filter, map, Observable, of, startWith, Subscription, tap } from 'rxjs';
 import { Prodavnica } from '../../models/prodavnica';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app-state';
@@ -22,6 +22,7 @@ export class ProdavniceComponent implements OnInit, OnChanges {
 
   prodavnice$: Observable<readonly Prodavnica[]> = of([])
   selectedProdavnice$: Observable<readonly Prodavnica[]> = of([])
+  prodavniceSub!: Subscription
 
   search: string = ''
 
@@ -50,7 +51,7 @@ export class ProdavniceComponent implements OnInit, OnChanges {
     this.prodavnice$ = this.store.select(selectProdavnice)
     this.selectedProdavnice$ = this.prodavnice$
 
-    this.selectedProdavnice$.pipe(
+    this.prodavniceSub = this.selectedProdavnice$.pipe(
       filter(prodavnice => !!prodavnice),
       tap(prodavnice => {
         const numberOfPages = Math.ceil(prodavnice.length / this.itemsPerPage)
@@ -93,6 +94,10 @@ export class ProdavniceComponent implements OnInit, OnChanges {
         return filteredProdavnice.slice(start, end)
       })
     )
+  }
+
+  ngOnDestroy(): void {
+    this.prodavniceSub.unsubscribe()
   }
 
   onChangeInput() {

@@ -1,6 +1,6 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
-import { combineLatest, filter, map, Observable, of } from 'rxjs';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { combineLatest, filter, map, Observable, of, Subscription } from 'rxjs';
 import { Recenzija } from '../../models/recenzija';
 import { RecenzijaItemComponent } from './recenzija-item/recenzija-item.component';
 import { AppState } from '../../store/app-state';
@@ -27,7 +27,7 @@ import { LoadingComponent } from "../../shared/components/loading/loading.compon
   styleUrl: './recenzije.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RecenzijeComponent implements OnInit, OnChanges { 
+export class RecenzijeComponent implements OnInit, OnChanges, OnDestroy { 
   
   loading$: Observable<boolean> = of(true)
   error$: Observable<any> = of()
@@ -36,6 +36,7 @@ export class RecenzijeComponent implements OnInit, OnChanges {
   recenzije$: Observable<readonly Recenzija[]> = of([])
   selectedRecenzije$: Observable<readonly Recenzija[]> = of([])
   unetaRecenzija$: Observable<boolean> = of()
+  recenzijeSub!: Subscription
 
   prosek: number = 0
 
@@ -61,7 +62,7 @@ export class RecenzijeComponent implements OnInit, OnChanges {
 
     this.unetaRecenzija$ = this.store.select(selectUnetaRecenzija)
 
-    this.selectedRecenzije$.pipe(
+    this.recenzijeSub = this.selectedRecenzije$.pipe(
       filter(recenzije => !!recenzije),
       map(recenzije => {
         const ocene = recenzije.map(recenzija => recenzija.ocena)
@@ -83,6 +84,10 @@ export class RecenzijeComponent implements OnInit, OnChanges {
         return filteredRecenzije
       })
     )
+  }
+
+  ngOnDestroy(): void {
+    this.recenzijeSub.unsubscribe()
   }
 
   onChangeSort() {

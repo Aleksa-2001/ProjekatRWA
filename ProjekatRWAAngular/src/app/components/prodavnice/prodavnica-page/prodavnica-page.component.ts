@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { filter, map, Observable, of, tap } from 'rxjs';
+import { concatMap, filter, map, Observable, of, Subscription, tap } from 'rxjs';
 import { Prodavnica } from '../../../models/prodavnica';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app-state';
@@ -47,10 +47,12 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
   loading$: Observable<boolean> = of(true)
   loadingProizvodi$: Observable<boolean> = of(true)
   error$: Observable<any> = of()
+  
+  isAdmin$: Observable<boolean> = of(false)
 
   prodavnicaID!: number
   prodavnica$: Observable<Prodavnica | null> = of()
-  isAdmin$: Observable<boolean> = of(false)
+  routeSub!: Subscription
 
   backgroundStyle: { [key: string]: string } = { }
   
@@ -70,16 +72,7 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
 
     this.isAdmin$ = this.store.select(isAdmin)
 
-    this.route.paramMap.pipe(
-      map(params => Number(params.get('id'))),
-      tap(prodavnicaID => {
-        this.store.dispatch(ProdavniceActions.setSelectedItemID({ prodavnicaID: prodavnicaID }))
-        this.store.dispatch(ProdavniceActions.loadSelectedItem({ selectedProdavnicaID: prodavnicaID }))
-        firstLoad = true
-      })
-    ).subscribe()
-
-    this.prodavnica$.pipe(
+    const prodavnicaPipe$ = this.prodavnica$.pipe(
       filter(prodavnica => !!prodavnica),
       tap(prodavnica => {
         this.title.setTitle(`${prodavnica.naziv} - ProjekatRWA`)
@@ -91,13 +84,24 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
           firstLoad = false
         }
       })
-    ).subscribe()
+    )
+
+    this.routeSub = this.route.paramMap.pipe(
+      map(params => Number(params.get('id'))),
+      tap(prodavnicaID => {
+        this.store.dispatch(ProdavniceActions.setSelectedItemID({ prodavnicaID: prodavnicaID }))
+        this.store.dispatch(ProdavniceActions.loadSelectedItem({ selectedProdavnicaID: prodavnicaID }))
+        firstLoad = true
+      }),
+      concatMap(prodavnicaID => prodavnicaID > 0 ? prodavnicaPipe$ : of(null))
+    ).subscribe()    
 
     this.brojProizvoda$ = this.store.select(selectBrojProizvoda)
   }
 
   ngOnDestroy(): void {
     this.store.dispatch(ProdavniceActions.deselectSelectedItem())
+    this.routeSub.unsubscribe()
   }
 
   setBackground(slika: string) {

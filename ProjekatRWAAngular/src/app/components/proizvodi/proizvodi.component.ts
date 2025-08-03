@@ -1,7 +1,7 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ProizvodItemComponent } from './proizvod-item/proizvod-item.component';
-import { combineLatest, filter, map, Observable, of, tap } from 'rxjs';
+import { combineLatest, filter, map, Observable, of, Subscription, tap } from 'rxjs';
 import { Proizvod } from '../../models/proizvod';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app-state';
@@ -22,7 +22,7 @@ import { LoadingComponent } from "../../shared/components/loading/loading.compon
   styleUrl: './proizvodi.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProizvodiComponent implements OnInit, OnChanges { 
+export class ProizvodiComponent implements OnInit, OnChanges, OnDestroy { 
 
   loading$: Observable<boolean> = of(true)
   error$: Observable<any> = of()
@@ -30,6 +30,7 @@ export class ProizvodiComponent implements OnInit, OnChanges {
   prodavnicaID: number = -1
   proizvodi$: Observable<readonly Proizvod[]> = of([])
   selectedProizvodi$: Observable<readonly Proizvod[]> = of([])
+  proizvodiSub!: Subscription
 
   displayMode: number = 1
 
@@ -66,7 +67,7 @@ export class ProizvodiComponent implements OnInit, OnChanges {
     this.proizvodi$ = this.store.select(selectProizvodi)
     this.selectedProizvodi$ = this.proizvodi$
 
-    this.selectedProizvodi$.pipe(
+    this.proizvodiSub = this.selectedProizvodi$.pipe(
       filter(proizvodi => !!proizvodi),
       tap(proizvodi => {
         const cene = proizvodi.map(proizvod => proizvod.cena)
@@ -123,6 +124,10 @@ export class ProizvodiComponent implements OnInit, OnChanges {
         return filteredProizvodi.slice(start, end)
       })
     )
+  }
+
+  ngOnDestroy(): void {
+    this.proizvodiSub.unsubscribe()
   }
 
   onChangeInput() {

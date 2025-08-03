@@ -10,7 +10,7 @@
 <app-loading *ngIf="loading$ | async"></app-loading>
 <div *ngIf="!(loading$ | async) && !(error$ | async) && (selectedProizvodi$ | async) as proizvodi" class="row row-gap-2" [ngClass]="{ 'row-gap-3': displayMode === 2 && proizvodi.length !== 0 }">
     <div class="col-12">
-        <input (input)="onChangeInput()" #inputSearch id="inputSearch" class="form-control border-secondary" placeholder="Pretraži prodavnice..." />
+        <input (input)="onChangeInput()" #inputSearch id="inputSearch" class="form-control border-secondary" placeholder="Pretraži proizvode..." />
     </div>
     <div [hidden]="proizvodi.length <= 1" class="col-12">
         <div class="row row-gap-1">
