@@ -20,6 +20,7 @@ import { LoadingComponent } from "../../../shared/components/loading/loading.com
 import { environment } from '../../../../environments/environment';
 import * as ProizvodiActions from '../../../store/proizvod/proizvod.actions'
 import * as RecenzijeActions from '../../../store/recenzija/recenzija.actions'
+import * as CartActions from "../../../store/cart/cart.actions"
 
 @Component({
   selector: 'app-proizvod-page',
@@ -114,6 +115,10 @@ export class ProizvodPageComponent implements OnInit, OnDestroy {
 
   getBrojRecenzija(brojRecenzija: number) {
     this.brojRecenzija = brojRecenzija
+  }
+
+  addToCart(proizvod: Proizvod) {
+    this.store.dispatch(CartActions.addToCart({ proizvod }))
   }
   
 }

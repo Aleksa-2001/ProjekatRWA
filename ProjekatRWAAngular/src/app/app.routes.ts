@@ -12,13 +12,13 @@ import { ProizvodPageComponent } from './components/proizvodi/proizvod-page/proi
 import { SearchPageComponent } from './components/search/search-page/search-page.component';
 import { ProdavnicePageComponent } from './components/prodavnice-page/prodavnice-page.component';
 import { SelectItemComponent } from './components/select-item/select-item.component';
-import { CartComponent } from './components/cart/cart.component';
+import { CartPageComponent } from './components/cart/cart-page/cart-page.component';
 
 export const routes: Routes = [
     { path: "", component: HomeComponent, pathMatch: 'full' },
 
     { path: "search", component: SearchPageComponent },
-    { path: "cart", component: CartComponent },
+    { path: "cart", component: CartPageComponent },
     
     { path: "prodavnice", component: ProdavnicePageComponent },
     { path: "prodavnica/:id", component: ProdavnicaPageComponent },

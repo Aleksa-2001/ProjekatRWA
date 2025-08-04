@@ -14,6 +14,7 @@ import { authReducer } from './store/auth/auth.reducer';
 import { prodavnicaReducer } from './store/prodavnica/prodavnica.reducer';
 import { proizvodReducer } from './store/proizvod/proizvod.reducer';
 import { recenzijaReducer } from './store/recenzija/recenzija.reducer';
+import { cartReducer } from './store/cart/cart.reducer';
 
 import { provideEffects } from '@ngrx/effects';
 import { AuthEffects } from './store/auth/auth.effects';
@@ -28,11 +29,10 @@ const jwtOptions: JwtModuleOptions = {
       const auth = localStorage.getItem('auth')
       return auth ? JSON.parse(auth).token : null
     },
-    allowedDomains: ["http://localhost:4200"],
+    allowedDomains: ["http://localhost:4200"]
   }
 }
 
-// console.log all actions
 export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
   return function(state: AppState | undefined, action: Action) {
     console.log('state', state)
@@ -43,15 +43,17 @@ export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
 }
 
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
-  console.log('localStorage metareducer radi')
   return localStorageSync({ 
-    keys: [{ auth: ["token"] }], 
+    keys: [
+      { auth: ["token"] },
+      { cart: ['artikli'] }
+    ], 
     rehydrate: true, 
     storage: localStorage
   })(reducer)
 }
 
-export const metaReducers: MetaReducer<any>[] = [debug, localStorageSyncReducer]
+export const metaReducers: MetaReducer<any>[] = [localStorageSyncReducer]
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -62,7 +64,8 @@ export const appConfig: ApplicationConfig = {
       auth: authReducer, 
       prodavnice: prodavnicaReducer, 
       proizvodi: proizvodReducer,
-      recenzije: recenzijaReducer
+      recenzije: recenzijaReducer,
+      cart: cartReducer
     }, { metaReducers: metaReducers }), 
     provideStoreDevtools({ maxAge: 25 , logOnly: !isDevMode() }),
     provideEffects([

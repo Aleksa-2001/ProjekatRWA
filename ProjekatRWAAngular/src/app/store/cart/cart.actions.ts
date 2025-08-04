@@ -1,19 +1,25 @@
 import { createAction, props } from "@ngrx/store"
+import { Artikal } from "./cart.reducer"
+import { Proizvod } from "../../models/proizvod"
 
 export const loadItems = createAction(
     "[Korpa] Ucitaj listu"
 )
 
-export const loadItemsSuccess = createAction(
-    "[Korpa] Ucitavanje liste je uspesno",
+export const addToCart = createAction(
+    "[Korpa] Dodaj u korpu",
     props<{
-        korpa: any[]
+        proizvod: Proizvod
     }>()
 )
 
-export const loadItemsFailure = createAction(
-    "[Korpa] Greska pri ucitavanju liste artikala",
+export const removeFromCart = createAction(
+    "[Korpa] Ukloni iz korpe",
     props<{
-        error: any
+        proizvod: Proizvod
     }>()
+)
+
+export const clearCart = createAction(
+    "[Korpa] Isprazni korpu"
 )

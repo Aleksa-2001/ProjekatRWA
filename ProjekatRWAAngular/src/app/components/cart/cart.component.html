@@ -1,4 +1,8 @@
-<div class="container my-3">
-    <h1>Korpa</h1>
-    <p>Radovi u toku!</p>
+<app-loading *ngIf="loading$ | async"></app-loading>
+<div *ngIf="!(loading$ | async) && (artikli$ | async) as artikli">
+    <div *ngFor="let artikal of artikli">
+        <app-cart-item [artikal]="artikal"></app-cart-item>
+    </div>
+    <button *ngIf="artikli.length > 0" (click)="clearCart()" class="btn btn-danger"><i class="bu bi-trash me-2"></i>Isprazni korpu</button>
+    <p class="m-0" *ngIf="artikli.length === 0"><i>Korpa je prazna</i></p>
 </div>

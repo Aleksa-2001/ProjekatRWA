@@ -10,7 +10,7 @@ export interface ProdavniceState extends EntityState<Prodavnica> {
     error: any
 }
 
-const adapter = createEntityAdapter<Prodavnica>();
+const adapter = createEntityAdapter<Prodavnica>()
 
 const initialState: ProdavniceState = adapter.getInitialState({
     loading: true,

@@ -32,7 +32,7 @@
                 </div>
                 <button class="btn btn-secondary mt-2 mt-md-0 ms-md-2 position-relative" type="button" [routerLink]="['/cart']">
                     <i class="bi bi-cart me-2"></i>Korpa
-                    <span class="position-absolute translate-middle badge rounded-pill bg-danger bottom-right">99+</span>
+                    <span *ngIf="cartItemCount$ | async as count" class="position-absolute translate-middle badge rounded-pill bg-danger bottom-right">{{count > 9 ? '9+' : count}}</span>
                 </button>
             </ul>
         </div>

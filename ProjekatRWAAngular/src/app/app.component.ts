@@ -4,8 +4,9 @@ import { HeaderComponent } from "./shared/components/header/header.component";
 import { FooterComponent } from "./shared/components/footer/footer.component";
 import { Store } from '@ngrx/store';
 import { AppState } from './store/app-state';
-import * as AuthActions from './store/auth/auth.actions'
 import { CommonModule } from '@angular/common';
+import * as AuthActions from './store/auth/auth.actions'
+import * as CartActions from "./store/cart/cart.actions"
 
 @Component({
   selector: 'app-root',
@@ -23,9 +24,8 @@ export class AppComponent {
   windowScroll: number = 0
 
   constructor(private store: Store<AppState>) {
-    const token = localStorage.getItem('token')
-    if (token)
-      this.store.dispatch(AuthActions.validateToken())
+    this.store.dispatch(AuthActions.validateToken())
+    this.store.dispatch(CartActions.loadItems())
 
     window.addEventListener('scroll', () => this.windowScroll = window.pageYOffset)
   }
