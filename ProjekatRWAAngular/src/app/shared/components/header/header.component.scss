@@ -13,3 +13,8 @@
     background-color: mix(black, $green-500, 25%);
     cursor: pointer;
 }
+
+.bottom-right {
+    top: calc(100% - 0.125rem);
+    left: calc(100% - 0.125rem);
+}

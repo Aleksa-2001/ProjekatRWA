@@ -24,7 +24,7 @@ export class AuthEffects {
             mergeMap(({ username, password }) =>
                 this.authService.login(username, password).pipe(
                     map((token) => {
-                        localStorage.setItem('token', token)
+                        localStorage.setItem('auth', JSON.stringify({ token }))
                         this.router.navigate(['/'])
                         return AuthActions.loginSuccess({ token })
                     }),

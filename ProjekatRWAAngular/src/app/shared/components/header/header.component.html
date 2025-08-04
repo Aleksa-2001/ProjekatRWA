@@ -13,7 +13,7 @@
                     <a class="nav-link" [routerLink]="['/prodavnice']" routerLinkActive="router-link-active"><i class="bi bi-motherboard-fill me-1"></i>Prodavnice</a>
                 </li>
             </ul>
-            <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav ms-auto d-flex">
                 <li *ngIf="isLoggedIn$ | async" class="nav-item dropdown">
                     <button *ngIf="user$ | async as user" id="dropdownMenuClickable" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                         {{user.username}}
@@ -30,6 +30,10 @@
                     </li>
                     <button class="btn btn-secondary" type="button" [routerLink]="['/register']"><i class="bi bi-plus-lg me-2"></i>Registruj se</button>
                 </div>
+                <button class="btn btn-secondary mt-2 mt-md-0 ms-md-2 position-relative" type="button" [routerLink]="['/cart']">
+                    <i class="bi bi-cart me-2"></i>Korpa
+                    <span class="position-absolute translate-middle badge rounded-pill bg-danger bottom-right">99+</span>
+                </button>
             </ul>
         </div>
     </div>

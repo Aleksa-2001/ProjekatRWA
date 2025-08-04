@@ -12,13 +12,15 @@ import { ProizvodPageComponent } from './components/proizvodi/proizvod-page/proi
 import { SearchPageComponent } from './components/search/search-page/search-page.component';
 import { ProdavnicePageComponent } from './components/prodavnice-page/prodavnice-page.component';
 import { SelectItemComponent } from './components/select-item/select-item.component';
+import { CartComponent } from './components/cart/cart.component';
 
 export const routes: Routes = [
     { path: "", component: HomeComponent, pathMatch: 'full' },
 
-    { path: "prodavnice", component: ProdavnicePageComponent },
-
     { path: "search", component: SearchPageComponent },
+    { path: "cart", component: CartComponent },
+    
+    { path: "prodavnice", component: ProdavnicePageComponent },
     { path: "prodavnica/:id", component: ProdavnicaPageComponent },
     { path: "proizvod/:id", component: ProizvodPageComponent },
 
