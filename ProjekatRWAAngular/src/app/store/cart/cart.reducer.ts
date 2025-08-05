@@ -6,14 +6,10 @@ export type Artikal = { proizvod: Proizvod, kolicina: number }
 
 export interface CartState {
     artikli: Artikal[]
-    loading: boolean
-    error: any
 }
 
 export const initialState: CartState = {
-    artikli: [],
-    loading: true,
-    error: null
+    artikli: []
 }
 
 export const cartReducer = createReducer(
@@ -23,9 +19,7 @@ export const cartReducer = createReducer(
 
         return {
             ...state,
-            artikli: cart ? JSON.parse(cart).artikli : [],
-            loading: false,
-            error: null
+            artikli: cart ? JSON.parse(cart).artikli : []
         }
     }),
     on(CartActions.addToCart, (state, { proizvod }) => {
@@ -38,7 +32,7 @@ export const cartReducer = createReducer(
                 ...state,
                 artikli: state.artikli.map(artikal =>
                     artikal.proizvod.id === proizvod.id
-                    ? { ...artikal, kolicina: artikal.kolicina + 1 }
+                    ? { ...artikal, kolicina: artikal.kolicina < 50 ? artikal.kolicina + 1: artikal.kolicina }
                     : artikal
                 )
             }
@@ -51,8 +45,40 @@ export const cartReducer = createReducer(
             artikli: [...state.artikli, noviArtikal]
         }
     }),
-    on(CartActions.removeFromCart, (state, { proizvod }) => {
-        return state
+    on(CartActions.increaseAmount, (state, { artikal }) => {
+        if (state.artikli.includes(artikal)) {
+            return {
+                ...state,
+                artikli: state.artikli.map(a =>
+                    a === artikal
+                    ? { ...a, kolicina: a.kolicina + 1 }
+                    : a
+                )
+            }
+        }
+        else return state
+    }),
+    on(CartActions.decreaseAmount, (state, { artikal }) => {
+        if (state.artikli.includes(artikal)) {
+            return {
+                ...state,
+                artikli: state.artikli.map(a =>
+                    a === artikal
+                    ? { ...a, kolicina: a.kolicina - 1 }
+                    : a
+                )
+            }
+        }
+        else return state
+    }),
+    on(CartActions.removeFromCart, (state, { artikal }) => {
+        if (state.artikli.includes(artikal)) {
+            return {
+                ...state,
+                artikli: state.artikli.filter(a => a !== artikal)
+            }
+        }
+        else return state
     }),
     on(CartActions.clearCart, (state) => {
         localStorage.removeItem('cart')

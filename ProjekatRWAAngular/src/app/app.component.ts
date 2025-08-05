@@ -24,8 +24,20 @@ export class AppComponent {
   windowScroll: number = 0
 
   constructor(private store: Store<AppState>) {
-    this.store.dispatch(AuthActions.validateToken())
-    this.store.dispatch(CartActions.loadItems())
+    const auth = localStorage.getItem('auth')
+    if (auth) {
+      const token = JSON.parse(auth).token as string | null
+      if (token)
+        this.store.dispatch(AuthActions.validateToken())
+    }
+
+    const cart = localStorage.getItem('cart')
+    if (cart) {
+      const artikli = JSON.parse(cart).artikli
+      if (artikli.length)
+        this.store.dispatch(CartActions.loadItems())
+    }
+    
 
     window.addEventListener('scroll', () => this.windowScroll = window.pageYOffset)
   }

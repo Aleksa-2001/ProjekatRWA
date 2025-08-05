@@ -1,3 +1,40 @@
 :host {
-  display: block;
+    display: block;
+}
+
+.info-list, .info-list .col {
+    padding: 0;
+}
+
+:host > .row:nth-of-type(1) {
+    margin: 0 0.75rem;
+    transition: 0.1s;
+}
+
+:host > .row:nth-of-type(1):hover {
+    background-color: #DDDDDD;
+    box-shadow: 0 0 0.5rem 0 black;
+}
+
+img {
+    aspect-ratio: 1.333;
+    object-fit: cover;
+}
+
+.image {
+    min-width: 96px;
+}
+
+.kolicina {
+    padding: 0.25rem 0.5rem;
+}
+
+@media screen and (max-width: 480px) {
+    .info-list h5 {
+        font-size: 1rem;
+    }
+
+    .image {
+        min-width: 72px;
+    }
 }

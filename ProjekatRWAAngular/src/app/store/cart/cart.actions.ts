@@ -13,10 +13,24 @@ export const addToCart = createAction(
     }>()
 )
 
+export const increaseAmount = createAction(
+    "[Korpa] Uvecaj kolicinu",
+    props<{
+        artikal: Artikal
+    }>()
+)
+
+export const decreaseAmount = createAction(
+    "[Korpa] Umanji kolicinu",
+    props<{
+        artikal: Artikal
+    }>()
+)
+
 export const removeFromCart = createAction(
     "[Korpa] Ukloni iz korpe",
     props<{
-        proizvod: Proizvod
+        artikal: Artikal
     }>()
 )
 
