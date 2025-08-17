@@ -1,11 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Proizvod } from '../../../models/proizvod';
 import { NgClass, NgIf } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app-state';
 import { selectSelectedProdavnica } from '../../../store/prodavnica/prodavnica.selectors';
-import { filter, Observable, of, switchMap, take, tap } from 'rxjs';
+import { filter, map, Observable, of, Subscription, switchMap, take, tap } from 'rxjs';
 import { selectSelectedProizvod } from '../../../store/proizvod/proizvod.selectors';
 import { Prodavnica } from '../../../models/prodavnica';
 import { CPUFormComponent } from "./komponente/cpu-form/cpu-form.component";
@@ -36,7 +36,7 @@ import * as ProizvodiActions from "../../../store/proizvod/proizvod.actions"
   styleUrl: './proizvod-dialog.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProizvodDialogComponent implements OnInit {
+export class ProizvodDialogComponent implements OnInit, OnDestroy {
 
   form!: FormGroup
   
@@ -54,6 +54,9 @@ export class ProizvodDialogComponent implements OnInit {
   formData?: FormData
   filename: string = ""
 
+  formChangesSub$: Subscription | null = null
+  prodavnicaSub$: Subscription | null = null
+
   get formInputData(): FormGroup {
     return this.form.get('formInputData') as FormGroup
   }
@@ -61,43 +64,7 @@ export class ProizvodDialogComponent implements OnInit {
   constructor(private fb: FormBuilder, private store: Store<AppState>) { }
 
   ngOnInit(): void {
-    this.form = this.fb.group({
-      tipProizvoda: ['', Validators.required],
-      proizvodjac: ['', Validators.required],
-      naziv: ['', Validators.required],
-      cena: ['', Validators.required],
-      opis: [],
-      slika: [],
-      formInputData: this.fb.group([])
-    })
-
-    this.form.get('tipProizvoda')!.valueChanges.pipe(
-      tap(tipProizvoda => {
-        this.formInputData.reset()
-
-        if (tipProizvoda === "Racunar") {
-          this.type = "Racunar"
-          this.formInputData.addControl('type', this.fb.control('', Validators.required))
-          this.formInputData.get('type')!.setValue(this.type)
-        }
-        else if (tipProizvoda === "RacunarskaKomponenta") {
-          this.type = ""
-          this.formInputData.addControl('type', this.fb.control('', Validators.required))
-          this.formInputData.get('type')!.setValue(this.type)
-        }
-        else {
-          this.type = ""
-          this.formInputData.removeControl('type')
-        }
-      }),
-      switchMap(tipProizvoda => {
-        return tipProizvoda === "RacunarskaKomponenta" ? this.form.get('formInputData.type')!.valueChanges : of(null)
-      }),
-      filter(type => !!type)
-    ).subscribe(type => {
-      this.type = type
-      if (this.type) this.addControlsForType(this.type, this.formInputData)
-    })
+    this.initForm()
 
     if (this.mode === 1) {
       this.title = 'Izmeni proizvod'
@@ -106,50 +73,55 @@ export class ProizvodDialogComponent implements OnInit {
       this.proizvod$.pipe(
         filter(proizvod => !!proizvod),
         take(1),
-        tap(proizvod => {
-          this.proizvodID = proizvod.id
-          this.type = proizvod.type
-          this.tipProizvoda = proizvod.tipProizvoda
-          this.prodavnica = proizvod.prodavnica
-          this.filename = proizvod.slika
-
-          this.form.patchValue({
-            tipProizvoda: proizvod.tipProizvoda, 
-            proizvodjac: proizvod.proizvodjac, 
-            naziv: proizvod.naziv, 
-            cena: proizvod.cena, 
-            opis: proizvod.opis, 
-            slika: '',
-            formInputData: {
-              type: proizvod.type
-            }
-          })
-
-          const kontrole = komponentaFormMetadata[proizvod.type]
-          if (kontrole) {
-            const patchObj: any = { }
-            for (const key of Object.keys(kontrole())) {
-              if (key in proizvod) {
-                patchObj[key] = (proizvod as any)[key]
-              }
-            }
-
-            this.formInputData.patchValue(patchObj)
-          }
-        })
+        tap(proizvod => this.fillForm(proizvod))
       ).subscribe()
     }
     else {
       this.title = 'Dodaj proizvod'
       this.prodavnica$ = this.store.select(selectSelectedProdavnica)
-      this.prodavnica$.pipe(
+      this.prodavnicaSub$ = this.prodavnica$.pipe(
         filter(prodavnica => !!prodavnica),
         tap(prodavnica => this.prodavnica = prodavnica)
       ).subscribe()
     }
   }
 
-  addControlsForType(type: string, group: FormGroup): void {
+  ngOnDestroy(): void {
+    this.prodavnicaSub$?.unsubscribe()
+    this.formChangesSub$?.unsubscribe()
+  }
+
+  initForm() {
+    this.form = this.fb.group({
+      tipProizvoda: ['', Validators.required],
+      proizvodjac: ['', Validators.required],
+      naziv: ['', Validators.required],
+      cena: ['', Validators.required],
+      opis: [],
+      slika: [],
+      formInputData: this.fb.group({
+        type: ['', Validators.required]
+      })
+    })
+
+    this.formChangesSub$ = this.form.get('tipProizvoda')!.valueChanges.pipe(
+      map(value => value as string),
+      tap(tipProizvoda => {
+        this.formInputData.reset()
+        this.type = tipProizvoda === "Racunar" ? tipProizvoda : ''
+        this.formInputData.get('type')!.setValue(this.type)
+      }),
+      switchMap(() => this.formInputData.get('type') ? this.formInputData.get('type')!.valueChanges : of(null)),
+      filter(type => !!type),
+      map(type => type as string),
+      tap(type => {
+        this.type = type
+        this.updateControls(this.type, this.formInputData)
+      })
+    ).subscribe()
+  }
+
+  updateControls(type: string, group: FormGroup): void {
     Object.keys(group.controls).forEach(key => {
       if (key !== 'type') group.removeControl(key)
     })
@@ -163,12 +135,36 @@ export class ProizvodDialogComponent implements OnInit {
     }
   }
 
-  onChangeTip() {    
-    this.tipProizvoda = this.form.value.tipProizvoda ? this.form.value.tipProizvoda : ''
-  }
+  fillForm(proizvod: Proizvod) {
+    this.proizvodID = proizvod.id
+    this.type = proizvod.type
+    this.tipProizvoda = proizvod.tipProizvoda
+    this.prodavnica = proizvod.prodavnica
+    this.filename = proizvod.slika
 
-  onChangeTipKomponente() {
-    this.type = this.formInputData.value.type ? this.formInputData.value.type : ''
+    this.form.patchValue({
+      tipProizvoda: proizvod.tipProizvoda, 
+      proizvodjac: proizvod.proizvodjac, 
+      naziv: proizvod.naziv, 
+      cena: proizvod.cena, 
+      opis: proizvod.opis, 
+      slika: '',
+      formInputData: {
+        type: proizvod.type
+      }
+    })
+
+    const kontrole = komponentaFormMetadata[proizvod.type]
+    if (kontrole) {
+      const patchObj: any = { }
+      for (const key of Object.keys(kontrole())) {
+        if (key in proizvod) {
+          patchObj[key] = (proizvod as any)[key]
+        }
+      }
+      
+      this.formInputData.patchValue(patchObj)
+    }
   }
 
   resetForm(addEvent: boolean = false) {
@@ -203,6 +199,14 @@ export class ProizvodDialogComponent implements OnInit {
     this.formData?.delete('file')
     this.formData = undefined
     this.filename = ""
+  }
+
+  onChangeTip(event: any) {
+    this.tipProizvoda = event.target.value ? event.target.value : ''
+  }
+
+  onChangeTipKomponente(event: any) {
+    this.type = event.target.value ? event.target.value : ''
   }
 
   onCancel() {
@@ -245,8 +249,7 @@ export class ProizvodDialogComponent implements OnInit {
   }
 
   private generatePath(path: string, filename: string, id?: number) {
-    if (filename) return `${path}${id ?? 'temp'}${filename.substring(this.filename.lastIndexOf('.'), this.filename.length)}`
-    else return ""
+    return filename ? `${path}${id ?? 'temp'}${filename.substring(this.filename.lastIndexOf('.'), this.filename.length)}` : ''
   }
 
 }

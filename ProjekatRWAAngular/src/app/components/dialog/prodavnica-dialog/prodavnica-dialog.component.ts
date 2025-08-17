@@ -32,6 +32,8 @@ export class ProdavnicaDialogComponent implements OnInit {
   constructor(private fb: FormBuilder, private store: Store<AppState>) { }
 
   ngOnInit(): void {
+    this.initForm()
+
     if (this.mode === 1) {
       this.title = 'Izmeni prodavnicu'
       this.prodavnica$ = this.store.select(selectSelectedProdavnica)
@@ -39,28 +41,33 @@ export class ProdavnicaDialogComponent implements OnInit {
       this.prodavnica$.pipe(
         filter(prodavnica => !!prodavnica),
         take(1),
-        tap(prodavnica => {
-          this.prodavnicaID = prodavnica.id
-          this.filename = prodavnica.slika
-          
-          this.form = this.fb.group({
-            naziv: [prodavnica.naziv, Validators.required],
-            adresa: [prodavnica.adresa, Validators.required],
-            opis: [prodavnica.opis],
-            slika: ['']
-          })
-        })
+        tap(prodavnica => this.fillForm(prodavnica))
       ).subscribe()
     }
     else {
       this.title = 'Dodaj prodavnicu'
-      this.form = this.fb.group({
-        naziv: ['', Validators.required],
-        adresa: ['', Validators.required],
-        opis: [''],
-        slika: ['']
-      })
     }
+  }
+
+  initForm() {
+    this.form = this.fb.group({
+      naziv: ['', Validators.required],
+      adresa: ['', Validators.required],
+      opis: [],
+      slika: []
+    })
+  }
+
+  fillForm(prodavnica: Prodavnica) {
+    this.prodavnicaID = prodavnica.id
+    this.filename = prodavnica.slika
+    
+    this.form = this.fb.group({
+      naziv: [prodavnica.naziv, Validators.required],
+      adresa: [prodavnica.adresa, Validators.required],
+      opis: [prodavnica.opis],
+      slika: ['']
+    })
   }
 
   resetForm(addEvent: boolean = false) {
@@ -104,8 +111,8 @@ export class ProdavnicaDialogComponent implements OnInit {
         id: this.prodavnicaID,
         naziv: prodavnica.naziv,
         adresa: prodavnica.adresa,
-        opis: prodavnica.opis ?? "",
-        slika: (prodavnica.slika && this.filename) ? prodavnica.slika : "",
+        opis: prodavnica.opis,// ?? "",
+        slika: (prodavnica.slika && this.filename) ? prodavnica.slika : null//""
       }
 
       //console.log(prodavnicaData)
@@ -127,8 +134,7 @@ export class ProdavnicaDialogComponent implements OnInit {
   }
 
   private generatePath(path: string, filename: string, id?: number) {
-    if (filename) return `${path}${id ?? 'temp'}${filename.substring(this.filename.lastIndexOf('.'), this.filename.length)}`
-    else return ""
+    return filename ? `${path}${id ?? 'temp'}${filename.substring(this.filename.lastIndexOf('.'), this.filename.length)}` : ''
   }
 
 }

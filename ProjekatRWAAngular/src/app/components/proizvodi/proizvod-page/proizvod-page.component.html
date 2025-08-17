@@ -2,7 +2,7 @@
     <app-loading></app-loading>
 </div>
 
-<div *ngIf="proizvod$ | async as proizvod" class="container my-3">
+<div *ngIf="!(loading$ | async) && !(error$ | async) && (proizvod$ | async) as proizvod" class="container my-3">
     <h1>Proizvod</h1>
     <div *ngIf="isAdmin$ | async" class="mb-3">
         <div class="d-flex flex-column flex-sm-row gap-2">

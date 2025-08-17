@@ -44,18 +44,15 @@ export const recenzijaReducer = createReducer(
     })),
     on(RecenzijeActions.loadSelectedItem, (state) => ({
         ...state,
-        loading: true,
         error: null
     })),
     on(RecenzijeActions.loadSelectedItemSuccess, (state, { selectedRecenzija }) => ({
         ...state,
-        loading: false,
         selectedRecenzija: selectedRecenzija,
         error: null
     })),
     on(RecenzijeActions.loadSelectedItemFailure, (state, { error }) => ({
         ...state,
-        loading: false,
         error
     })),
     on(RecenzijeActions.deselectSelectedItem, (state) => ({

@@ -10,7 +10,7 @@
                 <div class="col-12" [ngClass]="{ 'col-md-6': tipProizvoda === 'RacunarskaKomponenta' }">
                     <div class="mb-2">
                         <label for="inputTip">Tip proizvoda*</label>
-                        <select (change)="onChangeTip()" id="inputTip" class="form-select border-secondary" formControlName="tipProizvoda" aria-label="Izaberite tip proizvoda...">
+                        <select (change)="onChangeTip($event)" id="inputTip" class="form-select border-secondary" formControlName="tipProizvoda" aria-label="Izaberite tip proizvoda...">
                             <option value="" selected>Izaberite tip proizvoda...</option>
                             <option value="Racunar">Računar</option>
                             <option value="RacunarskaKomponenta">Računarska komponenta</option>
@@ -63,7 +63,7 @@
                 <div *ngIf="tipProizvoda === 'RacunarskaKomponenta'" class="col-12 col-md-6" formGroupName="formInputData">
                     <div class="mb-0" [ngClass]="{ 'mb-2': type !== '' }">
                         <label for="inputType">Tip računarske komponente*</label>
-                        <select (change)="onChangeTipKomponente()" id="inputType" class="form-select border-secondary" formControlName="type" aria-label="Izaberite tip računarske komponente...">
+                        <select (change)="onChangeTipKomponente($event)" id="inputType" class="form-select border-secondary" formControlName="type" aria-label="Izaberite tip računarske komponente...">
                             <option value="" selected>Izaberite tip računarske komponente...</option>
                             <option value="CPU">Procesor</option>
                             <option value="GPU">Grafička karta</option>
