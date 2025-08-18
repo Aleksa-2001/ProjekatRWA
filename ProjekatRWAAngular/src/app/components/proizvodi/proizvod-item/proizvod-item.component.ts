@@ -5,9 +5,8 @@ import { CommonModule, NgIf } from '@angular/common';
 import { StarsComponent } from "../../stars/stars.component";
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app-state';
-import * as ProizvodiActions from '../../../store/proizvod/proizvod.actions'
 import { selectSelectedProizvod } from '../../../store/proizvod/proizvod.selectors';
-import { filter, map, take, tap } from 'rxjs';
+import { filter, take, tap } from 'rxjs';
 import { Racunar } from '../../../models/racunar';
 import { MaticnaPloca } from '../../../models/komponente/maticna-ploca';
 import { CPU } from '../../../models/komponente/cpu';
@@ -16,6 +15,8 @@ import { Skladiste } from '../../../models/komponente/skladiste';
 import { GPU } from '../../../models/komponente/gpu';
 import { Napajanje } from '../../../models/komponente/napajanje';
 import { Kuciste } from '../../../models/komponente/kuciste';
+import * as ProizvodiActions from '../../../store/proizvod/proizvod.actions'
+import * as CartActions from "../../../store/cart/cart.actions"
 
 @Component({
   selector: 'app-proizvod-item',
@@ -38,6 +39,10 @@ export class ProizvodItemComponent {
   ngOnInit(): void {
     this.prosek = (this.proizvod as any).prosecnaOcena ?? 0
     this.brojRecenzija = (this.proizvod as any).brojRecenzija ?? 0
+  }
+
+  addToCart(proizvod: Proizvod) {
+    this.store.dispatch(CartActions.addToCart({ proizvod }))
   }
 
   updateRacunar(type: string) {

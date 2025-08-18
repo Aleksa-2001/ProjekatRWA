@@ -8,6 +8,7 @@
 
 :host > .row:nth-of-type(1) {
     margin: 0 0.75rem;
+    cursor: pointer;
     transition: 0.1s;
 }
 
@@ -27,6 +28,7 @@ img {
 
 .kolicina {
     padding: 0.25rem 0.5rem;
+    cursor: default;
 }
 
 @media screen and (max-width: 480px) {
