@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
 import { User } from "./user.entity"
 import { Prodavnica } from "./prodavnica.entity"
 import { Proizvod } from "./proizvod.entity"
@@ -13,6 +13,12 @@ export class Recenzija {
 
     @Column({ nullable: true })
     komentar: string
+
+    @CreateDateColumn()
+    created_at: Date
+
+    @UpdateDateColumn()
+    updated_at: Date
 
     @ManyToOne(() => User)
     user: User

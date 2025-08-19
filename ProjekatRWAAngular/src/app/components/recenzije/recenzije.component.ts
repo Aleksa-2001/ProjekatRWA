@@ -22,7 +22,7 @@ import { LoadingComponent } from "../../shared/components/loading/loading.compon
     RecenzijaDialogComponent,
     ConfirmDialogComponent,
     LoadingComponent
-],
+  ],
   templateUrl: './recenzije.component.html',
   styleUrl: './recenzije.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -81,6 +81,7 @@ export class RecenzijeComponent implements OnInit, OnChanges, OnDestroy {
         const filteredRecenzije = recenzije.filter(() => { return recenzije })
 
         if (this.sort === "ocena") filteredRecenzije.sort((a, b) => a.ocena > b.ocena ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
+        if (this.sort === "datum") filteredRecenzije.sort((a, b) => (a.created_at > b.created_at) || (a.updated_at > a.created_at && a.updated_at > b.created_at) || (a.updated_at > a.created_at && b.updated_at > b.created_at && a.updated_at > b.updated_at) ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
         return filteredRecenzije
       })
     )

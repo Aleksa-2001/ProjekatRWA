@@ -1,4 +1,4 @@
-<div class="row row-gap-2 border border-primary rounded-3 overflow-hidden" [routerLink]="['/prodavnica', prodavnica.id]">
+<div class="row row-gap-2 border overflow-hidden" [routerLink]="['/prodavnica', prodavnica.id]">
     <div class="col-12 p-0">
         <img *ngIf="prodavnica.slika" class="w-100" [src]="'http://localhost:3000/' + prodavnica.slika" alt={{prodavnica.slika}} />
         <img *ngIf="!prodavnica.slika" class="w-100 border-bottom" src="images/image-default.png" />

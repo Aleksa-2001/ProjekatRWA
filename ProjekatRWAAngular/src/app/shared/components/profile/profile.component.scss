@@ -48,3 +48,13 @@ small {
   top: calc(56px + 1rem);
   max-height: calc(100vh - 56px - 2rem);
 }
+
+.profile-menu {
+  border-right: 1px solid #C3C3C3;
+}
+
+@media screen and (max-width: 767px) {
+  .profile-menu {
+    border-right: 0;
+  }
+}

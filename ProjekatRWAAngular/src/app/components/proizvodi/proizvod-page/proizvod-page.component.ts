@@ -39,7 +39,7 @@ import * as CartActions from "../../../store/cart/cart.actions"
     StarsComponent,
     RacunarPageComponent,
     LoadingComponent
-],
+  ],
   templateUrl: './proizvod-page.component.html',
   styleUrl: './proizvod-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

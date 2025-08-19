@@ -8,6 +8,8 @@ export class Recenzija {
         public id: number, 
         public ocena: number, 
         public komentar: string, 
+        public created_at: Date, 
+        public updated_at: Date, 
         public user: User, 
         public prodavnica: Prodavnica, 
         public proizvod: Proizvod
@@ -15,6 +17,8 @@ export class Recenzija {
         id = 0
         ocena = 1
         komentar = ''
+        created_at = new Date()
+        updated_at = new Date()
         user
         prodavnica
         proizvod

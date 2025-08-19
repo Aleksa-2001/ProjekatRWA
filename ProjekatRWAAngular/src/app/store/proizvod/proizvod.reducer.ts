@@ -21,7 +21,7 @@ const initialState: ProizvodiState = adapter.getInitialState({
 
 export const proizvodReducer = createReducer(
     initialState,
-    on(ProizvodiActions.loadItems, (state) => ({
+    on(ProizvodiActions.loadItems, ProizvodiActions.loadItemsBySearch, (state) => ({
         ...state,
         loading: true,
         error: null

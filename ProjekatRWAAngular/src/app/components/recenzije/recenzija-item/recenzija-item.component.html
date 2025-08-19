@@ -1,10 +1,18 @@
-<div *ngIf="!profileMode" class="row border border-primary rounded-3 overflow-hidden p-2 gap-2 gap-md-0" [ngClass]="{ 'gap-md-2': ((isAdmin$ | async) || (user$ | async)?.userID === recenzija.user.userID) }">
+<div *ngIf="!profileMode" class="row border overflow-hidden p-2 gap-2 gap-md-0" [ngClass]="{ 'gap-md-2': ((isAdmin$ | async) || (user$ | async)?.userID === recenzija.user.userID) }">
     <div class="col-12 p-0">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center row-gap-1">
-            <h4 class="m-0">{{recenzija.user.firstName}} {{recenzija.user.lastName}} ({{recenzija.user.username}})</h4>
+        <div class="d-flex flex-column flex-md-row align-items-md-baseline column-gap-2">
+            <div class="d-flex flex-column flex-lg-row align-items-lg-center column-gap-2">
+                <h4 class="m-0">{{recenzija.user.firstName}} {{recenzija.user.lastName}} ({{recenzija.user.username}})</h4>
+                <i class="recenzija-datum">
+                    <span class="vreme" data-toggle="tooltip" data-placement="top" title="Datum kreiranja: {{recenzija.created_at | date: 'dd.MM.yyyy. HH:mm:ss'}}">{{prikaziVreme(recenzija.created_at)}}</span>
+                    <span *ngIf="recenzija.updated_at > recenzija.created_at"> (uređeno <span class="vreme" data-toggle="tooltip" data-placement="top" title="Datum izmene: {{recenzija.updated_at | date: 'dd.MM.yyyy. HH:mm:ss'}}">{{prikaziVreme(recenzija.updated_at)}}</span>)</span>
+                </i>
+            </div>
+            <div class="flex-grow-1"></div>
             <app-stars [ocena]="recenzija.ocena"></app-stars>
         </div>
     </div>
+    
     <div class="col-12 p-0">
         <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center" [ngClass]="{ 'gap-2': recenzija.komentar }">
             <p class="m-0">{{recenzija.komentar}}</p>
@@ -16,11 +24,18 @@
     </div>
 </div>
 
-<div *ngIf="profileMode" class="profile-mode row border border-primary rounded-3 overflow-hidden p-2 row-gap-1 row-gap-md-0" [routerLink]="recenzija.prodavnica ? ['/prodavnica', recenzija.prodavnica.id] : ['/proizvod', recenzija.proizvod.id]">
+<div *ngIf="profileMode" class="profile-mode row border overflow-hidden p-2 row-gap-1 row-gap-md-0" [routerLink]="recenzija.prodavnica ? ['/prodavnica', recenzija.prodavnica.id] : ['/proizvod', recenzija.proizvod.id]">
     <div class="col-12 p-0">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center row-gap-1">
-            <h4 *ngIf="recenzija.prodavnica" class="m-0">{{recenzija.prodavnica.naziv}}</h4>
-            <h4 *ngIf="recenzija.proizvod" class="m-0">{{recenzija.proizvod.naziv}}</h4>
+        <div class="d-flex flex-column flex-md-row align-items-md-baseline column-gap-2">
+            <div class="d-flex flex-column flex-lg-row align-items-lg-center column-gap-2">
+                <h4 *ngIf="recenzija.prodavnica" class="m-0">{{recenzija.prodavnica.naziv}}</h4>
+                <h4 *ngIf="recenzija.proizvod" class="m-0">{{recenzija.proizvod.naziv}}</h4>
+                <i class="recenzija-datum">
+                    <span class="vreme" data-toggle="tooltip" data-placement="top" title="Datum kreiranja: {{recenzija.created_at | date: 'dd.MM.yyyy. HH:mm:ss'}}">{{prikaziVreme(recenzija.created_at)}}</span>
+                    <span *ngIf="recenzija.updated_at > recenzija.created_at"> (uređeno <span class="vreme" data-toggle="tooltip" data-placement="top" title="Datum izmene: {{recenzija.updated_at | date: 'dd.MM.yyyy. HH:mm:ss'}}">{{prikaziVreme(recenzija.updated_at)}}</span>)</span>
+                </i>
+            </div>
+            <div class="flex-grow-1"></div>
             <app-stars [ocena]="recenzija.ocena"></app-stars>
         </div>
     </div>

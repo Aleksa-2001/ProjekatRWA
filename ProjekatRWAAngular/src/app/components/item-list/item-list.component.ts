@@ -19,7 +19,7 @@ import { LoadingComponent } from "../../shared/components/loading/loading.compon
     ProdavniceComponent,
     ProizvodiComponent,
     LoadingComponent
-],
+  ],
   templateUrl: './item-list.component.html',
   styleUrl: './item-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -53,12 +53,13 @@ export class ProdavniceComponent implements OnInit, OnChanges {
 
     this.prodavniceSub = this.selectedProdavnice$.pipe(
       filter(prodavnice => !!prodavnice),
-      tap(prodavnice => {
-        const numberOfPages = Math.ceil(prodavnice.length / this.itemsPerPage)
-        this.paginationList = []
-        for (let i = 1; i <= numberOfPages; i++) {
-          this.paginationList.push(i)
-        }
+      tap(() => {
+        // const numberOfPages = Math.ceil(prodavnice.length / this.itemsPerPage)
+        // this.paginationList = []
+        // for (let i = 1; i <= numberOfPages; i++) {
+        //   this.paginationList.push(i)
+        // }
+        this.ngOnChanges()
       })
     ).subscribe()
   }

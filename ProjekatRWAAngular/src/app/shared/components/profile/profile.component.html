@@ -1,7 +1,7 @@
 <div class="container my-3" *ngIf="user$ | async as user">
     <h1>Profil</h1>
     <div class="row row-gap-3">
-        <div class="col-12 col-md-4 col-lg-3">
+        <div class="col-12 col-md-4 col-lg-3 profile-menu">
             <div class="sticky-top btn-group-vertical w-100" role="group">
                 <input type="radio" class="btn-check" (click)="onChangeProfileOption(1)" name="radioProfile" id="radioProfileInfo" checked>
                 <label class="btn btn-lg btn-outline-primary rounded-0" for="radioProfileInfo"><i class="bi bi-person me-2"></i>Pregled profila</label>

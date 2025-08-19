@@ -17,7 +17,7 @@ import { LoadingComponent } from "../../shared/components/loading/loading.compon
     CommonModule,
     ProizvodItemComponent,
     LoadingComponent
-],
+  ],
   templateUrl: './proizvodi.component.html',
   styleUrl: './proizvodi.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -74,11 +74,13 @@ export class ProizvodiComponent implements OnInit, OnChanges, OnDestroy {
         this.selectedCenaRange = { min: Math.min(...cene), max: Math.max(...cene) }
         this.cenaRange.emit(this.selectedCenaRange)
         
-        const numberOfPages = Math.ceil(proizvodi.length / this.itemsPerPage)
-        this.paginationList = []
-        for (let i = 1; i <= numberOfPages; i++) {
-          this.paginationList.push(i)
-        }
+        // const numberOfPages = Math.ceil(proizvodi.length / this.itemsPerPage)
+        // this.paginationList = []
+        // for (let i = 1; i <= numberOfPages; i++) {
+        //   this.paginationList.push(i)
+        // }
+
+        this.ngOnChanges()
       })
     ).subscribe()
 
@@ -97,7 +99,7 @@ export class ProizvodiComponent implements OnInit, OnChanges, OnDestroy {
       of(this.selectedProizvodjaci),
     ]).pipe(
       filter(([proizvodi]) => !!proizvodi),
-      map(([proizvodi, search, selectedCenaRange, selectedTipoviProizvoda, selectedTypes, selectedProizvodjaci]) => {        
+      map(([proizvodi, search, selectedCenaRange, selectedTipoviProizvoda, selectedTypes, selectedProizvodjaci]) => {
         const filteredProizvodi = proizvodi.filter(proizvod => {
           const searchMatch = search.length ? proizvod.naziv.toLowerCase().includes(search.toLowerCase().trim()) : proizvodi
           const tipProizvodaMatch = selectedTipoviProizvoda.length ? selectedTipoviProizvoda.includes(proizvod.tipProizvoda) : proizvodi

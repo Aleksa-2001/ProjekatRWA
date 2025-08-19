@@ -5,11 +5,11 @@
     box-shadow: 0 0 0.75rem 0 black;
 }
 
-.navbar-nav > li > .dropdown-menu { 
+.dropdown-menu { 
     background-color: $green-500;
 }
 
-.navbar-nav > li > .dropdown-menu a:hover { 
+.dropdown-menu a:hover { 
     background-color: mix(black, $green-500, 25%);
     cursor: pointer;
 }
