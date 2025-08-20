@@ -76,7 +76,7 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
       filter(prodavnica => !!prodavnica),
       tap(prodavnica => {
         this.title.setTitle(`${prodavnica.naziv} - ProjekatRWA`)
-        this.setBackground(environment.apiUrl + prodavnica.slika)
+        this.setBackground(prodavnica.slika)
 
         if (firstLoad) {
           this.store.dispatch(ProizvodiActions.loadItems({ prodavnicaID: prodavnica.id }))
@@ -106,7 +106,7 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
 
   setBackground(slika: string) {
     const timestamp = new Date().getTime()
-    const url = `${slika}?t=${timestamp}`
+    const url = slika ? `${environment.apiUrl + slika}?t=${timestamp}` : ''
     this.backgroundStyle = {
       "background-image": `linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000 100%), url(${url})`,
       "background-size": "cover",

@@ -4,7 +4,7 @@
     <div class="col-12">
         <input (input)="onChangeInput()" #inputSearch id="inputSearch" class="form-control border-secondary" placeholder="Pretraži prodavnice..." />
     </div>
-    <div [hidden]="prodavnice.length <= 1"  class="col-12">
+    <div [hidden]="prodavnice.length === 0" class="col-12">
         <div class="row row-gap-1">
             <div class="col-12 col-sm-6 col-md-5 col-xl-3 d-flex flex-row align-items-center column-gap-1 pe-md-0">
                 <label for="inputProdavnicaSort">Sortiraj:</label>
@@ -35,7 +35,7 @@
         <app-prodavnica-item [prodavnica]="prodavnica"></app-prodavnica-item>
     </div>
     <div *ngIf="prodavnice.length > 0" class="col-12 d-flex">
-        <ul class="pagination mx-auto my-0 border border-primary rounded-2">
+        <ul class="pagination pagination-sm mx-auto my-0 border border-primary rounded-2">
             <li class="page-item border-0" [ngClass]="{'disabled': currentPage === 1}">
                 <a class="page-link border-top-0 border-bottom-0 border-start-0" (click)="selectPage(currentPage - 1)"><i class="bi bi-caret-left-fill"></i></a>
             </li>

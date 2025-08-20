@@ -85,7 +85,7 @@ export class ProdavniceEffects {
             mergeMap(({ selectedProdavnicaID }) => this.service.deleteProdavnica(selectedProdavnicaID)
                 .pipe(
                     map((prodavnicaID) => {
-                        this.router.navigate(["ng"])
+                        this.router.navigate(["/prodavnice"])
                         return ProdavniceActions.deleteItemSuccess({prodavnicaID})
                     }),
                     catchError((error) => of(ProdavniceActions.deleteItemFailure({ error })))

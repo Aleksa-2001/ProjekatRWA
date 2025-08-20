@@ -1,13 +1,13 @@
-import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule, NgIf } from '@angular/common';
 import { AppState } from '../../store/app-state';
 import { Store } from '@ngrx/store';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { concatMap, distinctUntilChanged, filter, map, Observable, of, Subscription, take, tap } from 'rxjs';
+import { concatMap, filter, map, Observable, of, Subscription, take, tap } from 'rxjs';
 import { Proizvod } from '../../models/proizvod';
 import * as ProizvodiActions from '../../store/proizvod/proizvod.actions'
-import { selectBrojProizvoda, selectCenaRange, selectError, selectLoading, selectSelectedProizvod } from '../../store/proizvod/proizvod.selectors';
+import { selectBrojProizvoda, selectError, selectLoading, selectSelectedProizvod } from '../../store/proizvod/proizvod.selectors';
 import { LoadingComponent } from "../../shared/components/loading/loading.component";
 import { ItemListComponent } from "../item-list/item-list.component";
 

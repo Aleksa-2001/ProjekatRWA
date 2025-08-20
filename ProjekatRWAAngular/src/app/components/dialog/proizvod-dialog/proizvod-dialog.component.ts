@@ -225,7 +225,7 @@ export class ProizvodDialogComponent implements OnInit, OnDestroy {
         naziv: proizvod.naziv,
         cena: proizvod.cena,
         opis: proizvod.opis,// ?? "",
-        slika: (proizvod.slika && this.filename) ? proizvod.slika : null,//"",
+        slika: (proizvod.slika && this.filename) ? proizvod.slika : "",
         prodavnica: this.prodavnica,
         ...this.formInputData.getRawValue()
       }
