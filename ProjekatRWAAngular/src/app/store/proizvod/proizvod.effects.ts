@@ -12,8 +12,6 @@ export class ProizvodiEffects {
     private service = inject(ProizvodService)
     private router = inject(Router)
 
-    //constructor(private service: RacunarskaKomponentaService, private actions$: Actions) { }
-
     loadEffect$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ProizvodiActions.loadItems),

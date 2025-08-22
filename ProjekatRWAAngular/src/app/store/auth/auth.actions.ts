@@ -75,6 +75,13 @@ export const getUserSuccess = createAction(
   }>()
 )
 
+export const getUserFailure = createAction(
+  '[Auth] Load User Failure',
+  props<{
+    error: any
+  }>()
+)
+
 export const updateUser = createAction(
   '[Auth] Update User', 
   props<{
@@ -87,6 +94,13 @@ export const updateUserSuccess = createAction(
   '[Auth] Update User Success',
   props<{
     user: Update<User>
+  }>()
+)
+
+export const updateUserFailure = createAction(
+  '[Auth] Update User Failure',
+  props<{
+    error: any
   }>()
 )
 
@@ -105,6 +119,13 @@ export const changePasswordSuccess = createAction(
   '[Auth] Change Password Success'
 )
 
+export const changePasswordFailure = createAction(
+  '[Auth] Change Password Failure',
+  props<{
+    error: any
+  }>()
+)
+
 export const deleteUser = createAction(
   '[Auth] Delete User',
   props<{
@@ -116,5 +137,12 @@ export const deleteUserSuccess = createAction(
   '[Auth] Delete User Success',
   props<{
     userID: number
+  }>()
+)
+
+export const deleteUserFailure = createAction(
+  '[Auth] Delete User Failure',
+  props<{
+    error: any
   }>()
 )

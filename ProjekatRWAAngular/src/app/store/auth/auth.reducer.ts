@@ -26,7 +26,8 @@ export const authReducer = createReducer(
   on(AuthActions.getUserSuccess, (state, { user }) => ({
     ...state,
     user,
-    isLoggedIn: true
+    isLoggedIn: true,
+    error: null
   })),
   on(AuthActions.loginFailure, (state, { error }) => ({
     ...state,
@@ -46,12 +47,14 @@ export const authReducer = createReducer(
     ...state,
     token: null,
     user: null,
-    isLoggedIn: false
+    isLoggedIn: false,
+    error: null
   })),
   on(AuthActions.tokenIsValid, (state, { user }) => ({
     ...state,
     user,
-    isLoggedIn: true
+    isLoggedIn: true,
+    error: null
   })),
   on(AuthActions.tokenIsInvalid, (state) => ({
     ...state,
@@ -61,18 +64,33 @@ export const authReducer = createReducer(
   })),
   on(AuthActions.updateUserSuccess, (state, { user }) => ({
     ...state,
-    user: user.changes as User
+    user: user.changes as User,
+    error: null
+  })),
+  on(AuthActions.updateUserFailure, (state, { error }) => ({
+    ...state,
+    error
   })),
   on(AuthActions.changePasswordSuccess, (state) => ({
     ...state,
     token: null,
     user: null,
-    isLoggedIn: false
+    isLoggedIn: false,
+    error: null
+  })),
+  on(AuthActions.changePasswordFailure, (state, { error }) => ({
+    ...state,
+    error
   })),
   on(AuthActions.deleteUserSuccess, (state) => ({
     ...state,
     token: null,
     user: null,
-    isLoggedIn: false
+    isLoggedIn: false,
+    error: null
+  })),
+  on(AuthActions.deleteUserFailure, (state, { error }) => ({
+    ...state,
+    error
   }))
 )

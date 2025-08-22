@@ -1,0 +1,15 @@
+<div *ngIf="prikaziPoruku$ | async as prikaz" class="poruka position-fixed translate-end-x">
+    <div class="alert alert-primary alert-dismissible fade" role="alert" [ngClass]="{ 
+        'show': prikaz,
+        'alert-success': (tipPoruke$ | async) === 'success',
+        'alert-warning': (tipPoruke$ | async) === 'warning',
+        'alert-danger': (tipPoruke$ | async) === 'danger',
+    }">
+        <i class="bi me-2" [ngClass]="{
+            'bi-check-circle': (tipPoruke$ | async) === 'success',
+            'bi-exclamation-triangle': (tipPoruke$ | async) === 'warning',
+            'bi-x-circle': (tipPoruke$ | async) === 'danger',
+        }"></i>{{(poruka$ | async) ? (poruka$ | async) : ''}}
+        <button type="button" class="btn-close" (click)="close()" aria-label="Close"></button>
+    </div>
+</div>

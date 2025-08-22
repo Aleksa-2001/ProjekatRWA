@@ -7,15 +7,17 @@ import { AppState } from './store/app-state';
 import { CommonModule } from '@angular/common';
 import * as AuthActions from './store/auth/auth.actions'
 import * as CartActions from "./store/cart/cart.actions"
+import { ToastComponent } from "./shared/components/toast/toast.component";
 
 @Component({
   selector: 'app-root',
   imports: [
-    RouterOutlet, 
-    CommonModule, 
-    HeaderComponent, 
+    RouterOutlet,
+    CommonModule,
+    HeaderComponent,
     FooterComponent,
-  ],
+    ToastComponent
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

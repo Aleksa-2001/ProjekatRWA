@@ -22,6 +22,8 @@ import { ProdavniceEffects } from './store/prodavnica/prodavnica.effects';
 import { ProizvodiEffects } from './store/proizvod/proizvod.effects';
 import { RecenzijeEffects } from './store/recenzija/recenzija.effects';
 import { AppState } from './store/app-state';
+import { CartEffects } from './store/cart/cart.effects';
+import { toastReducer } from './store/toast/toast.reducer';
 
 const jwtOptions: JwtModuleOptions = {
   config: {
@@ -65,14 +67,16 @@ export const appConfig: ApplicationConfig = {
       prodavnice: prodavnicaReducer, 
       proizvodi: proizvodReducer,
       recenzije: recenzijaReducer,
-      cart: cartReducer
+      cart: cartReducer,
+      toast: toastReducer
     }, { metaReducers: metaReducers }), 
     provideStoreDevtools({ maxAge: 25 , logOnly: !isDevMode() }),
     provideEffects([
       AuthEffects, 
       ProdavniceEffects, 
       ProizvodiEffects,
-      RecenzijeEffects
+      RecenzijeEffects,
+      CartEffects
     ]),
     importProvidersFrom(JwtModule.forRoot(jwtOptions)),
   ]

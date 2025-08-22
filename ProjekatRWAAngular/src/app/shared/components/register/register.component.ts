@@ -40,7 +40,6 @@ export class RegisterComponent {
 
   onInput() {
     this.formData = this.registerForm.getRawValue()
-    console.log(this.formData)
   }
 
   onSubmit() {

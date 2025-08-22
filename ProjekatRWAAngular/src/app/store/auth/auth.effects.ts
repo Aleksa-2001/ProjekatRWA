@@ -2,10 +2,11 @@ import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthService } from '../../shared/services/auth.service';
 import { UserService } from '../../shared/services/user.service';
-import * as AuthActions from './auth.actions';
 import { catchError, map, mergeMap, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
+import { hideToast, showToast } from '../toast/toast.actions';
+import * as AuthActions from './auth.actions';
 
 interface JwtPayload {
     sub: number;
@@ -34,6 +35,24 @@ export class AuthEffects {
         )
     })
 
+    loginSuccess$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(AuthActions.loginSuccess),
+            map(() => showToast({ poruka: 'Uspešno ste se ulogovali!', tipPoruke: 'success' }))
+        )
+    })
+
+    loginRegisterFailure$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(AuthActions.loginFailure, AuthActions.registerFailure),
+            map(({ error }) => {
+                if ((error as string).includes('API')) return showToast({ poruka: `Nije uspelo povezivanje sa serverom - ${error}`, tipPoruke: 'danger' })
+                else if ((error as string).includes('500')) return showToast({ poruka: `Serverska greška - ${error}`, tipPoruke: 'danger' })
+                else return hideToast()
+            })
+        )
+    })
+
     getUser$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(AuthActions.loginSuccess),
@@ -41,7 +60,7 @@ export class AuthEffects {
                 const payload: JwtPayload = jwtDecode(token)
                 return this.userService.getUserByID(payload.sub).pipe(
                     map((user) => (AuthActions.getUserSuccess({ user }))),
-                    catchError(() => of({ type: "[Auth] Get User Error" }))
+                    catchError((error) => of(AuthActions.getUserFailure({ error })))
                 )
             })
         )
@@ -61,6 +80,13 @@ export class AuthEffects {
         )
     })
 
+    registerSuccess$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(AuthActions.registerSuccess),
+            map(() => showToast({ poruka: 'Uspešno ste se registrovali!', tipPoruke: 'success' }))
+        )
+    })
+
     validateToken$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(AuthActions.validateToken),
@@ -76,10 +102,10 @@ export class AuthEffects {
     logout$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(AuthActions.logout, AuthActions.tokenIsInvalid),
-            mergeMap(() => {
+            map(() => {
                 this.authService.logout()
                 this.router.navigate(['/'])
-                return of({ type: "[Auth] Logout Completed" })
+                return showToast({ poruka: "Više niste ulogovani", tipPoruke: 'warning' })
             })
         )
     })
@@ -89,8 +115,27 @@ export class AuthEffects {
             ofType(AuthActions.updateUser),
             mergeMap(({ userID, user }) => this.userService.updateUser(userID, user).pipe(
                 map((user) => AuthActions.updateUserSuccess({ user: { id: user.userID, changes: user }})),
-                catchError(() => of({ type: "[Auth] Update User Error" }))
+                catchError((error) => of(AuthActions.updateUserFailure({ error })))
             ))
+        )
+    })
+    
+    updateUserSuccess$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(AuthActions.updateUserSuccess),
+            map(() => showToast({ poruka: 'Podaci su uspešno izmenjeni', tipPoruke: 'success' }))
+        )
+    })
+
+    updateUserFailure$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(AuthActions.updateUserFailure),
+            map(({ error }) => {
+                console.log(error)
+                if ((error as string).includes('API')) return showToast({ poruka: `Nije uspelo povezivanje sa serverom - ${error}`, tipPoruke: 'danger' })
+                else if ((error as string).includes('500')) return showToast({ poruka: `Serverska greška - ${error}`, tipPoruke: 'danger' })
+                else return showToast({ poruka: 'Greška pri izmeni korisnika', tipPoruke: 'danger' })
+            })
         )
     })
 
@@ -103,8 +148,27 @@ export class AuthEffects {
                     this.router.navigate(['/login'])
                     return AuthActions.changePasswordSuccess()
                 }),
-                catchError(() => of({ type: "[Auth] Change Password Error" }))
+                catchError((error) => of(AuthActions.changePasswordFailure({ error })))
             ))
+        )
+    })
+
+    changePasswordSuccess$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(AuthActions.changePasswordSuccess),
+            map(() => showToast({ poruka: 'Lozinka je uspešno izmenjena. Molimo Vas da se ponovo prijavite', tipPoruke: 'warning' }))
+        )
+    })
+
+    changePasswordFailure$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(AuthActions.changePasswordFailure),
+            map(({ error }) => {
+                if ((error as string).includes('API')) return showToast({ poruka: `Nije uspelo povezivanje sa serverom - ${error}`, tipPoruke: 'danger' })
+                else if ((error as string).includes('500')) return showToast({ poruka: `Serverska greška - ${error}`, tipPoruke: 'danger' })
+                else if ((error as string).includes('401')) return showToast({ poruka: 'Pogrešna lozinka', tipPoruke: 'danger' })
+                else return showToast({ poruka: 'Greška pri promeni lozinke', tipPoruke: 'danger' })
+            })
         )
     })
 
@@ -117,9 +181,27 @@ export class AuthEffects {
                     this.router.navigate(['/'])
                     return AuthActions.deleteUserSuccess({ userID })
                 }),
-                catchError(() => of({ type: "[Auth] Delete User Error" }))
+                catchError((error) => of(AuthActions.deleteUserFailure({ error })))
             ))
         )
     })
 
+    deleteUserSuccess$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(AuthActions.deleteUserSuccess),
+            map(() => showToast({ poruka: 'Nalog je uspešno obrisan', tipPoruke: 'warning' }))
+        )
+    })
+    
+    deleteUserFailure$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(AuthActions.deleteUserFailure),
+            map(({ error }) => {
+                if ((error as string).includes('API')) return showToast({ poruka: `Nije uspelo povezivanje sa serverom - ${error}`, tipPoruke: 'danger' })
+                else if ((error as string).includes('500')) return showToast({ poruka: `Serverska greška - ${error}`, tipPoruke: 'danger' })
+                else return showToast({ poruka: 'Greška pri brisanju naloga', tipPoruke: 'danger' })
+            })
+        )
+    })
+    
 }
