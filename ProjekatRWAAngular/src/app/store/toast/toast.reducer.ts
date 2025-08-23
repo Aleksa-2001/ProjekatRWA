@@ -21,5 +21,8 @@ export const toastReducer = createReducer(
         tipPoruke,
         prikaziPoruku: true
     })),
-    on(ToastActions.hideToast, () => (initialState))
+    on(ToastActions.hideToast, (state) => ({
+        ...state,
+        prikaziPoruku: false
+    }))
 )

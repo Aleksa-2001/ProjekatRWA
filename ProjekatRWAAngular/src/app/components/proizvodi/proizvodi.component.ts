@@ -109,8 +109,8 @@ export class ProizvodiComponent implements OnInit, OnChanges, OnDestroy {
         }).filter(proizvod => proizvod.cena >= selectedCenaRange.min && proizvod.cena <= selectedCenaRange.max)
         
         if (this.sort === "cena") filteredProizvodi.sort((a, b) => a.cena > b.cena ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
-        if (this.sort === "brojRecenzija") filteredProizvodi.sort((a, b) => (a as any).brojRecenzija > (b as any).brojRecenzija ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
-        if (this.sort === "prosecnaOcena") filteredProizvodi.sort((a, b) => (a as any).prosecnaOcena > (b as any).prosecnaOcena ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
+        if (this.sort === "brojRecenzija") filteredProizvodi.sort((a, b) => ((a as any).brojRecenzija > (b as any).brojRecenzija) || ((a as any).brojRecenzija === (b as any).brojRecenzija && (a as any).prosecnaOcena > (b as any).prosecnaOcena) ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
+        if (this.sort === "prosecnaOcena") filteredProizvodi.sort((a, b) => ((a as any).prosecnaOcena > (b as any).prosecnaOcena) || ((a as any).prosecnaOcena === (b as any).prosecnaOcena && (a as any).brojRecenzija > (b as any).brojRecenzija) ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
 
         const numberOfPages = Math.ceil(filteredProizvodi.length / this.itemsPerPage)
         this.paginationList = []

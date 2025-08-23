@@ -38,7 +38,7 @@ export class AuthEffects {
     loginSuccess$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(AuthActions.loginSuccess),
-            map(() => showToast({ poruka: 'Uspešno ste se ulogovali!', tipPoruke: 'success' }))
+            map(() => showToast({ poruka: 'Uspešno ste se prijavili!', tipPoruke: 'success' }))
         )
     })
 
@@ -105,7 +105,7 @@ export class AuthEffects {
             map(() => {
                 this.authService.logout()
                 this.router.navigate(['/'])
-                return showToast({ poruka: "Više niste ulogovani", tipPoruke: 'warning' })
+                return showToast({ poruka: "Više niste prijavljeni!", tipPoruke: 'warning' })
             })
         )
     })
@@ -123,7 +123,7 @@ export class AuthEffects {
     updateUserSuccess$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(AuthActions.updateUserSuccess),
-            map(() => showToast({ poruka: 'Podaci su uspešno izmenjeni', tipPoruke: 'success' }))
+            map(() => showToast({ poruka: 'Podaci su uspešno izmenjeni!', tipPoruke: 'success' }))
         )
     })
 
@@ -134,7 +134,7 @@ export class AuthEffects {
                 console.log(error)
                 if ((error as string).includes('API')) return showToast({ poruka: `Nije uspelo povezivanje sa serverom - ${error}`, tipPoruke: 'danger' })
                 else if ((error as string).includes('500')) return showToast({ poruka: `Serverska greška - ${error}`, tipPoruke: 'danger' })
-                else return showToast({ poruka: 'Greška pri izmeni korisnika', tipPoruke: 'danger' })
+                else return showToast({ poruka: 'Greška pri izmeni podataka', tipPoruke: 'danger' })
             })
         )
     })
@@ -156,7 +156,7 @@ export class AuthEffects {
     changePasswordSuccess$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(AuthActions.changePasswordSuccess),
-            map(() => showToast({ poruka: 'Lozinka je uspešno izmenjena. Molimo Vas da se ponovo prijavite', tipPoruke: 'warning' }))
+            map(() => showToast({ poruka: 'Lozinka je uspešno promenjena. Molimo Vas da se ponovo prijavite', tipPoruke: 'warning' }))
         )
     })
 

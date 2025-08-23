@@ -6,7 +6,7 @@ import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/
 import { JwtModule, JwtModuleOptions } from '@auth0/angular-jwt'
 import { authInterceptor } from './shared/services/auth.interceptor';
 
-import { Action, ActionReducer, MetaReducer, provideStore } from '@ngrx/store';
+import { ActionReducer, provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { localStorageSync } from "ngrx-store-localstorage";
 
@@ -15,15 +15,15 @@ import { prodavnicaReducer } from './store/prodavnica/prodavnica.reducer';
 import { proizvodReducer } from './store/proizvod/proizvod.reducer';
 import { recenzijaReducer } from './store/recenzija/recenzija.reducer';
 import { cartReducer } from './store/cart/cart.reducer';
+import { toastReducer } from './store/toast/toast.reducer';
 
 import { provideEffects } from '@ngrx/effects';
 import { AuthEffects } from './store/auth/auth.effects';
 import { ProdavniceEffects } from './store/prodavnica/prodavnica.effects';
 import { ProizvodiEffects } from './store/proizvod/proizvod.effects';
 import { RecenzijeEffects } from './store/recenzija/recenzija.effects';
-import { AppState } from './store/app-state';
 import { CartEffects } from './store/cart/cart.effects';
-import { toastReducer } from './store/toast/toast.reducer';
+import { ToastEffects } from './store/toast/toast.effects';
 
 const jwtOptions: JwtModuleOptions = {
   config: {
@@ -35,14 +35,14 @@ const jwtOptions: JwtModuleOptions = {
   }
 }
 
-export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
-  return function(state: AppState | undefined, action: Action) {
-    console.log('state', state)
-    console.log('action', action)
+// export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
+//   return function(state: AppState | undefined, action: Action) {
+//     console.log('state', state)
+//     console.log('action', action)
 
-    return reducer(state, action)
-  }
-}
+//     return reducer(state, action)
+//   }
+// }
 
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
   return localStorageSync({ 
@@ -54,8 +54,6 @@ export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionRedu
     storage: localStorage
   })(reducer)
 }
-
-export const metaReducers: MetaReducer<any>[] = [localStorageSyncReducer]
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -69,14 +67,15 @@ export const appConfig: ApplicationConfig = {
       recenzije: recenzijaReducer,
       cart: cartReducer,
       toast: toastReducer
-    }, { metaReducers: metaReducers }), 
+    }, { metaReducers: [localStorageSyncReducer] }), 
     provideStoreDevtools({ maxAge: 25 , logOnly: !isDevMode() }),
     provideEffects([
       AuthEffects, 
       ProdavniceEffects, 
       ProizvodiEffects,
       RecenzijeEffects,
-      CartEffects
+      CartEffects,
+      ToastEffects
     ]),
     importProvidersFrom(JwtModule.forRoot(jwtOptions)),
   ]

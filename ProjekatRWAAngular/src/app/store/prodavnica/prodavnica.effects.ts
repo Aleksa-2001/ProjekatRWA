@@ -5,6 +5,7 @@ import * as ProdavniceActions from "./prodavnica.actions"
 import { Observable, of } from "rxjs"
 import { catchError, map, mergeMap } from "rxjs/operators"
 import { Router } from "@angular/router"
+import { hideToast, showToast } from "../toast/toast.actions"
 
 @Injectable()
 export class ProdavniceEffects {
@@ -63,6 +64,24 @@ export class ProdavniceEffects {
         )
     })
 
+    addProdavnicaSuccess$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ProdavniceActions.addItemSuccess),
+            map(({ prodavnica }) => showToast({ poruka: `Prodavnica \"${prodavnica.naziv}\" je uspešno dodata!`, tipPoruke: 'success' }))
+        )
+    })
+
+    addProdavnicaFailure$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ProdavniceActions.addItemFailure),
+            map(({ error }) => {
+                if ((error as string).includes('API')) return showToast({ poruka: `Nije uspelo povezivanje sa serverom - ${error}`, tipPoruke: 'danger' })
+                else if ((error as string).includes('500')) return showToast({ poruka: `Serverska greška - ${error}`, tipPoruke: 'danger' })
+                else return showToast({ poruka: 'Greška pri dodavanju prodavnice', tipPoruke: 'danger' })
+            })
+        )
+    })
+
     updateProdavnica$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ProdavniceActions.updateItem),
@@ -79,6 +98,24 @@ export class ProdavniceEffects {
         )
     })
 
+    updateProdavnicaSuccess$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ProdavniceActions.updateItemSuccess),
+            map(({ prodavnica }) => showToast({ poruka: `Prodavnica \"${prodavnica.changes.naziv}\" je uspešno izmenjena!`, tipPoruke: 'success' }))
+        )
+    })
+
+    updateProdavnicaFailure$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ProdavniceActions.updateItemFailure),
+            map(({ error }) => {
+                if ((error as string).includes('API')) return showToast({ poruka: `Nije uspelo povezivanje sa serverom - ${error}`, tipPoruke: 'danger' })
+                else if ((error as string).includes('500')) return showToast({ poruka: `Serverska greška - ${error}`, tipPoruke: 'danger' })
+                else return showToast({ poruka: 'Greška pri izmeni prodavnice', tipPoruke: 'danger' })
+            })
+        )
+    })
+
     deleteProdavnica$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ProdavniceActions.deleteItem),
@@ -91,6 +128,24 @@ export class ProdavniceEffects {
                     catchError((error) => of(ProdavniceActions.deleteItemFailure({ error })))
                 )
             )
+        )
+    })
+
+    deleteProdavnicaSuccess$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ProdavniceActions.deleteItemSuccess),
+            map(() => showToast({ poruka: `Prodavnica je uspešno obrisana!`, tipPoruke: 'success' }))
+        )
+    })
+
+    deleteProdavnicaFailure$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ProdavniceActions.deleteItemFailure),
+            map(({ error }) => {
+                if ((error as string).includes('API')) return showToast({ poruka: `Nije uspelo povezivanje sa serverom - ${error}`, tipPoruke: 'danger' })
+                else if ((error as string).includes('500')) return showToast({ poruka: `Serverska greška - ${error}`, tipPoruke: 'danger' })
+                else return showToast({ poruka: 'Greška pri brisanju prodavnice', tipPoruke: 'danger' })
+            })
         )
     })
 

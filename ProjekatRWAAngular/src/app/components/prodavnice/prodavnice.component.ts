@@ -78,8 +78,8 @@ export class ProdavniceComponent implements OnInit, OnChanges {
           return searchMatch && nazivMatch
         })
 
-        if (this.sort === "brojRecenzija") filteredProdavnice.sort((a, b) => (a as any).brojRecenzija > (b as any).brojRecenzija ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
-        if (this.sort === "prosecnaOcena") filteredProdavnice.sort((a, b) => (a as any).prosecnaOcena > (b as any).prosecnaOcena ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
+        if (this.sort === "brojRecenzija") filteredProdavnice.sort((a, b) => ((a as any).brojRecenzija > (b as any).brojRecenzija) || ((a as any).brojRecenzija === (b as any).brojRecenzija && (a as any).prosecnaOcena > (b as any).prosecnaOcena) ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
+        if (this.sort === "prosecnaOcena") filteredProdavnice.sort((a, b) => ((a as any).prosecnaOcena > (b as any).prosecnaOcena) || ((a as any).prosecnaOcena === (b as any).prosecnaOcena && (a as any).brojRecenzija > (b as any).brojRecenzija) ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
 
         const numberOfPages = Math.ceil(filteredProdavnice.length / this.itemsPerPage)
         this.paginationList = []
