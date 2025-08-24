@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    <div *ngIf="brojProdavnica > 1 && prikaziProdavnice">
+    <div *ngIf="brojProdavnica > 0 && prikaziProdavnice">
         <hr *ngIf="!sakrijIzborPrikaza && !(brojProdavnica === 0 || brojProizvoda === 0)" class="my-2">
 
         <div class="row row-gap-1">
@@ -34,43 +34,44 @@
         </div>
     </div>
 
-    <div *ngIf="brojProizvoda > 1 && prikaziProizvode">
+    <div *ngIf="brojProizvoda > 0 && prikaziProizvode">
         <hr *ngIf="!sakrijIzborPrikaza && !(brojProdavnica === 0 || brojProizvoda === 0)" class="my-2">
 
-        <div class="row row-gap-1">
-            <h5 class="col-12 mb-0">Cena (u RSD)</h5>
-            <div class="col-12">
-                <div class="range-input row gap-1">
-                    <div class="col-12 d-flex flex-row align-items-center column-gap-1">
-                        <label for="inputMinCena">Od:</label>
-                        <input #inputMinCena id="inputMinCena" (change)="onChangeMinCena($event)" class="form-control form-control-sm border-secondary" type="number" [min]="cenaRange.min" [max]="cenaRange.max" [value]="cenaRange.min" />
+        <div [hidden]="brojProizvoda <= 1 || cenaRange.min === cenaRange.max">
+            <div class="row row-gap-1">
+                <h5 class="col-12 mb-0">Cena (u RSD)</h5>
+                <div class="col-12">
+                    <div class="range-input row gap-1">
+                        <div class="col-12 d-flex flex-row align-items-center column-gap-1">
+                            <label for="inputMinCena">Od:</label>
+                            <input #inputMinCena id="inputMinCena" (change)="onChangeMinCena($event)" class="form-control form-control-sm border-secondary" type="number" [min]="cenaRange.min" [max]="cenaRange.max" [value]="cenaRange.min" />
+                        </div>
+                        <div class="col-12 d-flex flex-row align-items-center column-gap-1">
+                            <label for="inputMaxCena">Do:</label>
+                            <input #inputMaxCena id="inputMaxCena" (change)="onChangeMaxCena($event)" class="form-control form-control-sm border-secondary" type="number" [min]="cenaRange.min" [max]="cenaRange.max" [value]="cenaRange.max" />
+                        </div>
                     </div>
-                    <div class="col-12 d-flex flex-row align-items-center column-gap-1">
-                        <label for="inputMaxCena">Do:</label>
-                        <input #inputMaxCena id="inputMaxCena" (change)="onChangeMaxCena($event)" class="form-control form-control-sm border-secondary" type="number" [min]="cenaRange.min" [max]="cenaRange.max" [value]="cenaRange.max" />
+                </div>
+                <div class="col-12">
+                    <div class="range-slider">
+                        <div class="range-background"></div>
+                        <div class="range-highlight" [ngStyle]="{
+                            left: getPercent(minCena) + '%',
+                            width: (getPercent(maxCena) - getPercent(minCena)) + '%'
+                        }"></div>
+                        <input #rangeMinCena id="rangeMinCena" (input)="onChangeMinCena($event)" class="form-range" type="range" [min]="cenaRange.min" [max]="cenaRange.max" [value]="cenaRange.min" />
+                        <input #rangeMaxCena id="rangeMaxCena" (input)="onChangeMaxCena($event)" class="form-range" type="range" [min]="cenaRange.min" [max]="cenaRange.max" [value]="cenaRange.max" />
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>{{cenaRange.min}}</span>
+                        <span>{{cenaRange.max}}</span>
                     </div>
                 </div>
             </div>
-            <div class="col-12">
-                <div class="range-slider">
-                    <div class="range-background"></div>
-                    <div class="range-highlight" [ngStyle]="{
-                        left: getPercent(minCena) + '%',
-                        width: (getPercent(maxCena) - getPercent(minCena)) + '%'
-                    }"></div>
-                    <input #rangeMinCena id="rangeMinCena" (input)="onChangeMinCena($event)" class="form-range" type="range" [min]="cenaRange.min" [max]="cenaRange.max" [value]="cenaRange.min" />
-                    <input #rangeMaxCena id="rangeMaxCena" (input)="onChangeMaxCena($event)" class="form-range" type="range" [min]="cenaRange.min" [max]="cenaRange.max" [value]="cenaRange.max" />
-                </div>
-                <div class="d-flex justify-content-between">
-                    <span>{{cenaRange.min}}</span>
-                    <span>{{cenaRange.max}}</span>
-                </div>
-            </div>
+            <hr class="my-2">
         </div>
 
         <div *ngIf="!selectMode">
-            <hr class="my-2">
-
             <div class="row row-gap-1">
                 <h5 class="col-12 mb-0">Proizvod</h5>
                 <div class="row mx-0">
@@ -87,27 +88,28 @@
 
             <hr class="my-2">
 
-            <div class="row row-gap-1">
-                <h5 class="col-12 mb-0">Tip proizvoda</h5>
-                <div class="row mx-0">
-                    <div class="col-auto col-md-12 form-check" *ngFor="let type of types$ | async">
-                        <input (change)="onSelectType(type)" class="form-check-input" type="checkbox" name="inputCheckbox{{type}}" id="checkbox{{type}}" value={{type}}>
-                        <label class="form-check-label" for="checkbox{{type}}" [ngSwitch]="type">
-                            <span *ngSwitchCase="'CPU'">Procesor</span>
-                            <span *ngSwitchCase="'GPU'">Grafička karta</span>
-                            <span *ngSwitchCase="'RAM'">RAM memorija</span>
-                            <span *ngSwitchCase="'MaticnaPloca'">Matična ploča</span>
-                            <span *ngSwitchCase="'Skladiste'">Skladišna memorija</span>
-                            <span *ngSwitchCase="'Napajanje'">Napajanje</span>
-                            <span *ngSwitchCase="'Kuciste'">Kućište</span>
-                            <span *ngSwitchDefault>{{type}}</span>
-                        </label>
+            <div *ngIf="(types$ | async) as types" [hidden]="types.length === 0">
+                <div class="row row-gap-1">
+                    <h5 class="col-12 mb-0">Tip proizvoda</h5>
+                    <div class="row mx-0">
+                        <div class="col-auto col-md-12 form-check" *ngFor="let type of types">
+                            <input (change)="onSelectType(type)" class="form-check-input" type="checkbox" name="inputCheckbox{{type}}" id="checkbox{{type}}" value={{type}}>
+                            <label class="form-check-label" for="checkbox{{type}}" [ngSwitch]="type">
+                                <span *ngSwitchCase="'CPU'">Procesor</span>
+                                <span *ngSwitchCase="'GPU'">Grafička karta</span>
+                                <span *ngSwitchCase="'RAM'">RAM memorija</span>
+                                <span *ngSwitchCase="'MaticnaPloca'">Matična ploča</span>
+                                <span *ngSwitchCase="'Skladiste'">Skladišna memorija</span>
+                                <span *ngSwitchCase="'Napajanje'">Napajanje</span>
+                                <span *ngSwitchCase="'Kuciste'">Kućište</span>
+                                <span *ngSwitchDefault>{{type}}</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
+                <hr class="my-2">
             </div>
         </div>
-
-        <hr class="my-2">
 
         <div class="row row-gap-1">
             <h5 class="col-12 mb-0">Proizvođač</h5>

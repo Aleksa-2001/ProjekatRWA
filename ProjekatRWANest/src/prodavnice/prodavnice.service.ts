@@ -76,6 +76,26 @@ export class ProdavniceService {
         else throw new BadRequestException("Molimo da popunite polje za pretragu!")
     }
 
+    public async getProdavniceRecommended() {
+        const prodavnice = await this.prodavnicaRepository
+            .createQueryBuilder('prodavnica')
+            .leftJoin('prodavnica.recenzije', 'recenzija')
+            .select(['prodavnica.id', 'prodavnica.naziv', 'prodavnica.adresa', 'prodavnica.slika'])
+            .addSelect('COUNT(recenzija)', 'brojRecenzija')
+            .addSelect('COALESCE(AVG(recenzija.ocena), 0)', 'prosecna_ocena')
+            .groupBy('prodavnica.id')
+            .orderBy('prosecna_ocena', 'DESC')
+            .addOrderBy('COUNT(recenzija)', 'DESC')
+            .limit(4)
+            .getRawAndEntities()
+        
+        return prodavnice.entities.map((prodavnica, i) => ({
+            ...prodavnica,
+            brojRecenzija: parseInt(prodavnice.raw[i].brojRecenzija),
+            prosecnaOcena: parseFloat(prodavnice.raw[i].prosecna_ocena)
+        }))
+    }
+
     public async getProdavnicaByID(prodavnicaID: number) {
         if (await this.prodavnicaRepository.existsBy({ id: prodavnicaID }))
             return await this.prodavnicaRepository.findOneBy({ id: prodavnicaID })

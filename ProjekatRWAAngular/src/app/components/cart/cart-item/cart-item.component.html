@@ -15,7 +15,7 @@
                 <h5 class="m-0">{{artikal.proizvod.cena}} RSD</h5>
                 <div class="d-flex column-gap-2">
                     <div class="d-inline-flex border border-primary rounded-2" (click)="$event.stopPropagation()">
-                        <button (click)="increaseAmount(artikal)" [disabled]="artikal.kolicina >= 50" class="btn btn-sm btn-primary rounded-0 border-top-0 border-bottom-0 border-start-0"><i class="bi bi-plus"></i></button>
+                        <button (click)="increaseAmount(artikal)" [disabled]="artikal.kolicina >= maxKolicina" class="btn btn-sm btn-primary rounded-0 border-top-0 border-bottom-0 border-start-0"><i class="bi bi-plus"></i></button>
                         <p class="m-0 kolicina">{{artikal.kolicina}}</p>
                         <button (click)="decreaseAmount(artikal)" [disabled]="artikal.kolicina <= 1" class="btn btn-sm btn-primary rounded-0 border-top-0 border-bottom-0 border-end-0"><i class="bi bi-dash"></i></button>
                     </div>

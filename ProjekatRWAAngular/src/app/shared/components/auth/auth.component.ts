@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { CommonModule, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-auth',
@@ -22,7 +23,7 @@ export class AuthComponent {
   error$: Observable<any>
 
   constructor(private title: Title, private fb: FormBuilder, private store: Store<AppState>) {
-    this.title.setTitle("Prijava - ProjekatRWA")
+    this.title.setTitle(`Prijava - ${environment.appName}`)
 
     this.loginForm = this.fb.group({
       username: ['', Validators.required],

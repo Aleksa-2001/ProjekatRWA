@@ -30,12 +30,13 @@ export class ProizvodiService {
         let query = this.proizvodRepository
             .createQueryBuilder('proizvod')
             .leftJoin('proizvod.recenzije', 'recenzija')
-            .select(['proizvod.id', 'proizvod.type', 'proizvod.tipProizvoda', 'proizvod.proizvodjac', 'proizvod.naziv', 'proizvod.cena', 'proizvod.slika'])
+            .leftJoinAndSelect('proizvod.prodavnica', 'prodavnica')
+            .addSelect(['proizvod.id', 'proizvod.type', 'proizvod.tipProizvoda', 'proizvod.proizvodjac', 'proizvod.naziv', 'proizvod.cena', 'proizvod.slika'])
             .addSelect('COUNT(recenzija)', 'brojRecenzija')
             .addSelect('COALESCE(AVG(recenzija.ocena), 0)', 'prosecnaOcena')
             .groupBy('proizvod.id')
+            .addGroupBy('prodavnica.id')
             .where('proizvod.prodavnica.id = :id', { id: prodavnicaID })
-
             
         if (type) {
             query = query.andWhere('proizvod.type = :type', { type })
@@ -63,10 +64,12 @@ export class ProizvodiService {
             const proizvodi = await this.proizvodRepository
                 .createQueryBuilder('proizvod')
                 .leftJoin('proizvod.recenzije', 'recenzija')
-                .select(['proizvod.id', 'proizvod.type', 'proizvod.tipProizvoda', 'proizvod.proizvodjac', 'proizvod.naziv', 'proizvod.cena', 'proizvod.slika'])
+                .leftJoinAndSelect('proizvod.prodavnica', 'prodavnica')
+                .addSelect(['proizvod.id', 'proizvod.type', 'proizvod.tipProizvoda', 'proizvod.proizvodjac', 'proizvod.naziv', 'proizvod.cena', 'proizvod.slika'])
                 .addSelect('COUNT(recenzija)', 'brojRecenzija')
                 .addSelect('COALESCE(AVG(recenzija.ocena), 0)', 'prosecnaOcena')
                 .groupBy('proizvod.id')
+                .addGroupBy('prodavnica.id')
                 .where('proizvod.proizvodjac ILIKE :search', { search: `%${search}%` })
                 .orWhere('proizvod.naziv ILIKE :search', { search: `%${search}%` })
                 .orWhere('proizvod.type ILIKE :search', { search: `%${search}%` })

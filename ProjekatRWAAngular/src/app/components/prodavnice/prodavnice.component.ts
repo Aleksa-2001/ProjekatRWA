@@ -30,6 +30,7 @@ export class ProdavniceComponent implements OnInit, OnChanges {
   itemsPerPage: number = 6
   currentPage: number = 1
 
+  @Input() homePage: boolean = false
   @Input() prodavnicePage: boolean = false
   @Input() selectedNaziviProdavnica: string[] = []
 
@@ -72,27 +73,34 @@ export class ProdavniceComponent implements OnInit, OnChanges {
     ]).pipe(
       filter(([prodavnice]) => !!prodavnice),
       map(([prodavnice, search, selectedProdavnice]) => {
-        const filteredProdavnice = prodavnice.filter(prodavnica => {
-          const searchMatch = search.length ? prodavnica.naziv.toLowerCase().includes(search.toLowerCase().trim()) : prodavnice
-          const nazivMatch = selectedProdavnice.length ? selectedProdavnice.includes(prodavnica.naziv) : prodavnice
-          return searchMatch && nazivMatch
-        })
-
-        if (this.sort === "brojRecenzija") filteredProdavnice.sort((a, b) => ((a as any).brojRecenzija > (b as any).brojRecenzija) || ((a as any).brojRecenzija === (b as any).brojRecenzija && (a as any).prosecnaOcena > (b as any).prosecnaOcena) ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
-        if (this.sort === "prosecnaOcena") filteredProdavnice.sort((a, b) => ((a as any).prosecnaOcena > (b as any).prosecnaOcena) || ((a as any).prosecnaOcena === (b as any).prosecnaOcena && (a as any).brojRecenzija > (b as any).brojRecenzija) ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
-
-        const numberOfPages = Math.ceil(filteredProdavnice.length / this.itemsPerPage)
-        this.paginationList = []
-        for (let i = 1; i <= numberOfPages; i++) {
-          this.paginationList.push(i)
+        if (this.homePage) {
+          return [...prodavnice].sort((a, b) => ((a as any).prosecnaOcena > (b as any).prosecnaOcena) || ((a as any).prosecnaOcena === (b as any).prosecnaOcena && (a as any).brojRecenzija > (b as any).brojRecenzija) ? -1 : 1)
         }
+        else {
+          const filteredProdavnice = prodavnice.filter(prodavnica => {
+            const searchMatch = search.length ? prodavnica.naziv.toLowerCase().includes(search.toLowerCase().trim()) : prodavnice
+            const nazivMatch = selectedProdavnice.length ? selectedProdavnice.includes(prodavnica.naziv) : prodavnice
+            return searchMatch && nazivMatch
+          })
 
-        if (this.currentPage > this.paginationList.length) this.currentPage = this.paginationList.length ? this.paginationList.length : 1
+          if (this.sort === "brojRecenzija") filteredProdavnice.sort((a, b) => ((a as any).brojRecenzija > (b as any).brojRecenzija) || ((a as any).brojRecenzija === (b as any).brojRecenzija && (a as any).prosecnaOcena > (b as any).prosecnaOcena) ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
+          if (this.sort === "prosecnaOcena") filteredProdavnice.sort((a, b) => ((a as any).prosecnaOcena > (b as any).prosecnaOcena) || ((a as any).prosecnaOcena === (b as any).prosecnaOcena && (a as any).brojRecenzija > (b as any).brojRecenzija) ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
 
-        const start = (this.currentPage - 1) * this.itemsPerPage
-        const end = start + this.itemsPerPage
-        
-        return filteredProdavnice.slice(start, end)
+          const numberOfPages = Math.ceil(filteredProdavnice.length / this.itemsPerPage)
+          this.paginationList = []
+          for (let i = 1; i <= numberOfPages; i++) {
+            this.paginationList.push(i)
+          }
+
+          if (this.currentPage > this.paginationList.length) this.currentPage = this.paginationList.length ? this.paginationList.length : 1
+
+          const start = (this.currentPage - 1) * this.itemsPerPage
+          const end = start + this.itemsPerPage
+
+          console.log(filteredProdavnice)
+          
+          return filteredProdavnice.slice(start, end)
+        }
       })
     )
   }

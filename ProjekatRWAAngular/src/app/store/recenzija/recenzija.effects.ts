@@ -3,6 +3,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { RecenzijaService } from "../../services/recenzija.service";
 import { catchError, map, mergeMap, of } from "rxjs";
 import * as RecenzijeActions from "./recenzija.actions"
+import { showToast } from "../toast/toast.actions";
 
 @Injectable()
 export class RecenzijeEffects {
@@ -63,6 +64,24 @@ export class RecenzijeEffects {
         )
     })
 
+    addRecenzijaSuccess$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(RecenzijeActions.addItemSuccess),
+            map(() => showToast({ poruka: 'Recenzija je uspešno dodata!', tipPoruke: 'success' }))
+        )
+    })
+
+    addRecenzijaFailure$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(RecenzijeActions.addItemFailure),
+            map(({ error }) => {
+                if ((error as string).includes('API')) return showToast({ poruka: `Nije uspelo povezivanje sa serverom - ${error}`, tipPoruke: 'danger' })
+                else if ((error as string).includes('500')) return showToast({ poruka: `Serverska greška - ${error}`, tipPoruke: 'danger' })
+                else return showToast({ poruka: 'Greška pri dodavanju recenzije', tipPoruke: 'danger' })
+            })
+        )
+    })
+
     updateRecenzija$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(RecenzijeActions.updateItem),
@@ -75,6 +94,24 @@ export class RecenzijeEffects {
         )
     })
 
+    updateRecenzijaSuccess$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(RecenzijeActions.updateItemSuccess),
+            map(() => showToast({ poruka: 'Recenzija je uspešno izmenjena!', tipPoruke: 'success' }))
+        )
+    })
+
+    updateRecenzijaFailure$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(RecenzijeActions.updateItemFailure),
+            map(({ error }) => {
+                if ((error as string).includes('API')) return showToast({ poruka: `Nije uspelo povezivanje sa serverom - ${error}`, tipPoruke: 'danger' })
+                else if ((error as string).includes('500')) return showToast({ poruka: `Serverska greška - ${error}`, tipPoruke: 'danger' })
+                else return showToast({ poruka: 'Greška pri izmeni recenzije', tipPoruke: 'danger' })
+            })
+        )
+    })
+
     deleteRecenzija$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(RecenzijeActions.deleteItem),
@@ -84,6 +121,24 @@ export class RecenzijeEffects {
                     catchError((error) => of(RecenzijeActions.deleteItemFailure({ error })))
                 )
             )
+        )
+    })
+
+    deleteProizvodSuccess$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(RecenzijeActions.deleteItemSuccess),
+            map(() => showToast({ poruka: `Recenzija je uspešno obrisana!`, tipPoruke: 'success' }))
+        )
+    })
+
+    deleteProizvodFailure$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(RecenzijeActions.deleteItemFailure),
+            map(({ error }) => {
+                if ((error as string).includes('API')) return showToast({ poruka: `Nije uspelo povezivanje sa serverom - ${error}`, tipPoruke: 'danger' })
+                else if ((error as string).includes('500')) return showToast({ poruka: `Serverska greška - ${error}`, tipPoruke: 'danger' })
+                else return showToast({ poruka: 'Greška pri brisanju recenzije', tipPoruke: 'danger' })
+            })
         )
     })
 

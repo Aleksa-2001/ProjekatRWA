@@ -12,6 +12,9 @@
                 <li class="nav-item">
                     <a class="nav-link" [routerLink]="['/prodavnice']" routerLinkActive="router-link-active"><i class="bi bi-shop me-1"></i>Prodavnice</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/about']" routerLinkActive="router-link-active"><i class="bi bi-info-circle me-1"></i>O nama</a>
+                </li>
             </ul>
             <div class="d-flex flex-column-reverse flex-md-row align-items-md-center ms-auto row-gap-2" [ngClass]="{ 'column-gap-2': isLoggedIn$ | async }">
                 <app-search [navbar]="true"></app-search>
@@ -19,7 +22,7 @@
                     <li class="nav-item" *ngIf="!(isLoggedIn$ | async)">
                         <a class="nav-link" [routerLink]="['/login']" routerLinkActive="router-link-active"><i class="bi bi-box-arrow-in-right me-1"></i>Prijavi se</a>
                     </li>
-                    <div class="d-flex flex-column flex-md-row justify-content-between gap-2">
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
                         <li class="nav-item" *ngIf="!(isLoggedIn$ | async)">
                             <a type="button" class="btn btn-sm btn-secondary" type="button" [routerLink]="['/register']"><i class="bi bi-plus-lg me-2"></i>Registruj se</a>
                         </li>

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app-state';
@@ -6,8 +6,9 @@ import { CommonModule, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import * as AuthActions from '../../../store/auth/auth.actions';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { selectError } from '../../../store/auth/auth.selectors';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-register',
@@ -16,21 +17,23 @@ import { selectError } from '../../../store/auth/auth.selectors';
   styleUrl: './register.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
 
-  error$: Observable<any>
+  error$: Observable<any> = of()
 
-  registerForm: FormGroup
+  registerForm!: FormGroup
   formData: any
 
-  constructor(private title: Title, private fb: FormBuilder, private store: Store<AppState>) {
-    this.title.setTitle("Registracija - ProjekatRWA")
+  constructor(private title: Title, private fb: FormBuilder, private store: Store<AppState>) { }
+
+  ngOnInit(): void {
+    this.title.setTitle(`Registracija - ${environment.appName}`)
     
     this.registerForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      username: ['', Validators.required],
+      username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       repeatPassword: ['', [Validators.required, Validators.minLength(8)]]
     })

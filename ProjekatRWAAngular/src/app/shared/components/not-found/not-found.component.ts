@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-not-found',
@@ -12,7 +13,7 @@ import { RouterLink } from '@angular/router';
 export class NotFoundComponent {
 
   constructor(private title: Title) {
-    this.title.setTitle("Error 404 - ProjekatRWA")
+    this.title.setTitle(`Error 404 - ${environment.appName}`)
   }
 
 }

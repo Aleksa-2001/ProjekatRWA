@@ -5,7 +5,6 @@ import { Artikal } from '../../store/cart/cart.reducer';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app-state';
 import { selectCart, selectUkupnaCena } from '../../store/cart/cart.selectors';
-import { LoadingComponent } from "../../shared/components/loading/loading.component";
 import { CartItemComponent } from "./cart-item/cart-item.component";
 import * as CartActions from '../../store/cart/cart.actions'
 

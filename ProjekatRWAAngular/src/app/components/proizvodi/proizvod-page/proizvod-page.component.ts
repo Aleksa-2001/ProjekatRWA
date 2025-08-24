@@ -74,7 +74,7 @@ export class ProizvodPageComponent implements OnInit, OnDestroy {
     const proizvodPipe$ = this.proizvod$.pipe(
       filter(proizvod => !!proizvod),
       tap(proizvod => {
-        this.title.setTitle(`${proizvod.naziv} - ProjekatRWA`)
+        this.title.setTitle(`${proizvod.naziv} - ${environment.appName}`)
         this.setImage(environment.apiUrl + proizvod.slika)
 
         if (firstLoad) {

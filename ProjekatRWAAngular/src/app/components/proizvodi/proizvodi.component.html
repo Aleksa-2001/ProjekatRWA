@@ -8,10 +8,11 @@
     </div>
 </div>
 <app-loading *ngIf="loading$ | async"></app-loading>
-<div *ngIf="!(loading$ | async) && !(error$ | async) && (selectedProizvodi$ | async) as proizvodi" class="row row-gap-2" [ngClass]="{ 'row-gap-3': displayMode === 2 && proizvodi.length !== 0 }">
+<div *ngIf="!(loading$ | async) && !(error$ | async) && (selectedProizvodi$ | async) as proizvodi" class="row row-gap-2">
     <div class="col-12">
-        <input (input)="onChangeInput()" #inputSearch id="inputSearch" class="form-control border-secondary" placeholder="Pretraži proizvode..." />
+        <input (input)="onChangeInput()" #inputSearch id="inputSearch" class="form-control border-secondary" placeholder="Pretraži proizvode..." maxlength="100"/>
     </div>
+
     <div [hidden]="proizvodi.length === 0" class="col-12">
         <div class="row row-gap-1">
             <div class="col-12 col-sm-6 col-md-5 col-xl-3 d-flex flex-row align-items-center column-gap-1 pe-md-0">
@@ -41,9 +42,15 @@
             </div>
         </div>
     </div>
-    <div class="p-0 col-12" [ngClass]="{ 'col-sm-6 col-lg-4 col-xl-3': displayMode === 2 }" *ngFor="let proizvod of proizvodi">
-        <app-proizvod-item [proizvod]="proizvod" [displayMode]="displayMode" [selectMode]="selectMode"></app-proizvod-item>
+
+    <div class="col-12">
+        <div class="row row-gap-2" [ngClass]="{ 'row-gap-3': displayMode === 2 && proizvodi.length !== 0 }">
+            <div class="p-0 col-12" [ngClass]="{ 'col-sm-6 col-lg-4 col-xl-3': displayMode === 2 }" *ngFor="let proizvod of proizvodi">
+                <app-proizvod-item [proizvod]="proizvod" [displayMode]="displayMode" [selectMode]="selectMode"></app-proizvod-item>
+            </div>
+        </div>
     </div>
+
     <div *ngIf="proizvodi.length > 0" class="col-12 d-flex">
         <ul class="pagination pagination-sm mx-auto mt-1 mb-0 border border-primary rounded-2">
             <li class="page-item border-0" [ngClass]="{'disabled': currentPage === 1}">

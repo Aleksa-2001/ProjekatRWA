@@ -11,6 +11,7 @@ import { CommonModule, NgIf } from '@angular/common';
 import { selectBrojProdavnica } from '../../../store/prodavnica/prodavnica.selectors';
 import { selectBrojProizvoda } from '../../../store/proizvod/proizvod.selectors';
 import { ItemListComponent } from "../../item-list/item-list.component";
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-search-page',
@@ -38,7 +39,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
       tap((params) => {
         this.query = params['q']
         if (this.query) {
-          this.title.setTitle(`Pretraga: \"${this.query}\" - ProjekatRWA`)
+          this.title.setTitle(`Pretraga: \"${this.query}\" - ${environment.appName}`)
           this.store.dispatch(loadProdavnice({ search: this.query }))
           this.store.dispatch(loadProizvodi({ search: this.query }))
 
@@ -50,7 +51,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
           )
         }
         else {
-          this.title.setTitle(`Pretraga - ProjekatRWA`)
+          this.title.setTitle(`Pretraga - ${environment.appName}`)
         }
       })
     ).subscribe()

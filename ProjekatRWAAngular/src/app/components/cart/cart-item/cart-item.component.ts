@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Artikal } from '../../../store/cart/cart.reducer';
+import { Artikal, maxKolicina } from '../../../store/cart/cart.reducer';
 import { CommonModule, NgIf } from '@angular/common';
 import { StarsComponent } from "../../stars/stars.component";
 import { RouterModule } from '@angular/router';
@@ -17,6 +17,7 @@ import * as CartActions from '../../../store/cart/cart.actions'
 export class CartItemComponent {
 
   @Input() artikal!: Artikal
+  maxKolicina = maxKolicina
 
   constructor(private store: Store<AppState>) { }
 

@@ -75,7 +75,7 @@ export class ProdavnicaPageComponent implements OnInit, OnDestroy {
     const prodavnicaPipe$ = this.prodavnica$.pipe(
       filter(prodavnica => !!prodavnica),
       tap(prodavnica => {
-        this.title.setTitle(`${prodavnica.naziv} - ProjekatRWA`)
+        this.title.setTitle(`${prodavnica.naziv} - ${environment.appName}`)
         this.setBackground(prodavnica.slika)
 
         if (firstLoad) {

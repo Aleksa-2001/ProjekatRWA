@@ -1,4 +1,4 @@
 <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="d-flex flex-row" [ngClass]="{ 'column-gap-3': !navbar, 'search-width': navbar }">
-    <input (input)="onInput($event)" [value]="query" id="inputSearch" class="form-control" [ngClass]="{ 'form-control-lg border-secondary': !navbar, 'form-control-sm rounded-end-0': navbar }" type="search" maxlength="100" formControlName="inputSearch" placeholder="Pretraga"/>
+    <input (input)="onInput($event)" [value]="query" id="inputSearch" class="form-control" [ngClass]="{ 'form-control-lg border-secondary': !navbar, 'form-control-sm rounded-end-0': navbar }" type="search" maxlength="100" formControlName="inputSearch" placeholder="Pretraga" maxlength="100"/>
     <button [disabled]="!this.searchForm.valid || isEmptyOrWhiteSpace(query)" class="btn" [ngClass]="{ 'btn-lg btn-primary': !navbar, 'btn-sm btn-secondary rounded-start-0': navbar }" type="submit"><i class="bi bi-search"></i></button>
 </form>

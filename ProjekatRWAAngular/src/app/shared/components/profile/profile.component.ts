@@ -11,6 +11,7 @@ import { ConfirmDialogComponent } from '../../../components/dialog/confirm-dialo
 import { RecenzijeComponent } from '../../../components/recenzije/recenzije.component';
 import * as AuthActions from '../../../store/auth/auth.actions';
 import * as RecenzijeActions from '../../../store/recenzija/recenzija.actions';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-profile',
@@ -39,7 +40,7 @@ export class ProfileComponent {
   userID: number = -1
 
   constructor(private title: Title, private store: Store<AppState>, private fb: FormBuilder) {
-    this.title.setTitle("Profil - ProjekatRWA")
+    this.title.setTitle(`Profil - ${environment.appName}`)
     this.user$ = this.store.select(selectUser).pipe(
       filter(user => !!user),
       tap(user => {
@@ -66,9 +67,9 @@ export class ProfileComponent {
 
   onChangeProfileOption(displayMode: number) {
     this.displayMode = displayMode
-    if (displayMode === 1) this.title.setTitle("Profil - ProjekatRWA")
-    if (displayMode === 2) this.title.setTitle("Recenzije - ProjekatRWA")
-    if (displayMode === 3) this.title.setTitle("Izmeni Profil - ProjekatRWA")
+    if (displayMode === 1) this.title.setTitle(`Profil - ${environment.appName}`)
+    if (displayMode === 2) this.title.setTitle(`Recenzije - ${environment.appName}`)
+    if (displayMode === 3) this.title.setTitle(`Izmeni profil - ${environment.appName}`)
   }
   
   onDataInput() {

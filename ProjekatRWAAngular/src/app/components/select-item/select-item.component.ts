@@ -10,6 +10,7 @@ import * as ProizvodiActions from '../../store/proizvod/proizvod.actions'
 import { selectBrojProizvoda, selectError, selectLoading, selectSelectedProizvod } from '../../store/proizvod/proizvod.selectors';
 import { LoadingComponent } from "../../shared/components/loading/loading.component";
 import { ItemListComponent } from "../item-list/item-list.component";
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-select-item',
@@ -82,12 +83,12 @@ export class SelectItemComponent implements OnInit, OnDestroy {
       tap(proizvod => {
         if (proizvod.type === "Racunar") {
           this.store.dispatch(ProizvodiActions.loadItems({ prodavnicaID: proizvod.prodavnica.id, tip: this.type }))
-          this.title.setTitle(`Izaberi ${this.tipKomponenteTitle} - ProjekatRWA`)
+          this.title.setTitle(`Izaberi ${this.tipKomponenteTitle} - ${environment.apiUrl}`)
         }
         else {
           this.loading$ = of(false)
           this.error$ = of("Greska: Proizvod nije racunar")
-          this.title.setTitle(`Izaberi - ProjekatRWA`)
+          this.title.setTitle(`Izaberi - ${environment.apiUrl}`)
         }
       })
     )

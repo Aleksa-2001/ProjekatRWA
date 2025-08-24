@@ -9,6 +9,7 @@ import { ProdavnicaDialogComponent } from "../dialog/prodavnica-dialog/prodavnic
 import * as ProdavniceActions from '../../store/prodavnica/prodavnica.actions';
 import { selectBrojProdavnica, selectError, selectLoading } from '../../store/prodavnica/prodavnica.selectors';
 import { ItemListComponent } from "../item-list/item-list.component";
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-angular',
@@ -38,7 +39,7 @@ export class ProdavnicePageComponent implements OnInit {
     this.error$ = this.store.select(selectError)
 
     this.isAdmin$ = this.store.select(isAdmin)
-    this.title.setTitle("Prodavnice - ProjekatRWA")
+    this.title.setTitle(`Prodavnice - ${environment.appName}`)
 
     this.store.dispatch(ProdavniceActions.loadItems())
 

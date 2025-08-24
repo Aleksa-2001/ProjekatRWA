@@ -1,5 +1,5 @@
 import { CommonModule, NgFor, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app-state';
@@ -27,6 +27,8 @@ export class FilterComponent implements OnInit, OnChanges {
 
   @ViewChild('rangeMinCena') rangeMinCena!: ElementRef<HTMLInputElement>
   @ViewChild('rangeMaxCena') rangeMaxCena!: ElementRef<HTMLInputElement>
+
+  @Input() searchPage: boolean = false
   
   @Input() brojProdavnica: number = 0
   @Input() brojProizvoda: number = 0
@@ -74,11 +76,16 @@ export class FilterComponent implements OnInit, OnChanges {
     this.proizvodjaci$ = this.store.select(selectProizvodjaci)
   }
 
-  ngOnChanges(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.selectedCenaRange = this.cenaRange
     this.minCena = this.cenaRange.min
     this.maxCena = this.cenaRange.max
     this.selectedCenaRangeOutput.emit(this.selectedCenaRange)
+
+    if (this.searchPage && changes['cenaRange']) {
+      this.onSelectPrikaz(1)
+      //console.log(this.brojProdavnica, this.brojProizvoda)
+    }
   }
 
   onChangeMinCena(event: Event) {

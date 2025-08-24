@@ -3,9 +3,17 @@
 }
 
 .poruka {
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.15s;
     top: calc(1rem + 56px);
     right: 0;
     margin: 0 0.75rem;
     z-index: 1030;
     max-width: 20rem;
+}
+
+.show-toast {
+    visibility: visible;
+    opacity: 1;
 }

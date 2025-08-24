@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { CartComponent } from "../cart.component";
-import { Store } from '@ngrx/store';
-import { AppState } from '../../../store/app-state';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-cart-page',
@@ -12,11 +11,11 @@ import { AppState } from '../../../store/app-state';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartPageComponent {
-
-  constructor(private title: Title, private store: Store<AppState>) { }
+  
+  constructor(private title: Title) { }
   
   ngOnInit(): void {
-    this.title.setTitle("Korpa - ProjekatRWA")
+    this.title.setTitle(`Korpa - ${ environment.appName}`)
   }
 
 }

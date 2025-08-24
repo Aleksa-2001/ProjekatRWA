@@ -22,7 +22,7 @@
 
                     <div class="mb-2">
                         <label for="inputProizvodjac">Proizvođač*</label>
-                        <input id="inputProizvodjac" class="form-control border-secondary" type="text" formControlName="proizvodjac" placeholder="Proizvođač" />
+                        <input id="inputProizvodjac" class="form-control border-secondary" type="text" formControlName="proizvodjac" placeholder="Proizvođač" maxlength="50"/>
                         <small class="text-danger" *ngIf="form.controls['proizvodjac'].dirty && form.hasError('required', 'proizvodjac')">
                             *Proizvođač je obavezno polje
                         </small>
@@ -30,7 +30,7 @@
 
                     <div class="mb-2">
                         <label for="inputNaziv">Naziv proizvoda*</label>
-                        <input id="inputNaziv" class="form-control border-secondary" type="text" formControlName="naziv" placeholder="Naziv proizvoda" />
+                        <input id="inputNaziv" class="form-control border-secondary" type="text" formControlName="naziv" placeholder="Naziv proizvoda" maxlength="100"/>
                         <small class="text-danger" *ngIf="form.controls['naziv'].dirty && form.hasError('required', 'naziv')">
                             *Naziv proizvoda je obavezno polje
                         </small>

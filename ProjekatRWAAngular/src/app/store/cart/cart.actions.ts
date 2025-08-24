@@ -13,6 +13,20 @@ export const addToCart = createAction(
     }>()
 )
 
+export const addToCartSuccess = createAction(
+    "[Korpa] Dodavanje je uspesno",
+    props<{
+        proizvod: Proizvod
+    }>()
+)
+
+export const addToCartFailure = createAction(
+    "[Korpa] Greska prilikom dodavanja",
+    props<{
+        error: any
+    }>()
+)
+
 export const increaseAmount = createAction(
     "[Korpa] Uvecaj kolicinu",
     props<{

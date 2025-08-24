@@ -10,7 +10,7 @@ export interface ProdavniceState extends EntityState<Prodavnica> {
     error: any
 }
 
-const adapter = createEntityAdapter<Prodavnica>()
+const adapter = createEntityAdapter<Prodavnica>({ sortComparer: false })
 
 const initialState: ProdavniceState = adapter.getInitialState({
     loading: true,
@@ -21,13 +21,13 @@ const initialState: ProdavniceState = adapter.getInitialState({
 
 export const prodavnicaReducer = createReducer(
     initialState,
-    on(ProdavniceActions.loadItems, (state) => ({
+    on(ProdavniceActions.loadItems, ProdavniceActions.loadRecommendedItems, (state) => ({
         ...state,
         loading: true,
         error: null
     })),
     on(ProdavniceActions.loadItemsSuccess, (state, { prodavnice }) => 
-        adapter.setAll(prodavnice, {
+        adapter.setAll([...prodavnice], {
             ...state,
             loading: false,
             error: null

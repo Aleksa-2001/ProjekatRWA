@@ -23,6 +23,12 @@ export class ProdavnicaService {
             .pipe(catchError(errorHandler))
     }
 
+    getProdavniceRecommended() {
+        return this.httpClient
+            .get<Prodavnica[]>(environment.apiUrl + "prodavniceRecommended")
+            .pipe(catchError(errorHandler))
+    }
+
     getProdavnicaByID(prodavnicaID: number) {
         return this.httpClient
             .get<Prodavnica>(environment.apiUrl + `prodavnica/${prodavnicaID}`)

@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 import { isLoggedIn, selectUser } from '../../../store/auth/auth.selectors';
 import { CommonModule, NgClass, NgIf } from '@angular/common';
 import { User } from '../../../models/user';
-import { selectItemCount } from '../../../store/cart/cart.selectors';
+import { selectTotalItemCount } from '../../../store/cart/cart.selectors';
 import { SearchComponent } from "../../../components/search/search.component";
 import * as AuthActions from '../../../store/auth/auth.actions';
 
@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.isLoggedIn$ = this.store.select(isLoggedIn)
     this.user$ = this.store.select(selectUser)
-    this.cartItemCount$ = this.store.select(selectItemCount)
+    this.cartItemCount$ = this.store.select(selectTotalItemCount)
   }
 
   logout() {

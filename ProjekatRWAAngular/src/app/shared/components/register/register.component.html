@@ -5,14 +5,14 @@
             <div class="d-sm-flex justify-content-between">
                 <div class="mb-2">
                     <label for="inputFirstName">Ime*</label>
-                    <input id="inputFirstName" class="form-control border border-secondary" type="text" formControlName="firstName" placeholder="Ime" (input)="onInput()" />
+                    <input id="inputFirstName" class="form-control border border-secondary" type="text" formControlName="firstName" placeholder="Ime" (input)="onInput()" maxlength="20"/>
                     <small class="text-danger" *ngIf="registerForm.controls['firstName'].dirty && registerForm.hasError('required', 'firstName')">
                         *Ime je obavezno polje
                     </small>
                 </div>
                 <div class="mb-2">
                     <label for="inputLastName">Prezime*</label>
-                    <input id="inputLastName" class="form-control border border-secondary" type="text" formControlName="lastName" placeholder="Prezime" (input)="onInput()"/>
+                    <input id="inputLastName" class="form-control border border-secondary" type="text" formControlName="lastName" placeholder="Prezime" (input)="onInput()" maxlength="20"/>
                     <small class="text-danger" *ngIf="registerForm.controls['lastName'].dirty && registerForm.hasError('required', 'lastName')">
                         *Prezime je obavezno polje
                     </small>
@@ -20,7 +20,7 @@
             </div>
             <div class="mb-2">
                 <label for="inputEmail">E-mail adresa*</label>
-                <input id="inputEmail" class="form-control border border-secondary" type="text" formControlName="email" placeholder="text@example.com" (input)="onInput()" />
+                <input id="inputEmail" class="form-control border border-secondary" type="text" formControlName="email" placeholder="E-mail adresa" (input)="onInput()" maxlength="50"/>
                 <small class="text-danger" *ngIf="registerForm.controls['email'].dirty && registerForm.hasError('required', 'email')">
                     *E-mail je obavezno polje
                 </small>
@@ -30,9 +30,15 @@
             </div>
             <div class="mb-2">
                 <label for="inputUsername">Korisničko ime*</label>
-                <input id="inputUsername" class="form-control border border-secondary" type="text" formControlName="username" placeholder="Korisničko ime" (input)="onInput()" />
+                <input id="inputUsername" class="form-control border border-secondary" type="text" formControlName="username" placeholder="Korisničko ime" (input)="onInput()" maxlength="20"/>
                 <small class="text-danger" *ngIf="registerForm.controls['username'].dirty && registerForm.hasError('required', 'username')">
                     *Korisničko ime je obavezno polje
+                </small>
+                <small class="text-danger" *ngIf="registerForm.controls['password'].dirty && registerForm.hasError('minlength', 'username')">
+                    *Korisničko ime mora imati minimum 3 karaktera
+                </small>
+                <small class="text-danger" *ngIf="registerForm.controls['password'].dirty && registerForm.hasError('maxlength', 'username')">
+                    *Korisničko ime mora imati maksimum 20 karaktera
                 </small>
             </div>
             <div class="mb-2">

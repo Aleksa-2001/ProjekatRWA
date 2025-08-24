@@ -13,9 +13,12 @@ import { SearchPageComponent } from './components/search/search-page/search-page
 import { ProdavnicePageComponent } from './components/prodavnice-page/prodavnice-page.component';
 import { SelectItemComponent } from './components/select-item/select-item.component';
 import { CartPageComponent } from './components/cart/cart-page/cart-page.component';
+import { AboutComponent } from './shared/components/about/about.component';
 
 export const routes: Routes = [
     { path: "", component: HomeComponent, pathMatch: 'full' },
+
+    { path: "about", component: AboutComponent },
 
     { path: "search", component: SearchPageComponent },
     { path: "cart", component: CartPageComponent },
@@ -24,7 +27,7 @@ export const routes: Routes = [
     { path: "prodavnica/:id", component: ProdavnicaPageComponent },
     { path: "proizvod/:id", component: ProizvodPageComponent },
 
-    { path: "select/:id", component: SelectItemComponent, canActivate: [AuthGuard, ValidateGuard] },
+    { path: "select/:id", component: SelectItemComponent, canActivate: [AuthGuard, ValidateGuard, RolesGuard] },
 
     { path: "login", component: AuthComponent, canActivate: [AuthRedirectGuard] },
     { path: "register", component: RegisterComponent, canActivate: [AuthRedirectGuard] },

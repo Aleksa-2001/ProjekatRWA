@@ -1,10 +1,12 @@
-<h2 class="mb-2" [hidden]="prodavnicePage">Prodavnice</h2>
+<h2 class="mb-2" [hidden]="prodavnicePage || homePage">Prodavnice</h2>
+<h2 class="mb-2" [hidden]="!homePage">Preporučene prodavnice</h2>
 <app-loading *ngIf="loading$ | async"></app-loading>
-<div *ngIf="!(loading$ | async) && !(error$ | async) && (selectedProdavnice$ | async) as prodavnice" class="row row-gap-2" [ngClass]="{ 'row-gap-3': prodavnice.length !== 0 }">
-    <div class="col-12">
-        <input (input)="onChangeInput()" #inputSearch id="inputSearch" class="form-control border-secondary" placeholder="Pretraži prodavnice..." />
+<div *ngIf="!(loading$ | async) && !(error$ | async) && (selectedProdavnice$ | async) as prodavnice" class="row row-gap-2">
+    <div class="col-12" [hidden]="homePage">
+        <input (input)="onChangeInput()" #inputSearch id="inputSearch" class="form-control border-secondary" placeholder="Pretraži prodavnice..." maxlength="50"/>
     </div>
-    <div [hidden]="prodavnice.length === 0" class="col-12">
+
+    <div [hidden]="prodavnice.length === 0 || homePage" class="col-12">
         <div class="row row-gap-1">
             <div class="col-12 col-sm-6 col-md-5 col-xl-3 d-flex flex-row align-items-center column-gap-1 pe-md-0">
                 <label for="inputProdavnicaSort">Sortiraj:</label>
@@ -31,10 +33,16 @@
             </div>
         </div>
     </div>
-    <div class="p-0 col-12 col-sm-6 col-xl-4" *ngFor="let prodavnica of prodavnice">
-        <app-prodavnica-item [prodavnica]="prodavnica"></app-prodavnica-item>
+
+    <div class="col-12">
+        <div class="row row-gap-3 row-gap-lg-4">
+            <div class="p-0 col-12 col-sm-6" [ngClass]="{ 'col-lg-3': homePage, 'col-xl-4': !homePage }" *ngFor="let prodavnica of prodavnice">
+                <app-prodavnica-item [prodavnica]="prodavnica"></app-prodavnica-item>
+            </div>
+        </div>
     </div>
-    <div *ngIf="prodavnice.length > 0" class="col-12 d-flex">
+    
+    <div *ngIf="prodavnice.length > 0 && !homePage" class="col-12 d-flex">
         <ul class="pagination pagination-sm mx-auto my-0 border border-primary rounded-2">
             <li class="page-item border-0" [ngClass]="{'disabled': currentPage === 1}">
                 <a class="page-link border-top-0 border-bottom-0 border-start-0" (click)="selectPage(currentPage - 1)"><i class="bi bi-caret-left-fill"></i></a>
@@ -47,6 +55,7 @@
             </li>
         </ul>
     </div>
+    
     <p class="m-0" *ngIf="prodavnice.length === 0"><i>Nema unetih prodavnica</i></p>
 </div>
 <p class="m-0 text-danger" *ngIf="!(loading$ | async) && (error$ | async) as error"><i>{{error}}</i></p>

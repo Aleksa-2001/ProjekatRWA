@@ -1,6 +1,6 @@
-<div *ngIf="prikaziPoruku$ | async as prikaz" class="poruka position-fixed translate-end-x">
+<div class="poruka position-fixed translate-end-x" [ngClass]="{ 'show-toast': (prikaziPoruku$ | async) }">
     <div class="alert alert-primary alert-dismissible fade" role="alert" [ngClass]="{ 
-        'show': prikaz,
+        'show': (prikaziPoruku$ | async),
         'alert-success': (tipPoruke$ | async) === 'success',
         'alert-warning': (tipPoruke$ | async) === 'warning',
         'alert-danger': (tipPoruke$ | async) === 'danger',

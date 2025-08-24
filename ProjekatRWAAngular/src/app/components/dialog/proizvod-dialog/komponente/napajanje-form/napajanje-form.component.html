@@ -1,7 +1,7 @@
 <div [formGroup]="formGroup">
     <div class="mb-2">
         <label for="inputSnaga">Snaga (u W)*</label>
-        <input id="inputSnaga" class="form-control border-secondary" type="number" formControlName="snaga" min="0" placeholder="Snaga (u W)" />
+        <input id="inputSnaga" class="form-control border-secondary" type="number" formControlName="snaga" min="0" max="5000" placeholder="Snaga (u W)" />
         <small class="text-danger" *ngIf="formGroup.controls['snaga'].dirty && formGroup.hasError('required', 'snaga')">
             *Snaga je obavezno polje
         </small>

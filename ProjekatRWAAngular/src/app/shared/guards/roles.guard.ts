@@ -16,7 +16,7 @@ export class RolesGuard implements CanActivate {
             filter(user => !!user),
             take(1),
             map((user) => 
-                user.admin ? true : this.router.createUrlTree(['/ng'])
+                user.admin ? true : this.router.createUrlTree([''])
             )
         )
     }

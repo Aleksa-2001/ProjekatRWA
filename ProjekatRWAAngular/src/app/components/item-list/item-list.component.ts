@@ -65,8 +65,8 @@ export class ItemListComponent implements OnInit {
     ]).pipe(
       map(([brojProdavnica, brojProizvoda, cenaRange]) => {
         return {
-          brojProdavnica: this.prikaziProdavnice ? brojProdavnica : 0, 
-          brojProizvoda: this.prikaziProizvode ? brojProizvoda : 0, 
+          brojProdavnica: this.prikaziProdavnice || this.searchPage ? brojProdavnica : 0, 
+          brojProizvoda: this.prikaziProizvode || this.searchPage ? brojProizvoda : 0, 
           cenaRange
         }
       })

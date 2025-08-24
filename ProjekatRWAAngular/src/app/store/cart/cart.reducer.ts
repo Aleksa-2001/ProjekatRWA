@@ -4,6 +4,8 @@ import * as CartActions from "./cart.actions"
 
 export type Artikal = { proizvod: Proizvod, kolicina: number }
 
+export const maxKolicina = 50
+
 export interface CartState {
     artikli: Artikal[]
 }
@@ -22,7 +24,7 @@ export const cartReducer = createReducer(
             artikli: cart ? JSON.parse(cart).artikli : []
         }
     }),
-    on(CartActions.addToCart, (state, { proizvod }) => {
+    on(CartActions.addToCartSuccess, (state, { proizvod }) => {
         const existingItem = state.artikli.find(
             artikal => artikal.proizvod.id === proizvod.id
         )
@@ -32,7 +34,7 @@ export const cartReducer = createReducer(
                 ...state,
                 artikli: state.artikli.map(artikal =>
                     artikal.proizvod.id === proizvod.id
-                    ? { ...artikal, kolicina: artikal.kolicina < 50 ? artikal.kolicina + 1: artikal.kolicina }
+                    ? { ...artikal, kolicina: artikal.kolicina < maxKolicina ? artikal.kolicina + 1: artikal.kolicina }
                     : artikal
                 )
             }
@@ -51,7 +53,7 @@ export const cartReducer = createReducer(
                 ...state,
                 artikli: state.artikli.map(a =>
                     a === artikal
-                    ? { ...a, kolicina: a.kolicina + 1 }
+                    ? { ...a, kolicina: a.kolicina < maxKolicina ? a.kolicina + 1 : a.kolicina }
                     : a
                 )
             }
@@ -64,7 +66,7 @@ export const cartReducer = createReducer(
                 ...state,
                 artikli: state.artikli.map(a =>
                     a === artikal
-                    ? { ...a, kolicina: a.kolicina - 1 }
+                    ? { ...a, kolicina: a.kolicina > 1 ? a.kolicina - 1 : a.kolicina }
                     : a
                 )
             }

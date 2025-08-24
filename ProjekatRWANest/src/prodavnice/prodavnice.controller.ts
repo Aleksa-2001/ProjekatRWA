@@ -22,6 +22,11 @@ export class ProdavniceController {
         return this.service.getProdavniceBySearch(query)
     }
 
+    @Get('prodavniceRecommended')
+    public getProdavniceRecommended() {
+        return this.service.getProdavniceRecommended()
+    }
+
     @Get('prodavnica/:id')
     public getProdavnicaByID(@Param('id', ParseIntPipe) prodavnicaID: number) {
         return this.service.getProdavnicaByID(prodavnicaID)

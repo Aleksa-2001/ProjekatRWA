@@ -13,6 +13,10 @@ export const loadItemsBySearch = createAction(
     }>()
 )
 
+export const loadRecommendedItems = createAction(
+    "[Prodavnica] Ucitaj preporucene prodavnice"
+)
+
 export const loadItemsSuccess = createAction(
     "[Prodavnica] Ucitavanje liste je uspesno",
     props<{

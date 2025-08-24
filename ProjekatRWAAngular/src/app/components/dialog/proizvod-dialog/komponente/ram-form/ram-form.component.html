@@ -1,7 +1,7 @@
 <div [formGroup]="formGroup">
     <div class="mb-2">
         <label for="inputTipMemorije">Tip memorije*</label>
-        <input id="inputTipMemorije" class="form-control border-secondary" type="text" formControlName="tipMemorije" placeholder="Tip memorije" />
+        <input id="inputTipMemorije" class="form-control border-secondary" type="text" formControlName="tipMemorije" placeholder="Tip memorije" maxlength="10"/>
         <small class="text-danger" *ngIf="formGroup.controls['tipMemorije'].dirty && formGroup.hasError('required', 'tipMemorije')">
             *Tip memorije je obavezno polje
         </small>
@@ -9,7 +9,7 @@
 
     <div class="mb-2">
         <label for="inputBrojRAMModula">Broj RAM modula*</label>
-        <input id="inputBrojRAMModula" class="form-control border-secondary" type="number" formControlName="brojRAMModula" min="0" placeholder="Broj RAM modula" />
+        <input id="inputBrojRAMModula" class="form-control border-secondary" type="number" formControlName="brojRAMModula" min="0" max="16" placeholder="Broj RAM modula" />
         <small class="text-danger" *ngIf="formGroup.controls['brojRAMModula'].dirty && formGroup.hasError('required', 'brojRAMModula')">
             *Broj RAM modula je obavezno polje
         </small>
@@ -17,7 +17,7 @@
 
     <div class="mb-2">
         <label for="inputVelicina">Veličina (u GB)*</label>
-        <input id="inputVelicina" class="form-control border-secondary" type="number" formControlName="velicina" min="0" placeholder="Veličina (u GB)" />
+        <input id="inputVelicina" class="form-control border-secondary" type="number" formControlName="velicina" min="0" max="256" placeholder="Veličina (u GB)" />
         <small class="text-danger" *ngIf="formGroup.controls['velicina'].dirty && formGroup.hasError('required', 'velicina')">
             *Veličina je obavezno polje
         </small>
@@ -25,7 +25,7 @@
 
     <div>
         <label for="inputFrekvencija">Frekvencija (u MHz)*</label>
-        <input id="inputFrekvencija" class="form-control border-secondary" type="number" formControlName="frekvencija" min="0" placeholder="Frekvencija (u MHz)" />
+        <input id="inputFrekvencija" class="form-control border-secondary" type="number" formControlName="frekvencija" min="0" max="10000" placeholder="Frekvencija (u MHz)" />
         <small class="text-danger" *ngIf="formGroup.controls['frekvencija'].dirty && formGroup.hasError('required', 'frekvencija')">
             *Frekvencija je obavezno polje
         </small>

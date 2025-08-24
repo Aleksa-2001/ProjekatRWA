@@ -37,6 +37,18 @@ export class ProdavniceEffects {
         )
     })
 
+    loadRecommended$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(ProdavniceActions.loadRecommendedItems),
+            mergeMap(() => this.service.getProdavniceRecommended()
+                .pipe(
+                    map((prodavnice) => (ProdavniceActions.loadItemsSuccess({prodavnice}))),
+                    catchError((error) => of(ProdavniceActions.loadItemsFailure({ error })))
+                )
+            )
+        )
+    })
+
     loadProdavnica$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ProdavniceActions.loadSelectedItem),
