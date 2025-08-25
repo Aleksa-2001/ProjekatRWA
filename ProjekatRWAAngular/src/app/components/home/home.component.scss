@@ -3,7 +3,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  height: calc(50vh - 56px);
+  height: calc(75vh - 112px);
   min-height: 240px;
 }
 
@@ -13,5 +13,11 @@
 }
 
 .search {
-  max-width: 640px;
+  max-width: 720px;
+}
+
+@media screen and (max-width: 767px) {
+  .masthead {
+    height: calc(50vh - 56px);
+  }
 }

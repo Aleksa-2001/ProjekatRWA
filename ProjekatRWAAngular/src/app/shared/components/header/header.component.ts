@@ -9,6 +9,7 @@ import { User } from '../../../models/user';
 import { selectTotalItemCount } from '../../../store/cart/cart.selectors';
 import { SearchComponent } from "../../../components/search/search.component";
 import * as AuthActions from '../../../store/auth/auth.actions';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -24,6 +25,8 @@ import * as AuthActions from '../../../store/auth/auth.actions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit {
+
+  appName = environment.appName
 
   isLoggedIn$: Observable<boolean> = of()
   user$: Observable<User | null> = of()

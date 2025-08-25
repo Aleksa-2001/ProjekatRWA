@@ -1,3 +1,14 @@
 :host {
   display: block;
 }
+
+img {
+  aspect-ratio: 1.333;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 767px) {
+  img {
+    aspect-ratio: 1.778;
+  }  
+}
