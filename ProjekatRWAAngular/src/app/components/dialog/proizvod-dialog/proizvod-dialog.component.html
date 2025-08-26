@@ -38,7 +38,7 @@
 
                     <div class="mb-2">
                         <label for="inputCena">Cena (u RSD)*</label>
-                        <input id="inputCena" class="form-control border-secondary" type="number" formControlName="cena" min="0" placeholder="Cena (u RSD)" />
+                        <input id="inputCena" class="form-control border-secondary" type="number" formControlName="cena" min="0" max="999999999" placeholder="Cena (u RSD)" />
                         <small class="text-danger" *ngIf="form.controls['cena'].dirty && form.hasError('required', 'cena')">
                             *Cena je obavezno polje
                         </small>

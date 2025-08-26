@@ -4,14 +4,14 @@
             <h1 class="text-center">Prijavi se</h1>
             <div class="mb-2">
                 <label for="inputUsername">Korisničko ime*</label>
-                <input id="inputUsername" class="form-control border border-secondary" type="text" formControlName="username" placeholder="Korisničko ime" />
+                <input id="inputUsername" class="form-control border border-secondary" type="text" formControlName="username" placeholder="Korisničko ime" maxlength="50" />
                 <small class="text-danger" *ngIf="loginForm.controls['username'].dirty && loginForm.hasError('required', 'username')">
                     *Korisničko ime je obavezno polje
                 </small>
             </div>
             <div class="mb-2">
                 <label for="inputPassword">Lozinka*</label>
-                <input id="inputPassword" class="form-control border border-secondary" type="password" formControlName="password" placeholder="Lozinka" />
+                <input id="inputPassword" class="form-control border border-secondary" type="password" formControlName="password" placeholder="Lozinka" maxlength="100" />
                 <small class="text-danger" *ngIf="loginForm.controls['password'].dirty && loginForm.hasError('required', 'password')">
                     *Lozinka je obavezno polje
                 </small>

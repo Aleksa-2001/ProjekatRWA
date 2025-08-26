@@ -40,10 +40,18 @@
             <h5>Skladišna memorija</h5>
         </div>
         <div class="col col-7">
-            <h5 *ngFor="let item of racunar.skladiste; let i = index">
-                <span *ngIf="i !== 0">, </span><a [routerLink]="['/proizvod', item.id]" (click)="navigate(item.id)" class="text-primary">{{item.naziv}}</a>
-            </h5>
-            <button [routerLink]="['/select', racunar.id]" [queryParams]="{ type: 'Skladiste' }" class="btn btn-sm btn-primary d-block" [ngClass]="{ 'mt-2': racunar.skladiste.length > 0 }" *ngIf="isAdmin$ | async"><i class="bi bi-plus-lg me-2"></i>Dodaj skladišnu memoriju</button>
+            <div [ngClass]="{ 'd-flex flex-column row-gap-1': isAdmin$ | async }">
+                <div class="d-flex align-items-center" *ngFor="let item of racunar.skladiste; let i = index" [ngClass]="{ 'column-gap-1': isAdmin$ | async }">
+                    <h5><a [routerLink]="['/proizvod', item.id]" (click)="navigate(item.id)" class="text-primary">{{item.naziv}}</a></h5>
+                    <div *ngIf="isAdmin$ | async" class="flex-grow-1"></div>
+                    <button [routerLink]="['/select', racunar.id]" [queryParams]="{ type: 'Skladiste', editItemID: item.id }" class="btn btn-sm btn-warning" *ngIf="(isAdmin$ | async) && racunar.skladiste"><i class="bi bi-pencil"></i></button>
+                    <button (click)="deleteComponent('Skladiste', item)" class="btn btn-sm btn-danger" *ngIf="(isAdmin$ | async) && racunar.gpu"><i class="bi bi-trash"></i></button>
+                </div>
+            </div>
+            <div *ngIf="isAdmin$ | async" class="d-flex column-gap-1" [ngClass]="{ 'mt-1': racunar.skladiste.length > 0 }">
+                <button [routerLink]="['/select', racunar.id]" [queryParams]="{ type: 'Skladiste' }" class="btn btn-sm btn-primary"><i class="bi bi-plus-lg me-2"></i>Dodaj skladišnu memoriju</button>
+                <button (click)="deleteComponent('Skladiste')" class="btn btn-sm btn-danger" *ngIf="racunar.skladiste.length"><i class="bi bi-trash"></i></button>
+            </div>
         </div>
     </div>
     <div class="row">

@@ -41,6 +41,7 @@ export class ProizvodiComponent implements OnInit, OnChanges, OnDestroy {
   currentPage: number = 1
 
   @Input() selectMode: boolean = false
+  @Input() editItemID: number = -1
   @Input() selectedCenaRange: { min: number, max: number } = { min: 0, max: Infinity }
   @Input() selectedTypes: string[] = []
   @Input() selectedTipoviProizvoda: string[] = []

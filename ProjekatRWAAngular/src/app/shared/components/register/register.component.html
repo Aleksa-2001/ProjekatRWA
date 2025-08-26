@@ -43,7 +43,7 @@
             </div>
             <div class="mb-2">
                 <label for="inputPassword">Lozinka*</label>
-                <input id="inputPassword" class="form-control border border-secondary" type="password" formControlName="password" placeholder="Lozinka" (input)="onInput()" />
+                <input id="inputPassword" class="form-control border border-secondary" type="password" formControlName="password" placeholder="Lozinka" (input)="onInput()" maxlength="50"/>
                 <small class="text-danger" *ngIf="registerForm.controls['password'].dirty && registerForm.hasError('required', 'password')">
                     *Lozinka je obavezno polje
                 </small>
@@ -53,7 +53,7 @@
             </div>
             <div class="mb-2">
                 <label for="inputRepeatPassword">Ponovi lozinku*</label>
-                <input id="inputRepeatPassword" class="form-control border border-secondary" type="password" formControlName="repeatPassword" placeholder="Ponovi lozinku" (input)="onInput()" />
+                <input id="inputRepeatPassword" class="form-control border border-secondary" type="password" formControlName="repeatPassword" placeholder="Ponovi lozinku" (input)="onInput()" maxlength="50" />
                 <small class="text-danger" *ngIf="registerForm.controls['repeatPassword'].dirty && registerForm.hasError('required', 'repeatPassword')">
                     *Ponovi lozinku je obavezno polje
                 </small>

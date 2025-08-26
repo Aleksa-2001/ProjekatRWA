@@ -3,6 +3,7 @@
     <app-loading *ngIf="loading$ | async"></app-loading>
     <app-item-list *ngIf="!(loading$ | async) && !(error$ | async) && (brojProizvoda$ | async) as brojProizvoda"
         [selectMode]="true" 
+        [editItemID]="editItemID" 
         [sakrijIzborPrikaza]="true" 
         [prikaziProdavnice]="false"
     ></app-item-list>

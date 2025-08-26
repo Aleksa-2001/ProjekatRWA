@@ -1,22 +1,23 @@
 <div class="row border overflow-hidden" [routerLink]="['/proizvod', artikal.proizvod.id]">
     <div class="image col-3 col-md-2 col-xl-1 p-0 align-content-center">
-        <img *ngIf="artikal.proizvod.slika" class="w-100" [src]="'http://localhost:3000/' + artikal.proizvod.slika" alt={{artikal.proizvod.slika}} />
+        <img *ngIf="artikal.proizvod.slika" class="w-100" [src]="apiUrl + artikal.proizvod.slika" alt={{artikal.proizvod.slika}} />
         <img *ngIf="!artikal.proizvod.slika" class="w-100" src="images/image-default.png"/>
     </div>
     <div class="info-list col align-content-center px-3 py-2 border-start">
         <div class="d-flex flex-column flex-md-row align-items-md-center">
             <div>
                 <h5 class="m-0">{{artikal.proizvod.naziv}}</h5>
-                <h5 class="m-0"><a [routerLink]="['/prodavnica', artikal.proizvod.prodavnica.id]" class="text-primary">{{artikal.proizvod.prodavnica.naziv}} - {{artikal.proizvod.prodavnica.adresa}}</a></h5>
-                <!-- <app-stars [ocena]="prosek" [brojRecenzija]="brojRecenzija" [small]="true" [prikaziBrojeve]="true"></app-stars> -->
+                <h5 class="m-0 d-md-none">{{artikal.proizvod.cena}} RSD</h5>
+                <h6 class="m-0"><a [routerLink]="['/prodavnica', artikal.proizvod.prodavnica.id]" class="text-primary">{{artikal.proizvod.prodavnica.naziv}} - {{artikal.proizvod.prodavnica.adresa}}</a></h6>
+                <app-stars [ocena]="prosek" [brojRecenzija]="brojRecenzija" [small]="true" [prikaziBrojeve]="true"></app-stars>
             </div>
             <div class="flex-grow-1"></div>
             <div class="d-flex column-gap-2 flex-column flex-md-row align-items-md-center">
-                <h5 class="m-0">{{artikal.proizvod.cena}} RSD</h5>
+                <h5 class="m-0 d-none d-md-block text-end">{{artikal.proizvod.cena}} RSD</h5>
                 <div class="d-flex column-gap-2">
-                    <div class="d-inline-flex border border-primary rounded-2" (click)="$event.stopPropagation()">
+                    <div class="select-kolicina d-inline-flex border border-primary rounded-2" (click)="$event.stopPropagation()">
                         <button (click)="increaseAmount(artikal)" [disabled]="artikal.kolicina >= maxKolicina" class="btn btn-sm btn-primary rounded-0 border-top-0 border-bottom-0 border-start-0"><i class="bi bi-plus"></i></button>
-                        <p class="m-0 kolicina">{{artikal.kolicina}}</p>
+                        <p class="m-0 text-center kolicina">{{artikal.kolicina}}</p>
                         <button (click)="decreaseAmount(artikal)" [disabled]="artikal.kolicina <= 1" class="btn btn-sm btn-primary rounded-0 border-top-0 border-bottom-0 border-end-0"><i class="bi bi-dash"></i></button>
                     </div>
                     <button (click)="removeFromCart(artikal); $event.stopPropagation()" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>

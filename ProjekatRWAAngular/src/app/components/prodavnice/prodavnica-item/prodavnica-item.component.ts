@@ -3,6 +3,7 @@ import { Prodavnica } from '../../../models/prodavnica';
 import { RouterModule } from '@angular/router';
 import { CommonModule, NgIf } from '@angular/common';
 import { StarsComponent } from "../../stars/stars.component";
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-prodavnica-item',
@@ -12,6 +13,8 @@ import { StarsComponent } from "../../stars/stars.component";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProdavnicaItemComponent implements OnInit {
+
+  apiUrl = environment.apiUrl
 
   @Input() prodavnica!: Prodavnica
 

@@ -11,10 +11,10 @@ import { Racunar } from '../../../models/racunar';
 import { MaticnaPloca } from '../../../models/komponente/maticna-ploca';
 import { CPU } from '../../../models/komponente/cpu';
 import { RAM } from '../../../models/komponente/ram';
-import { Skladiste } from '../../../models/komponente/skladiste';
 import { GPU } from '../../../models/komponente/gpu';
 import { Napajanje } from '../../../models/komponente/napajanje';
 import { Kuciste } from '../../../models/komponente/kuciste';
+import { environment } from '../../../../environments/environment';
 import * as ProizvodiActions from '../../../store/proizvod/proizvod.actions'
 import * as CartActions from "../../../store/cart/cart.actions"
 
@@ -27,9 +27,12 @@ import * as CartActions from "../../../store/cart/cart.actions"
 })
 export class ProizvodItemComponent { 
 
+  apiUrl = environment.apiUrl
+
   @Input() proizvod!: Proizvod
   @Input() displayMode!: number
   @Input() selectMode!: boolean
+  @Input() editItemID: number = -1
 
   prosek: number = 0
   brojRecenzija: number = 0
@@ -66,7 +69,13 @@ export class ProizvodItemComponent {
           case 'Skladiste':
             data.skladiste = []
             racunar.skladiste.forEach(item => data.skladiste.push(item.id))
-            data.skladiste.push(this.proizvod.id)
+            if (this.editItemID !== -1) {
+              const index = data.skladiste.indexOf(this.editItemID)
+              if (!data.skladiste.includes(this.proizvod.id)) data.skladiste[index] = this.proizvod.id
+            }
+            else {
+              data.skladiste.push(this.proizvod.id)
+            }
             break
           case 'GPU':
             data.gpu = this.proizvod as GPU

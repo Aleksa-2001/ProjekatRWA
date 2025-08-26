@@ -6,11 +6,11 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { concatMap, filter, map, Observable, of, Subscription, take, tap } from 'rxjs';
 import { Proizvod } from '../../models/proizvod';
-import * as ProizvodiActions from '../../store/proizvod/proizvod.actions'
 import { selectBrojProizvoda, selectError, selectLoading, selectSelectedProizvod } from '../../store/proizvod/proizvod.selectors';
 import { LoadingComponent } from "../../shared/components/loading/loading.component";
 import { ItemListComponent } from "../item-list/item-list.component";
 import { environment } from '../../../environments/environment';
+import * as ProizvodiActions from '../../store/proizvod/proizvod.actions'
 
 @Component({
   selector: 'app-select-item',
@@ -31,6 +31,7 @@ export class SelectItemComponent implements OnInit, OnDestroy {
 
   proizvodID: number = -1
   type: string = ''
+  editItemID: number = -1
   tipKomponenteTitle: string = ''
   routeSub!: Subscription
 
@@ -47,6 +48,7 @@ export class SelectItemComponent implements OnInit, OnDestroy {
 
     this.proizvod$ = this.store.select(selectSelectedProizvod)
     this.type = this.route.snapshot.queryParamMap.get('type') ?? ''
+    this.editItemID = this.route.snapshot.queryParamMap.get('editItemID') ? parseInt(this.route.snapshot.queryParamMap.get('editItemID')!) : -1
 
     switch (this.type) {
       case "CPU":
@@ -72,7 +74,7 @@ export class SelectItemComponent implements OnInit, OnDestroy {
         break
       default:
         this.loading$ = of(false)
-        this.error$ = of("Greska: Tip komponente nije ispravan")
+        this.error$ = of("Greška: Tip komponente nije ispravan")
         this.title.setTitle(`Izaberi - ProjekatRWA`)
         return
     }
@@ -83,12 +85,12 @@ export class SelectItemComponent implements OnInit, OnDestroy {
       tap(proizvod => {
         if (proizvod.type === "Racunar") {
           this.store.dispatch(ProizvodiActions.loadItems({ prodavnicaID: proizvod.prodavnica.id, tip: this.type }))
-          this.title.setTitle(`Izaberi ${this.tipKomponenteTitle} - ${environment.apiUrl}`)
+          this.title.setTitle(`Izaberi ${this.tipKomponenteTitle} - ${environment.appName}`)
         }
         else {
           this.loading$ = of(false)
-          this.error$ = of("Greska: Proizvod nije racunar")
-          this.title.setTitle(`Izaberi - ${environment.apiUrl}`)
+          this.error$ = of("Greška: Proizvod nije računar")
+          this.title.setTitle(`Izaberi - ${environment.appName}`)
         }
       })
     )

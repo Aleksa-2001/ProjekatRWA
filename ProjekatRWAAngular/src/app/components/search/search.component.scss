@@ -3,11 +3,12 @@
 }
 
 .search-width {
-  width: 10rem;
+  width: 100%;
+  max-width: 10rem;
 }
 
 @media screen and (max-width: 767px) {
   .search-width {
-    width: 100%;
+    max-width: initial;
   }
 }

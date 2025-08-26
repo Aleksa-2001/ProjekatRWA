@@ -39,6 +39,7 @@ export class ItemListComponent implements OnInit {
   @Input() prodavnicePage: boolean = false
 
   @Input() selectMode: boolean = false
+  @Input() editItemID: number = -1
   @Input() selectedRacunarID: number = -1
 
   @Input() sakrijIzborPrikaza: boolean = false

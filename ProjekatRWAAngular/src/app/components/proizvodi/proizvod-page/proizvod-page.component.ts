@@ -118,7 +118,11 @@ export class ProizvodPageComponent implements OnInit, OnDestroy {
   }
 
   addToCart(proizvod: Proizvod) {
-    this.store.dispatch(CartActions.addToCart({ proizvod }))
+    this.store.dispatch(CartActions.addToCart({ proizvod: {
+      ...proizvod,
+      brojRecenzija: this.brojRecenzija,
+      prosecnaOcena: this.prosek
+    } as Proizvod }))
   }
   
 }

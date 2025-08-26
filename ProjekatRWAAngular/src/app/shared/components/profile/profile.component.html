@@ -60,21 +60,21 @@
                     <div class="row row-gap-2">
                         <div class="col-12 col-sm-6">
                             <label for="inputFirstName">Ime*</label>
-                            <input id="inputFirstName" class="form-control border border-secondary" type="text" formControlName="firstName" placeholder="Ime" (input)="onDataInput()" />
+                            <input id="inputFirstName" class="form-control border border-secondary" type="text" formControlName="firstName" maxlength="20" placeholder="Ime" (input)="onDataInput()" />
                             <small class="text-danger" *ngIf="editProfileForm.controls['firstName'].dirty && editProfileForm.hasError('required', 'firstName')">
                                 *Ime je obavezno polje
                             </small>
                         </div>
                         <div class="col-12 col-sm-6">
                             <label for="inputLastName">Prezime*</label>
-                            <input id="inputLastName" class="form-control border border-secondary" type="text" formControlName="lastName" placeholder="Prezime" (input)="onDataInput()" />
+                            <input id="inputLastName" class="form-control border border-secondary" type="text" formControlName="lastName" maxlength="20" placeholder="Prezime" (input)="onDataInput()" />
                             <small class="text-danger" *ngIf="editProfileForm.controls['lastName'].dirty && editProfileForm.hasError('required', 'lastName')">
                                 *Prezime je obavezno polje
                             </small>
                         </div>
                         <div class="col-12">
                             <label for="inputEmail">E-mail adresa*</label>
-                            <input id="inputEmail" class="form-control border border-secondary" type="text" formControlName="email" placeholder="text@example.com" (input)="onDataInput()" />
+                            <input id="inputEmail" class="form-control border border-secondary" type="text" formControlName="email" maxlength="50" placeholder="text@example.com" (input)="onDataInput()" />
                             <small class="text-danger" *ngIf="editProfileForm.controls['email'].dirty && editProfileForm.hasError('required', 'email')">
                                 *E-mail je obavezno polje
                             </small>
@@ -84,7 +84,7 @@
                         </div>
                         <div class="col-12">
                             <label for="inputUsername">Korisničko ime*</label>
-                            <input id="inputUsername" class="form-control border border-secondary" type="text" formControlName="username" placeholder="Korisničko ime" (input)="onDataInput()" />
+                            <input id="inputUsername" class="form-control border border-secondary" type="text" formControlName="username" maxlength="20" placeholder="Korisničko ime" (input)="onDataInput()" />
                             <small class="text-danger" *ngIf="editProfileForm.controls['username'].dirty && editProfileForm.hasError('required', 'username')">
                                 *Korisničko ime je obavezno polje
                             </small>
@@ -104,7 +104,7 @@
                     <div class="row row-gap-2">
                         <div class="col-12">
                             <label for="inputPassword">Trenutna lozinka*</label>
-                            <input id="inputPassword" class="form-control border border-secondary" type="password" formControlName="password" placeholder="Trenutna lozinka" (input)="onPasswordInput()" />
+                            <input id="inputPassword" class="form-control border border-secondary" type="password" formControlName="password" placeholder="Trenutna lozinka" (input)="onPasswordInput()" maxlength="50" />
                             <small class="text-danger" *ngIf="changePasswordForm.controls['password'].dirty && changePasswordForm.hasError('required', 'password')">
                                 *Trenutna lozinka je obavezno polje
                             </small>
@@ -114,7 +114,7 @@
                         </div>
                         <div class="col-12">
                             <label for="inputNewPassword">Nova lozinka*</label>
-                            <input id="inputNewPassword" class="form-control border border-secondary" type="password" formControlName="newPassword" placeholder="Nova lozinka" (input)="onPasswordInput()" />
+                            <input id="inputNewPassword" class="form-control border border-secondary" type="password" formControlName="newPassword" placeholder="Nova lozinka" (input)="onPasswordInput()" maxlength="50" />
                             <small class="text-danger" *ngIf="changePasswordForm.controls['newPassword'].dirty && changePasswordForm.hasError('required', 'newPassword')">
                                 *Nova lozinka je obavezno polje
                             </small>
@@ -127,7 +127,7 @@
                         </div>
                         <div class="col-12">
                             <label for="inputRepeatPassword">Ponovi lozinku*</label>
-                            <input id="inputRepeatPassword" class="form-control border border-secondary" type="password" formControlName="repeatPassword" placeholder="Ponovi lozinku" (input)="onPasswordInput()" />
+                            <input id="inputRepeatPassword" class="form-control border border-secondary" type="password" formControlName="repeatPassword" placeholder="Ponovi lozinku" (input)="onPasswordInput()" maxlength="50" />
                             <small class="text-danger" *ngIf="changePasswordForm.controls['repeatPassword'].dirty && changePasswordForm.hasError('required', 'repeatPassword')">
                                 *Ponovi lozinku je obavezno polje
                             </small>

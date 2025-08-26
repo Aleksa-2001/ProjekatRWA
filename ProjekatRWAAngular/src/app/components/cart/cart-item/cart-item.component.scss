@@ -27,8 +27,12 @@ img {
 }
 
 .kolicina {
-    padding: 0.25rem 0.5rem;
-    cursor: default;
+    width: 2rem;
+    padding: 0.25rem 0;
+}
+
+.select-kolicina {
+    cursor: initial;
 }
 
 @media screen and (max-width: 480px) {

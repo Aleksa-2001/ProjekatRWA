@@ -46,7 +46,7 @@
     <div class="col-12">
         <div class="row row-gap-2" [ngClass]="{ 'row-gap-3': displayMode === 2 && proizvodi.length !== 0 }">
             <div class="p-0 col-12" [ngClass]="{ 'col-sm-6 col-lg-4 col-xl-3': displayMode === 2 }" *ngFor="let proizvod of proizvodi">
-                <app-proizvod-item [proizvod]="proizvod" [displayMode]="displayMode" [selectMode]="selectMode"></app-proizvod-item>
+                <app-proizvod-item [proizvod]="proizvod" [displayMode]="displayMode" [editItemID]="editItemID" [selectMode]="selectMode"></app-proizvod-item>
             </div>
         </div>
     </div>

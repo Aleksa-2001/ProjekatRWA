@@ -4,11 +4,12 @@ import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app-state';
-import * as ProizvodiActions from '../../../../store/proizvod/proizvod.actions'
-import * as RecenzijeActions from '../../../../store/recenzija/recenzija.actions'
 import { filter, Observable, of, take, tap } from 'rxjs';
 import { isAdmin } from '../../../../store/auth/auth.selectors';
 import { selectSelectedProizvod } from '../../../../store/proizvod/proizvod.selectors';
+import { Skladiste } from '../../../../models/komponente/skladiste';
+import * as ProizvodiActions from '../../../../store/proizvod/proizvod.actions'
+import * as RecenzijeActions from '../../../../store/recenzija/recenzija.actions'
 
 @Component({
   selector: 'app-racunar-page',
@@ -40,7 +41,7 @@ export class RacunarPageComponent implements OnInit {
     this.store.dispatch(RecenzijeActions.loadItemsProizvod({ proizvodID: proizvodID }))
   }
 
-  deleteComponent(type: string) {
+  deleteComponent(type: string, item?: Skladiste) {
     this.store.select(selectSelectedProizvod).pipe(
       filter(proizvod => !!proizvod),
       take(1),
@@ -59,9 +60,12 @@ export class RacunarPageComponent implements OnInit {
             data.ram = null
             break
           case 'Skladiste':
-            //data.skladiste = []
-            //racunar.skladiste.forEach(item => data.skladiste.push(item.id))
-            //data.skladiste.push(this.proizvod.id)
+            data.skladiste = []
+            if (item) {
+              racunar.skladiste.forEach(item => data.skladiste.push(item.id))
+              const index = data.skladiste.indexOf(item.id)
+              data.skladiste.splice(index, 1)
+            }
             break
           case 'GPU':
             data.gpu = null

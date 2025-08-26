@@ -1,6 +1,6 @@
 <div *ngIf="!selectMode" class="row border overflow-hidden" [ngClass]="{ 'row-gap-2': displayMode === 2 }" [routerLink]="['/proizvod', proizvod.id]">
     <div class="p-0" [ngClass]="{ 'image col-3 col-md-2 col-xl-1 align-content-center': displayMode === 1, 'col-12': displayMode === 2 }">
-        <img *ngIf="proizvod.slika" class="w-100" [ngClass]="{ 'border-bottom': displayMode === 2 }" [src]="'http://localhost:3000/' + proizvod.slika" alt={{proizvod.slika}} />
+        <img *ngIf="proizvod.slika" class="w-100" [ngClass]="{ 'border-bottom': displayMode === 2 }" [src]="apiUrl + proizvod.slika" alt={{proizvod.slika}} />
         <img *ngIf="!proizvod.slika" class="w-100" [ngClass]="{ 'border-bottom': displayMode === 2 }" src="images/image-default.png"/>
     </div>
     <div class="px-2" [ngClass]="{ 'info-list col align-content-center px-md-3 py-2 border-start': displayMode === 1, 'info-grid col-12 pb-2': displayMode === 2 }">
@@ -21,7 +21,7 @@
 
 <div *ngIf="selectMode" class="row border overflow-hidden" [ngClass]="{ 'row-gap-2': displayMode === 2 }" (click)="updateRacunar(proizvod.type)">
     <div class="p-0" [ngClass]="{ 'image col-3 col-md-2 col-xl-1 align-content-center': displayMode === 1, 'col-12': displayMode === 2 }">
-        <img *ngIf="proizvod.slika" class="w-100" [ngClass]="{ 'border-bottom': displayMode === 2 }" [src]="'http://localhost:3000/' + proizvod.slika" alt={{proizvod.slika}} />
+        <img *ngIf="proizvod.slika" class="w-100" [ngClass]="{ 'border-bottom': displayMode === 2 }" [src]="apiUrl + proizvod.slika" alt={{proizvod.slika}} />
         <img *ngIf="!proizvod.slika" class="w-100" [ngClass]="{ 'border-bottom': displayMode === 2 }" src="images/image-default.png"/>
     </div>
     <div class="px-2" [ngClass]="{ 'info-list col align-content-center px-md-3 py-2 border-start': displayMode === 1, 'info-grid col-12 pb-2': displayMode === 2 }">

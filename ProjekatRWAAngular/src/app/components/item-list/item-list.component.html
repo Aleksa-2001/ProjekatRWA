@@ -28,6 +28,7 @@
             <hr *ngIf="data.brojProdavnica !== 0 && data.brojProizvoda !== 0 && prikaziProdavnice && prikaziProizvode">
             <app-proizvodi *ngIf="prikaziProizvode" [hidden]="data.brojProizvoda === 0 && searchPage"
                 [selectMode]="selectMode" 
+                [editItemID]="editItemID" 
                 [selectedCenaRange]="selectedCenaRange" 
                 [selectedTipoviProizvoda]="selectedTipoviProizvoda" 
                 [selectedTypes]="selectedTypes" 
