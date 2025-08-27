@@ -1,5 +1,5 @@
 export const environment = {
-    production: true,
+    appName: "ProjekatRWA",
     apiUrl: "http://localhost:3000/",
-    appName: "ProjekatRWA"
+    production: true
 }

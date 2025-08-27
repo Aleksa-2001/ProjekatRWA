@@ -19,8 +19,18 @@
     left: calc(100% - 0.125rem);
 }
 
+.navigacija {
+    min-width: calc(20rem - 10px);
+}
+
 .overflow {
     overflow: visible;
+}
+
+@media screen and (max-width: 991px) {
+    .navigacija {
+        min-width: initial;
+    }
 }
 
 @media screen and (max-width: 767px) {

@@ -19,13 +19,13 @@
                 </div>
             </div>
             <div class="mb-2">
-                <label for="inputEmail">E-mail adresa*</label>
-                <input id="inputEmail" class="form-control border border-secondary" type="text" formControlName="email" placeholder="E-mail adresa" (input)="onInput()" maxlength="50"/>
+                <label for="inputEmail">Email adresa*</label>
+                <input id="inputEmail" class="form-control border border-secondary" type="text" formControlName="email" placeholder="Email adresa" (input)="onInput()" maxlength="50"/>
                 <small class="text-danger" *ngIf="registerForm.controls['email'].dirty && registerForm.hasError('required', 'email')">
-                    *E-mail je obavezno polje
+                    *Email adresa je obavezno polje
                 </small>
                 <small class="text-danger" *ngIf="registerForm.controls['email'].dirty && registerForm.hasError('email', 'email')">
-                    *Format e-maila nije ispravan
+                    *Format emaila nije ispravan
                 </small>
             </div>
             <div class="mb-2">

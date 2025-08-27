@@ -73,13 +73,13 @@
                             </small>
                         </div>
                         <div class="col-12">
-                            <label for="inputEmail">E-mail adresa*</label>
-                            <input id="inputEmail" class="form-control border border-secondary" type="text" formControlName="email" maxlength="50" placeholder="text@example.com" (input)="onDataInput()" />
+                            <label for="inputEmail">Email adresa*</label>
+                            <input id="inputEmail" class="form-control border border-secondary" type="text" formControlName="email" maxlength="50" placeholder="Email adresa" (input)="onDataInput()" />
                             <small class="text-danger" *ngIf="editProfileForm.controls['email'].dirty && editProfileForm.hasError('required', 'email')">
-                                *E-mail je obavezno polje
+                                *Email je obavezno polje
                             </small>
                             <small class="text-danger" *ngIf="editProfileForm.controls['email'].dirty && editProfileForm.hasError('email', 'email')">
-                                *Format e-maila nije ispravan
+                                *Format emaila nije ispravan
                             </small>
                         </div>
                         <div class="col-12">

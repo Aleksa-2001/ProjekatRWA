@@ -102,10 +102,11 @@ export class AuthEffects {
     logout$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(AuthActions.logout, AuthActions.tokenIsInvalid),
-            map(() => {
+            map(({ type }) => {
                 this.authService.logout()
                 this.router.navigate(['/'])
-                return showToast({ poruka: "Više niste prijavljeni!", tipPoruke: 'warning' })
+                if (type.includes("Token")) return showToast({ poruka: "Vaša sesija je istekla! Molimo Vas da se ponovo prijavite", tipPoruke: 'warning' })
+                else return showToast({ poruka: "Više niste prijavljeni!", tipPoruke: 'warning' })
             })
         )
     })
@@ -156,7 +157,7 @@ export class AuthEffects {
     changePasswordSuccess$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(AuthActions.changePasswordSuccess),
-            map(() => showToast({ poruka: 'Lozinka je uspešno promenjena. Molimo Vas da se ponovo prijavite', tipPoruke: 'warning' }))
+            map(() => showToast({ poruka: 'Lozinka je uspešno promenjena! Molimo Vas da se ponovo prijavite', tipPoruke: 'warning' }))
         )
     })
 

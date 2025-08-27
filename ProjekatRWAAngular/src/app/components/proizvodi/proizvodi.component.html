@@ -8,7 +8,7 @@
     </div>
 </div>
 <app-loading *ngIf="loading$ | async"></app-loading>
-<div *ngIf="!(loading$ | async) && !(error$ | async) && (selectedProizvodi$ | async) as proizvodi" class="row row-gap-2">
+<div *ngIf="!(loading$ | async) && (selectedProizvodi$ | async) as proizvodi" class="row row-gap-2">
     <div class="col-12">
         <input (input)="onChangeInput()" #inputSearch id="inputSearch" class="form-control border-secondary" placeholder="Pretraži proizvode..." maxlength="100"/>
     </div>
@@ -66,4 +66,4 @@
     </div>
     <p class="m-0" *ngIf="proizvodi.length === 0"><i>Nema unetih proizvoda</i></p>
 </div>
-<p class="m-0 text-danger" *ngIf="!(loading$ | async) && (error$ | async) as error"><i>{{error}}</i></p>
+<p class="m-0 text-danger" *ngIf="!(loading$ | async) && !(selectedProizvodi$ | async) && (error$ | async) as error"><i>{{error}}</i></p>

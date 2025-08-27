@@ -96,8 +96,6 @@ export class ProdavniceComponent implements OnInit, OnChanges {
 
           const start = (this.currentPage - 1) * this.itemsPerPage
           const end = start + this.itemsPerPage
-
-          console.log(filteredProdavnice)
           
           return filteredProdavnice.slice(start, end)
         }

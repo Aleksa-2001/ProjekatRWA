@@ -2,7 +2,7 @@
     <app-loading></app-loading>
 </div>
 
-<div *ngIf="!(loading$ | async) && !(error$ | async) && (prodavnica$ | async) as prodavnica">
+<div *ngIf="!(loading$ | async) && (prodavnica$ | async) as prodavnica">
     <header class="masthead" [ngStyle]="backgroundStyle">
         <div class="container h-100">
             <div class="row h-100 align-items-center">
@@ -63,4 +63,4 @@
     <app-confirm-dialog *ngIf="isAdmin$ | async" [modalID]="'confirmModalDialogProizvod'" [delete]="'Proizvodi'"></app-confirm-dialog>
 </div>
 
-<app-not-found *ngIf="!(loading$ | async) && (error$ | async)"></app-not-found>
+<app-not-found *ngIf="!(loading$ | async) && (error$ | async) && !(prodavnica$ | async)"></app-not-found>

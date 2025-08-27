@@ -1,7 +1,7 @@
 <h2 class="mb-2" [hidden]="prodavnicePage || homePage">Prodavnice</h2>
 <h2 class="mb-2" [hidden]="!homePage">Preporučene prodavnice</h2>
 <app-loading *ngIf="loading$ | async"></app-loading>
-<div *ngIf="!(loading$ | async) && !(error$ | async) && (selectedProdavnice$ | async) as prodavnice" class="row row-gap-2">
+<div *ngIf="!(loading$ | async) && (selectedProdavnice$ | async) as prodavnice" class="row row-gap-2">
     <div class="col-12" [hidden]="homePage">
         <input (input)="onChangeInput()" #inputSearch id="inputSearch" class="form-control border-secondary" placeholder="Pretraži prodavnice..." maxlength="50"/>
     </div>
@@ -58,4 +58,4 @@
     
     <p class="m-0" *ngIf="prodavnice.length === 0"><i>Nema unetih prodavnica</i></p>
 </div>
-<p class="m-0 text-danger" *ngIf="!(loading$ | async) && (error$ | async) as error"><i>{{error}}</i></p>
+<p class="m-0 text-danger" *ngIf="!(loading$ | async) && !(selectedProdavnice$ | async) && (error$ | async) as error"><i>{{error}}</i></p>

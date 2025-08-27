@@ -2,7 +2,7 @@
     <app-loading></app-loading>
 </div>
 
-<div *ngIf="!(loading$ | async) && !(error$ | async) && (proizvod$ | async) as proizvod" class="container my-3">
+<div *ngIf="!(loading$ | async) && (proizvod$ | async) as proizvod" class="container my-3">
     <h1>Proizvod</h1>
     <div *ngIf="isAdmin$ | async" class="mb-3">
         <div class="d-flex flex-column flex-sm-row gap-2">
@@ -94,4 +94,4 @@
     <app-confirm-dialog *ngIf="isAdmin$ | async" [modalID]="'confirmModalDialog'" [delete]="'Proizvod'"></app-confirm-dialog>
 </div>
 
-<app-not-found *ngIf="!(loading$ | async) && (error$ | async)"></app-not-found>
+<app-not-found *ngIf="!(loading$ | async) && (error$ | async) && !(proizvod$ | async)"></app-not-found>
