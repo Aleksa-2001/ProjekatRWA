@@ -9,10 +9,8 @@ import { typeOrmConfig } from 'typeorm.config';
 import { ProdavniceModule } from './prodavnice/prodavnice.module';
 import { ProizvodiModule } from './proizvodi/proizvodi.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
-import { RecenzijeController } from './recenzije/recenzije.controller';
-import { RecenzijeService } from './recenzije/recenzije.service';
 import { RecenzijeModule } from './recenzije/recenzije.module';
+import { join } from 'path';
 
 @Module({
   imports: [

@@ -16,8 +16,8 @@ export class MaticnaPloca extends RacunarskaKomponenta {
         public tipMaticnePloce: string, 
         public socket: string, 
         public brojRAMSlotova: number, 
-        public brojUSB20Portova: number | null,
-        public brojUSB30Portova: number | null,
+        public brojUSB20Portova: number | null, 
+        public brojUSB30Portova: number | null, 
         public brojUSB31Portova: number | null
     ) {
         super(id, type, tipProizvoda, proizvodjac, naziv, cena, opis, slika, prodavnica)

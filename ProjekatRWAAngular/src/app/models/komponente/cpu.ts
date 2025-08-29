@@ -13,13 +13,13 @@ export class CPU extends RacunarskaKomponenta {
         opis: string, 
         slika: string, 
         prodavnica: Prodavnica, 
-        public socket: number, 
+        public socket: string, 
         public frekvencija: number, 
         public brojJezgara: number, 
         public brojNiti: number
     ) {
         super(id, type, tipProizvoda, proizvodjac, naziv, cena, opis, slika, prodavnica)
-        socket = 0
+        socket = ''
         frekvencija = 0
         brojJezgara = 0
         brojNiti = 0

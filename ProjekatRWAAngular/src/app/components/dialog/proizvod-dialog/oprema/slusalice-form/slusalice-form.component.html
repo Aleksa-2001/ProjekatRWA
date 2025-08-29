@@ -1,0 +1,42 @@
+<div [formGroup]="formGroup">
+    <div class="mb-2">
+        <label for="inputTipSlusalica">Tip slušalica*</label>
+        <input id="inputTipSlusalica" class="form-control border-secondary" type="text" formControlName="tipSlusalica" placeholder="Tip slušalica" maxlength="20"/>
+        <small class="text-danger" *ngIf="formGroup.controls['tipSlusalica'].dirty && formGroup.hasError('required', 'tipSlusalica')">
+            *Tip slušalica je obavezno polje
+        </small>
+    </div>
+
+    <div class="mb-2">
+        <label for="inputPovezivanje">Povezivanje*</label>
+        <input id="inputPovezivanje" class="form-control border-secondary" type="text" formControlName="povezivanje" placeholder="Povezivanje" maxlength="20"/>
+        <small class="text-danger" *ngIf="formGroup.controls['povezivanje'].dirty && formGroup.hasError('required', 'povezivanje')">
+            *Povezivanje je obavezno polje
+        </small>
+    </div>
+
+    <div class="mb-2 row row-gap-2">
+        <div class="col-12 col-sm-6">
+            <label for="inputFrekvencijaMin">Frekvencija (min)*</label>
+            <input id="inputFrekvencijaMin" class="form-control border-secondary" type="number" formControlName="frekvencijaMin" min="0" max="2000" placeholder="Donji opseg" />
+            <small class="text-danger" *ngIf="formGroup.controls['frekvencijaMin'].dirty && formGroup.hasError('required', 'frekvencijaMin')">
+                *Donji opseg je obavezno polje
+            </small>
+        </div>
+        <div class="col-12 col-sm-6">
+            <label for="inputFrekvencijaMax">Frekvencija (max)*</label>
+            <input id="inputFrekvencijaMax" class="form-control border-secondary" type="number" formControlName="frekvencijaMax" min="10000" max="40000" placeholder="Gornji opseg" />
+            <small class="text-danger" *ngIf="formGroup.controls['frekvencijaMax'].dirty && formGroup.hasError('required', 'frekvencijaMax')">
+                *Gornji opseg je obavezno polje
+            </small>
+        </div>
+    </div>
+
+    <div>
+        <label for="inputMikrofon">Mikrofon</label>
+        <div>
+            <input id="inputMikrofon" class="btn-check" type="checkbox" formControlName="mikrofon" placeholder="Mikrofon" />
+            <label for="inputMikrofon" class="btn btn-outline-primary">{{formGroup.controls['mikrofon'].value ? 'DA' : 'NE'}}</label>
+        </div>
+    </div>
+</div>

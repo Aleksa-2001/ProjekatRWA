@@ -67,6 +67,7 @@
                     <h5 [ngSwitch]="proizvod.tipProizvoda">
                         <span *ngSwitchCase="'Racunar'">Računar</span>
                         <span *ngSwitchCase="'RacunarskaKomponenta'">Računarska komponenta</span>
+                        <span *ngSwitchCase="'RacunarskaOprema'">Računarska oprema</span>
                         <span *ngSwitchDefault>Tip proizvoda nije pronađen!</span>
                     </h5>
                 </div>
@@ -82,6 +83,7 @@
             <div [ngSwitch]="proizvod.tipProizvoda">
                 <app-racunar-page *ngSwitchCase="'Racunar'" [racunar]="getRacunar(proizvod)"></app-racunar-page>
                 <app-komponenta-page *ngSwitchCase="'RacunarskaKomponenta'" [komponenta]="proizvod"></app-komponenta-page>
+                <app-oprema-page *ngSwitchCase="'RacunarskaOprema'" [oprema]="proizvod"></app-oprema-page>
             </div>
         </div>
     </div>

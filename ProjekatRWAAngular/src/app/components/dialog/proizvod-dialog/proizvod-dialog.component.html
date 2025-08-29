@@ -1,5 +1,5 @@
 <div class="modal fade" [id]="modalID" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="proizvodModalDialogLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" [ngClass]="{ 'modal-lg': tipProizvoda === 'RacunarskaKomponenta' }">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" [ngClass]="{ 'modal-lg': tipProizvoda === 'RacunarskaKomponenta' || tipProizvoda === 'RacunarskaOprema' }">
         <form [formGroup]="form" (ngSubmit)="onSubmit()" class="modal-content border-secondary border-3 rounded-3">
             <div class="modal-header">
                 <h5 class="modal-title" id="proizvodModalDialogLabel">{{title}}</h5>
@@ -7,13 +7,14 @@
             </div>
                 
             <div class="modal-body row">
-                <div class="col-12" [ngClass]="{ 'col-md-6': tipProizvoda === 'RacunarskaKomponenta' }">
+                <div class="col-12" [ngClass]="{ 'col-md-6': tipProizvoda === 'RacunarskaKomponenta' || tipProizvoda === 'RacunarskaOprema' }">
                     <div class="mb-2">
                         <label for="inputTip">Tip proizvoda*</label>
                         <select (change)="onChangeTip($event)" id="inputTip" class="form-select border-secondary" formControlName="tipProizvoda" aria-label="Izaberite tip proizvoda...">
                             <option value="" selected>Izaberite tip proizvoda...</option>
                             <option value="Racunar">Računar</option>
                             <option value="RacunarskaKomponenta">Računarska komponenta</option>
+                            <option value="RacunarskaOprema">Računarska oprema</option>
                         </select>
                         <small class="text-danger" *ngIf="form.controls['tipProizvoda'].dirty && form.hasError('required', 'tipProizvoda')">
                             *Tip je obavezno polje
@@ -49,7 +50,7 @@
                         <textarea id="inputOpis" class="form-control border-secondary" rows="3" maxlength="1000" formControlName="opis" placeholder="Opis"></textarea>
                     </div>
 
-                    <div class="mb-md-0 mb-0" [ngClass]="{ 'mb-2': tipProizvoda === 'RacunarskaKomponenta' }">
+                    <div class="mb-md-0 mb-0" [ngClass]="{ 'mb-2': tipProizvoda === 'RacunarskaKomponenta' || tipProizvoda === 'RacunarskaOprema' }">
                         <label for="inputSlika">Slika</label>
                         <input (change)="onFileSelected($event)" id="inputSlika" class="form-control border-secondary" type="file" accept="image/png, image/jpeg" formControlName="slika" #fileUpload />
                         <div class="file-upload d-flex align-items-center overflow-hidden border border-secondary rounded-2 position-relative">
@@ -60,21 +61,28 @@
                     </div>
                 </div>
 
-                <div *ngIf="tipProizvoda === 'RacunarskaKomponenta'" class="col-12 col-md-6" formGroupName="formInputData">
+                <div *ngIf="tipProizvoda === 'RacunarskaKomponenta' || tipProizvoda === 'RacunarskaOprema'" class="col-12 col-md-6" formGroupName="formInputData">
                     <div class="mb-0" [ngClass]="{ 'mb-2': type !== '' }">
-                        <label for="inputType">Tip računarske komponente*</label>
+                        <label for="inputType">Tip računarske {{tipProizvoda === 'RacunarskaKomponenta' ? 'komponente' : 'opreme'}}*</label>
                         <select (change)="onChangeTipKomponente($event)" id="inputType" class="form-select border-secondary" formControlName="type" aria-label="Izaberite tip računarske komponente...">
-                            <option value="" selected>Izaberite tip računarske komponente...</option>
-                            <option value="CPU">Procesor</option>
-                            <option value="GPU">Grafička karta</option>
-                            <option value="RAM">RAM memorija</option>
-                            <option value="MaticnaPloca">Matična ploča</option>
-                            <option value="Skladiste">Skladišna memorija</option>
-                            <option value="Napajanje">Napajanje</option>
-                            <option value="Kuciste">Kućište</option>
+                            <option value="" selected>Izaberite tip računarske {{tipProizvoda === 'RacunarskaKomponenta' ? 'komponente' : 'opreme'}}...</option>
+                            <option *ngIf="tipProizvoda === 'RacunarskaKomponenta'" value="CPU">Procesor</option>
+                            <option *ngIf="tipProizvoda === 'RacunarskaKomponenta'" value="GPU">Grafička karta</option>
+                            <option *ngIf="tipProizvoda === 'RacunarskaKomponenta'" value="RAM">RAM memorija</option>
+                            <option *ngIf="tipProizvoda === 'RacunarskaKomponenta'" value="MaticnaPloca">Matična ploča</option>
+                            <option *ngIf="tipProizvoda === 'RacunarskaKomponenta'" value="Skladiste">Skladišna memorija</option>
+                            <option *ngIf="tipProizvoda === 'RacunarskaKomponenta'" value="Napajanje">Napajanje</option>
+                            <option *ngIf="tipProizvoda === 'RacunarskaKomponenta'" value="Kuciste">Kućište</option>
+
+                            <option *ngIf="tipProizvoda === 'RacunarskaOprema'" value="Monitor">Monitor</option>
+                            <option *ngIf="tipProizvoda === 'RacunarskaOprema'" value="Tastatura">Tastatura</option>
+                            <option *ngIf="tipProizvoda === 'RacunarskaOprema'" value="Mis">Miš</option>
+                            <option *ngIf="tipProizvoda === 'RacunarskaOprema'" value="Slusalice">Slušalice</option>
+                            <option *ngIf="tipProizvoda === 'RacunarskaOprema'" value="Zvucnik">Zvučnik</option>
+                            <option *ngIf="tipProizvoda === 'RacunarskaOprema'" value="Stampac">Štampac</option>
                         </select>
                         <small class="text-danger" *ngIf="formInputData.controls['type'].dirty && formInputData.hasError('required', 'type')">
-                            *Tip računarske komponente je obavezno polje
+                            *Tip računarske {{tipProizvoda === 'RacunarskaKomponenta' ? 'komponente' : 'opreme'}} je obavezno polje
                         </small>
                     </div>
 
@@ -85,6 +93,13 @@
                     <app-skladiste-form *ngIf="type === 'Skladiste'" [formGroup]="formInputData"></app-skladiste-form>
                     <app-napajanje-form *ngIf="type === 'Napajanje'" [formGroup]="formInputData"></app-napajanje-form>
                     <app-kuciste-form *ngIf="type === 'Kuciste'" [formGroup]="formInputData"></app-kuciste-form>
+
+                    <app-monitor-form *ngIf="type === 'Monitor'" [formGroup]="formInputData"></app-monitor-form>
+                    <app-tastatura-form *ngIf="type === 'Tastatura'" [formGroup]="formInputData"></app-tastatura-form>
+                    <app-mis-form *ngIf="type === 'Mis'" [formGroup]="formInputData"></app-mis-form>
+                    <app-slusalice-form *ngIf="type === 'Slusalice'" [formGroup]="formInputData"></app-slusalice-form>
+                    <app-zvucnik-form *ngIf="type === 'Zvucnik'" [formGroup]="formInputData"></app-zvucnik-form>
+                    <app-stampac-form *ngIf="type === 'Stampac'" [formGroup]="formInputData"></app-stampac-form>
                 </div>
 
             </div>

@@ -1,0 +1,26 @@
+<div *ngIf="oprema">
+    <div class="row">
+        <div class="col col-5">
+            <h5>Tip opreme</h5>
+        </div>
+        <div class="col">
+            <h5 [ngSwitch]="oprema.type">
+                <span *ngSwitchCase="'Monitor'">Monitor</span>
+                <span *ngSwitchCase="'Tastatura'">Tastatura</span>
+                <span *ngSwitchCase="'Mis'">Miš</span>
+                <span *ngSwitchCase="'Slusalice'">Slušalice</span>
+                <span *ngSwitchCase="'Zvucnik'">Zvučnik</span>
+                <span *ngSwitchCase="'Stampac'">Štampac</span>
+                <span *ngSwitchDefault>Tip opreme nije pronađen!</span>
+            </h5>
+        </div>
+    </div>
+    <div [ngSwitch]="oprema.type">
+        <app-monitor *ngSwitchCase="'Monitor'" [monitor]="getMonitor()"></app-monitor>
+        <app-tastatura *ngSwitchCase="'Tastatura'" [tastatura]="getTastatura()"></app-tastatura>
+        <app-mis *ngSwitchCase="'Mis'" [mis]="getMis()"></app-mis>
+        <app-slusalice *ngSwitchCase="'Slusalice'" [slusalice]="getSlusalice()"></app-slusalice>
+        <app-zvucnik *ngSwitchCase="'Zvucnik'" [zvucnik]="getZvucnik()"></app-zvucnik>
+        <app-stampac *ngSwitchCase="'Stampac'" [stampac]="getStampac()"></app-stampac>
+    </div>
+</div>

@@ -7,8 +7,9 @@ import { AppState } from '../../../store/app-state';
 import { CommonModule, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { selectError, selectLoading, selectSelectedProizvod } from '../../../store/proizvod/proizvod.selectors';
 import { NotFoundComponent } from "../../../shared/components/not-found/not-found.component";
-import { KomponentaPageComponent } from "./komponenta-page/komponenta-page.component";
 import { RacunarPageComponent } from "./racunar-page/racunar-page.component";
+import { KomponentaPageComponent } from "./komponenta-page/komponenta-page.component";
+import { OpremaPageComponent } from "./oprema-page/oprema-page.component";
 import { StarsComponent } from "../../stars/stars.component";
 import { Title } from '@angular/platform-browser';
 import { isAdmin } from '../../../store/auth/auth.selectors';
@@ -38,8 +39,9 @@ import * as CartActions from "../../../store/cart/cart.actions"
     RecenzijeComponent,
     StarsComponent,
     RacunarPageComponent,
-    LoadingComponent
-  ],
+    LoadingComponent,
+    OpremaPageComponent
+],
   templateUrl: './proizvod-page.component.html',
   styleUrl: './proizvod-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

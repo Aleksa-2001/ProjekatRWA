@@ -80,6 +80,7 @@
                         <label class="form-check-label" for="checkbox{{tipProizvoda}}" [ngSwitch]="tipProizvoda">
                             <span *ngSwitchCase="'Racunar'">Računar</span>
                             <span *ngSwitchCase="'RacunarskaKomponenta'">Računarska komponenta</span>
+                            <span *ngSwitchCase="'RacunarskaOprema'">Računarska oprema</span>
                             <span *ngSwitchDefault>{{tipProizvoda}}</span>
                         </label>
                     </div>
@@ -102,6 +103,14 @@
                                 <span *ngSwitchCase="'Skladiste'">Skladišna memorija</span>
                                 <span *ngSwitchCase="'Napajanje'">Napajanje</span>
                                 <span *ngSwitchCase="'Kuciste'">Kućište</span>
+
+                                <span *ngSwitchCase="'Monitor'">Monitor</span>
+                                <span *ngSwitchCase="'Tastatura'">Tastatura</span>
+                                <span *ngSwitchCase="'Mis'">Miš</span>
+                                <span *ngSwitchCase="'Slusalice'">Slušalice</span>
+                                <span *ngSwitchCase="'Zvucnik'">Zvučnik</span>
+                                <span *ngSwitchCase="'Stampac'">Štampac</span>
+                                
                                 <span *ngSwitchDefault>{{type}}</span>
                             </label>
                         </div>

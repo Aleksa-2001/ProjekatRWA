@@ -1,20 +1,22 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { RacunarskaKomponenta } from '../../../../models/racunarska-komponenta';
 import { CommonModule, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
-import { CPUComponent } from './cpu/cpu.component';
-import { GPUComponent } from "./gpu/gpu.component";
-import { RAMComponent } from './ram/ram.component';
-import { RAM } from '../../../../models/komponente/ram';
+
+import { RacunarskaKomponenta } from '../../../../models/racunarska-komponenta';
 import { CPU } from '../../../../models/komponente/cpu';
 import { GPU } from '../../../../models/komponente/gpu';
-import { MaticnaPlocaComponent } from "./maticna-ploca/maticna-ploca.component";
+import { RAM } from '../../../../models/komponente/ram';
 import { MaticnaPloca } from '../../../../models/komponente/maticna-ploca';
 import { Skladiste } from '../../../../models/komponente/skladiste';
 import { Napajanje } from '../../../../models/komponente/napajanje';
+import { Kuciste } from '../../../../models/komponente/kuciste';
+
+import { CPUComponent } from './cpu/cpu.component';
+import { GPUComponent } from "./gpu/gpu.component";
+import { RAMComponent } from './ram/ram.component';
+import { MaticnaPlocaComponent } from "./maticna-ploca/maticna-ploca.component";
 import { SkladisteComponent } from "./skladiste/skladiste.component";
 import { NapajanjeComponent } from "./napajanje/napajanje.component";
 import { KucisteComponent } from "./kuciste/kuciste.component";
-import { Kuciste } from '../../../../models/komponente/kuciste';
 
 @Component({
   selector: 'app-komponenta-page',
@@ -30,7 +32,7 @@ import { Kuciste } from '../../../../models/komponente/kuciste';
     SkladisteComponent,
     NapajanjeComponent,
     KucisteComponent
-],
+  ],
   templateUrl: './komponenta-page.component.html',
   styleUrl: './komponenta-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

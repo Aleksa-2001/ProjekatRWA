@@ -8,6 +8,7 @@ import { selectSelectedProdavnica } from '../../../store/prodavnica/prodavnica.s
 import { filter, map, Observable, of, Subscription, switchMap, take, tap } from 'rxjs';
 import { selectSelectedProizvod } from '../../../store/proizvod/proizvod.selectors';
 import { Prodavnica } from '../../../models/prodavnica';
+
 import { CPUFormComponent } from "./komponente/cpu-form/cpu-form.component";
 import { GPUFormComponent } from "./komponente/gpu-form/gpu-form.component";
 import { RAMFormComponent } from "./komponente/ram-form/ram-form.component";
@@ -16,21 +17,36 @@ import { SkladisteFormComponent } from "./komponente/skladiste-form/skladiste-fo
 import { NapajanjeFormComponent } from "./komponente/napajanje-form/napajanje-form.component";
 import { KucisteFormComponent } from "./komponente/kuciste-form/kuciste-form.component";
 import { komponentaFormMetadata } from './komponente/komponenta-form.metadata';
+
+import { MonitorFormComponent } from "./oprema/monitor-form/monitor-form.component";
+import { TastaturaFormComponent } from "./oprema/tastatura-form/tastatura-form.component";
+import { MisFormComponent } from "./oprema/mis-form/mis-form.component";
+import { SlusaliceFormComponent } from "./oprema/slusalice-form/slusalice-form.component";
+import { ZvucnikFormComponent } from "./oprema/zvucnik-form/zvucnik-form.component";
+import { StampacFormComponent } from "./oprema/stampac-form/stampac-form.component";
+import { opremaFormMetadata } from './oprema/oprema-form.metadata';
+
 import * as ProizvodiActions from "../../../store/proizvod/proizvod.actions"
 
 @Component({
   selector: 'app-proizvod-dialog',
   imports: [
-    NgIf,
-    NgClass,
-    ReactiveFormsModule,
-    CPUFormComponent,
-    GPUFormComponent,
-    RAMFormComponent,
-    MaticnaPlocaFormComponent,
-    SkladisteFormComponent,
-    NapajanjeFormComponent,
-    KucisteFormComponent
+    NgIf, 
+    NgClass, 
+    ReactiveFormsModule, 
+    CPUFormComponent, 
+    GPUFormComponent, 
+    RAMFormComponent, 
+    MaticnaPlocaFormComponent, 
+    SkladisteFormComponent, 
+    NapajanjeFormComponent, 
+    KucisteFormComponent, 
+    MonitorFormComponent, 
+    TastaturaFormComponent, 
+    MisFormComponent, 
+    SlusaliceFormComponent, 
+    ZvucnikFormComponent, 
+    StampacFormComponent
 ],
   templateUrl: './proizvod-dialog.component.html',
   styleUrl: './proizvod-dialog.component.scss',
@@ -126,7 +142,7 @@ export class ProizvodDialogComponent implements OnInit, OnDestroy {
       if (key !== 'type') group.removeControl(key)
     })
     
-    const kontrole = komponentaFormMetadata[type]
+    const kontrole = komponentaFormMetadata[type] || opremaFormMetadata[type]
     if (kontrole) {
       const kontroleGroup = this.fb.group(kontrole())
       Object.entries(kontroleGroup.controls).forEach(([key, control]) => {
@@ -154,7 +170,7 @@ export class ProizvodDialogComponent implements OnInit, OnDestroy {
       }
     })
 
-    const kontrole = komponentaFormMetadata[proizvod.type]
+    const kontrole = komponentaFormMetadata[proizvod.type] || opremaFormMetadata[proizvod.type]
     if (kontrole) {
       const patchObj: any = { }
       for (const key of Object.keys(kontrole())) {
