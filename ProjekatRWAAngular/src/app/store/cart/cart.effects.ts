@@ -7,11 +7,13 @@ import { AppState } from "../app-state";
 import { selectItemCount } from "./cart.selectors";
 import { maxKolicina } from "./cart.reducer";
 import * as CartActions from "./cart.actions";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class CartEffects { 
     private actions$ = inject(Actions)
     private store = inject(Store<AppState>)
+    private router = inject(Router)
 
     addToCart$ = createEffect(() => {
         return this.actions$.pipe(
@@ -55,4 +57,16 @@ export class CartEffects {
             catchError(() => of({ type: '[Korpa] Remove All Error' }))
         )
     })
+
+    createOrder$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(CartActions.createOrder),
+            map(() => {
+                this.router.navigate(["/"])
+                return showToast({ poruka: "Uspešno ste postavili narudžbinu! Hvala Vam na ukazanom poverenju!", tipPoruke: 'success' })
+            }),
+            catchError(() => of({ type: '[Korpa] Create Order Error' }))
+        )
+    })
+
 }

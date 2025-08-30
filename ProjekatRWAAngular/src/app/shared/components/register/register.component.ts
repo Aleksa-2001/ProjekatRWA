@@ -27,18 +27,23 @@ export class RegisterComponent implements OnInit {
   constructor(private title: Title, private fb: FormBuilder, private store: Store<AppState>) { }
 
   ngOnInit(): void {
+    this.initForm()
     this.title.setTitle(`Registracija - ${environment.appName}`)
-    
+
+    this.error$ = this.store.select(selectError)
+  }
+
+  initForm() {
     this.registerForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
+      address: ['', Validators.required],
+      city: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       repeatPassword: ['', [Validators.required, Validators.minLength(8)]]
     })
-
-    this.error$ = this.store.select(selectError)
   }
 
   onInput() {

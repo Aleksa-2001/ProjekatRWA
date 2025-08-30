@@ -18,9 +18,17 @@
 
                     <div class="mb-2">
                         <label for="inputAdresa">Adresa*</label>
-                        <input id="inputAdresa" class="form-control border-secondary" type="text" formControlName="adresa" placeholder="Adresa" maxlength="100"/>
+                        <input id="inputAdresa" class="form-control border-secondary" type="text" formControlName="adresa" placeholder="Adresa" maxlength="50"/>
                         <small class="text-danger" *ngIf="form.controls['adresa'].dirty && form.hasError('required', 'adresa')">
                             *Adresa je obavezno polje
+                        </small>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="inputGrad">Grad*</label>
+                        <input id="inputGrad" class="form-control border-secondary" type="text" formControlName="grad" placeholder="Grad" maxlength="50"/>
+                        <small class="text-danger" *ngIf="form.controls['grad'].dirty && form.hasError('required', 'grad')">
+                            *Grad je obavezno polje
                         </small>
                     </div>
 

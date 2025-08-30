@@ -1,5 +1,5 @@
 <div class="poruka position-fixed translate-end-x" [ngClass]="{ 'show-toast': (prikaziPoruku$ | async) }">
-    <div class="alert alert-primary alert-dismissible fade" role="alert" [ngClass]="{ 
+    <div class="m-0 alert alert-primary alert-dismissible fade" role="alert" [ngClass]="{ 
         'show': (prikaziPoruku$ | async),
         'alert-success': (tipPoruke$ | async) === 'success',
         'alert-warning': (tipPoruke$ | async) === 'warning',

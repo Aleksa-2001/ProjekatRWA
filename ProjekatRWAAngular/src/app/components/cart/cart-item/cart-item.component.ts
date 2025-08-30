@@ -21,6 +21,7 @@ export class CartItemComponent implements OnInit {
   maxKolicina = maxKolicina
 
   @Input() artikal!: Artikal
+  @Input() checkout: boolean = false
   
   prosek: number = 0
   brojRecenzija: number = 0

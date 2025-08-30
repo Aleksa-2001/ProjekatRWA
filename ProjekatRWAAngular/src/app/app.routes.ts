@@ -14,6 +14,7 @@ import { ProdavnicePageComponent } from './components/prodavnice-page/prodavnice
 import { SelectItemComponent } from './components/select-item/select-item.component';
 import { CartPageComponent } from './components/cart/cart-page/cart-page.component';
 import { AboutComponent } from './shared/components/about/about.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 export const routes: Routes = [
     { path: "", component: HomeComponent, pathMatch: 'full' },
@@ -22,6 +23,7 @@ export const routes: Routes = [
 
     { path: "search", component: SearchPageComponent },
     { path: "cart", component: CartPageComponent },
+    { path: "checkout", component: CheckoutComponent },
     
     { path: "prodavnice", component: ProdavnicePageComponent },
     { path: "prodavnica/:id", component: ProdavnicaPageComponent },

@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { filter, Observable, tap } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { filter, Observable, of, tap } from 'rxjs';
 import { User } from '../../../models/user';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app-state';
@@ -9,9 +9,9 @@ import { Title } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConfirmDialogComponent } from '../../../components/dialog/confirm-dialog/confirm-dialog.component';
 import { RecenzijeComponent } from '../../../components/recenzije/recenzije.component';
+import { environment } from '../../../../environments/environment';
 import * as AuthActions from '../../../store/auth/auth.actions';
 import * as RecenzijeActions from '../../../store/recenzija/recenzija.actions';
-import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-profile',
@@ -26,7 +26,7 @@ import { environment } from '../../../../environments/environment';
   styleUrl: './profile.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
 
   editProfileForm!: FormGroup
   formData: any
@@ -36,26 +36,18 @@ export class ProfileComponent {
 
   displayMode: number = 1
 
-  user$: Observable<User | null>
+  user$: Observable<User | null> = of(null)
   userID: number = -1
 
-  constructor(private title: Title, private store: Store<AppState>, private fb: FormBuilder) {
+  constructor(private title: Title, private store: Store<AppState>, private fb: FormBuilder) { }
+
+  ngOnInit(): void {
     this.title.setTitle(`Profil - ${environment.appName}`)
     this.user$ = this.store.select(selectUser).pipe(
       filter(user => !!user),
       tap(user => {
-        this.editProfileForm = this.fb.group({
-          firstName: [user.firstName, Validators.required],
-          lastName: [user.lastName, Validators.required],
-          email: [user.email, [Validators.required, Validators.email]],
-          username: [user.username, Validators.required]
-        })
-
-        this.changePasswordForm = this.fb.group({
-          password: ['', [Validators.required, Validators.minLength(8)]],
-          newPassword: ['', [Validators.required, Validators.minLength(8)]],
-          repeatPassword: ['', [Validators.required, Validators.minLength(8)]]
-        })
+        this.initUserForm(user)
+        this.initChangePasswordForm()
 
         this.userID = user.userID
         this.formData = this.editProfileForm.getRawValue()
@@ -63,6 +55,34 @@ export class ProfileComponent {
         this.store.dispatch(RecenzijeActions.loadItemsUser({ userID: this.userID }))
       })
     )
+  }
+
+  initUserForm(user: User) {
+    this.editProfileForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      address: ['', Validators.required],
+      city: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      username: ['', Validators.required]
+    })
+
+    this.editProfileForm.patchValue({
+      firstName: user.firstName,
+      lastName: user.lastName,
+      address: user.address,
+      city: user.city,
+      email: user.email,
+      username: user.username
+    })
+  }
+
+  initChangePasswordForm() {
+    this.changePasswordForm = this.fb.group({
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      newPassword: ['', [Validators.required, Validators.minLength(8)]],
+      repeatPassword: ['', [Validators.required, Validators.minLength(8)]]
+    })
   }
 
   onChangeProfileOption(displayMode: number) {
@@ -80,10 +100,12 @@ export class ProfileComponent {
     if (form) {
       const checkFirstName = user.firstName !== form.firstName
       const checklLastName = user.lastName !== form.lastName
+      const checkAddress = user.address !== form.address
+      const checkCity = user.city !== form.city
       const checkEmail = user.email !== form.email
       const checkUsername = user.username !== form.username
       
-      return checkFirstName || checklLastName || checkEmail || checkUsername
+      return checkFirstName || checklLastName || checkAddress || checkCity || checkEmail || checkUsername
     }
     return false
   }

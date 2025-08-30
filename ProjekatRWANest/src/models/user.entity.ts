@@ -15,6 +15,12 @@ export class User {
     lastName: string
 
     @Column()
+    address: string
+
+    @Column()
+    city: string
+
+    @Column()
     email: string
 
     @Column({ unique: true })

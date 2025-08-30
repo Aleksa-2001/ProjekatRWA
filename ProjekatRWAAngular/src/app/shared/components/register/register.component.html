@@ -19,6 +19,20 @@
                 </div>
             </div>
             <div class="mb-2">
+                <label for="inputAddress">Adresa*</label>
+                <input id="inputAddress" class="form-control border border-secondary" type="text" formControlName="address" placeholder="Adresa" (input)="onInput()" maxlength="50"/>
+                <small class="text-danger" *ngIf="registerForm.controls['address'].dirty && registerForm.hasError('required', 'address')">
+                    *Adresa je obavezno polje
+                </small>
+            </div>
+            <div class="mb-2">
+                <label for="inputCity">Grad*</label>
+                <input id="inputCity" class="form-control border border-secondary" type="text" formControlName="city" placeholder="Grad" (input)="onInput()" maxlength="50"/>
+                <small class="text-danger" *ngIf="registerForm.controls['city'].dirty && registerForm.hasError('required', 'city')">
+                    *Grad je obavezno polje
+                </small>
+            </div>
+            <div class="mb-2">
                 <label for="inputEmail">Email adresa*</label>
                 <input id="inputEmail" class="form-control border border-secondary" type="text" formControlName="email" placeholder="Email adresa" (input)="onInput()" maxlength="50"/>
                 <small class="text-danger" *ngIf="registerForm.controls['email'].dirty && registerForm.hasError('required', 'email')">

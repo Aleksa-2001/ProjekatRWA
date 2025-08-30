@@ -1,14 +1,19 @@
-<div class="row row-gap-2" *ngIf="artikli$ | async as artikli">
-    <div class="p-0 col-12" *ngFor="let artikal of artikli">
-        <app-cart-item [artikal]="artikal"></app-cart-item>
-    </div>
-    <div *ngIf="ukupnaCena$ | async as ukupno" class="col-12">
-        <hr class="mt-2">
-        <div class="d-flex row-gap-2 flex-column flex-sm-row-reverse align-items-sm-center">
-            <h3 class="m-0">TOTAL: {{ukupno}} RSD</h3>
+<div *ngIf="artikli$ | async as artikli">
+    <div *ngIf="artikli.length > 0" class="row row-gap-2">
+        <div class="p-0 col-12" *ngFor="let artikal of artikli">
+            <app-cart-item [artikal]="artikal" [checkout]="checkout"></app-cart-item>
+        </div>
+        <div *ngIf="ukupnaCena$ | async as ukupno" class="col-12">
+            <hr class="mt-2">
+            <div class="d-flex row-gap-2 flex-column flex-sm-row-reverse" [ngClass]="{ 'flex-sm-row-reverse': !checkout, 'flex-md-row-reverse': checkout }">
+                <h3 class="m-0">TOTAL = {{ukupno}} RSD</h3>
+            </div>
+        </div>
+        <div *ngIf="!checkout" class="col-12 d-flex flex-column flex-sm-row-reverse gap-2">
+            <a [routerLink]="['/checkout']" type="button" class="btn btn-primary">Dalje<i class="bi bi-arrow-right ms-2"></i></a>
+            <button (click)="clearCart()" class="btn btn-danger"><i class="bi bi-trash me-2"></i>Isprazni korpu</button>
             <div class="flex-grow-1 d-none d-sm-block"></div>
-            <button *ngIf="artikli.length > 0" (click)="clearCart()" class="btn btn-danger"><i class="bu bi-trash me-2"></i>Isprazni korpu</button>
         </div>
     </div>
-    <p class="m-0" *ngIf="artikli.length === 0"><i>Korpa je prazna</i></p>
+    <p class="m-0" *ngIf="artikli.length === 0"><i>Korpa je trenutno prazna. Artikle koje dodate u korpu možete videti ovde.</i></p>
 </div>

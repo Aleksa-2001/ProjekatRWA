@@ -51,3 +51,7 @@ export const removeFromCart = createAction(
 export const clearCart = createAction(
     "[Korpa] Isprazni korpu"
 )
+
+export const createOrder = createAction(
+    "[Korpa] Postavi narudzbinu"
+)

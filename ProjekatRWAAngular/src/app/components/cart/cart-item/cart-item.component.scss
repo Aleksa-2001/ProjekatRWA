@@ -17,6 +17,12 @@
     box-shadow: 0 0 0.25rem 0.125rem #5F5F5F;
 }
 
+:host > .checkout-item:hover {
+    background-color: initial !important;
+    box-shadow: initial !important;
+    cursor: default !important;
+}
+
 img {
     aspect-ratio: 1.333;
     object-fit: cover;

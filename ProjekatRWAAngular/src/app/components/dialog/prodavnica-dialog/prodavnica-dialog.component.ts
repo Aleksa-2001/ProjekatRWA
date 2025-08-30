@@ -53,6 +53,7 @@ export class ProdavnicaDialogComponent implements OnInit {
     this.form = this.fb.group({
       naziv: ['', Validators.required],
       adresa: ['', Validators.required],
+      grad: ['', Validators.required],
       opis: [],
       slika: []
     })
@@ -65,6 +66,7 @@ export class ProdavnicaDialogComponent implements OnInit {
     this.form.patchValue({
       naziv: prodavnica.naziv,
       adresa: prodavnica.adresa,
+      grad: prodavnica.grad,
       opis: prodavnica.opis,
       slika: ''
     })
@@ -111,6 +113,7 @@ export class ProdavnicaDialogComponent implements OnInit {
         id: this.prodavnicaID,
         naziv: prodavnica.naziv,
         adresa: prodavnica.adresa,
+        grad: prodavnica.grad,
         opis: prodavnica.opis,// ?? "",
         slika: (prodavnica.slika && this.filename) ? prodavnica.slika : ""
       }

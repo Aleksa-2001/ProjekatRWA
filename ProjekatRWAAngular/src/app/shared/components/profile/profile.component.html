@@ -39,6 +39,15 @@
                             <h5>{{user.firstName}} {{user.lastName}}</h5>
                         </div>
                     </div>
+                    
+                    <div class="row">
+                        <div class="col col-auto col-sm-4">
+                            <h5>Adresa</h5>
+                        </div>
+                        <div class="col col-auto">
+                            <h5>{{user.address}}, {{user.city}}</h5>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col col-auto col-sm-4">
                             <h5>Email</h5>
@@ -70,6 +79,20 @@
                             <input id="inputLastName" class="form-control border border-secondary" type="text" formControlName="lastName" maxlength="20" placeholder="Prezime" (input)="onDataInput()" />
                             <small class="text-danger" *ngIf="editProfileForm.controls['lastName'].dirty && editProfileForm.hasError('required', 'lastName')">
                                 *Prezime je obavezno polje
+                            </small>
+                        </div>
+                        <div class="col-12">
+                            <label for="inputAddress">Adresa*</label>
+                            <input id="inputAddress" class="form-control border border-secondary" type="text" formControlName="address" maxlength="50" placeholder="Adresa" (input)="onDataInput()" />
+                            <small class="text-danger" *ngIf="editProfileForm.controls['address'].dirty && editProfileForm.hasError('required', 'address')">
+                                *Adresa je obavezno polje
+                            </small>
+                        </div>
+                        <div class="col-12">
+                            <label for="inputCity">Grad*</label>
+                            <input id="inputCity" class="form-control border border-secondary" type="text" formControlName="city" maxlength="50" placeholder="Grad" (input)="onDataInput()" />
+                            <small class="text-danger" *ngIf="editProfileForm.controls['city'].dirty && editProfileForm.hasError('required', 'city')">
+                                *Grad je obavezno polje
                             </small>
                         </div>
                         <div class="col-12">

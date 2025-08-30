@@ -21,7 +21,7 @@ export class ProdavniceService {
         const prodavnice = await this.prodavnicaRepository
             .createQueryBuilder('prodavnica')
             .leftJoin('prodavnica.recenzije', 'recenzija')
-            .select(['prodavnica.id', 'prodavnica.naziv', 'prodavnica.adresa', 'prodavnica.slika'])
+            .select(['prodavnica.id', 'prodavnica.naziv', 'prodavnica.adresa', 'prodavnica.grad', 'prodavnica.slika'])
             .addSelect('COUNT(recenzija)', 'brojRecenzija')
             .addSelect('COALESCE(AVG(recenzija.ocena), 0)', 'prosecna_ocena')
             .groupBy('prodavnica.id')
@@ -60,7 +60,7 @@ export class ProdavniceService {
             const prodavnice = await this.prodavnicaRepository
                 .createQueryBuilder('prodavnica')
                 .leftJoin('prodavnica.recenzije', 'recenzija')
-                .select(['prodavnica.id', 'prodavnica.naziv', 'prodavnica.adresa', 'prodavnica.slika'])
+                .select(['prodavnica.id', 'prodavnica.naziv', 'prodavnica.adresa', 'prodavnica.grad', 'prodavnica.slika'])
                 .addSelect('COUNT(recenzija)', 'brojRecenzija')
                 .addSelect('COALESCE(AVG(recenzija.ocena), 0)', 'prosecnaOcena')
                 .groupBy('prodavnica.id')
@@ -80,7 +80,7 @@ export class ProdavniceService {
         const prodavnice = await this.prodavnicaRepository
             .createQueryBuilder('prodavnica')
             .leftJoin('prodavnica.recenzije', 'recenzija')
-            .select(['prodavnica.id', 'prodavnica.naziv', 'prodavnica.adresa', 'prodavnica.slika'])
+            .select(['prodavnica.id', 'prodavnica.naziv', 'prodavnica.adresa', 'prodavnica.grad', 'prodavnica.slika'])
             .addSelect('COUNT(recenzija)', 'brojRecenzija')
             .addSelect('COALESCE(AVG(recenzija.ocena), 0)', 'prosecna_ocena')
             .groupBy('prodavnica.id')

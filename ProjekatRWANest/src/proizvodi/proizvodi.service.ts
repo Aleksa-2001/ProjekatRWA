@@ -92,7 +92,8 @@ export class ProizvodiService {
                     prodavnica: {
                         id: true,
                         naziv: true,
-                        adresa: true
+                        adresa: true,
+                        grad: true
                     }
                 },
                 relations: ['prodavnica']

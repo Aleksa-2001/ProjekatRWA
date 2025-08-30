@@ -12,6 +12,9 @@ export class Prodavnica {
     @Column()
     adresa: string
 
+    @Column()
+    grad: string
+
     @Column({ nullable: true })
     opis: string
     

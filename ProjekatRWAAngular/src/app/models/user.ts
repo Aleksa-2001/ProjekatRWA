@@ -5,6 +5,8 @@ export class User {
         public admin: boolean, 
         public firstName: string, 
         public lastName: string, 
+        public address: string, 
+        public city: string, 
         public email: string, 
         public username: string, 
         public password: string
@@ -13,6 +15,8 @@ export class User {
         admin = false
         firstName = ''
         lastName = ''
+        address = ''
+        city = ''
         email = ''
         username = ''
         password = ''

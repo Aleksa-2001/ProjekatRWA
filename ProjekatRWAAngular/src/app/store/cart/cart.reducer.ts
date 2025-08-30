@@ -89,5 +89,13 @@ export const cartReducer = createReducer(
             ...state,
             artikli: []
         }
+    }),
+    on(CartActions.createOrder, (state) => {
+        localStorage.removeItem('cart')
+
+        return {
+            ...state,
+            artikli: []
+        }
     })
 )

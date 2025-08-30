@@ -1,16 +1,17 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Artikal } from '../../store/cart/cart.reducer';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app-state';
 import { selectCart, selectUkupnaCena } from '../../store/cart/cart.selectors';
 import { CartItemComponent } from "./cart-item/cart-item.component";
+import { RouterLink } from "@angular/router";
 import * as CartActions from '../../store/cart/cart.actions'
 
 @Component({
   selector: 'app-cart',
-  imports: [NgIf, NgFor, CommonModule, CartItemComponent],
+  imports: [NgIf, NgFor, CommonModule, CartItemComponent, RouterLink],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -19,6 +20,8 @@ export class CartComponent implements OnInit {
   
   artikli$: Observable<Artikal[]> = of([])
   ukupnaCena$: Observable<number> = of(0)
+
+  @Input() checkout: boolean = false
 
   constructor(private store: Store<AppState>) { }
 
