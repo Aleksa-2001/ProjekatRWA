@@ -56,5 +56,5 @@ export const typeOrmConfig: DataSourceOptions = {
         Stampac, 
         Recenzija
     ],
-    synchronize: true
+    synchronize: false
 }

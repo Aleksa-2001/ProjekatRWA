@@ -6,10 +6,10 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app-state';
 import { isAdmin } from '../../store/auth/auth.selectors';
 import { ProdavnicaDialogComponent } from "../dialog/prodavnica-dialog/prodavnica-dialog.component";
-import * as ProdavniceActions from '../../store/prodavnica/prodavnica.actions';
 import { selectBrojProdavnica, selectError, selectLoading } from '../../store/prodavnica/prodavnica.selectors';
 import { ItemListComponent } from "../item-list/item-list.component";
 import { environment } from '../../../environments/environment';
+import * as ProdavniceActions from '../../store/prodavnica/prodavnica.actions';
 
 @Component({
   selector: 'app-angular',

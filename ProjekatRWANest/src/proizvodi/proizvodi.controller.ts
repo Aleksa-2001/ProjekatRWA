@@ -6,6 +6,7 @@ import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { RacunarDto } from 'src/dto/racunar.dto';
+import { RolesGuard } from 'src/auth/roles.guard';
 
 @Controller()
 export class ProizvodiController {
@@ -33,37 +34,37 @@ export class ProizvodiController {
     }
 
     @Post('proizvod')
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard, RolesGuard)
     public addProizvod(@Body() dto: ProizvodDto) {
         return this.service.create(dto)
     }
 
     @Put('proizvod/:id')
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard, RolesGuard)
     public updateProizvod(@Param('id', ParseIntPipe) proizvodID: number, @Body() dto: ProizvodDto) {
         return this.service.update(proizvodID, dto)
     }
 
     @Put('proizvodRacunar/:id')
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard, RolesGuard)
     public updateRacunar(@Param('id', ParseIntPipe) racunarID: number, @Body() dto: RacunarDto) {
         return this.service.updateRacunar(racunarID, dto)
     }
 
     @Delete('proizvod/:id')
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard, RolesGuard)
     public deleteProizvod(@Param('id', ParseIntPipe) proizvodID: number) {
         return this.service.delete(proizvodID)
     }
 
     @Delete('proizvodi/:prodavnicaID')
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard, RolesGuard)
     public deleteProizvodi(@Param('prodavnicaID', ParseIntPipe) prodavnicaID: number) {
         return this.service.deleteAll(prodavnicaID)
     }
 
     @Post('proizvod/upload/:id')
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard, RolesGuard)
     @UseInterceptors(FileInterceptor('file', {
         storage: diskStorage({
             destination: 'images/proizvodi',

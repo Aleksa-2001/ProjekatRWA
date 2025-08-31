@@ -6,8 +6,8 @@ import { Store } from "@ngrx/store";
 import { AppState } from "../app-state";
 import { selectItemCount } from "./cart.selectors";
 import { maxKolicina } from "./cart.reducer";
-import * as CartActions from "./cart.actions";
 import { Router } from "@angular/router";
+import * as CartActions from "./cart.actions";
 
 @Injectable()
 export class CartEffects { 

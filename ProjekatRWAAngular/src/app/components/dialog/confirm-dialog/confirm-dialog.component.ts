@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app-state';
-import { filter, take, tap } from 'rxjs';
+import { User } from '../../../models/user';
+import { filter, Observable, of, take, tap } from 'rxjs';
 import { selectUser } from '../../../store/auth/auth.selectors';
 import { selectSelectedProdavnica } from '../../../store/prodavnica/prodavnica.selectors';
 import { selectSelectedProizvod } from '../../../store/proizvod/proizvod.selectors';
@@ -25,9 +25,19 @@ export class ConfirmDialogComponent implements OnInit {
   @Input() delete!: string
   title: string = ""
 
-  constructor(private router: Router, private store: Store<AppState>) { }
+  user$: Observable<User | null> = of(null)
+  user: User | null = null
+
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
+    this.user$ = this.store.select(selectUser)
+    this.user$.pipe(
+      filter(user => !!user),
+      take(1),
+      tap(user => this.user = user)
+    ).subscribe()
+
     switch (this.delete) {
       case 'User':
         this.title = 'Obriši nalog'
@@ -93,7 +103,7 @@ export class ConfirmDialogComponent implements OnInit {
         filter(recenzija => !!recenzija),
         take(1),
         tap(recenzija => {
-          this.store.dispatch(RecenzijeActions.deleteItem({ selectedRecenzijaID: recenzija.id }))
+          this.store.dispatch(RecenzijeActions.deleteItem({ selectedRecenzijaID: recenzija.id, user: this.user! }))
         })
       ).subscribe()
     }

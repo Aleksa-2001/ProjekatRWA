@@ -77,14 +77,15 @@ export class FilterComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.selectedCenaRange = this.cenaRange
-    this.minCena = this.cenaRange.min
-    this.maxCena = this.cenaRange.max
-    this.selectedCenaRangeOutput.emit(this.selectedCenaRange)
+    if (changes['prikaziProizvode'] && changes['prikaziProizvode'].currentValue === true) {
+      this.selectedCenaRange = this.cenaRange
+      this.minCena = this.cenaRange.min
+      this.maxCena = this.cenaRange.max
+      this.selectedCenaRangeOutput.emit(this.selectedCenaRange)
+    }
 
     if (this.searchPage && changes['cenaRange']) {
       this.onSelectPrikaz(1)
-      //console.log(this.brojProdavnica, this.brojProizvoda)
     }
   }
 

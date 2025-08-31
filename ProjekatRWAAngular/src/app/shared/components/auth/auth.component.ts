@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app-state';
-import * as AuthActions from '../../../store/auth/auth.actions'
 import { selectToken, selectError } from '../../../store/auth/auth.selectors';
 import { Observable } from 'rxjs';
 import { CommonModule, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { environment } from '../../../../environments/environment';
+import * as AuthActions from '../../../store/auth/auth.actions'
 
 @Component({
   selector: 'app-auth',

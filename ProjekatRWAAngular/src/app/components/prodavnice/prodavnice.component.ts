@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { ProdavnicaItemComponent } from "./prodavnica-item/prodavnica-item.component";
 import { CommonModule, NgFor } from '@angular/common';
-import { combineLatest, debounceTime, distinctUntilChanged, filter, map, Observable, of, startWith, Subscription, tap } from 'rxjs';
+import { combineLatest, filter, map, Observable, of, Subscription, tap } from 'rxjs';
 import { Prodavnica } from '../../models/prodavnica';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app-state';

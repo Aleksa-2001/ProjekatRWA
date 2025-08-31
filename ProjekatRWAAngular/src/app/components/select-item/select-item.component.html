@@ -1,13 +1,11 @@
 <div class="container my-3">
     <h1>Izaberi {{tipKomponenteTitle}}</h1>
     <app-loading *ngIf="loading$ | async"></app-loading>
-    <app-item-list *ngIf="!(loading$ | async) && !(error$ | async) && (brojProizvoda$ | async) as brojProizvoda"
+    <app-item-list *ngIf="!(loading$ | async) && !(error$ | async) && (brojProizvoda$ | async)"
         [selectMode]="true" 
         [editItemID]="editItemID" 
         [sakrijIzborPrikaza]="true" 
         [prikaziProdavnice]="false"
     ></app-item-list>
-    <div *ngIf="!(loading$ | async) && (error$ | async) as error">
-        {{error}}
-    </div>
+    <p class="m-0" *ngIf="!(loading$ | async) && (error$ | async) as error">{{error}}</p>
 </div>

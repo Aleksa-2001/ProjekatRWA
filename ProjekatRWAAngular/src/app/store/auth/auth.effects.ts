@@ -9,7 +9,8 @@ import { hideToast, showToast } from '../toast/toast.actions';
 import * as AuthActions from './auth.actions';
 
 interface JwtPayload {
-    sub: number;
+    sub: number
+    admin: boolean
 }
 
 @Injectable()
@@ -38,7 +39,10 @@ export class AuthEffects {
     loginSuccess$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(AuthActions.loginSuccess),
-            map(() => showToast({ poruka: 'Uspešno ste se prijavili!', tipPoruke: 'success' }))
+            map(({ token }) => {
+                const payload: JwtPayload = jwtDecode(token)
+                return showToast({ poruka: `Uspešno ste se prijavili! ${payload.admin ? 'Prijavljeni ste kao Administrator': ''}`, tipPoruke: 'success' })
+            })
         )
     })
 

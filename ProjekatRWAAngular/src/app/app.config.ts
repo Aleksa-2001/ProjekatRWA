@@ -35,15 +35,6 @@ const jwtOptions: JwtModuleOptions = {
   }
 }
 
-// export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
-//   return function(state: AppState | undefined, action: Action) {
-//     console.log('state', state)
-//     console.log('action', action)
-
-//     return reducer(state, action)
-//   }
-// }
-
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
   return localStorageSync({ 
     keys: [

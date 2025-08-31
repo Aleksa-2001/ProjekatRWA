@@ -8,6 +8,7 @@ import { Mis } from '../../../../models/oprema/mis';
 import { Slusalice } from '../../../../models/oprema/slusalice';
 import { Zvucnik } from '../../../../models/oprema/zvucnik';
 import { Stampac } from '../../../../models/oprema/stampac';
+
 import { MonitorComponent } from "./monitor/monitor.component";
 import { TastaturaComponent } from "./tastatura/tastatura.component";
 import { ZvucnikComponent } from "./zvucnik/zvucnik.component";

@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { catchError, throwError } from "rxjs";
 import { Recenzija } from "../models/recenzija";
 import { environment } from "../../environments/environment";
+import { User } from "../models/user";
 
 @Injectable({
     providedIn: 'root'
@@ -11,11 +12,11 @@ export class RecenzijaService {
 
     constructor(private httpClient: HttpClient) { }
 
-    getRecenzije() {
-        return this.httpClient
-            .get<Recenzija[]>(environment.apiUrl + "recenzije")
-            .pipe(catchError(errorHandler))
-    }
+    // getRecenzije() {
+    //     return this.httpClient
+    //         .get<Recenzija[]>(environment.apiUrl + "recenzije")
+    //         .pipe(catchError(errorHandler))
+    // }
 
     getRecenzijeByUserID(userID: number) {
         return this.httpClient
@@ -48,16 +49,16 @@ export class RecenzijaService {
             .pipe(catchError(errorHandler))
     }
 
-    updateRecenzija(recenzijaID: number, recenzija: Partial<Recenzija>) {
+    updateRecenzija(recenzijaID: number, recenzija: Partial<Recenzija>, user: User) {
         const { id, ...recenzijaDto } = recenzija
         return this.httpClient
-            .put<Recenzija>(environment.apiUrl + `recenzija/${recenzijaID}`, recenzijaDto)
+            .put<Recenzija>(environment.apiUrl + `recenzija/${recenzijaID}`, { recenzija: recenzijaDto, user: user })
             .pipe(catchError(errorHandler))
     }
 
-    deleteRecenzija(recenzijaID: number) {
+    deleteRecenzija(recenzijaID: number, user: User) {
         return this.httpClient
-            .delete<number>(environment.apiUrl + `recenzija/${recenzijaID}`)
+            .delete<number>(environment.apiUrl + `recenzija/${recenzijaID}`, { body: { ...user } })
             .pipe(catchError(errorHandler))
     }
 

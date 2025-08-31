@@ -6,6 +6,7 @@ import { Express } from 'express'
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/roles.guard';
 
 @Controller()
 export class ProdavniceController {
@@ -33,25 +34,25 @@ export class ProdavniceController {
     }
 
     @Post('prodavnica')
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard, RolesGuard)
     public addProdavnica(@Body() dto: ProdavnicaDto) {
         return this.service.create(dto)
     }
     
     @Put('prodavnica/:id')
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard, RolesGuard)
     public updateProdavnica(@Param('id', ParseIntPipe) prodavnicaID: number, @Body() dto: ProdavnicaDto) {
         return this.service.update(prodavnicaID, dto)
     }
 
     @Delete('prodavnica/:id')
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard, RolesGuard)
     public deleteProdavnica(@Param('id', ParseIntPipe) prodavnicaID: number) {
         return this.service.delete(prodavnicaID)
     }
 
     @Post('prodavnica/upload/:id')
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard, RolesGuard)
     @UseInterceptors(FileInterceptor('file', {
         storage: diskStorage({
             destination: 'images/prodavnice',

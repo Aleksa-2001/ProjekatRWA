@@ -1,6 +1,7 @@
 import { createAction, props } from "@ngrx/store"
 import { Recenzija } from "../../models/recenzija"
 import { Update } from "@ngrx/entity"
+import { User } from "../../models/user"
 
 export const loadItemsUser = createAction(
     "[Recenzija] Ucitaj listu recenzija korisnika",
@@ -94,7 +95,8 @@ export const updateItem = createAction(
     "[Recenzija] Izmeni recenziju",
     props<{
         selectedRecenzijaID: number,
-        selectedRecenzija: Recenzija
+        selectedRecenzija: Recenzija,
+        user: User
     }>()
 )
 
@@ -115,7 +117,8 @@ export const updateItemFailure = createAction(
 export const deleteItem = createAction(
     "[Recenzija] Obrisi recenziju",
     props<{
-        selectedRecenzijaID: number
+        selectedRecenzijaID: number,
+        user: User
     }>()
 )
 

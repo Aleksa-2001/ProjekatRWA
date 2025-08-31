@@ -2,6 +2,7 @@ import { BadRequestException, ForbiddenException, Injectable, NotFoundException 
 import { InjectRepository } from '@nestjs/typeorm';
 import { RecenzijaDto } from 'src/dto/recenzija.dto';
 import { Recenzija } from 'src/models/recenzija.entity';
+import { User } from 'src/models/user.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -91,6 +92,7 @@ export class RecenzijeService {
     }
 
     public async create(recenzijaDto: RecenzijaDto) {
+        console.log(recenzijaDto)
         if (!((recenzijaDto.prodavnica && recenzijaDto.proizvod) || (!recenzijaDto.prodavnica && !recenzijaDto.proizvod))) {
             if (!(await this.recenzijaRepository.findOneBy({ 
                 user: { userID: recenzijaDto.user.userID }, 
@@ -105,22 +107,28 @@ export class RecenzijeService {
         else throw new BadRequestException("Unos nije ispravan!")
     }
 
-    public async update(recenzijaID: number, recenzijaDto: RecenzijaDto) {
-        if (await this.recenzijaRepository.existsBy({ id: recenzijaID })) {
+    public async update(recenzijaID: number, recenzijaDto: RecenzijaDto, user: User) {
+        const recenzija = await this.getRecenzijaByID(recenzijaID)
+        if (recenzija) {
             if (!((recenzijaDto.prodavnica && recenzijaDto.proizvod) || (!recenzijaDto.prodavnica && !recenzijaDto.proizvod)))
-                return await this.recenzijaRepository.update(recenzijaID, recenzijaDto).then(res => {
-                    if (res.affected === 1) return this.getRecenzijaByID(recenzijaID)
-                })
+                if (recenzija.user.userID === user.userID || (recenzija.user.userID !== user.userID && user.admin))
+                    return await this.recenzijaRepository.update(recenzijaID, recenzijaDto).then(res => {
+                        if (res.affected === 1) return this.getRecenzijaByID(recenzijaID)
+                    })
+                else throw new ForbiddenException("Ne mozete promeniti tudju recenziju!")
             else throw new BadRequestException("Unos nije ispravan!")
         }
         else throw new NotFoundException(`Recenzija sa ID-jem ${recenzijaID} nije pronadjena!`)
     }
 
-    public async delete(recenzijaID: number) {
-        if (await this.recenzijaRepository.existsBy({ id: recenzijaID })) {
-            return await this.recenzijaRepository.delete(recenzijaID).then(res => {
-                if (res.affected === 1) return recenzijaID
-            })
+    public async delete(recenzijaID: number, user: User) {
+        const recenzija = await this.getRecenzijaByID(recenzijaID)
+        if (recenzija) {
+            if (recenzija.user.userID === user.userID || (recenzija.user.userID !== user.userID && user.admin))
+                return await this.recenzijaRepository.delete(recenzijaID).then(res => {
+                    if (res.affected === 1) return recenzijaID
+                })
+            else throw new ForbiddenException("Ne mozete obrisati tudju recenziju!")
         }
         else throw new NotFoundException(`Recenzija sa ID-jem ${recenzijaID} nije pronadjena!`)
     }

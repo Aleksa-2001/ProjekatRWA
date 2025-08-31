@@ -12,8 +12,9 @@ export class AuthService {
 
     public async login(req: Request) {
         const username = req.body.username
-        const userID = await this.userService.getUserID(username)
-        return JSON.stringify(await this.jwt.signAsync({ sub: userID }))
+        const user = await this.userService.getUserPayload(username)
+        const jwtBearerToken = await this.jwt.signAsync({ sub: user.userID, admin: user.admin })
+        return JSON.stringify(jwtBearerToken)
         //const cookieOptions: CookieOptions = {
         //    httpOnly: true,
         //    secure: true

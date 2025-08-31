@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./shared/components/header/header.component";
 import { FooterComponent } from "./shared/components/footer/footer.component";
+import { ToastComponent } from "./shared/components/toast/toast.component";
 import { Store } from '@ngrx/store';
 import { AppState } from './store/app-state';
 import { CommonModule } from '@angular/common';
 import * as AuthActions from './store/auth/auth.actions'
 import * as CartActions from "./store/cart/cart.actions"
-import { ToastComponent } from "./shared/components/toast/toast.component";
 
 @Component({
   selector: 'app-root',
@@ -21,11 +21,15 @@ import { ToastComponent } from "./shared/components/toast/toast.component";
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   windowScroll: number = 0
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>) { }
+
+  ngOnInit(): void {
+    window.addEventListener('scroll', () => this.windowScroll = window.pageYOffset)
+
     const auth = localStorage.getItem('auth')
     if (auth) {
       const token = JSON.parse(auth).token as string | null
@@ -39,9 +43,6 @@ export class AppComponent {
       if (artikli.length)
         this.store.dispatch(CartActions.loadItems())
     }
-    
-
-    window.addEventListener('scroll', () => this.windowScroll = window.pageYOffset)
   }
 
   scrollToTop() {

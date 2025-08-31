@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Proizvod } from '../models/proizvod';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, of, throwError } from 'rxjs';
-import { environment } from '../../environments/environment';
 import { Racunar } from '../models/racunar';
+import { environment } from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -12,11 +12,11 @@ export class ProizvodService {
 
     constructor(private httpClient: HttpClient) { }
 
-    //getAll() {
-    //  return this.httpClient
-    //    .get<Proizvod[]>(environment.apiUrl + "proizvodi")
-    //    .pipe(catchError(errorHandler))
-    //}
+    // getProizvodi() {
+    //   return this.httpClient
+    //     .get<Proizvod[]>(environment.apiUrl + "proizvodi")
+    //     .pipe(catchError(errorHandler))
+    // }
 
     getProizvodi(prodavnicaID: number, type?: string) {
         return this.httpClient

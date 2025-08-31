@@ -1,11 +1,11 @@
 import { inject, Injectable } from "@angular/core"
 import { Actions, createEffect, ofType } from "@ngrx/effects"
 import { ProdavnicaService } from "../../services/prodavnica.service"
-import * as ProdavniceActions from "./prodavnica.actions"
 import { Observable, of } from "rxjs"
 import { catchError, map, mergeMap } from "rxjs/operators"
 import { Router } from "@angular/router"
-import { hideToast, showToast } from "../toast/toast.actions"
+import { showToast } from "../toast/toast.actions"
+import * as ProdavniceActions from "./prodavnica.actions"
 
 @Injectable()
 export class ProdavniceEffects {

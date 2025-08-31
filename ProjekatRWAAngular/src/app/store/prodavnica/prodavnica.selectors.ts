@@ -1,12 +1,6 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { ProdavniceState } from "./prodavnica.reducer";
 import { Prodavnica } from "../../models/prodavnica";
-import { AppState } from "../app-state";
-
-//export const selectProdavniceFeature = createSelector(
-//    (state: AppState) => state.prodavnice,
-//    (prodavnice) => prodavnice
-//)
 
 export const selectProdavniceFeature = createFeatureSelector<ProdavniceState>('prodavnice')
 

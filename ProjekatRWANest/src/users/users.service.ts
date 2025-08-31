@@ -85,9 +85,11 @@ export class UsersService {
 		else throw new NotFoundException(`Korisnik sa korisnickim imenom ${username} nije pronadjen!`)
 	}
 
-	public async getUserID(username: string) {
-		if (await this.userRepository.existsBy({ username: username }))
-			return (await this.userRepository.findOneBy({ username: username })).userID
+	public async getUserPayload(username: string) {
+		if (await this.userRepository.existsBy({ username: username })) {
+			const user = await this.userRepository.findOneBy({ username: username })
+			return { userID: user.userID, admin: user.admin }
+		}
 		else throw new NotFoundException(`Korisnik sa korisnickim imenom ${username} nije pronadjen!`)
 	}
 }

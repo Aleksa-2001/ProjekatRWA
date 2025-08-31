@@ -36,6 +36,8 @@ export class RecenzijaDialogComponent implements OnInit {
 
   recenzijaID: number = -1
 
+  currentUser: User | null = null
+
   user: User | null = null
   prodavnica: Prodavnica | null = null
   proizvod: Proizvod | null = null
@@ -53,6 +55,13 @@ export class RecenzijaDialogComponent implements OnInit {
       ocena: ['', Validators.required],
       komentar: [''],
     })
+
+    this.user$ = this.store.select(selectUser)
+    this.user$.pipe(
+      filter(user => !!user),
+      take(1),
+      tap(user => this.currentUser = user)
+    ).subscribe()
 
     if (this.mode === 1) {
       this.title = 'Izmeni recenziju'
@@ -85,15 +94,8 @@ export class RecenzijaDialogComponent implements OnInit {
     else {
       this.title = 'Dodaj recenziju'
 
-      this.user$ = this.store.select(selectUser)
       this.prodavnica$ = this.store.select(selectSelectedProdavnica)
-      this.proizvod$ = this.store.select(selectSelectedProizvod)
-
-      this.user$.pipe(
-        filter(user => !!user),
-        take(1),
-        tap(user => this.user = user)
-      ).subscribe()
+      this.proizvod$ = this.store.select(selectSelectedProizvod)      
 
       this.prodavnica$.pipe(
         take(1),
@@ -148,7 +150,7 @@ export class RecenzijaDialogComponent implements OnInit {
       //console.log(recenzijaData)
       
       if (this.mode === 1) {
-        this.store.dispatch(RecenzijeActions.updateItem({ selectedRecenzijaID: this.recenzijaID, selectedRecenzija: <Recenzija>recenzijaData }))
+        this.store.dispatch(RecenzijeActions.updateItem({ selectedRecenzijaID: this.recenzijaID, selectedRecenzija: <Recenzija>recenzijaData, user: this.currentUser! }))
       }
       else {
         this.store.dispatch(RecenzijeActions.addItem({ recenzija: <Recenzija>recenzijaData }))

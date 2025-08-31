@@ -1,10 +1,10 @@
 import { inject, Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { debounceTime, filter, map, withLatestFrom } from "rxjs";
-import * as ToastActions from "./toast.actions";
 import { selectPrikaz } from "./toast.selectors";
 import { Store } from "@ngrx/store";
 import { AppState } from "../app-state";
+import * as ToastActions from "./toast.actions";
 
 @Injectable()
 export class ToastEffects {

@@ -5,10 +5,10 @@ import { AppState } from '../../../store/app-state';
 import { CommonModule, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import * as AuthActions from '../../../store/auth/auth.actions';
 import { Observable, of } from 'rxjs';
 import { selectError } from '../../../store/auth/auth.selectors';
 import { environment } from '../../../../environments/environment';
+import * as AuthActions from '../../../store/auth/auth.actions';
 
 @Component({
   selector: 'app-register',

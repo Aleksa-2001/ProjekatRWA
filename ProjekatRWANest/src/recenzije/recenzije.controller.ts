@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UseGuard
 import { RecenzijeService } from './recenzije.service';
 import { RecenzijaDto } from 'src/dto/recenzija.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { User } from 'src/models/user.entity';
 
 @Controller()
 export class RecenzijeController {
@@ -41,14 +42,14 @@ export class RecenzijeController {
 
     @Put('recenzija/:id')
     @UseGuards(JwtAuthGuard)
-    public updateRecenzija(@Param('id', ParseIntPipe) recenzijaID: number, @Body() dto: RecenzijaDto) {
-        return this.service.update(recenzijaID, dto)
+    public updateRecenzija(@Param('id', ParseIntPipe) recenzijaID: number, @Body() data: any) {
+        return this.service.update(recenzijaID, data.recenzija as RecenzijaDto, data.user as User)
     }
 
     @Delete('recenzija/:id')
     @UseGuards(JwtAuthGuard)
-    public deleteRecenzija(@Param('id', ParseIntPipe) recenzijaID: number) {
-        return this.service.delete(recenzijaID)
+    public deleteRecenzija(@Param('id', ParseIntPipe) recenzijaID: number, @Body() user: User) {
+        return this.service.delete(recenzijaID, user)
     }
     
 }
