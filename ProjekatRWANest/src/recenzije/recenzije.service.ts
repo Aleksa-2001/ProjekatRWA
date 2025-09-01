@@ -92,7 +92,6 @@ export class RecenzijeService {
     }
 
     public async create(recenzijaDto: RecenzijaDto) {
-        console.log(recenzijaDto)
         if (!((recenzijaDto.prodavnica && recenzijaDto.proizvod) || (!recenzijaDto.prodavnica && !recenzijaDto.proizvod))) {
             if (!(await this.recenzijaRepository.findOneBy({ 
                 user: { userID: recenzijaDto.user.userID }, 

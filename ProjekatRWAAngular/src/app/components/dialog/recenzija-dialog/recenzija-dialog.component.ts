@@ -142,7 +142,7 @@ export class RecenzijaDialogComponent implements OnInit {
         id: this.recenzijaID,
         ocena: recenzija.ocena,
         komentar: recenzija.komentar ?? "",
-        user: this.user ?? null,
+        user: this.user ?? this.currentUser,
         prodavnica: this.prodavnica ?? null,
         proizvod: this.proizvod ?? null
       }
