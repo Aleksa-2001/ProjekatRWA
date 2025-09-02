@@ -102,7 +102,10 @@ export class ProizvodiComponent implements OnInit, OnChanges, OnDestroy {
       filter(([proizvodi]) => !!proizvodi),
       map(([proizvodi, search, selectedCenaRange, selectedTipoviProizvoda, selectedTypes, selectedProizvodjaci]) => {
         const filteredProizvodi = proizvodi.filter(proizvod => {
-          const searchMatch = search.length ? proizvod.naziv.toLowerCase().includes(search.toLowerCase().trim()) : proizvodi
+          const searchMatch = search.length 
+            ? proizvod.proizvodjac.toLowerCase().includes(search.toLowerCase().trim()) 
+            || proizvod.naziv.toLowerCase().includes(search.toLowerCase().trim()) 
+            : proizvodi
           const tipProizvodaMatch = selectedTipoviProizvoda.length ? selectedTipoviProizvoda.includes(proizvod.tipProizvoda) : proizvodi
           const typeMatch = selectedTypes.length ? selectedTypes.includes(proizvod.type) : proizvodi
           const proizvodjacMatch = selectedProizvodjaci.length ? selectedProizvodjaci.includes(proizvod.proizvodjac) : proizvodi

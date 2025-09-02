@@ -78,7 +78,11 @@ export class ProdavniceComponent implements OnInit, OnChanges {
         }
         else {
           const filteredProdavnice = prodavnice.filter(prodavnica => {
-            const searchMatch = search.length ? prodavnica.naziv.toLowerCase().includes(search.toLowerCase().trim()) : prodavnice
+            const searchMatch = search.length 
+              ? prodavnica.naziv.toLowerCase().includes(search.toLowerCase().trim()) 
+              || prodavnica.adresa.toLowerCase().includes(search.toLowerCase().trim()) 
+              || prodavnica.grad.toLowerCase().includes(search.toLowerCase().trim()) 
+              : prodavnice
             const nazivMatch = selectedProdavnice.length ? selectedProdavnice.includes(prodavnica.naziv) : prodavnice
             return searchMatch && nazivMatch
           })

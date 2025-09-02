@@ -75,7 +75,6 @@ export class AuthEffects {
             ofType(AuthActions.register),
             mergeMap(({ user }) => this.userService.addUser(user).pipe(
                 map((user) => {
-                    console.log(user)
                     this.router.navigate(['/login'])
                     return AuthActions.registerSuccess()
                 }),
@@ -136,7 +135,6 @@ export class AuthEffects {
         return this.actions$.pipe(
             ofType(AuthActions.updateUserFailure),
             map(({ error }) => {
-                console.log(error)
                 if ((error as string).includes('API')) return showToast({ poruka: `Nije uspelo povezivanje sa serverom - ${error}`, tipPoruke: 'danger' })
                 else if ((error as string).includes('500')) return showToast({ poruka: `Serverska greška - ${error}`, tipPoruke: 'danger' })
                 else return showToast({ poruka: 'Greška pri izmeni podataka', tipPoruke: 'danger' })

@@ -72,7 +72,6 @@ export class ProizvodiService {
                 .addGroupBy('prodavnica.id')
                 .where('proizvod.proizvodjac ILIKE :search', { search: `%${search}%` })
                 .orWhere('proizvod.naziv ILIKE :search', { search: `%${search}%` })
-                .orWhere('proizvod.type ILIKE :search', { search: `%${search}%` })
                 .getRawAndEntities()
             
             return proizvodi.entities.map((proizvod, i) => ({

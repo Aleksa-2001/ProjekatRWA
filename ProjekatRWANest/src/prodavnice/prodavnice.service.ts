@@ -65,6 +65,8 @@ export class ProdavniceService {
                 .addSelect('COALESCE(AVG(recenzija.ocena), 0)', 'prosecnaOcena')
                 .groupBy('prodavnica.id')
                 .where('prodavnica.naziv ILIKE :search', { search: `%${search}%` })
+                .orWhere('prodavnica.adresa ILIKE :search', { search: `%${search}%` })
+                .orWhere('prodavnica.grad ILIKE :search', { search: `%${search}%` })
                 .getRawAndEntities()
             
             return prodavnice.entities.map((prodavnica, i) => ({
