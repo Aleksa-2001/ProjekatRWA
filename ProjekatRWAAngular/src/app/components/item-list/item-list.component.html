@@ -15,6 +15,7 @@
             (prikaziProdavniceOutput)="getPrikaziProdavnice($event)" 
             (prikaziProizvodeOutput)="getPrikaziProizvode($event)" 
             (selectedNaziviProdavnicaOutput)="getSelectedNaziviProdavnica($event)" 
+            (selectedGradoviOutput)="getSelectedGradovi($event)" 
             (selectedCenaRangeOutput)="getSelectedCenaRange($event)" 
             (selectedTipoviProizvodaOutput)="getSelectedTipoviProizvoda($event)" 
             (selectedTypesOutput)="getSelectedTypes($event)" 
@@ -23,7 +24,8 @@
         <div class="col">
             <app-prodavnice *ngIf="prikaziProdavnice" [hidden]="data.brojProdavnica === 0 && searchPage"
                 [prodavnicePage]="prodavnicePage" 
-                [selectedNaziviProdavnica]="selectedNaziviProdavnica"
+                [selectedNaziviProdavnica]="selectedNaziviProdavnica" 
+                [selectedGradovi]="selectedGradovi"
             ></app-prodavnice>
             <hr *ngIf="data.brojProdavnica !== 0 && data.brojProizvoda !== 0 && prikaziProdavnice && prikaziProizvode">
             <app-proizvodi *ngIf="prikaziProizvode" [hidden]="data.brojProizvoda === 0 && searchPage"

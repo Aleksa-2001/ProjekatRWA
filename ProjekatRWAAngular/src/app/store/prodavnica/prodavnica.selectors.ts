@@ -40,6 +40,11 @@ export const selectNaziviProdavnica = createSelector(
     (prodavnice) => [...new Set(prodavnice.map(prodavnica => prodavnica.naziv))].sort((a, b) => a.toLowerCase() < b.toLowerCase() ? -1 : 1)
 )
 
+export const selectGradovi = createSelector(
+    selectProdavnice,
+    (prodavnice) => [...new Set(prodavnice.map(prodavnica => prodavnica.grad))].sort((a, b) => a.toLowerCase() < b.toLowerCase() ? -1 : 1)
+)
+
 export const selectError = createSelector(
     selectProdavniceFeature,
     (state: ProdavniceState) => state.error

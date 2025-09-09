@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, On
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/app-state';
-import { selectNaziviProdavnica } from '../../store/prodavnica/prodavnica.selectors';
+import { selectGradovi, selectNaziviProdavnica } from '../../store/prodavnica/prodavnica.selectors';
 import { selectProizvodjaci, selectTipoviProizvoda, selectType } from '../../store/proizvod/proizvod.selectors';
 
 @Component({
@@ -37,6 +37,7 @@ export class FilterComponent implements OnInit, OnChanges {
   maxCena: number = Infinity
 
   naziviProdavnica$: Observable<string[]> = of([])
+  gradovi$: Observable<string[]> = of([])
 
   tipoviProizvoda$: Observable<string[]> = of([])
   types$: Observable<string[]> = of([])
@@ -50,6 +51,7 @@ export class FilterComponent implements OnInit, OnChanges {
   @Input() selectMode: boolean = false
 
   selectedNaziviProdavnica: string[] = []
+  selectedGradovi: string[] = []
 
   selectedCenaRange: { min: number, max: number } = { min: 0, max: Infinity }
   selectedTipoviProizvoda: string[] = []
@@ -60,6 +62,7 @@ export class FilterComponent implements OnInit, OnChanges {
   @Output() prikaziProizvodeOutput = new EventEmitter<boolean>()
 
   @Output() selectedNaziviProdavnicaOutput = new EventEmitter<string[]>()
+  @Output() selectedGradoviOutput = new EventEmitter<string[]>()
 
   @Output() selectedCenaRangeOutput = new EventEmitter<{ min: number, max: number }>()
   @Output() selectedTipoviProizvodaOutput = new EventEmitter<string[]>()
@@ -70,6 +73,7 @@ export class FilterComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.naziviProdavnica$ = this.store.select(selectNaziviProdavnica)
+    this.gradovi$ = this.store.select(selectGradovi)
 
     this.tipoviProizvoda$ = this.store.select(selectTipoviProizvoda)
     this.types$ = this.store.select(selectType)
@@ -159,10 +163,12 @@ export class FilterComponent implements OnInit, OnChanges {
         this.prikaziProdavnice = false
         this.prikaziProizvode = true
         this.selectedNaziviProdavnica = []
+        this.selectedGradovi = []
 
         this.prikaziProdavniceOutput.emit(this.prikaziProdavnice)
         this.prikaziProizvodeOutput.emit(this.prikaziProizvode)
         this.selectedNaziviProdavnicaOutput.emit(this.selectedNaziviProdavnica)
+        this.selectedGradoviOutput.emit(this.selectedGradovi)
         break
     }
   }
@@ -173,6 +179,15 @@ export class FilterComponent implements OnInit, OnChanges {
     this.selectedNaziviProdavnica = [...this.selectedNaziviProdavnica]
     this.selectedNaziviProdavnicaOutput.emit(this.selectedNaziviProdavnica)
   }
+
+  onSelectGrad(grad: string) {
+    if (this.selectedGradovi.includes(grad)) this.selectedGradovi.splice(this.selectedGradovi.indexOf(grad), 1)
+    else this.selectedGradovi.push(grad)
+    this.selectedGradovi = [...this.selectedGradovi]
+    this.selectedGradoviOutput.emit(this.selectedGradovi)
+  }
+
+  
 
   onSelectTipProizvoda(tipProizvoda: string) {
     if (this.selectedTipoviProizvoda.includes(tipProizvoda)) this.selectedTipoviProizvoda.splice(this.selectedTipoviProizvoda.indexOf(tipProizvoda), 1)

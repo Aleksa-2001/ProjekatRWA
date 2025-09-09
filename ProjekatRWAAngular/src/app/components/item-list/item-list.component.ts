@@ -47,6 +47,7 @@ export class ItemListComponent implements OnInit {
   @Input() prikaziProizvode: boolean = true
 
   selectedNaziviProdavnica: string[] = []
+  selectedGradovi: string[] = []
 
   selectedCenaRange: { min: number, max: number } = { min: 0, max: Infinity }
   selectedTipoviProizvoda: string[] = []
@@ -82,9 +83,17 @@ export class ItemListComponent implements OnInit {
     this.prikaziProizvode = prikaziProizvode
   }
 
+
+
   getSelectedNaziviProdavnica(selectedNaziviProdavnica: string[]) {
     this.selectedNaziviProdavnica = selectedNaziviProdavnica
   }
+
+  getSelectedGradovi(selectedGradovi: string[]) {
+    this.selectedGradovi = selectedGradovi
+  }
+
+
 
   getSelectedCenaRange(selectedCenaRange: { min: number, max: number }) {
     this.selectedCenaRange = selectedCenaRange

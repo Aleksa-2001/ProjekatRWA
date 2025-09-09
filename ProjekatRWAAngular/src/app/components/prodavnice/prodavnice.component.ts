@@ -33,6 +33,7 @@ export class ProdavniceComponent implements OnInit, OnChanges {
   @Input() homePage: boolean = false
   @Input() prodavnicePage: boolean = false
   @Input() selectedNaziviProdavnica: string[] = []
+  @Input() selectedGradovi: string[] = []
 
   @ViewChild('inputSearch') inputSearch!: ElementRef<HTMLInputElement>
 
@@ -69,10 +70,11 @@ export class ProdavniceComponent implements OnInit, OnChanges {
     this.selectedProdavnice$ = combineLatest([
       this.prodavnice$,
       of(this.search),
-      of(this.selectedNaziviProdavnica)
+      of(this.selectedNaziviProdavnica),
+      of(this.selectedGradovi)
     ]).pipe(
       filter(([prodavnice]) => !!prodavnice),
-      map(([prodavnice, search, selectedProdavnice]) => {
+      map(([prodavnice, search, selectedProdavnice, selectedGradovi]) => {
         if (this.homePage) {
           return [...prodavnice].sort((a, b) => ((a as any).prosecnaOcena > (b as any).prosecnaOcena) || ((a as any).prosecnaOcena === (b as any).prosecnaOcena && (a as any).brojRecenzija > (b as any).brojRecenzija) ? -1 : 1)
         }
@@ -84,7 +86,8 @@ export class ProdavniceComponent implements OnInit, OnChanges {
               || prodavnica.grad.toLowerCase().includes(search.toLowerCase().trim()) 
               : prodavnice
             const nazivMatch = selectedProdavnice.length ? selectedProdavnice.includes(prodavnica.naziv) : prodavnice
-            return searchMatch && nazivMatch
+            const gradMatch = selectedGradovi.length ? selectedGradovi.includes(prodavnica.grad) : prodavnice
+            return searchMatch && nazivMatch && gradMatch
           })
 
           if (this.sort === "brojRecenzija") filteredProdavnice.sort((a, b) => ((a as any).brojRecenzija > (b as any).brojRecenzija) || ((a as any).brojRecenzija === (b as any).brojRecenzija && (a as any).prosecnaOcena > (b as any).prosecnaOcena) ? 1 * this.redosledSortiranja : -1 * this.redosledSortiranja)
