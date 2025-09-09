@@ -27,8 +27,8 @@
             <h5 class="col-12 mb-0">Prodavnica</h5>
             <div class="row mx-0">
                 <div class="col-auto col-md-12 form-check" *ngFor="let nazivProdavnice of naziviProdavnica$ | async">
-                    <input (change)="onSelectProdavnica(nazivProdavnice)" class="form-check-input" type="checkbox" name="inputCheckbox{{nazivProdavnice}}" id="checkbox{{nazivProdavnice}}" value={{nazivProdavnice}}>
-                    <label class="form-check-label" for="checkbox{{nazivProdavnice}}">{{nazivProdavnice}}</label>
+                    <input (change)="onSelectProdavnica(nazivProdavnice)" class="form-check-input" type="checkbox" name="inputCheckboxProdavnica{{nazivProdavnice}}" id="checkboxProdavnica{{nazivProdavnice}}" value={{nazivProdavnice}}>
+                    <label class="form-check-label" for="checkboxProdavnica{{nazivProdavnice}}">{{nazivProdavnice}}</label>
                 </div>
             </div>
         </div>
@@ -39,8 +39,8 @@
             <h5 class="col-12 mb-0">Grad</h5>
             <div class="row mx-0">
                 <div class="col-auto col-md-12 form-check" *ngFor="let grad of gradovi$ | async">
-                    <input (change)="onSelectGrad(grad)" class="form-check-input" type="checkbox" name="inputCheckbox{{grad}}" id="checkbox{{grad}}" value={{grad}}>
-                    <label class="form-check-label" for="checkbox{{grad}}">{{grad}}</label>
+                    <input (change)="onSelectGrad(grad)" class="form-check-input" type="checkbox" name="inputCheckboxGrad{{grad}}" id="checkboxGrad{{grad}}" value={{grad}}>
+                    <label class="form-check-label" for="checkboxGrad{{grad}}">{{grad}}</label>
                 </div>
             </div>
         </div>
@@ -88,8 +88,8 @@
                 <h5 class="col-12 mb-0">Proizvod</h5>
                 <div class="row mx-0">
                     <div class="col-auto col-md-12 form-check" *ngFor="let tipProizvoda of tipoviProizvoda$ | async">
-                        <input (change)="onSelectTipProizvoda(tipProizvoda)" class="form-check-input" type="checkbox" name="inputCheckbox{{tipProizvoda}}" id="checkbox{{tipProizvoda}}" value={{tipProizvoda}}>
-                        <label class="form-check-label" for="checkbox{{tipProizvoda}}" [ngSwitch]="tipProizvoda">
+                        <input (change)="onSelectTipProizvoda(tipProizvoda)" class="form-check-input" type="checkbox" name="inputCheckboxProizvod{{tipProizvoda}}" id="checkboxProizvod{{tipProizvoda}}" value={{tipProizvoda}}>
+                        <label class="form-check-label" for="checkboxProizvod{{tipProizvoda}}" [ngSwitch]="tipProizvoda">
                             <span *ngSwitchCase="'Racunar'">Računar</span>
                             <span *ngSwitchCase="'RacunarskaKomponenta'">Računarska komponenta</span>
                             <span *ngSwitchCase="'RacunarskaOprema'">Računarska oprema</span>
@@ -106,8 +106,8 @@
                     <h5 class="col-12 mb-0">Tip proizvoda</h5>
                     <div class="row mx-0">
                         <div class="col-auto col-md-12 form-check" *ngFor="let type of types">
-                            <input (change)="onSelectType(type)" class="form-check-input" type="checkbox" name="inputCheckbox{{type}}" id="checkbox{{type}}" value={{type}}>
-                            <label class="form-check-label" for="checkbox{{type}}" [ngSwitch]="type">
+                            <input (change)="onSelectType(type)" class="form-check-input" type="checkbox" name="inputCheckboxTipProizvoda{{type}}" id="checkboxTipProizvoda{{type}}" value={{type}}>
+                            <label class="form-check-label" for="checkboxTipProizvoda{{type}}" [ngSwitch]="type">
                                 <span *ngSwitchCase="'CPU'">Procesor</span>
                                 <span *ngSwitchCase="'GPU'">Grafička karta</span>
                                 <span *ngSwitchCase="'RAM'">RAM memorija</span>
@@ -136,8 +136,8 @@
             <h5 class="col-12 mb-0">Proizvođač</h5>
             <div class="row mx-0">
                 <div class="col-auto col-md-12 form-check" *ngFor="let proizvodjac of proizvodjaci$ | async">
-                    <input (change)="onSelectProizvodjac(proizvodjac)" class="form-check-input" type="checkbox" name="inputCheckbox{{proizvodjac}}" id="checkbox{{proizvodjac}}" value={{proizvodjac}}>
-                    <label class="form-check-label" for="checkbox{{proizvodjac}}">{{proizvodjac}}</label>
+                    <input (change)="onSelectProizvodjac(proizvodjac)" class="form-check-input" type="checkbox" name="inputCheckboxProizvodjac{{proizvodjac}}" id="checkboxProizvodjac{{proizvodjac}}" value={{proizvodjac}}>
+                    <label class="form-check-label" for="checkboxProizvodjac{{proizvodjac}}">{{proizvodjac}}</label>
                 </div>
             </div>
         </div>
